@@ -1,7 +1,9 @@
-"""Supp: GO enrichment-map network for the Tier-1 sweep genes. Nodes = enriched
-biological-process terms (size = # Tier-1 genes, colour = -log10 FDR); edges connect
-terms that share Tier-1 genes (Jaccard >= 0.15). Reveals the two connected modules:
-neural development and RNA-regulatory/transcriptional control. Run under bioinfo-buddy (networkx)."""
+"""Supp: GO enrichment-map network for the BACKGROUND-SELECTION-ROBUST sweep genes.
+Nodes = enriched biological-process terms (size = # genes, colour = -log10 FDR); edges
+connect terms that share genes (Jaccard >= 0.15). Built from the 291 BGS-robust Tier-1
+calls -- the subset whose local diversity reduction exceeds the background-selection
+expectation -- so the modules reflect the screened, higher-confidence set. Reveals the
+connected modules of neural development and photoreception. Run under bioinfo-buddy (networkx)."""
 import os
 os.environ.setdefault("MPLCONFIGDIR", "/dev/shm/mplcache")
 import sys
@@ -15,12 +17,19 @@ import networkx as nx
 D = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel/results/empirical_scan_fullsfs/hmm_decode"
 OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/supp_figures/supp_go_network.png"
 
-enr = pd.read_csv(f"{D}/tier1_GO_enrichment.tsv", sep="\t")
+enr = pd.read_csv(f"{D}/tier1_BGS_GO_enrichment.tsv", sep="\t")
 enr = enr[(enr.FDR < 0.05) & (enr.category == "biological_process")].copy()
 enr = enr.sort_values("FDR").head(15)                       # top terms for legibility
+
+# restrict the gene table to genes in the BGS-robust calls (join on the call region)
 genes = pd.read_csv(f"{D}/tier1_genes.tsv", sep="\t")
 genes = genes[genes.annotated == True] if genes.annotated.dtype == bool else genes
+rob = pd.read_csv(f"{D}/tier1_BGS_robust_calls.tsv", sep="\t")
+rob_keys = set(zip(rob["chrom"].astype(str), rob["start"].astype(int)))
+genes = genes[[(str(c), int(s)) in rob_keys
+               for c, s in zip(genes["chrom"], genes["call_start"])]].copy()
 gbp = genes.dropna(subset=["GO_biological_process"])
+print(f"BGS-robust genes for network: {len(gbp)} annotated of {len(genes)}")
 
 # gene set per enriched term (genes whose GO_BP string contains the term name)
 def gene_set(term):
@@ -60,7 +69,7 @@ for n in G:
 ax.set_axis_off()
 cb = fig.colorbar(nodes, ax=ax, fraction=0.04, pad=0.01, shrink=0.7)
 cb.set_label(r"$-\log_{10}$ FDR", fontsize=8.5); cb.ax.tick_params(labelsize=7)
-ax.set_title("Tier-1 sweep genes: GO enrichment map (shared-gene network)",
+ax.set_title("BGS-robust sweep genes: GO enrichment map (shared-gene network)",
              loc="left", fontweight="bold", fontsize=11)
 fig.savefig(OUT, dpi=220, bbox_inches="tight")
 print("wrote", OUT, "|", G.number_of_nodes(), "nodes", G.number_of_edges(), "edges")

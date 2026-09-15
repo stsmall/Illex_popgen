@@ -197,10 +197,12 @@
 
 \begin{figure}[h]\centering
   \includegraphics[width=.85\linewidth]{supp_go_network.png}
-  \caption{\textbf{GO enrichment map for the Tier-1 sweep genes.} Nodes are enriched biological-process
-    terms (size $=$ number of Tier-1 genes, colour $=-\log_{10}$ FDR); edges connect terms sharing Tier-1
-    genes (Jaccard $\geq0.15$). The terms form two connected modules: neural development and
-    RNA-regulatory/transcriptional control.}
+  \caption{\textbf{GO enrichment map for the background-selection-robust sweep genes.} Built from the 291
+    BGS-robust Tier-1 calls (the subset whose local diversity reduction exceeds the background-selection
+    expectation; 227 GO-annotated genes). Nodes are enriched biological-process terms (size $=$ number of
+    genes, colour $=-\log_{10}$ FDR); edges connect terms sharing genes (Jaccard $\geq0.15$). The terms form
+    connected modules of neural development / cell morphogenesis and photoreception (response to
+    light/radiation), the same two themes seen in the GSEA dot plot (\cref{sfig:gsea}).}
   \label{sfig:gonet}
 \end{figure}
 
@@ -365,14 +367,36 @@
   \end{tabular}
 \end{table}
 
-% ---- S6: full sweep-candidate table (pointer) ----
+% ---- S6: Tier-2 cross-method-concordant genes ----
 \begin{table}[h]\centering
-  \caption{\textbf{Full selective-sweep candidate set.} The 216 candidate windows, the 34 cross-method
-    concordant regions, and the 11 background-selection-robust candidates, with EnTAP annotation, MK/DoS,
-    and the per-region background-selection test, are provided as machine-readable tables:
-    \texttt{outlier\_scan/\{windows,regions,concordant33\_genes\_ENTAP\_GO,concordant33\_genes\_MK,%
-    concordant33\_BGS\_test\}.tsv}. \emph{[To be typeset as a full supplementary table for submission.]}}
+  \caption{\textbf{Tier-2 (cross-method-concordant) sweep genes.} The 34 regions where the diploSHIC-HMM
+    sweep signal is independently corroborated by both RAiSD and SweepFinder2 (33 auto-detected plus the
+    chr43 balancing locus handled separately). Seven regions carry a named protein-coding gene (12 genes,
+    listed); the remaining concordant regions are gene deserts or uncharacterised loci. Coordinates in Mb;
+    $\alpha$ and DoS from the McDonald--Kreitman test against \textit{I.~coindetii} (`--' where the test is
+    unpowered, i.e.\ too few fixed/polymorphic sites). The full candidate set --- all 216 windows, the 34
+    concordant regions, and the background-selection test --- is provided as machine-readable tables
+    (\texttt{outlier\_scan/\{windows,regions,concordant33\_genes\_ENTAP\_GO,concordant33\_genes\_MK,%
+    concordant33\_BGS\_test\}.tsv}).}
   \label{stab:candidates}
+  \begin{tabular}{llllrr}
+    \toprule
+    region (Mb) & sweep & gene & EnTAP best hit & $\alpha$ & DoS \\
+    \midrule
+    1:20.3 & hard & \textit{Aplnr} & Apelin receptor & 1.00 & +0.17 \\
+    1:85.5 & hard & \textit{eif3h} & Eukaryotic translation initiation factor 3 & 0.69 & +0.20 \\
+    1:85.5 & hard & \textit{babam1} & BRISC and BRCA1-A complex member 1 & -- & -0.48 \\
+    1:85.5 & hard & \textit{ttc39b} & Tetratricopeptide repeat protein 39B & -- & -0.27 \\
+    5:38.0 & hard & \textit{cept1} & Choline/ethanolaminephosphotransferase 1 & -- & -1.00 \\
+    5:38.0 & hard & \textit{Arsi} & Arylsulfatase I & -- & -0.25 \\
+    13:73.2 & hard & \textit{Rab3} & Ras-related protein Rab-3 & -- & -0.17 \\
+    13:73.2 & hard & \textit{hyi} & Putative hydroxypyruvate isomerase & -- & -0.64 \\
+    13:73.2 & hard & \textit{Vps28} & Vacuolar protein sorting-associated protein 28 & -- & -- \\
+    32:9.3 & soft & \textit{Macrod2} & ADP-ribose glycohydrolase MACROD2 & -- & -0.59 \\
+    33:9.0 & hard & \textit{Tinagl1} & Tubulointerstitial nephritis antigen-like & -- & -0.23 \\
+    35:39.0 & hard & \textit{zag-1} & Zinc finger E-box-binding homeobox (ZEB) & -- & -0.31 \\
+    \bottomrule
+  \end{tabular}
 \end{table}
 
 \clearpage
