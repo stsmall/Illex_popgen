@@ -182,9 +182,16 @@
 
 \begin{figure}[h]\centering
   \includegraphics[width=.9\linewidth]{supp_gsea.png}
-  \caption{\textbf{GO enrichment of the Tier-1 sweep genes} (biological process). Each dot is an enriched
-    term: $x=$ fold enrichment, size $=$ number of Tier-1 genes, colour $=-\log_{10}$ FDR. Two themes
-    dominate --- neural development and RNA-regulatory/transcriptional control (\cref{stab:goenrich}).}
+  \caption{\textbf{GO enrichment of the diploSHIC-HMM sweep genes} (biological process; terms significant at
+    FDR$<$0.05 in both sets). Paired dot plot: each term is shown for the full Tier-1 set (blue circle; 658
+    calls) and for its background-selection-robust subset (orange diamond; 291 calls), with $x=$ fold
+    enrichment and marker area $=$ number of sweep genes carrying the term. The grey arrow marks the shift
+    between the two sets: the BGS screen consistently \emph{sharpens} the enrichment (rightward), and most
+    strongly for the light-response / photoreception terms (response to light stimulus $1.9\to3.1\times$;
+    response to radiation $1.8\to2.8\times$). Two coherent themes dominate --- neural development and
+    photoreception --- and both survive the background-selection filter (\cref{stab:goenrich};
+    full per-set enrichment tables are provided with the source). The hard-sweep calls are a
+    sub-classification recorded in the calls table, not a separate gene set.}
   \label{sfig:gsea}
 \end{figure}
 
@@ -220,17 +227,6 @@
     background-selection-robust subset (\S\,BGS screen; 291 of 658) is ringed. The calls are distributed
     across the genome with no single dominant locus.}
   \label{sfig:t1man}
-\end{figure}
-
-\begin{figure}[h]\centering
-  \includegraphics[width=.82\linewidth]{supp_gsea_bgsrobust.png}
-  \caption{\textbf{GO enrichment of the background-selection-robust Tier-1 sweep genes} (GSEA-style dot plot;
-    top terms by FDR). Each dot is an enriched biological-process term: $x=$ fold enrichment, size $=$ number
-    of genes, colour $=-\log_{10}$ FDR. After BGS screening the neural-developmental and RNA-regulatory
-    enrichment strengthens and a photoreception signal (response to light/radiation) appears; the full and
-    hard-sweep Tier-1 dot plots (\texttt{supp\_gsea\_tier1.png}, \texttt{supp\_gsea\_hard.png}) are provided
-    with the source.}
-  \label{sfig:gseabgs}
 \end{figure}
 
 \begin{figure}[h]\centering
@@ -350,7 +346,7 @@
 % ---- S5: GO functional clusters (BGS-robust Tier-1) ----
 \begin{table}[h]\centering
   \caption{\textbf{Functional clusters of the background-selection-robust Tier-1 sweep genes.} The 152
-    enriched biological-process GO terms (FDR$<$0.05) of the BGS-robust set (\cref{sfig:gseabgs}), grouped
+    enriched biological-process GO terms (FDR$<$0.05) of the BGS-robust set (\cref{sfig:gsea}), grouped
     into functional clusters by term semantics. Neural development and cell morphogenesis/differentiation
     dominate, with RNA-regulatory control and organ development, and a distinct photoreception/sensory
     cluster.}
