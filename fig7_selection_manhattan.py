@@ -1,0 +1,169 @@
+import sys; sys.path.insert(0, '/sietch_colab/data_share/illex/popgen_data/analysis/manuscript')
+from figstyle import apply, C, despine, save
+apply()
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+import numpy as np
+import csv
+
+# 45-chromosome outlier scan (includes chr2 and chr42; the older
+# outlier_scan/windows.tsv is a stale 43-chromosome run missing both)
+WINDOWS = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel/results/empirical_scan_fullsfs/outlier_scan_45/windows.tsv"
+OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/figures/fig7_selection_manhattan.png"
+
+# ---- why the y-axis is NOT raw diploSHIC S ----
+# Raw S = P(hard)+P(soft) saturates at ~1 across a huge, spatially-correlated
+# fraction of the genome (a documented sim-vs-real mismatch: the CNN
+# over-calls on real heterogeneous data). Plotting raw S makes thousands of
+# non-candidate windows look identical to the true candidates, which is
+# exactly the "why did so few pass" confusion this figure must avoid.
+#
+# Instead we plot each window's STRATIFIED rank: S_pct is diploSHIC S's
+# percentile rank *within its own callability x gene-density stratum*
+# (windows.tsv, columns S_pct/S_out) -- this is the value actually used to
+# call outliers, and it discounts strata where S=1 is the common background
+# rather than a real signal. We display it as -log10(1 - S_pct) purely so
+# the top of the rank distribution (where the real outliers live) is spread
+# out and reads as a Manhattan-style peak instead of a saturated ceiling.
+S_OUT_PCT = 0.99  # windows.tsv's own stratified-outlier cut (top 1%/stratum)
+EPS = 1e-6
+
+def rank_y(pct):
+    return -np.log10(max(1.0 - pct, EPS))
+
+Y_THRESH = rank_y(S_OUT_PCT)
+
+# ---- load per-window scan ----
+rows = []
+with open(WINDOWS) as fh:
+    r = csv.DictReader(fh, delimiter="\t")
+    for row in r:
+        chrom = row["chrom"]
+        start = int(row["start"])
+        end = int(row["end"])
+        S_pct = float(row["S_pct"])
+        n_methods = int(row["n_methods"]) if row["n_methods"] not in ("", "NA") else 0
+        S_out = row["S_out"] == "1"
+        candidate = S_out and n_methods >= 2   # stratified outlier AND
+                                                # corroborated by >=1 independent
+                                                # method (SF2/RAiSD) AND BGS-robust
+                                                # (candidate set already filtered
+                                                # upstream to n_methods>=2)
+        rows.append(dict(chrom=chrom, start=start, end=end, S_pct=S_pct,
+                          y=rank_y(S_pct), S_out=S_out, candidate=candidate))
+
+chroms = sorted({r["chrom"] for r in rows}, key=lambda c: int(c))
+chrom_len = {c: max(r["end"] for r in rows if r["chrom"] == c) for c in chroms}
+
+offset = {}
+cum = 0
+for c in chroms:
+    offset[c] = cum
+    cum += chrom_len[c]
+
+def gpos(chrom, pos):
+    return offset[chrom] + pos
+
+background = [r for r in rows if not r["S_out"]]
+outlier_only = [r for r in rows if r["S_out"] and not r["candidate"]]
+candidates = [r for r in rows if r["candidate"]]
+
+print(f"genome-wide windows: {len(rows)} across {len(chroms)} chroms")
+print(f"stratified outliers (top {100*(1-S_OUT_PCT):.0f}% per stratum): "
+      f"{len(outlier_only) + len(candidates)}")
+print(f"  -> corroborated (>=2 methods) + BGS-robust candidates: {len(candidates)}")
+
+# ---- named genes to label ----
+genes = [
+    ("1", 20_300_000, "Aplnr"),
+    ("35", 39_000_000, "ZEB2"),
+    ("32", 9_300_000, "MACROD2"),
+    ("5", 38_000_000, "cept1"),
+    ("16", 35_300_000, "novel"),
+]
+
+fig, ax = plt.subplots(figsize=(9.0, 3.2))
+
+# alternating chromosome bands
+for i, c in enumerate(chroms):
+    if i % 2 == 0:
+        continue
+    ax.axvspan(offset[c], offset[c] + chrom_len[c], color=C["faint"], lw=0, zorder=0)
+
+# stratified-outlier reference line (drawn under the points)
+ax.axhline(Y_THRESH, color=C["muted"], lw=0.8, ls="--", zorder=1)
+ax.text(cum, Y_THRESH + 0.12, "top 1% per stratum", ha="right", va="bottom",
+        fontsize=6.5, color=C["muted"])
+
+def xy(recs):
+    x = [gpos(r["chrom"], (r["start"] + r["end"]) / 2) for r in recs]
+    y = [r["y"] for r in recs]
+    return x, y
+
+# 1) discounted background -- the raw over-call lives in here, but ranked
+#    within its own stratum it sits low, near everything else
+bx, by = xy(background)
+ax.scatter(bx, by, s=1.6, color=C["ink"], alpha=0.22, linewidths=0,
+           zorder=2, rasterized=True)
+
+# 2) stratified outliers that failed corroboration/BGS -- real rank outliers,
+#    but not confirmed candidates
+ox, oy = xy(outlier_only)
+ax.scatter(ox, oy, s=7, color=C["muted"], alpha=0.75, linewidths=0,
+           zorder=3, rasterized=True)
+
+# 3) the corroborated, BGS-robust candidates
+cx, cy = xy(candidates)
+ax.scatter(cx, cy, s=24, color=C["warm"], edgecolors="white", linewidths=0.4,
+           zorder=4)
+
+# label a handful of the strongest named candidate genes
+label_offsets = [(0, 6), (0, 6), (-16, 6), (0, 6), (12, 6)]
+for (chrom, pos, name), (dx, dy) in zip(genes, label_offsets):
+    win_start = pos + 1
+    hit = [r for r in rows if r["chrom"] == chrom and r["start"] == win_start]
+    x = gpos(chrom, pos + 50_000)
+    y = hit[0]["y"] if hit else Y_THRESH
+    ax.annotate(name, xy=(x, y), xytext=(dx, dy), textcoords="offset points",
+                ha="center", va="bottom", fontsize=7.5, style="italic",
+                color=C["ink"], zorder=5)
+
+# in-figure note on the filtering cascade
+n_out = len(outlier_only) + len(candidates)
+ax.text(0.008, 0.96,
+         f"{n_out} stratified outliers  →  {len(candidates)} confirmed\n"
+         "(≥ 2 independent methods + BGS-robust)",
+         transform=ax.transAxes, ha="left", va="top", fontsize=6.5,
+         color=C["ink"], linespacing=1.4)
+
+# compact legend
+legend_handles = [
+    Line2D([0], [0], marker="o", linestyle="", markersize=3.5,
+           markerfacecolor=C["ink"], markeredgewidth=0, alpha=0.5,
+           label="discounted (in-stratum rank low)"),
+    Line2D([0], [0], marker="o", linestyle="", markersize=4.5,
+           markerfacecolor=C["muted"], markeredgewidth=0,
+           label="stratified outlier, uncorroborated"),
+    Line2D([0], [0], marker="o", linestyle="", markersize=5.5,
+           markerfacecolor=C["warm"], markeredgewidth=0,
+           label=f"confirmed candidate (n={len(candidates)})"),
+]
+ax.legend(handles=legend_handles, loc="upper right", bbox_to_anchor=(1.0, 1.18),
+          ncol=1, handletextpad=0.3, borderaxespad=0, fontsize=6.5)
+
+# x-axis: centered chromosome ticks
+tick_pos = [offset[c] + chrom_len[c] / 2 for c in chroms]
+tick_lab = [c if int(c) % 2 == 1 else "" for c in chroms]
+ax.set_xticks(tick_pos)
+ax.set_xticklabels(tick_lab, fontsize=6)
+ax.set_xlim(0, cum)
+ymax = max(r["y"] for r in rows)
+ax.set_ylim(-0.15, ymax + 0.5)
+ax.set_yticks([0, Y_THRESH, ymax])
+ax.set_yticklabels(["0", "0.99", "≈1"])
+ax.set_xlabel("chromosome")
+ax.set_ylabel("stratified S percentile\n" r"$-\log_{10}(1-\mathrm{S\_pct})$")
+
+despine(ax)
+fig.tight_layout()
+save(fig, OUT)

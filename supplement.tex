@@ -1,0 +1,386 @@
+% =====================================================================
+%  Supplementary material — Illex illecebrosus population genomics
+%  Diagnostic figures + detail tables. Build: make supp  (or pdflatex+bibtex)
+% =====================================================================
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{longtable}
+\usepackage[round]{natbib}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+\usepackage{cleveref}
+
+\graphicspath{{supp_figures/}}
+\newcommand{\illex}{\textit{Illex illecebrosus}}
+\newcommand{\coin}{\textit{I.\ coindetii}}
+\newcommand{\Fst}{F_\mathrm{ST}}
+\newcommand{\dxy}{d_\mathrm{xy}}
+
+% number supplementary floats S1, S2, ...
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thetable}{S\arabic{table}}
+
+\title{\textbf{Supplementary material}\\[2pt]
+  Population genomics of the northern shortfin squid \textit{Illex illecebrosus}}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Supplementary figures}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{supp_pca_geography.png}
+  \caption{\textbf{The autosomal-PCA spread is not geographic structure.} Genome-wide PCA
+    (autosomes; chromosome~2, chromosome~42 and the Z excluded), $n=621$ individuals.
+    (a)~Coloured by NAFO sampling division and (b)~by latitude, the divisions and the
+    latitudinal gradient are fully intermixed across PC space --- no clustering by origin.
+    (c)~PC scores plotted against latitude show no relationship (Pearson $r=-0.10$ for PC1,
+    $r=-0.01$ for PC2). The dispersion along the minor PC axis in \cref{fig:overview} is carried by a handful
+    of individuals ($\sim$9 samples account for $>$80\% of the PC2 variance) and tracks neither division nor
+    latitude nor sequencing coverage; a KING-robust screen finds no cryptic relatedness among them, so it is
+    a minor-axis artifact rather than population subdivision, consistent with genome-wide $\Fst\approx0$.}
+  \label{sfig:pcageo}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{supp_fst_expanded.png}
+  \caption{\textbf{No geographic differentiation beyond genetic drift; no local adaptation signal.} Per-SNP
+    Weir--Cockerham $\Fst$ across all 45 NAFO-division pairs (well-genotyped sites, $\geq$40 observed
+    haplotypes per pair; per-SNP mean over $\geq$20 informative pairs). \textbf{(a)}~The empirical distribution
+    (blue) lies entirely within a coalescent \emph{neutral null} (grey): a single panmictic population
+    simulated under the fitted growth demography ($N_0=6.8\times10^{6}$, $N_\mathrm{ANC}=5.5\times10^{5}$,
+    $\mu=3\times10^{-9}$) at the empirical per-division sample sizes with the matched 44\% missingness, split
+    at random into ten ``divisions''. Empirical max $\Fst=0.143$ vs neutral max $0.322$; only 57 SNPs exceed
+    the neutral 99.9th percentile ($0.105$) against $\approx$131 expected by chance --- \emph{fewer} than the
+    false-positive rate. Drift, finite sampling and missingness fully explain the observed differentiation.
+    \textbf{(b)}~On chromosome~2, the inverted region (green) is geographically indistinguishable from the
+    collinear remainder (median $\Fst\approx0.005$) --- the inversion is non-clinal; its $\Fst\approx0.37$ is
+    between \emph{karyotypes}, not geography. \textbf{(c)}~No SNP survives the neutral threshold, so a scan for
+    local adaptation that the diversity-based sweep tests could miss returns no candidates. (The autosomal
+    panel samples a fixed 400~kb window per chromosome; the distribution/threshold conclusion is robust, but a
+    genome-wide genic-outlier scan would require per-chromosome $\Fst$ on the full callsets.)}
+  \label{sfig:fstsnp}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=.7\linewidth]{supp_winpca.png}
+  \caption{\textbf{Windowed PCA across chromosome~2} localising the differentiated block.
+    \emph{[Regeneration note: window coordinates to be corrected in the final version.]}}
+  \label{sfig:winpca}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=.6\linewidth]{supp_ld_triangle.png}
+  \caption{\textbf{Linkage-disequilibrium triangle across chr2}, showing the extended LD block
+    coincident with the inversion.}
+  \label{sfig:ld}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=.9\linewidth]{supp_joint_sfs.png}
+  \caption{\textbf{Joint two-dimensional site-frequency spectrum} of derived-allele frequency in the
+    AA (ancestral) versus BB (inverted) arrangement. Each cell is a count of sites (colour, $\log_{10}$).
+    In the inversion body (a) density spreads off the diagonal and into the corners --- variants common in
+    one arrangement and absent in the other, i.e.\ near-fixed differences (2{,}219 sites; 21\% shared
+    polymorphism) --- the direct signature of the recombination barrier. In the collinear control (b) the
+    density collapses onto the diagonal (0 near-fixed differences; 47\% shared), as expected for freely
+    recombining, exchangeable sequence. \emph{[Regeneration note: drop interpolation, floor counts at 1,
+    mask empty cells to a distinct colour.]}}
+  \label{sfig:jsfs}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=.7\linewidth]{supp_cline.png}
+  \caption{\textbf{The inversion is non-clinal.} Inverted-arrangement frequency across NAFO sampling
+    divisions shows no latitudinal trend (see \cref{stab:geo}); geographic $\Fst\approx0$, and the three
+    karyotypes co-occur throughout the range.}
+  \label{sfig:cline}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=.6\linewidth]{supp_confusion.png}
+  \caption{\textbf{Sweep-classifier confusion matrix} (five-class diploSHIC, full-SFS model; 81\% overall
+    accuracy). Recall: hard 0.85, linked-hard 0.86, neutral 0.82, soft 0.75, linked-soft 0.77.}
+  \label{sfig:confusion}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=.92\linewidth]{supp_pipeline.png}
+  \caption{\textbf{The selective-sweep scan pipeline.} Simulate (SLiM + msprime under the fitted growth
+    demography) $\to$ diploSHIC five-class classifier $\to$ Markov/HMM decode $\to$ stratified
+    empirical-outlier ranking (within callability $\times$ gene-density strata) + cross-method concordance
+    (RAiSD, SweepFinder2) + background-selection filter $\to$ candidate sweeps.}
+  \label{sfig:pipeline}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{supp_diversity_boxplots.png}
+  \caption{\textbf{Per-chromosome diversity.} Distribution of nucleotide diversity $\pi$ (top) and Tajima's
+    $D$ (bottom) across windows, per chromosome. $D$ is negative on every chromosome.}
+  \label{sfig:divbox}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=.8\linewidth]{supp_mkado.png}
+  \caption{\textbf{Per-gene McDonald--Kreitman neutrality index} (mkado volcano plot, \coin{} outgroup).
+    Each point is one gene: $-\log_{10}$ of its neutrality index NI\,$=(P_n/P_s)/(D_n/D_s)$ on the $x$-axis
+    (right of the neutral NI\,$=1$ line $=$ adaptive, $\mathrm{NI}<1$; left $=$ excess non-synonymous
+    polymorphism, $\mathrm{NI}>1$) against $-\log_{10}p$ on the $y$-axis. Dashed lines mark the nominal
+    ($p=0.05$) and Bonferroni thresholds. Of $n=2{,}354$ testable genes, 50 are nominally significant and 1
+    survives Bonferroni; the genome-wide asymptotic $\alpha=0.64$ resolves to few individual genes, as
+    expected for a large-$N_e$ species where per-gene MK is underpowered.}
+  \label{sfig:mkado}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=.9\linewidth]{supp_breakpoints.png}
+  \caption{\textbf{Inversion breakpoints.} $\Fst$ across the left (60.54~Mb) and right (79.50~Mb) breakpoints
+    --- a step, not a ramp.}
+  \label{sfig:breakpoints}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=.9\linewidth]{supp_recomb_boxplots.png}
+  \caption{\textbf{Per-chromosome recombination-rate distribution} (ReLERNN). chr2 (autosomal-net estimate,
+    flagged) and the Z chromosome (male/female) shown separately. \emph{[chr2 and Z estimates are provisional
+    --- see main text.]}}
+  \label{sfig:recombbox}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{fig_markov.png}
+  \caption{\textbf{Recombination-aware Markov decoder for the Tier-1 sweep calls.} A hidden Markov model over
+    the per-100~kb-window diploSHIC classification (emissions $=$ prior-corrected class posteriors; dwell
+    lengths from the $\sim$400~kb sweep footprint scaled by the ReLERNN map; design-informed, not
+    simulation-calibrated). \textbf{(a)}~The decoder at a representative concordant sweep (chromosome~6):
+    the sweep posterior $p_\mathrm{hard}+p_\mathrm{soft}$ per window and the Viterbi state track
+    (neutral / linked / centre); it localises the centre inside the linked envelope and overrides spatially
+    isolated high-posterior windows (e.g.\ near 12.05~Mb). \textbf{(b)}~Markov correction reduces the raw
+    hard/soft calls from 1{,}758 to 717 spatially-coherent calls ($-59\%$). \textbf{(c)}~89\% of windows at
+    the Tier-2 cross-method-concordant loci are decoded as sweep centres versus 2.9\% genome-wide (odds
+    ratio 282, $p<10^{-46}$; 30 of 34 concordant regions recovered).}
+  \label{sfig:markov}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=.85\linewidth]{supp_inversion_profiles.png}
+  \caption{\textbf{Profile-likelihood bounds on the chromosome-2 inversion's decline}
+    (\cref{fig:demog}). $\Delta\chi^2$ from the best fit while profiling (a)~$t_\mathrm{decline}$, when
+    the fall ended, and (b)~$t_\mathrm{fall}$, how long it took; the shaded band is $\Delta\chi^2<2$
+    (not excluded). The fall ended $\sim$50--200~ka and took $\sim$50--200~ky.}
+  \label{sfig:profiles}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=.9\linewidth]{supp_gsea.png}
+  \caption{\textbf{GO enrichment of the Tier-1 sweep genes} (biological process). Each dot is an enriched
+    term: $x=$ fold enrichment, size $=$ number of Tier-1 genes, colour $=-\log_{10}$ FDR. Two themes
+    dominate --- neural development and RNA-regulatory/transcriptional control (\cref{stab:goenrich}).}
+  \label{sfig:gsea}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=.85\linewidth]{supp_go_network.png}
+  \caption{\textbf{GO enrichment map for the Tier-1 sweep genes.} Nodes are enriched biological-process
+    terms (size $=$ number of Tier-1 genes, colour $=-\log_{10}$ FDR); edges connect terms sharing Tier-1
+    genes (Jaccard $\geq0.15$). The terms form two connected modules: neural development and
+    RNA-regulatory/transcriptional control.}
+  \label{sfig:gonet}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{supp_recomb_selection.png}
+  \caption{\textbf{Recombination, gene proximity and the efficacy of selection.} Per-window statistics
+    ($\sim$50~kb windows, autosomes). \textbf{(a)}~Recombination rate rises with distance from the nearest
+    exon, and \textbf{(b)}~nucleotide diversity $\pi$ does the same ($\rho=+0.29$): gene proximity depresses
+    both, the footprint of linked selection. \textbf{(c)}~$\pi$ falls with local coding density
+    ($\rho=-0.27$) --- background selection reduces diversity where genes are dense, i.e.\ a locally reduced
+    effective size, and it is \emph{gene-density-driven}. \textbf{(d)}~There is \emph{no}
+    diversity--recombination relationship ($\rho\approx0$), unlike \textit{Drosophila} and humans; note also
+    that ReLERNN infers recombination from diversity/LD, so $\pi$ and the recombination estimate are not
+    independent. Linked selection in \illex{} is thus organised by gene density and gene proximity rather than
+    by the recombination-rate axis.}
+  \label{sfig:recombsel}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{supp_tier1_manhattan.png}
+  \caption{\textbf{Genome-wide diploSHIC-HMM (Tier-1) sweep calls.} Per-100~kb-window empirical-outlier
+    sweep score (rank within callability $\times$ coding-density strata) across all 45 autosomes plus
+    chromosomes~2 and~42. The Markov-decoded Tier-1 calls are highlighted by class (hard, soft), and the
+    background-selection-robust subset (\S\,BGS screen; 291 of 658) is ringed. The calls are distributed
+    across the genome with no single dominant locus.}
+  \label{sfig:t1man}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=.82\linewidth]{supp_gsea_bgsrobust.png}
+  \caption{\textbf{GO enrichment of the background-selection-robust Tier-1 sweep genes} (GSEA-style dot plot;
+    top terms by FDR). Each dot is an enriched biological-process term: $x=$ fold enrichment, size $=$ number
+    of genes, colour $=-\log_{10}$ FDR. After BGS screening the neural-developmental and RNA-regulatory
+    enrichment strengthens and a photoreception signal (response to light/radiation) appears; the full and
+    hard-sweep Tier-1 dot plots (\texttt{supp\_gsea\_tier1.png}, \texttt{supp\_gsea\_hard.png}) are provided
+    with the source.}
+  \label{sfig:gseabgs}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{supp_fst_genomewide.png}
+  \caption{\textbf{Genome-wide per-SNP $\Fst$ finds no differentiation outlier.} The window scan of
+    \cref{sfig:fstsnp} extended to the \emph{full} per-chromosome callsets (551{,}344 autosomal SNPs, 2\%
+    thinning, covering 12{,}007 genes). \textbf{(a)}~The empirical per-SNP $\Fst$ distribution across the 45
+    division pairs lies entirely within --- and slightly narrower than --- the coalescent neutral null.
+    \textbf{(b)}~Genome-wide, \emph{no} SNP exceeds the neutral maximum ($0.322$); a single intergenic SNP on
+    chromosome~21 exceeds the lenient 99.9th percentile ($0.105$), against $\approx$556 expected by chance ---
+    i.e.\ $\sim$555$\times$ \emph{fewer} outliers than the false-positive rate. Zero genic outliers, hence no
+    functional enrichment. Extreme panmixia is confirmed at genome scale, and no local-adaptation signal is
+    present that the diversity-based sweep scans could have missed. (chrZ, blue in (b), is confounded by
+    division sex ratios and shown for completeness.)}
+  \label{sfig:fstgw}
+\end{figure}
+
+\clearpage
+\section*{Supplementary tables}
+
+% ---- S1: software & versions (shared with the Methods) ----
+\input{software_table}
+
+% ---- S2: karyotype frequency by NAFO division (geography / non-cline) ----
+\begin{table}[h]\centering
+  \caption{\textbf{Chromosome-2 karyotype counts and inverted-arrangement frequency by NAFO division}
+    (ordered by latitude). The inverted (BB) frequency $p_\mathrm{inv}$ shows no latitudinal cline
+    (range 0.29--0.46), consistent with geographic $\Fst\approx0$ (\cref{sfig:cline}).}
+  \label{stab:geo}
+  \begin{tabular}{lrrrrrr}
+    \toprule
+    Division & AA & AB & BB & $N$ & $p_\mathrm{inv}$ & mean lat.\ ($^\circ$N) \\
+    \midrule
+    6C & 38 & 40 &  9 &  87 & 0.333 & 36.9 \\
+    6B & 34 & 47 & 16 &  97 & 0.407 & 38.3 \\
+    6A & 35 & 45 & 15 &  95 & 0.395 & 39.2 \\
+    3N &  0 &  0 &  1 &   1 & 1.000 & 43.1 \\
+    4X & 42 & 41 & 11 &  94 & 0.335 & 43.2 \\
+    4W & 21 & 17 &  9 &  47 & 0.372 & 43.6 \\
+    3O &  7 &  7 &  2 &  16 & 0.344 & 44.0 \\
+    4T &  7 & 11 &  5 &  23 & 0.457 & 47.7 \\
+    4R & 27 & 25 &  4 &  56 & 0.295 & 48.7 \\
+    4S &  8 &  4 &  3 &  15 & 0.333 & 49.9 \\
+    3K & 35 & 47 & 20 & 102 & 0.426 & 50.0 \\
+    \midrule
+    Total & 254 & 284 & 95 & 633 & 0.374 & --- \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ---- S3: coindetii outgroup usage (alignment / polarization / MK) ----
+\begin{table}[h]\centering
+  \caption{\textbf{Use of the two outgroups.} \coin{} served two roles --- ancestral-state polarization of
+    the chromosome-2 inversion and the divergence term of the genome-wide McDonald--Kreitman (MK) test ---
+    both resting on a single whole-genome \coin$\leftrightarrow$\illex{} AnchorWave alignment.
+    \textit{I.\ argentinus} was aligned identically (CDS) and used as a secondary MK outgroup; it yields
+    $\sim$9$\times$ fewer fixed coding differences than \coin{} yet has genome-wide $\pi$ indistinguishable
+    from \illex{}, marking it as a recently-diverged congener of near-identical diversity.}
+  \label{stab:coindetii}
+  \begin{tabular}{llr}
+    \toprule
+    Step & Quantity & Value \\
+    \midrule
+    \multicolumn{3}{l}{\emph{Alignment} (AnchorWave v1.2.3, CDS-anchored)} \\
+    \quad & \coin{} substitution sites (genome-wide) & 45{,}722{,}335 \\
+    \quad & aligned scaffold identity (inversion body) & 99.2--99.9\% \\
+    \midrule
+    \multicolumn{3}{l}{\emph{Polarization} of chr2 karyotypes (est-sfs 2.04 + non-circular subset)} \\
+    \quad & diagnostic (AA/BB fixed-difference) sites & 13{,}998 \\
+    \quad & \dots\ where \coin$=$\illex{} REF (circular; excluded) & 9{,}680 \ (69.2\%) \\
+    \quad & \dots\ where \coin{} carries the ALT (non-circular; used) & 4{,}175 \\
+    \quad & polarity from non-circular set & BB derived / AA ancestral \\
+    \midrule
+    \multicolumn{3}{l}{\emph{McDonald--Kreitman} test (mkado, \coin{} divergence)} \\
+    \quad & genes tested & 20{,}999 \\
+    \quad & nonsynonymous / synonymous divergence (Dn / Ds) & 15{,}343 / 13{,}670 \\
+    \quad & nonsynonymous / synonymous polymorphism (Pn / Ps) & 468{,}124 / 630{,}949 \\
+    \quad & asymptotic $\alpha$ (95\% CI) & 0.642 \ (0.539--3.673) \\
+    \midrule
+    \multicolumn{3}{l}{\emph{I.\ argentinus} (secondary MK outgroup; CDS alignment)} \\
+    \quad & nonsynonymous / synonymous divergence (Dn / Ds) & 1{,}355 / 1{,}805 \\
+    \quad & fixed coding differences (vs \coin{} 29{,}013) & 3{,}160 \ ($\sim$9$\times$ fewer) \\
+    \quad & asymptotic $\alpha$ & 0.526 \\
+    \quad & genome-wide $\pi$ (ANGSD, 6 autosomes; \illex{} $=0.0093$) & 0.0092 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ---- S4: Tier-1 GO enrichment ----
+\begin{table}[h]\centering
+  \caption{\textbf{Gene-ontology enrichment of the Tier-1 (diploSHIC-only, Markov-corrected) sweep genes.}
+    The 658 Tier-1 calls overlap 894 genes (476 GO-annotated); enrichment by Fisher's exact test against the
+    annotated-gene background on the scanned chromosomes, Benjamini--Hochberg FDR. 124 biological-process terms
+    reach FDR$<$0.05 --- representative terms shown, spanning the two dominant themes (neural development;
+    RNA-regulatory/transcriptional control). All are carried by the hard-sweep calls; the soft-sweep gene set
+    has no term at FDR$<$0.05. Full machine-readable table: \texttt{hmm\_decode/tier1\_GO\_enrichment.tsv}.}
+  \label{stab:goenrich}
+  \begin{tabular}{llrrr}
+    \toprule
+    GO id & term (biological process) & genes (T1/bg) & fold & FDR \\
+    \midrule
+    GO:0048699 & generation of neurons & 124/1444 & 1.60 & $1.5\times10^{-4}$ \\
+    GO:0022008 & neurogenesis & 126/1511 & 1.55 & $1.6\times10^{-4}$ \\
+    GO:0030182 & neuron differentiation & 91/1076 & 1.57 & $1.5\times10^{-3}$ \\
+    GO:0030154 & cell differentiation & 187/2553 & 1.36 & $3.7\times10^{-4}$ \\
+    GO:0009887 & animal organ morphogenesis & 96/1116 & 1.60 & $8.3\times10^{-4}$ \\
+    GO:0050767 & regulation of neurogenesis & 67/695 & 1.79 & $9.4\times10^{-4}$ \\
+    GO:0000902 & cell morphogenesis & 72/776 & 1.72 & $1.3\times10^{-3}$ \\
+    GO:0007409 & axonogenesis & 45/463 & 1.81 & $1.0\times10^{-2}$ \\
+    GO:0048858 & cell projection morphogenesis & 59/610 & 1.80 & $1.6\times10^{-3}$ \\
+    GO:0051252 & regulation of RNA metabolic process & 145/1922 & 1.40 & $1.3\times10^{-3}$ \\
+    GO:2001141 & regulation of RNA biosynthetic process & 135/1770 & 1.42 & $1.5\times10^{-3}$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ---- S5: GO functional clusters (BGS-robust Tier-1) ----
+\begin{table}[h]\centering
+  \caption{\textbf{Functional clusters of the background-selection-robust Tier-1 sweep genes.} The 152
+    enriched biological-process GO terms (FDR$<$0.05) of the BGS-robust set (\cref{sfig:gseabgs}), grouped
+    into functional clusters by term semantics. Neural development and cell morphogenesis/differentiation
+    dominate, with RNA-regulatory control and organ development, and a distinct photoreception/sensory
+    cluster.}
+  \label{stab:goclusters}
+  \begin{tabular}{lrll}
+    \toprule
+    functional cluster & terms & fold range & representative term (min FDR) \\
+    \midrule
+    Neural development & 22 & 1.6--22.2 & generation of neurons ($3\times10^{-5}$) \\
+    Cell morphogenesis \& differentiation & 17 & 1.5--2.2 & cell development ($2\times10^{-5}$) \\
+    RNA / transcription regulation & 14 & 1.5--2.1 & reg.\ RNA metabolic process ($9\times10^{-4}$) \\
+    Organ / anatomical development & 13 & 1.2--2.5 & system development ($3\times10^{-3}$) \\
+    Photoreception / sensory response & 7 & 1.2--5.8 & response to light stimulus ($1\times10^{-4}$) \\
+    Other regulation / metabolism & 65 & 1.2--22.2 & reg.\ developmental process \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ---- S6: full sweep-candidate table (pointer) ----
+\begin{table}[h]\centering
+  \caption{\textbf{Full selective-sweep candidate set.} The 216 candidate windows, the 34 cross-method
+    concordant regions, and the 11 background-selection-robust candidates, with EnTAP annotation, MK/DoS,
+    and the per-region background-selection test, are provided as machine-readable tables:
+    \texttt{outlier\_scan/\{windows,regions,concordant33\_genes\_ENTAP\_GO,concordant33\_genes\_MK,%
+    concordant33\_BGS\_test\}.tsv}. \emph{[To be typeset as a full supplementary table for submission.]}}
+  \label{stab:candidates}
+\end{table}
+
+\clearpage
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

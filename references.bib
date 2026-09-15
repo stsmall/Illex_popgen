@@ -1,0 +1,287 @@
+% =====================================================================
+%  references.bib  —  Illex illecebrosus population genomics
+%  Tool citations transcribed from the VERIFIED software table (§10 of
+%  ILLEX_PROJECT_MANUSCRIPT_AND_METHODS.md). Versions were read off the
+%  analysis machine; the reference details below are recall-level pointers
+%  and every entry should be confirmed against the primary source and
+%  completed with DOI/pages during final reference formatting.
+%  Rows flagged CONFIRM could not be fully resolved and need a positive check.
+% =====================================================================
+
+@article{baker2025,
+  author  = {Baker and others},
+  title   = {{[CONFIRM — the Baker et al. Illex illecebrosus population-genomics paper: PCA/FST/admixture, chr2 inversion structure; the callset source for this study]}},
+  journal = {[journal]},
+  year    = {2025},
+  note    = {CONFIRM full citation}
+}
+
+% ---- coalescent / simulation lineage --------------------------------
+@misc{msinv,
+  author       = {Small, S.},
+  title        = {{msinv: ARG-based coalescent simulator with chromosomal inversions}},
+  year         = {2025},
+  version      = {0.3.5},
+  howpublished = {\url{https://github.com/stsmall/msinv}},
+  note         = {MIT license; commit abd0d63}
+}
+
+@article{kelleher2016,
+  author  = {Kelleher, Jerome and Etheridge, Alison M. and McVean, Gilean},
+  title   = {Efficient coalescent simulation and genealogical analysis for large sample sizes},
+  journal = {PLoS Computational Biology},
+  volume  = {12},
+  number  = {5},
+  pages   = {e1004842},
+  year    = {2016}
+}
+
+@article{baumdicker2022,
+  author  = {Baumdicker, Franz and others},
+  title   = {Efficient ancestry and mutation simulation with msprime 1.0},
+  journal = {Genetics},
+  volume  = {220},
+  number  = {3},
+  pages   = {iyab229},
+  year    = {2022}
+}
+
+@article{kelleher2018,
+  author  = {Kelleher, Jerome and Thornton, Kevin R. and Ashander, Jaime and Ralph, Peter L.},
+  title   = {Efficient pedigree recording for fast population genetics simulation},
+  journal = {PLoS Computational Biology},
+  volume  = {14},
+  number  = {11},
+  pages   = {e1006581},
+  year    = {2018},
+  note    = {tskit; CONFIRM whether to cite this or Ralph et al. 2020 for tree-sequence I/O}
+}
+
+@article{haller2019slim,
+  author  = {Haller, Benjamin C. and Messer, Philipp W.},
+  title   = {{SLiM 3: forward genetic simulation with a graphical interface and a scriptable model}},
+  journal = {Molecular Biology and Evolution},
+  volume  = {36},
+  number  = {3},
+  pages   = {632--637},
+  year    = {2019},
+  note    = {SLiM 5.2 used; CONFIRM the current SLiM citation (Haller \& Messer 2023, MBE, for SLiM 4)}
+}
+
+@article{kern2016discoal,
+  author  = {Kern, Andrew D. and Schrider, Daniel R.},
+  title   = {discoal: flexible coalescent simulations with selection},
+  journal = {Bioinformatics},
+  volume  = {32},
+  number  = {24},
+  pages   = {3839--3841},
+  year    = {2016}
+}
+
+% ---- diversity / demography -----------------------------------------
+@article{korneliussen2014angsd,
+  author  = {Korneliussen, Thorfinn Sand and Albrechtsen, Anders and Nielsen, Rasmus},
+  title   = {{ANGSD: analysis of next generation sequencing data}},
+  journal = {BMC Bioinformatics},
+  volume  = {15},
+  pages   = {356},
+  year    = {2014}
+}
+
+@article{liu2020stairway,
+  author  = {Liu, Xiaoming and Fu, Yun-Xin},
+  title   = {{Stairway Plot 2: demographic history inference with folded SNP frequency spectra}},
+  journal = {Genome Biology},
+  volume  = {21},
+  pages   = {280},
+  year    = {2020}
+}
+
+@article{jouganous2017moments,
+  author  = {Jouganous, Julien and Long, Will and Ragsdale, Aaron P. and Gravel, Simon},
+  title   = {Inferring the joint demographic history of multiple populations: beyond the diffusion approximation},
+  journal = {Genetics},
+  volume  = {206},
+  number  = {3},
+  pages   = {1549--1567},
+  year    = {2017}
+}
+
+@article{gower2022demes,
+  author  = {Gower, Graham and others},
+  title   = {Demes: a standard format for demographic models},
+  journal = {Bioinformatics},
+  volume  = {38},
+  number  = {22},
+  pages   = {5516--5517},
+  year    = {2022}
+}
+
+@misc{gone2,
+  author       = {{GONE2 authors}},
+  title        = {{GONE2: estimation of recent effective population size}},
+  year         = {2024},
+  note         = {v1.0.4; CONFIRM — cite the GONE2 paper if published, else Santiago et al. 2020 (GONE)}
+}
+
+% ---- recombination / sweeps -----------------------------------------
+@article{adrion2020relernn,
+  author  = {Adrion, Jeffrey R. and Galloway, Jared G. and Kern, Andrew D.},
+  title   = {Predicting the landscape of recombination using deep learning},
+  journal = {Molecular Biology and Evolution},
+  volume  = {37},
+  number  = {6},
+  pages   = {1790--1808},
+  year    = {2020}
+}
+
+@article{kern2018diploshic,
+  author  = {Kern, Andrew D. and Schrider, Daniel R.},
+  title   = {{diploS/HIC: an updated approach to classifying selective sweeps}},
+  journal = {G3: Genes, Genomes, Genetics},
+  volume  = {8},
+  number  = {6},
+  pages   = {1959--1970},
+  year    = {2018}
+}
+
+@article{alachiotis2018raisd,
+  author  = {Alachiotis, Nikolaos and Pavlidis, Pavlos},
+  title   = {{RAiSD detects positive selection based on multiple signatures of a selective sweep}},
+  journal = {Communications Biology},
+  volume  = {1},
+  pages   = {79},
+  year    = {2018}
+}
+
+@misc{pggpu,
+  author       = {{kr-colab}},
+  title        = {{pg\_gpu: GPU-accelerated population genetics}},
+  year         = {2025},
+  howpublished = {\url{https://github.com/kr-colab/pg_gpu}},
+  note         = {v0.1.1.dev14+g820c7da89; no paper}
+}
+
+% ---- MK / annotation / homology -------------------------------------
+@misc{mkado,
+  author       = {Small, S.},
+  title        = {{mkado: McDonald--Kreitman analysis from VCFs}},
+  year         = {2025},
+  note         = {v0.5.0; no paper}
+}
+
+@article{buchfink2021diamond,
+  author  = {Buchfink, Benjamin and Reuter, Klaus and Drost, Hajk-Georg},
+  title   = {Sensitive protein alignments at tree-of-life scale using DIAMOND},
+  journal = {Nature Methods},
+  volume  = {18},
+  number  = {4},
+  pages   = {366--368},
+  year    = {2021}
+}
+
+@article{eddy2011hmmer,
+  author  = {Eddy, Sean R.},
+  title   = {Accelerated profile HMM searches},
+  journal = {PLoS Computational Biology},
+  volume  = {7},
+  number  = {10},
+  pages   = {e1002195},
+  year    = {2011}
+}
+
+@article{mistry2021pfam,
+  author  = {Mistry, Jaina and others},
+  title   = {{Pfam: the protein families database in 2021}},
+  journal = {Nucleic Acids Research},
+  volume  = {49},
+  number  = {D1},
+  pages   = {D412--D419},
+  year    = {2021},
+  note    = {CONFIRM Pfam-A release number}
+}
+
+@article{song2022anchorwave,
+  author  = {Song, Baoxing and others},
+  title   = {{AnchorWave: sensitive alignment of genomes with high sequence diversity, extensive structural polymorphism, and whole-genome duplication}},
+  journal = {Proceedings of the National Academy of Sciences},
+  volume  = {119},
+  number  = {1},
+  pages   = {e2113075119},
+  year    = {2022}
+}
+
+@article{li2018minimap2,
+  author  = {Li, Heng},
+  title   = {{Minimap2: pairwise alignment for nucleotide sequences}},
+  journal = {Bioinformatics},
+  volume  = {34},
+  number  = {18},
+  pages   = {3094--3100},
+  year    = {2018}
+}
+
+@article{keightley2018estsfs,
+  author  = {Keightley, Peter D. and Jackson, Benjamin C.},
+  title   = {Inferring the probability of the derived versus the ancestral allelic state at a polymorphic site},
+  journal = {Genetics},
+  volume  = {209},
+  number  = {3},
+  pages   = {897--906},
+  year    = {2018}
+}
+
+@misc{degenotate,
+  author       = {{gwct}},
+  title        = {{degenotate: annotation of degeneracy of coding sites}},
+  year         = {2024},
+  howpublished = {\url{https://github.com/gwct/degenotate}},
+  note         = {v1.3; no paper}
+}
+
+@article{quinlan2010bedtools,
+  author  = {Quinlan, Aaron R. and Hall, Ira M.},
+  title   = {{BEDTools: a flexible suite of utilities for comparing genomic features}},
+  journal = {Bioinformatics},
+  volume  = {26},
+  number  = {6},
+  pages   = {841--842},
+  year    = {2010}
+}
+
+@article{danecek2021samtools,
+  author  = {Danecek, Petr and others},
+  title   = {Twelve years of SAMtools and BCFtools},
+  journal = {GigaScience},
+  volume  = {10},
+  number  = {2},
+  pages   = {giab008},
+  year    = {2021}
+}
+
+@article{baril2024earlgrey,
+  author  = {Baril, Tobias and Galbraith, James and Hayward, Alexander},
+  title   = {{Earl Grey: a fully automated TE curation pipeline}},
+  journal = {Molecular Biology and Evolution},
+  volume  = {41},
+  number  = {4},
+  pages   = {msae068},
+  year    = {2024}
+}
+
+@article{kovaka2019stringtie,
+  author  = {Kovaka, Sam and others},
+  title   = {{Transcriptome assembly from long-read RNA-seq alignments with StringTie2}},
+  journal = {Genome Biology},
+  volume  = {20},
+  pages   = {278},
+  year    = {2019}
+}
+
+@article{pardo2024sqanti3,
+  author  = {Pardo-Palacios, Francisco J. and others},
+  title   = {{SQANTI3: curation of long-read transcriptomes}},
+  journal = {Nature Methods},
+  year    = {2024},
+  note    = {CONFIRM volume/pages and version}
+}
