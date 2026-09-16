@@ -14,7 +14,9 @@ WINDOWS = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_se
 # the Z Tier-1 hard/soft calls are overlaid separately below.
 WINDOWS_Z = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel/results/empirical_scan_fullsfs/outlier_scan_Z/windows.tsv"
 TIER1_Z = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel/results/empirical_scan_fullsfs/hmm_decode/tier1_markov_calls_Z.tsv"
-HARD_Z, SOFT_Z = "#D55E00", "#E69F00"
+# chrZ Tier-1 calls are one category (diploSHIC-only, male-based) -> a single distinct
+# colour (blue, the male convention used elsewhere), not the orange sweep-candidate family
+HARD_Z = SOFT_Z = "#0072B2"
 OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/figures/fig7_selection_manhattan.png"
 
 # ---- why the y-axis is NOT raw diploSHIC S ----
@@ -67,9 +69,11 @@ chrom_len = {c: max(r["end"] for r in rows if r["chrom"] == c) for c in chroms}
 
 offset = {}
 cum = 0
+GAP = 5_000_000  # inter-chromosome gap so the short chrZ separates from chr45 and is not clipped
 for c in chroms:
     offset[c] = cum
-    cum += chrom_len[c]
+    cum += chrom_len[c] + GAP
+cum -= GAP  # no trailing gap past the last chromosome
 
 def gpos(chrom, pos):
     return offset[chrom] + pos
@@ -92,7 +96,7 @@ genes = [
     ("16", 35_300_000, "novel"),
 ]
 
-fig, ax = plt.subplots(figsize=(9.0, 3.2))
+fig, ax = plt.subplots(figsize=(9.5, 3.4))
 
 # alternating chromosome bands
 for i, c in enumerate(chroms):
@@ -100,10 +104,9 @@ for i, c in enumerate(chroms):
         continue
     ax.axvspan(offset[c], offset[c] + chrom_len[c], color=C["faint"], lw=0, zorder=0)
 
-# stratified-outlier reference line (drawn under the points)
+# stratified-outlier reference line (drawn under the points); labelled by the y-axis
+# 0.99 tick and the cascade note above the plot, so no floating label needed here
 ax.axhline(Y_THRESH, color=C["muted"], lw=0.8, ls="--", zorder=1)
-ax.text(cum, Y_THRESH + 0.12, "top 1% per stratum", ha="right", va="bottom",
-        fontsize=6.5, color=C["muted"])
 
 def xy(recs):
     x = [gpos(r["chrom"], (r["start"] + r["end"]) / 2) for r in recs]
@@ -156,13 +159,13 @@ for (chrom, pos, name), (dx, dy) in zip(genes, label_offsets):
                 ha="center", va="bottom", fontsize=7.5, style="italic",
                 color=C["ink"], zorder=5)
 
-# in-figure note on the filtering cascade
+# note on the filtering cascade -- placed ABOVE the plot (top margin) so it never covers points
 n_out = len(outlier_only) + len(candidates)
-ax.text(0.008, 0.96,
-         f"{n_out} stratified outliers  →  {len(candidates)} corroborated windows in 34 regions\n"
+ax.text(0.0, 1.20,
+         f"{n_out} stratified outliers  →  {len(candidates)} corroborated windows in 34 regions "
          "(diploSHIC-HMM outlier + a footprint method; Tier-2)",
-         transform=ax.transAxes, ha="left", va="top", fontsize=6.5,
-         color=C["ink"], linespacing=1.4)
+         transform=ax.transAxes, ha="left", va="bottom", fontsize=6.8,
+         color=C["ink"])
 
 # compact legend
 legend_handles = [
@@ -179,15 +182,15 @@ legend_handles = [
            markerfacecolor=HARD_Z, markeredgewidth=0,
            label=f"chrZ Tier-1, diploSHIC-only (n={len(zt1)})"),
 ]
-ax.legend(handles=legend_handles, loc="upper right", bbox_to_anchor=(1.0, 1.18),
-          ncol=1, handletextpad=0.3, borderaxespad=0, fontsize=6.5)
+ax.legend(handles=legend_handles, loc="lower left", bbox_to_anchor=(0.0, 1.01),
+          ncol=4, handletextpad=0.3, columnspacing=1.1, borderaxespad=0, fontsize=6.5)
 
 # x-axis: centered chromosome ticks
 tick_pos = [offset[c] + chrom_len[c] / 2 for c in chroms]
 tick_lab = [(c if (c.isdigit() and int(c) % 2 == 1) else ("Z" if c == "Z" else "")) for c in chroms]
 ax.set_xticks(tick_pos)
 ax.set_xticklabels(tick_lab, fontsize=6)
-ax.set_xlim(0, cum)
+ax.set_xlim(-cum * 0.006, cum * 1.006)   # margins so chrZ markers are not clipped
 ymax = max(r["y"] for r in rows)
 ax.set_ylim(-0.15, ymax + 0.5)
 ax.set_yticks([0, Y_THRESH, ymax])

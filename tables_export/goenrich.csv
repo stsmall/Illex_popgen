@@ -1,0 +1,13 @@
+"Gene-ontology enrichment of the Tier-1 (diploSHIC-only, Markov-corrected) sweep genes"
+GO id,term (biological process),genes (T1/bg),fold,FDR
+GO:0048699,generation of neurons,124/1444,1.60,1.5x10^-4
+GO:0022008,neurogenesis,126/1511,1.55,1.6x10^-4
+GO:0030182,neuron differentiation,91/1076,1.57,1.5x10^-3
+GO:0030154,cell differentiation,187/2553,1.36,3.7x10^-4
+GO:0009887,animal organ morphogenesis,96/1116,1.60,8.3x10^-4
+GO:0050767,regulation of neurogenesis,67/695,1.79,9.4x10^-4
+GO:0000902,cell morphogenesis,72/776,1.72,1.3x10^-3
+GO:0007409,axonogenesis,45/463,1.81,1.0x10^-2
+GO:0048858,cell projection morphogenesis,59/610,1.80,1.6x10^-3
+GO:0051252,regulation of RNA metabolic process,145/1922,1.40,1.3x10^-3
+GO:2001141,regulation of RNA biosynthetic process,135/1770,1.42,1.5x10^-3

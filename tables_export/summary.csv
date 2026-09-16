@@ -1,0 +1,12 @@
+Sample and whole-genome summary
+Quantity,Value
+Species / callset,I. illecebrosus; baker_2025 whole-genome
+Individuals (karyotyped),633
+Sex (chrZ coverage),342 ZZ males / 291 ZO females
+Sampling,"11 NAFO divisions, 37-50^"
+Geographic structure,FST~0 (none outside chr2)
+Genome-wide pi,0.0093
+Genome-wide Tajima's D,-2.07 (-2.09 in 50 kb windows)
+chr2 karyotypes (AA/AB/BB),254 / 284 / 95
+Inverted (BB) frequency,"0.374 (0.29-0.46 across divisions, non-clinal)"
+"Karyotype FST(AA,BB)",0.365

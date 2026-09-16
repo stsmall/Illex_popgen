@@ -1,0 +1,12 @@
+"The chromosome-2 inversion (corrected polarisation: I = BB inverted/derived, S = AA ancestral/standard)"
+Quantity,Value
+Location (differentiated body),chr2:60.54-79.50 Mb (18.96 Mb)
+Karyotypes (AA/AB/BB),254 / 284 / 95 (95.3\
+Inverted (BB) frequency p,0.374
+Historical peak frequency,0.74
+"Karyotype FST(AA,BB)",0.365 (geographic FST~0)
+pi_I/pi_S (I=BB),1.356 0.048
+dXY/pi_I,1.385 0.021
+Coalescent age t_inv,"850 ky ( 1/mu, mu=3x10^-9)"
+Decline,"0.74->0.374 over 50-100 ky, ending 50-100 ka"
+Selection on decline,s10^2-10^3 (s~1.5x10^-4)

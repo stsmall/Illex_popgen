@@ -1,0 +1,25 @@
+"High-confidence selective-sweep candidates, grouped by biological function and ordered by chromosome, including the Z-chromosome set"
+Location,Gene / feature,Class
+"Neural, RNA-regulation & development"
+chr35:39.0 Mb,ZEB2 (neural/EMT transcription factor),hard
+Z:20.8 Mb,Pasilla/Nova-1 (splicing regulator),hard (Z)
+Z:23.6 Mb,Smaug/samd4a (translational repressor),hard (Z)
+Cardiovascular
+chr1:20.3 Mb,Aplnr (apelin receptor),hard
+Genome-maintenance & stress
+chr32:9.3 Mb,MACROD2 (DNA-damage response),soft
+Membrane & lipid
+chr5:38.0 Mb,cept1 (phospholipid synthesis),hard
+chr1:85.5 Mb,ceramide phosphoethanolamine synthase ^,hard
+Metabolism
+chr25:65.0 Mb,GALT ^,soft
+ECM & adhesion
+chr33:9.0 Mb,Tinagl1,hard
+Signalling
+chr32:24.1 Mb,GPCR cluster,hard
+Z:30.7 Mb,Esrrg (estrogen-related receptor),soft (Z)
+Cephalopod-specific novelty
+chr16:35.3 Mb,uncharacterised (Euprymna family),hard
+Lower confidence (TE-dense)
+chr1:35.9 Mb,transposable element ^,hard
+chr11:10.8 Mb,transposable element ^,hard

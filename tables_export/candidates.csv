@@ -1,0 +1,14 @@
+Tier-2 (cross-method-concordant) sweep genes
+region (Mb),sweep,gene,EnTAP best hit,alpha,DoS
+1:20.3,hard,Aplnr,Apelin receptor,1.00,+0.17
+1:85.5,hard,eif3h,Eukaryotic translation initiation factor 3,0.69,+0.20
+1:85.5,hard,babam1,BRISC and BRCA1-A complex member 1,-,-0.48
+1:85.5,hard,ttc39b,Tetratricopeptide repeat protein 39B,-,-0.27
+5:38.0,hard,cept1,Choline/ethanolaminephosphotransferase 1,-,-1.00
+5:38.0,hard,Arsi,Arylsulfatase I,-,-0.25
+13:73.2,hard,Rab3,Ras-related protein Rab-3,-,-0.17
+13:73.2,hard,hyi,Putative hydroxypyruvate isomerase,-,-0.64
+13:73.2,hard,Vps28,Vacuolar protein sorting-associated protein 28,-,-
+32:9.3,soft,Macrod2,ADP-ribose glycohydrolase MACROD2,-,-0.59
+33:9.0,hard,Tinagl1,Tubulointerstitial nephritis antigen-like,-,-0.23
+35:39.0,hard,zag-1,Zinc finger E-box-binding homeobox (ZEB),-,-0.31

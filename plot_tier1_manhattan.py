@@ -32,11 +32,13 @@ rob["chrom"] = rob["chrom"].astype(str)
 # cumulative genome coordinate
 chroms = sorted(win["chrom"].unique(), key=lambda c: int(c) if c.isdigit() else 99)
 offset, cum, ticks, tlab = {}, 0, [], []
+GAP = 5_000_000  # inter-chromosome gap so the short chrZ separates from chr45 and is not clipped
 for c in chroms:
     offset[c] = cum
     L = win[win["chrom"] == c]["end"].max()
     ticks.append(cum + L / 2); tlab.append(c)
-    cum += L
+    cum += L + GAP
+cum -= GAP
 win["gpos"] = win.apply(lambda r: offset[r["chrom"]] + r["start"], axis=1)
 
 
@@ -62,7 +64,7 @@ ax.scatter(robm["gpos"], robm["max_Spct"], s=46, facecolors="none", edgecolors=R
            linewidths=0.9, zorder=4, label=f"BGS-robust ({len(robm)})")
 
 ax.set_xticks(ticks); ax.set_xticklabels(tlab, fontsize=6.0)
-ax.set_xlim(0, cum); ax.set_ylim(0.5, 1.005)
+ax.set_xlim(-cum * 0.005, cum * 1.005); ax.set_ylim(0.5, 1.005)
 ax.set_xlabel("chromosome"); ax.set_ylabel("sweep score (empirical outlier percentile)")
 ax.set_title("Genome-wide diploSHIC-HMM (Tier-1) sweep calls", loc="left", fontweight="bold", pad=8)
 ax.legend(loc="upper center", ncol=3, fontsize=8.5, frameon=False, bbox_to_anchor=(0.5, -0.13))

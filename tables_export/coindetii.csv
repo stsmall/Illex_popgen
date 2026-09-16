@@ -1,0 +1,20 @@
+Use of the two outgroups
+Step,Quantity,Value
+"Alignment (AnchorWave v1.2.3, CDS-anchored)"
+,substitution sites (genome-wide),"45,722,335"
+,aligned scaffold identity (inversion body),99.2-99.9\
+Polarization of chr2 karyotypes (est-sfs 2.04 + non-circular subset)
+,diagnostic (AA/BB fixed-difference) sites,"13,998"
+,\ where =I. illecebrosus REF (circular; excluded),"9,680 \ (69.2\"
+,\ where carries the ALT (non-circular; used),"4,175"
+,polarity from non-circular set,BB derived / AA ancestral
+"McDonald-Kreitman test (mkado, divergence)"
+,genes tested,"20,999"
+,nonsynonymous / synonymous divergence (Dn / Ds),"15,343 / 13,670"
+,nonsynonymous / synonymous polymorphism (Pn / Ps),"468,124 / 630,949"
+,asymptotic alpha (95\,0.642 \ (0.539-3.673)
+I.\ argentinus (secondary MK outgroup; CDS alignment)
+,nonsynonymous / synonymous divergence (Dn / Ds),"1,355 / 1,805"
+,"fixed coding differences (vs 29,013)","3,160 \ (9x fewer)"
+,asymptotic alpha,0.526
+,"genome-wide pi (ANGSD, 6 autosomes; I. illecebrosus =0.0093)",0.0092

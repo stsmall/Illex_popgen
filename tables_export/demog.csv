@@ -1,0 +1,10 @@
+"Demographic model (moments, folded SFS; validated by forward simulation)"
+Parameter,Value
+Ancestral (N_REF),"547,928"
+Present (N0),"6,808,096"
+Growth duration (T_GROW),"769,519 generations"
+Fold expansion,12x
+Genome-wide pi,0.0093
+Genome-wide Tajima's D,~-2 (nearly all windows)
+Mutation rate mu,3x10^-9 / bp / generation
+Recombination (autosomal),0.21-0.24 cM/Mb (sex-averaged)
