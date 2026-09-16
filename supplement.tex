@@ -248,6 +248,33 @@
   \label{sfig:fstgw}
 \end{figure}
 
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{figS20_chr2_karyotype_fst.png}
+  \caption{\textbf{Between-karyotype differentiation is confined to the chromosome-2 inversion.} Per-window
+    $\Fst$ between the AA and BB arrangements (arrangement homozygotes: AA $n=254$, BB $n=95$) across the
+    whole of chromosome~2, aggregated in 100~kb windows (ratio-of-averages Hudson estimator). Unlike the
+    population-$\Fst$ scan (which asks about geography), this asks how differentiated the two arrangements are
+    along the chromosome. The collinear remainder (grey) sits at $\Fst\approx0$ (median 0.006) --- outside the
+    inversion the karyotypes are one panmictic population --- while the inverted body (60.54--79.50~Mb;
+    shaded) is strongly differentiated (median 0.34, max 0.53). The $\Fst\approx0.37$ ``structure'' on
+    chromosome~2 is thus between \emph{karyotypes} and confined to the inversion, not geographic.}
+  \label{sfig:karyofst}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=.62\linewidth]{figS21_inversion_go_qq.png}
+  \caption{\textbf{The inversion-captured genes show no GO enrichment.} QQ-plot of the per-term GO-enrichment
+    $p$-values (Fisher's exact vs.\ genome background, all three ontologies) for the genes in the inversion
+    body against a \emph{permutation} null (500 random gene sets of the same size). A theoretical-uniform
+    null is inappropriate for GO --- nested/correlated terms and tiny discrete counts inflate any small gene
+    set --- so the permutation band is the correct reference. The observed points fall entirely within it:
+    the inversion genes yield \emph{fewer} nominally enriched terms than random sets of the same size
+    (69 vs $86.6\pm60$; permutation $p=0.51$) and none survive FDR$<$0.05. The large per-term fold values
+    (up to $\sim$40$\times$) are small-count artefacts (most rest on 2 of the 29 GO-annotated genes), not
+    enrichment (\cref{stab:invgenes}).}
+  \label{sfig:invqq}
+\end{figure}
+
 \clearpage
 \section*{Supplementary tables}
 
@@ -399,6 +426,9 @@
     \bottomrule
   \end{tabular}
 \end{table}
+
+\clearpage
+\input{inversion_gene_table}
 
 \clearpage
 \bibliographystyle{plainnat}
