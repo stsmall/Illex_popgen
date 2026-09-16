@@ -3,13 +3,13 @@
 Populations = NAFO sampling divisions. Everything is computed PER POPULATION
 (not genome-wide-pooled).
 
-MAIN (figures/fig_diversity.png), three panels:
+MAIN (figures/fig6_diversity.png), three panels:
   a. Nucleotide diversity pi per population (box per division), ordered by latitude.
   b. Tajima's D per population (box per division), ordered by latitude.
   c. Pairwise Hudson FST among divisions -- clustermap (heatmap + hierarchical
      dendrogram). Near-zero everywhere -> no geographic structure (that is the result).
 
-SUPP (supp_figures/supp_diversity_boxplots.png):
+SUPP (supp_figures/figS9_diversity_boxplots.png):
   per-population, per-chromosome box plots of pi and Tajima's D.
 
 Data:
@@ -32,8 +32,8 @@ from scipy.spatial.distance import squareform
 from scipy.cluster.hierarchy import linkage, dendrogram
 
 BASE = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/08_demography/per_population/tables"
-FIG = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/figures/fig_diversity.png"
-SUP = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/supp_figures/supp_diversity_boxplots.png"
+FIG = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/figures/fig6_diversity.png"
+SUP = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/supp_figures/figS9_diversity_boxplots.png"
 
 # genome-wide ANGSD reference values (RESULTS_demography.md)
 GW_PI, GW_D = 0.00930, -2.07

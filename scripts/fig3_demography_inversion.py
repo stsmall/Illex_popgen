@@ -305,5 +305,5 @@ ax_bi.text(-0.085, 1.06, "b", transform=ax_bi.transAxes, **LETTER_KW)
 ax_bi.set_title("Inversion frequency history", loc="left", pad=8,
                 fontsize=11, fontweight="normal", color=C["muted"])
 
-OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/figures/fig3_demography.png"
+OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/figures/fig4_demography.png"
 save(fig, OUT)

@@ -11,7 +11,7 @@ apply()
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
 
 D = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel/results/empirical_scan_fullsfs"
-OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/supp_figures/supp_tier1_manhattan.png"
+OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/supp_figures/figS18_tier1_manhattan.png"
 HARD, SOFT, ROBUST = "#D55E00", "#E69F00", "#000000"
 
 win = pd.read_csv(f"{D}/outlier_scan_45/windows.tsv", sep="\t")

@@ -17,7 +17,7 @@ TIER1_Z = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_se
 # chrZ Tier-1 calls are one category (diploSHIC-only, male-based) -> a single distinct
 # colour (blue, the male convention used elsewhere), not the orange sweep-candidate family
 HARD_Z = SOFT_Z = "#0072B2"
-OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/figures/fig7_selection_manhattan.png"
+OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/figures/fig5_selection.png"
 
 # ---- why the y-axis is NOT raw diploSHIC S ----
 # Raw S = P(hard)+P(soft) saturates at ~1 across a huge, spatially-correlated

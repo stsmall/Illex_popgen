@@ -7,7 +7,7 @@ import os
 import sys
 sys.path.insert(0, "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript")
 _HERE = os.path.dirname(os.path.abspath(__file__))
-DATA = os.path.join(_HERE, "data")
+DATA = os.path.join(_HERE, "..", "data")
 from figstyle import apply, C, OKABE, despine
 apply()
 import numpy as np, pandas as pd
@@ -16,7 +16,7 @@ from scipy.stats import pearsonr
 
 SC = DATA
 META = "/sietch_colab/data_share/illex/popgen_data/pggpu_illex/popstats/metadata.tsv"
-OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/supp_figures/supp_pca_geography.png"
+OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/supp_figures/figS1_pca_geography.png"
 
 ev = pd.read_csv(f"{SC}/auto_pca4.eigenvec", sep="\t")
 ev = ev.rename(columns={"IID": "sample"})

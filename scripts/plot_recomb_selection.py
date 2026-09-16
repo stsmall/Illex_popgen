@@ -17,7 +17,7 @@ import numpy as np, pandas as pd, matplotlib.pyplot as plt
 from scipy import stats
 
 R = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel/results"
-OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/supp_figures/supp_recomb_selection.png"
+OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/supp_figures/figS17_recomb_selection.png"
 
 d = pd.read_csv(f"{R}/bgs_diagnostic_windows.tsv", sep="\t")
 d["chrom"] = d["chrom"].astype(str)

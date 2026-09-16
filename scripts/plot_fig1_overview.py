@@ -5,7 +5,7 @@ Run with bioinfo-buddy python.
 """
 import sys; sys.path.insert(0, "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript")
 _HERE = os.path.dirname(os.path.abspath(__file__))
-DATA = os.path.join(_HERE, "data")
+DATA = os.path.join(_HERE, "..", "data")
 from figstyle import apply, C, SEXES, despine
 apply()
 import matplotlib.pyplot as plt
@@ -14,7 +14,7 @@ import pandas as pd
 
 SC = DATA
 SEXDIR = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/12_sex"
-OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/figures/fig1_overview.png"
+OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/figures/fig2_overview.png"
 
 AUTO_PCA_PREFIX = "auto_pca4"   # set by driver once final PCA is ready
 AUTO_N_SNPS = None              # filled below from log if present

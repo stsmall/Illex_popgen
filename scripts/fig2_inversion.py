@@ -36,7 +36,7 @@ KARYO_COORDS = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_kar
 RESULTS = "/sietch_colab/ssmall/projects/msinv_dir/inversion_sims/files/results/illex"
 FST_SCAN = f"{RESULTS}/karyotype_fst_scan.tsv"
 DIV_WINDOWS = f"{RESULTS}/empirical_jackknife_windows.csv"
-OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/figures/fig2_inversion.png"
+OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/figures/fig3_inversion.png"
 
 BP_L, BP_R = 60_540_000, 79_500_000     # pinned inversion breakpoints (Mb)
 CHR2_LEN = 119_466_599

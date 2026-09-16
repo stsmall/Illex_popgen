@@ -15,7 +15,7 @@ import matplotlib.patheffects as pe
 import networkx as nx
 
 D = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel/results/empirical_scan_fullsfs/hmm_decode"
-OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/supp_figures/supp_go_network.png"
+OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/supp_figures/figS16_go_network.png"
 
 enr = pd.read_csv(f"{D}/tier1_BGS_GO_enrichment.tsv", sep="\t")
 enr = enr[(enr.FDR < 0.05) & (enr.category == "biological_process")].copy()

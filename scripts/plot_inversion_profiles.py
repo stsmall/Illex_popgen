@@ -14,7 +14,7 @@ from matplotlib.gridspec import GridSpec
 
 RESULTS_ILLEX = Path("/sietch_colab/ssmall/projects/msinv_dir/inversion_sims/files/"
                      "results/illex")
-OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/supp_figures/supp_inversion_profiles.png"
+OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/supp_figures/figS14_inversion_profiles.png"
 COL_BB = OKABE[7]
 COL_GONE2 = OKABE[3]
 

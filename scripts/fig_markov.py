@@ -21,7 +21,7 @@ from matplotlib.patches import Patch
 D = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel"
 R = f"{D}/results/empirical_scan_fullsfs"
 HMM = f"{R}/hmm_decode"
-OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/supp_figures/fig_markov.png"
+OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/supp_figures/figS13_markov.png"
 
 HARD = "#D55E00"   # vermillion
 SOFT = "#E69F00"   # orange

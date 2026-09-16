@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 RES = "/sietch_colab/data_share/illex/popgen_data/mkado_illex/results/coindetii"
-OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/supp_figures/supp_mkado.png"
+OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/supp_figures/figS10_mkado.png"
 SF3B4 = "LOC_00013210"
 
 asym = pd.read_csv(f"{RES}/coindetii.asymptotic.tsv", sep="\t").iloc[0]

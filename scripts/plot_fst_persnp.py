@@ -11,7 +11,7 @@ os.environ.setdefault("MPLCONFIGDIR", "/dev/shm/mplcache")  # avoid slow-FS font
 import sys
 sys.path.insert(0, "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript")
 _HERE = os.path.dirname(os.path.abspath(__file__))
-DATA = os.path.join(_HERE, "data")
+DATA = os.path.join(_HERE, "..", "data")
 from figstyle import apply, C, despine
 apply()
 import numpy as np, matplotlib.pyplot as plt

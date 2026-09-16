@@ -27,7 +27,7 @@ import numpy as np, pandas as pd, matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
 D = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel/results/empirical_scan_fullsfs/hmm_decode"
-OUT = os.path.join(_HERE, "supp_figures", "supp_gsea.png")
+OUT = os.path.join(_HERE, "supp_figures", "figS15_gsea.png")
 COL_T1, COL_BG = C["accent"], C["warm"]   # blue = all Tier-1, orange = BGS-robust
 
 # generic parent terms that carry no biology, plus deprecated GO ("obsolete ...") --

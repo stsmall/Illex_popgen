@@ -59,6 +59,6 @@ ax.legend(handles=leg, loc="lower right", fontsize=8, frameon=True,
           framealpha=0.9, edgecolor="none", title="chr2 karyotype")
 ax.set_title("Sampling and chr2 arrangement frequency", loc="left")
 
-out = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/figures/fig_map.png"
+out = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/figures/fig1_map.png"
 fig.savefig(out, dpi=220, bbox_inches="tight")
 print("wrote", out, "| divisions:", ",".join(DIV["division"]))
