@@ -224,10 +224,12 @@
 \begin{figure}[h]\centering
   \includegraphics[width=\linewidth]{supp_tier1_manhattan.png}
   \caption{\textbf{Genome-wide diploSHIC-HMM (Tier-1) sweep calls.} Per-100~kb-window empirical-outlier
-    sweep score (rank within callability $\times$ coding-density strata) across all 45 autosomes plus
-    chromosomes~2 and~42. The Markov-decoded Tier-1 calls are highlighted by class (hard, soft), and the
-    background-selection-robust subset (\S\,BGS screen; 291 of 658) is ringed. The calls are distributed
-    across the genome with no single dominant locus.}
+    sweep score (rank within callability $\times$ coding-density strata) across all 45 autosomes plus the
+    Z chromosome (662 calls total; 462 hard, 200 soft). The Markov-decoded Tier-1 calls are highlighted by
+    class (hard, soft), and the background-selection-robust subset (\S\,BGS screen; 291 of the 658 autosomal
+    calls) is ringed. The four chromosome-Z calls come from the male-only ($n{=}330$) diploSHIC scan and are
+    diploSHIC-only (RAiSD/SweepFinder2 do not cover the Z). The calls are distributed across the genome with
+    no single dominant locus.}
   \label{sfig:t1man}
 \end{figure}
 
@@ -369,15 +371,14 @@
 
 % ---- S6: Tier-2 cross-method-concordant genes ----
 \begin{table}[h]\centering
-  \caption{\textbf{Tier-2 (cross-method-concordant) sweep genes.} The 34 regions where the diploSHIC-HMM
-    sweep signal is independently corroborated by both RAiSD and SweepFinder2 (33 auto-detected plus the
-    chr43 balancing locus handled separately). Seven regions carry a named protein-coding gene (12 genes,
-    listed); the remaining concordant regions are gene deserts or uncharacterised loci. Coordinates in Mb;
-    $\alpha$ and DoS from the McDonald--Kreitman test against \textit{I.~coindetii} (`--' where the test is
-    unpowered, i.e.\ too few fixed/polymorphic sites). The full candidate set --- all 216 windows, the 34
-    concordant regions, and the background-selection test --- is provided as machine-readable tables
-    (\texttt{outlier\_scan/\{windows,regions,concordant33\_genes\_ENTAP\_GO,concordant33\_genes\_MK,%
-    concordant33\_BGS\_test\}.tsv}).}
+  \caption{\textbf{Tier-2 (cross-method-concordant) sweep genes.} The 34 genome-wide-scan regions where
+    the diploSHIC-HMM sweep signal is independently corroborated by an LD/SFS-footprint method (RAiSD or
+    SweepFinder2). Seven regions carry a named protein-coding gene (12 genes, listed); the remaining
+    concordant regions are gene deserts or uncharacterised loci. Coordinates in Mb; $\alpha$ and DoS from
+    the McDonald--Kreitman test against \textit{I.~coindetii} (`--' where the test is unpowered, i.e.\ too
+    few fixed/polymorphic sites). The full candidate set --- all 216 windows, the 34 concordant regions,
+    and the per-region background-selection test --- is provided as machine-readable tables
+    (\texttt{outlier\_scan\_45/\{windows,regions\}.tsv} and the \texttt{concordant} gene/MK/BGS tables).}
   \label{stab:candidates}
   \begin{tabular}{llllrr}
     \toprule

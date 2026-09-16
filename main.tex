@@ -285,18 +285,22 @@ under strong expansion, the decoder's role is spatial coherence: it keeps hard/s
 contiguous sweep centres and discards spatially isolated ones. This reduces the raw calls from 1{,}758 to
 717 windows (658 localised calls; 459 hard, 199 soft; 35 on chromosomes~2 and~42), retaining the
 higher-outlier windows (median empirical-outlier percentile 0.98 vs 0.95 for discarded calls;
-Supplementary Fig.~S13b). \textbf{Tier~2} is the subset independently corroborated by two LD/SFS-footprint methods
-(RAiSD, SweepFinder2): the 34 cross-method-concordant regions. The two tiers agree strongly --- 89\% of
+Supplementary Fig.~S13b). \textbf{Tier~2} is the subset independently corroborated by an LD/SFS-footprint
+method (RAiSD or SweepFinder2): the 34 cross-method-concordant regions (the diploSHIC-HMM outlier plus at
+least one footprint method). The two tiers agree strongly --- 89\% of
 windows at concordant loci are decoded as sweep centres versus 2.9\% genome-wide (odds ratio 282,
 $p<10^{-46}$), and 30 of the 34 concordant regions contain a Tier-1 centre (Supplementary Fig.~S13c) --- so the
 conservative concordance set is a high-purity subset of the classifier calls, not a disjoint list. Because
 the decoder could not be simulation-calibrated at this genome's recombination density (a dense-ancestry
 bottleneck; see Methods), its dwell parameters are set from the known sweep footprint and the recombination
 map and validated post-hoc by this concordance; we therefore treat Tier~1 as a ranked candidate set and
-Tier~2 as the high-confidence calls.
+Tier~2 as the high-confidence calls. The Z chromosome, which RAiSD and SweepFinder2 do not cover, is
+necessarily diploSHIC-only; it is scanned and localised separately below and contributes four further Tier-1
+calls (genome-wide total 662), now shown alongside the autosomes in the genome-wide sweep figures
+(\cref{fig:selection}; Supplementary Fig.~S17).
 
 \paragraph{The Tier-1 set is enriched for neural-developmental and RNA-regulatory function.}
-Independently of the cross-method concordance, the 658 Tier-1 calls overlap 894 genes (476 with GO
+Independently of the cross-method concordance, the 658 autosomal Tier-1 calls overlap 894 genes (476 with GO
 annotation; one-third of the calls fall in gene-poor, often transposon-rich windows and are excluded from the
 enrichment). A gene-ontology analysis (Fisher's exact test, Benjamini--Hochberg FDR, against the
 annotated-gene background on the scanned chromosomes) returns 124 terms at FDR $<0.05$, dominated by two
@@ -338,8 +342,9 @@ Because males are Z-diploid and females Z-haploid, the Z was scanned separately 
 males, using a model retrained at the matched sample size (the classifier's features are sample-size
 dependent) and a formal adequacy gate to control for the Z's reduced effective size; the male-only screen was
 independently validated against the 289 haploid females, whose per-window diversity tracks the males' at
-$r=0.996$. Three credible, gene-localised sweeps survive fine-scale triage, all confirmed as conserved
-cephalopod genes by direct homology: \textbf{Pasilla/Nova-1} (a neuronal alternative-splicing regulator;
+$r=0.996$. Of the four Z Tier-1 calls (three hard, one soft; Supplementary Fig.~S17), three credible,
+gene-localised sweeps survive fine-scale triage, all confirmed as conserved cephalopod genes by direct
+homology: \textbf{Pasilla/Nova-1} (a neuronal alternative-splicing regulator;
 92\% identity to \textit{Octopus}), \textbf{Smaug/samd4a} (a germline RNA-binding translational repressor),
 and \textbf{Esrrg} (an estrogen-related receptor, with an adjacent likely-\textit{cis}-regulatory lncRNA;
 97.5\% identity to \textit{Octopus}) --- a coherent RNA-regulation-and-hormone-signalling signature for a sex
@@ -525,9 +530,11 @@ file is provided as \texttt{FIGURES\_AND\_TABLES\_INDEX.md}.
   \caption{\textbf{The genome-wide selective-sweep scan.} Sweep signal across the genome (chromosomes
     concatenated). The classifier reads the genome as pervasively \emph{linked}-selected
     ($\sim$91\% linked-hard/soft; neutral $\sim$1\%; true hard/soft only a few percent), so raw diploSHIC
-    calls are filtered by cross-method concordance (RAiSD/SweepFinder2) and a background-selection test; the
-    corroborated, background-selection-robust candidates (highlighted) stand out above the discounted
-    background, with key genes labelled. The full scan pipeline is shown in Supplementary Fig.~S6.}
+    calls are filtered by cross-method concordance (a diploSHIC-HMM outlier plus RAiSD or SweepFinder2) and a
+    background-selection test; the corroborated, background-selection-robust candidates (35 windows across 34
+    regions; highlighted) stand out above the discounted background, with key genes labelled. Chromosome-Z
+    Tier-1 calls (diamonds) are male-based and diploSHIC-only --- RAiSD/SweepFinder2 do not cover the Z --- so
+    they cannot enter the concordance filter. The full scan pipeline is shown in Supplementary Fig.~S6.}
   \label{fig:selection}
 \end{figure}
 

@@ -9,6 +9,12 @@ import csv
 # 45-chromosome outlier scan (includes chr2 and chr42; the older
 # outlier_scan/windows.tsv is a stale 43-chromosome run missing both)
 WINDOWS = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel/results/empirical_scan_fullsfs/outlier_scan_45/windows.tsv"
+# chrZ (male-based n=330 diploSHIC scan). RAiSD/SweepFinder2 do NOT cover chrZ, so
+# Z windows are diploSHIC-only (n_methods<=1, never a >=2-method "confirmed candidate");
+# the Z Tier-1 hard/soft calls are overlaid separately below.
+WINDOWS_Z = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel/results/empirical_scan_fullsfs/outlier_scan_Z/windows.tsv"
+TIER1_Z = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel/results/empirical_scan_fullsfs/hmm_decode/tier1_markov_calls_Z.tsv"
+HARD_Z, SOFT_Z = "#D55E00", "#E69F00"
 OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/figures/fig7_selection_manhattan.png"
 
 # ---- why the y-axis is NOT raw diploSHIC S ----
@@ -33,26 +39,30 @@ def rank_y(pct):
 
 Y_THRESH = rank_y(S_OUT_PCT)
 
-# ---- load per-window scan ----
+# ---- load per-window scan (autosomes + chrZ) ----
 rows = []
-with open(WINDOWS) as fh:
-    r = csv.DictReader(fh, delimiter="\t")
-    for row in r:
-        chrom = row["chrom"]
-        start = int(row["start"])
-        end = int(row["end"])
-        S_pct = float(row["S_pct"])
-        n_methods = int(row["n_methods"]) if row["n_methods"] not in ("", "NA") else 0
-        S_out = row["S_out"] == "1"
-        candidate = S_out and n_methods >= 2   # stratified outlier AND
-                                                # corroborated by >=1 independent
-                                                # method (SF2/RAiSD) AND BGS-robust
-                                                # (candidate set already filtered
-                                                # upstream to n_methods>=2)
-        rows.append(dict(chrom=chrom, start=start, end=end, S_pct=S_pct,
-                          y=rank_y(S_pct), S_out=S_out, candidate=candidate))
+for wfile in (WINDOWS, WINDOWS_Z):
+    with open(wfile) as fh:
+        r = csv.DictReader(fh, delimiter="\t")
+        for row in r:
+            chrom = row["chrom"]
+            start = int(row["start"])
+            end = int(row["end"])
+            S_pct = float(row["S_pct"])
+            n_methods = int(row["n_methods"]) if row["n_methods"] not in ("", "NA") else 0
+            S_out = row["S_out"] == "1"
+            candidate = S_out and n_methods >= 2   # stratified outlier AND
+                                                    # corroborated by >=1 independent
+                                                    # method (SF2/RAiSD) AND BGS-robust
+                                                    # (candidate set already filtered
+                                                    # upstream to n_methods>=2)
+            rows.append(dict(chrom=chrom, start=start, end=end, S_pct=S_pct,
+                              y=rank_y(S_pct), S_out=S_out, candidate=candidate))
 
-chroms = sorted({r["chrom"] for r in rows}, key=lambda c: int(c))
+def chrom_sort_key(c):
+    return (0, int(c)) if c.isdigit() else (1, 99)
+
+chroms = sorted({r["chrom"] for r in rows}, key=chrom_sort_key)
 chrom_len = {c: max(r["end"] for r in rows if r["chrom"] == c) for c in chroms}
 
 offset = {}
@@ -117,6 +127,24 @@ cx, cy = xy(candidates)
 ax.scatter(cx, cy, s=24, color=C["warm"], edgecolors="white", linewidths=0.4,
            zorder=4)
 
+# 3b) chrZ Tier-1 (diploSHIC-only) calls -- RAiSD/SF2 do not cover chrZ, so these
+#     cannot enter the >=2-method concordant set; shown in Tier-1 hard/soft styling
+#     (diamond markers) with no BGS ring.
+zt1 = []
+with open(TIER1_Z) as fh:
+    for row in csv.DictReader(fh, delimiter="\t"):
+        zt1.append((gpos("Z", (int(row["start"]) + int(row["end"])) / 2),
+                    rank_y(float(row["max_Spct"])), row["evidence"]))
+if zt1:
+    zx_h = [x for x, y, e in zt1 if e == "hard"]; zy_h = [y for x, y, e in zt1 if e == "hard"]
+    zx_s = [x for x, y, e in zt1 if e == "soft"]; zy_s = [y for x, y, e in zt1 if e == "soft"]
+    if zx_h:
+        ax.scatter(zx_h, zy_h, s=26, marker="D", color=HARD_Z, edgecolors="white",
+                   linewidths=0.4, zorder=5)
+    if zx_s:
+        ax.scatter(zx_s, zy_s, s=26, marker="D", color=SOFT_Z, edgecolors="white",
+                   linewidths=0.4, zorder=5)
+
 # label a handful of the strongest named candidate genes
 label_offsets = [(0, 6), (0, 6), (-16, 6), (0, 6), (12, 6)]
 for (chrom, pos, name), (dx, dy) in zip(genes, label_offsets):
@@ -131,8 +159,8 @@ for (chrom, pos, name), (dx, dy) in zip(genes, label_offsets):
 # in-figure note on the filtering cascade
 n_out = len(outlier_only) + len(candidates)
 ax.text(0.008, 0.96,
-         f"{n_out} stratified outliers  →  {len(candidates)} confirmed\n"
-         "(≥ 2 independent methods + BGS-robust)",
+         f"{n_out} stratified outliers  →  {len(candidates)} corroborated windows in 34 regions\n"
+         "(diploSHIC-HMM outlier + a footprint method; Tier-2)",
          transform=ax.transAxes, ha="left", va="top", fontsize=6.5,
          color=C["ink"], linespacing=1.4)
 
@@ -146,14 +174,17 @@ legend_handles = [
            label="stratified outlier, uncorroborated"),
     Line2D([0], [0], marker="o", linestyle="", markersize=5.5,
            markerfacecolor=C["warm"], markeredgewidth=0,
-           label=f"confirmed candidate (n={len(candidates)})"),
+           label=f"Tier-2 corroborated window (n={len(candidates)})"),
+    Line2D([0], [0], marker="D", linestyle="", markersize=4.5,
+           markerfacecolor=HARD_Z, markeredgewidth=0,
+           label=f"chrZ Tier-1, diploSHIC-only (n={len(zt1)})"),
 ]
 ax.legend(handles=legend_handles, loc="upper right", bbox_to_anchor=(1.0, 1.18),
           ncol=1, handletextpad=0.3, borderaxespad=0, fontsize=6.5)
 
 # x-axis: centered chromosome ticks
 tick_pos = [offset[c] + chrom_len[c] / 2 for c in chroms]
-tick_lab = [c if int(c) % 2 == 1 else "" for c in chroms]
+tick_lab = [(c if (c.isdigit() and int(c) % 2 == 1) else ("Z" if c == "Z" else "")) for c in chroms]
 ax.set_xticks(tick_pos)
 ax.set_xticklabels(tick_lab, fontsize=6)
 ax.set_xlim(0, cum)
