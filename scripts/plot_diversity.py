@@ -21,7 +21,7 @@ Data:
                     variance ratio -> robust to the ascertainment bias. tables/fst_matrix.tsv
 """
 import sys
-sys.path.insert(0, "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript")
+sys.path.insert(0, "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/scripts")
 from figstyle import apply, C, SEQ_HUE, despine
 apply()
 import numpy as np, pandas as pd
@@ -160,42 +160,45 @@ print("pi medians:", {d: round(float(win[win.division==d]['pi'].median()), 5) fo
 print("D  medians:", {d: round(float(win[win.division==d]['tajd'].median()), 3) for d in order})
 print(f"FST off-diag: min={fst_off.min():.4f} max={fst_off.max():.4f} mean={fst_off.mean():.4f}")
 
-# ============ SUPP FIGURE: per-population x per-chromosome ============
-chroms = sorted(win["chrom"].unique(), key=lambda x: int(x) if str(x).isdigit() else 99)
+# ============ SUPP FIGURE: per-chromosome (pooled over divisions) ============
+# One box per chromosome (distribution over all windows, all divisions), ordered by
+# chromosome. The population/division axis is dropped -- with no geographic structure
+# (panel c above) the per-division split is uninformative and unreadable at >30 chroms.
+# chr2 (the inversion, elevated pi) and chrZ (males-only; reduced pi) are highlighted.
+chroms = sorted(win["chrom"].unique(), key=lambda x: int(x) if str(x).isdigit() else 999)
 nchrom = len(chroms)
-chrom_cols = mpl.colormaps["cividis"](np.linspace(0.05, 0.9, nchrom))
-figs, axs = plt.subplots(2, 1, figsize=(min(13, 3.0 + 1.05 * len(order)), 7.2), sharex=False)
+NEUTRAL, INVCOL, ZCOL = "#9AA6AE", C["warm"], C["accent"]
+box_c = [INVCOL if c == "2" else ZCOL if str(c).upper() == "Z" else NEUTRAL for c in chroms]
 
-for ax, stat, ylabel, hline, gw in ((axs[0], "pi", r"$\pi$", None, REF_PI),
-                                    (axs[1], "tajd", "Tajima's $D$", 0.0, REF_D)):
-    width = 0.82 / nchrom
-    for ci, c in enumerate(chroms):
-        data = [win[(win["division"] == d) & (win["chrom"] == c)][stat].to_numpy()
-                for d in order]
-        pos = np.arange(len(order)) + (ci - (nchrom - 1) / 2) * width
-        bp = ax.boxplot(data, positions=pos, widths=width * 0.9, showfliers=False,
-                        patch_artist=True, medianprops=dict(color="white", lw=0.6))
-        for patch in bp["boxes"]:
-            patch.set(facecolor=chrom_cols[ci], edgecolor="none", alpha=0.92)
-        for w in ("whiskers", "caps"):
-            for ln in bp[w]:
-                ln.set(color=chrom_cols[ci], lw=0.5)
+figs, axs = plt.subplots(2, 1, figsize=(max(11, 0.36 * nchrom + 2), 6.6), sharex=True)
+for ax, stat, ylabel, hline, gw in ((axs[0], "pi", r"nucleotide diversity  $\pi$", None, REF_PI),
+                                    (axs[1], "tajd", "Tajima's  $D$", 0.0, REF_D)):
+    data = [win[win["chrom"] == c][stat].to_numpy() for c in chroms]
+    bp = ax.boxplot(data, positions=np.arange(nchrom), widths=0.68, showfliers=False,
+                    patch_artist=True, medianprops=dict(color="white", lw=1.0))
+    for patch, col in zip(bp["boxes"], box_c):
+        patch.set(facecolor=col, edgecolor="none", alpha=0.95)
+    for wk in ("whiskers", "caps"):
+        for ln in bp[wk]:
+            ln.set(color="#5B6B75", lw=0.6)
     if gw is not None:
         ax.axhline(gw, color=C["ink"], ls=":", lw=0.9, zorder=0)
     if hline is not None:
         ax.axhline(hline, color=C["muted"], ls="--", lw=0.8, zorder=0)
     ax.set_ylabel(ylabel); despine(ax); ax.tick_params(axis="x", length=0)
-    ax.set_xticks(np.arange(len(order)))
-    ax.set_xlim(-0.6, len(order) - 0.4)
+    ax.set_xlim(-0.7, nchrom - 0.3)
 
-axs[0].set_xticklabels([])
-axs[1].set_xticklabels([f"{d}\n{lat[d]:.0f}°N" for d in order], fontsize=8)
-axs[1].set_xlabel("NAFO division  (south → north)")
-handles = [plt.Rectangle((0, 0), 1, 1, color=chrom_cols[i]) for i in range(nchrom)]
-axs[0].set_title("Per-population, per-chromosome diversity and Tajima's $D$", loc="left", pad=30)
-axs[0].legend(handles, [f"chr{c}" for c in chroms], ncol=nchrom, fontsize=8,
-              loc="lower center", bbox_to_anchor=(0.5, 1.02), frameon=False,
-              handlelength=1.0, columnspacing=1.4)
+axs[1].set_xticks(np.arange(nchrom))
+axs[1].set_xticklabels([f"chr{c}" for c in chroms], fontsize=6.5, rotation=90)
+axs[1].set_xlabel("chromosome")
+from matplotlib.patches import Patch
+axs[0].legend(handles=[Patch(color=NEUTRAL, label="autosome"),
+                       Patch(color=INVCOL, label="chr2 (inversion)"),
+                       Patch(color=ZCOL, label="chrZ (males only)")],
+              loc="upper right", ncol=3, fontsize=8, frameon=False)
+axs[0].set_title("Per-chromosome nucleotide diversity and Tajima's $D$ "
+                 f"(pooled over divisions; {nchrom} chromosomes)", loc="left", fontweight="bold", pad=8)
 figs.tight_layout()
 figs.savefig(SUP, dpi=220, bbox_inches="tight")
-print("wrote", SUP)
+print("wrote", SUP, f"| {nchrom} chroms; chr2 pi median="
+      f"{win[win.chrom=='2']['pi'].median():.5f} chrZ pi median={win[win.chrom=='Z']['pi'].median():.5f}")
