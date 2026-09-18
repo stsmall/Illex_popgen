@@ -333,9 +333,9 @@ sweep signal) and use the full spectrum on both the simulation and empirical sid
 \paragraph{Two tiers of sweep calls.}
 We report sweeps at two levels of stringency (Supplementary Fig.~S13). \textbf{Tier~1} is the diploS/HIC
 hard/soft classification, spatially resolved by a recombination-aware Markov decoder --- a hidden Markov model
-over the per-100~kb-window classes whose neutral/linked/centre emissions are the prior-corrected class
-posteriors and whose dwell lengths follow the $\sim$400~kb sweep footprint scaled by the recombination map
-(Supplementary Fig.~S13a). Because the genome reads as $\sim$91\% linked-selected under strong expansion, the
+over the per-window (100~kb) classes, with neutral, linked, and sweep-centre states whose emissions are the
+prior-corrected class posteriors and whose dwell lengths follow the $\sim$400~kb sweep footprint scaled by
+the recombination map (Supplementary Fig.~S13a). Because the genome reads as $\sim$91\% linked-selected under strong expansion, the
 decoder's role is spatial coherence: it retains hard/soft calls that lie in contiguous sweep centres and
 discards spatially isolated ones, reducing 1{,}758 raw calls to 717 windows (658 localised autosomal calls;
 459 hard, 199 soft) and preferentially keeping the higher-outlier windows (median empirical-outlier
@@ -721,8 +721,8 @@ inversion figures --- is contained within that repository under \texttt{files/il
     Coalescent age $t_\mathrm{inv}$ & $\sim$850~ky ($\propto 1/\mu$, $\mu=3\times10^{-9}$) \\
     Decline                        & $0.74\to0.374$ over $\sim$50--100~ky, ending $\gtrsim$50--100~ka \\
     Selection on decline           & $\Ne s\sim10^{2}$--$10^{3}$ ($s\approx1.5\times10^{-4}$) \\
-    Gene content                   & 89 gene models (45 annotated); no GO enrichment (permutation $p=0.51$) \\
-    Fixed differences (AA vs BB)   & 3{,}513 ($|\Delta\mathrm{AF}|\geq0.9$); 19 exonic, in 9 genes \\
+    Gene content                   & 89 gene models, 45 annotated; no GO enrichment ($p=0.51$) \\
+    Fixed differences (AA vs BB)   & 3{,}513; 19 exonic, in 9 genes \\
     \bottomrule
   \end{tabular}
 \end{table}
