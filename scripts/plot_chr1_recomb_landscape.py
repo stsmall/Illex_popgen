@@ -52,7 +52,7 @@ roll = d.recombRate.rolling(41, center=True, min_periods=15).median()
 ax.plot(d.mid, roll, color=C["ink"], lw=1.4, label="rolling median (≈0.6 Mb)")
 med = d.recombRate.median(); ax.axhline(med, color=C["muted"], ls=":", lw=0.9)
 broad = d.recombRate.rolling(133, center=True, min_periods=60).median()
-ax.text(GAP[0] + 1.25, 0.47, "masked block\n45.0–47.5 Mb\n80% repeat; no windows\n(centromere)", ha="center",
+axs[1].text(GAP[0] + 1.25, 0.47, "masked block\n45.0–47.5 Mb\n80% repeat; no windows\n(centromere)", ha="center",
         va="top", fontsize=7.5, color=C["ink"])
 ax.text(0.995, 0.06, f"chromosome-scale range of rolling median: {broad.min():.2f}–{broad.max():.2f} cM/Mb "
         f"({100*(broad.min()/med-1):+.0f}% … {100*(broad.max()/med-1):+.0f}%); pericentromeric flanks −5%",
@@ -80,6 +80,10 @@ fl = w[(w.mid > 43.9) & (w.mid < 45.0)].pi.median(); ctl = w[(w.mid > 40) & (w.m
 ax.annotate(f"π halves on the flank\n({fl:.4f} vs {ctl:.4f})", xy=(44.5, fl), xytext=(36, 0.017),
             fontsize=7.5, ha="center", arrowprops=dict(arrowstyle="-", color=C["muted"], lw=0.8))
 ax.set_ylim(0, w.pi.quantile(0.995) * 1.1); ax.set_ylabel("nucleotide\ndiversity π")
+ax.axvspan(23.98, 31.28, facecolor="none", edgecolor=C["warm"], hatch="////", lw=0, alpha=0.35, zorder=0)
+ax.annotate("elevated-π block (3×; one of 22 genome-wide)\nno karyotype structure, no CNV — see caption",
+            xy=(24.2, ax.get_ylim()[1]*0.80), xytext=(11.5, ax.get_ylim()[1]*0.93), ha="center", va="top", fontsize=7.5,
+            color=C["warm"], arrowprops=dict(arrowstyle="-", color=C["warm"], lw=0.8))
 ax.set_title("c   diversity", loc="left", fontweight="bold", fontsize=10)
 ax.legend(loc="upper right", frameon=False, fontsize=7.5, ncol=2); despine(ax)
 ax.set_xlabel("chromosome 1 position (Mb)")

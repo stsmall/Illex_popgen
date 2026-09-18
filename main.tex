@@ -148,9 +148,15 @@ autosomal by this criterion. Autosomal analyses use both sexes; the Z, on which 
 haploid, is analysed separately (\cref{sec:sweep}).
 
 Consistent with \citet{baker2025}, population structure exists in exactly one place in the genome. A
-windowed principal-component analysis finds among-cluster variance $\eta^{2}=0.748$ inside the chromosome-2
-inversion against $\eta^{2}=0.003$ in collinear sequence and on every other chromosome (\cref{fig:overview};
-Supplementary Fig.~S3). The residual dispersion on minor PCA axes tracks neither division, latitude, nor
+windowed principal-component analysis along chromosome~2 localises the three-cluster structure to the
+inversion (among-cluster variance $\eta^{2}=0.748$ inside it against $\eta^{2}=0.003$ in collinear sequence;
+Supplementary Fig.~S3), and two genome-wide tests show it is unique. First, the chromosome-2 karyotype
+explains none of the variation on any other chromosome (per-chromosome PCA coloured by karyotype:
+$\eta^{2}=0.76$ on chr2 versus $\leq0.01$ on all 45 others). Second, and independently of the chr2 labels,
+a Gaussian-mixture screen of each chromosome's leading principal component supports more than one cluster
+only on chromosome~2 (three clusters, $\Delta\mathrm{BIC}=199$, cluster separation $8.6\sigma$) and on the Z
+(two clusters --- the expected ZZ/ZO hemizygosity split); every autosome is a single cloud
+(\cref{fig:overview}). The residual dispersion on minor PCA axes tracks neither division, latitude, nor
 coverage (Supplementary Fig.~S1), and a KING-robust relatedness screen \citep{manichaikul2010} finds no
 duplicate, parent--offspring, or full-sib pairs and a single second-degree pair among the 633 individuals
 (maximum kinship 0.16): despite sweepstakes reproduction, the sample behaves as effectively unrelated.
@@ -302,7 +308,18 @@ ceiling; none of the analyses below depend on fine-scale recombination variation
 ($r=-0.31$; 20--30\% reduction in gene-dense windows) and rises 43\% between exon-adjacent and exon-distant
 windows, while recombination does neither (Supplementary Fig.~S17) --- the classical footprint of linked
 purifying selection \citep{charlesworth1993,mcvicker2009,charlesworth2021}, organised here by gene density
-rather than by the recombination axis. A model-based $B$-map could not be fit under this
+rather than by the recombination axis. Diversity is also heterogeneous at the megabase scale: 22 blocks of
+$\geq$1~Mb on 17 chromosomes carry 2--4$\times$ the chromosome-median $\pi$ with less-negative Tajima's $D$
+(e.g.\ chr1:24--31~Mb, $\pi=0.020$; Supplementary Fig.~S22c). We tested these against every structural
+explanation and they fail all of them: local PCA finds no karyotype clusters (unlike the chr2 positive
+control), there is no heterozygosity excess, no excess-heterozygosity filtering loss, and no per-individual
+depth anomaly, and their allele-frequency spectrum is identical to flanking sequence --- they simply carry
+$\sim$2.5$\times$ more SNPs. They are gene-poor (coding fraction 0.001), largely unalignable to \coin{}
+(35\% vs $\sim$88\% of bases aligned) and 1.7-fold more divergent where alignable, and low-coverage
+\textit{I.\ argentinus} reads also call $\sim$3$\times$ more variants in them. They are therefore
+fast-evolving, largely lineage-specific gene deserts --- elevated mutation input and relaxed linked selection
+--- not structural polymorphisms, and the chromosome-2 inversion remains the genome's only segregating
+karyotype. A model-based $B$-map could not be fit under this
 regime (the classical approximation overflows where the deleterious mutation rate exceeds the selection
 coefficient), so local coding fraction serves as the background-selection covariate that the sweep scan
 controls for explicitly. \emph{Protein adaptation} over the divergence timescale is substantial:
