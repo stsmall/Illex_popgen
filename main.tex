@@ -284,14 +284,25 @@ inversion arose, which places the supergene's origin at the start of the demogra
 whole genome.
 
 \subsection{Genomic context: recombination, background selection, and protein adaptation}
-Three further features of the genome set the stage for the sweep scan. \emph{Recombination} is nearly
-uniform: a deep-learning recombination map built per sex gives an autosomal rate of $\sim$0.21--0.24~cM/Mb
-(sex-averaged $\sim$0.244; Supplementary Fig.~S12); because the estimator reads linkage disequilibrium it
-recovers the sex-averaged rate and heterochiasmy is not identifiable from it. \emph{Background selection} is
-moderate and gene-density-driven rather than recombination-driven: $\pi$ falls with local coding density
-($r=-0.31$; 20--30\% reduction in gene-dense windows) but shows no relationship with recombination rate
-(Supplementary Fig.~S17), the classical pattern of linked purifying selection
-\citep{charlesworth1993,mcvicker2009,charlesworth2021}. A model-based $B$-map could not be fit under this
+Three further features of the genome set the stage for the sweep scan. \emph{Recombination}, as estimated
+by a deep-learning LD-based map built per sex, is $\sim$0.21--0.24~cM/Mb on the autosomes (sex-averaged
+$\sim$0.244; Supplementary Fig.~S12); because the estimator reads linkage disequilibrium it recovers the
+sex-averaged rate and heterochiasmy is not identifiable from it (the female-only map in fact collapses to a
+near-constant and is uninformative). The map is flat with respect to gene content --- the rate varies by only
+$\sim$6\% between windows adjacent to exons and windows $>$100~kb from any exon, unchanged when $\pi$ is held
+fixed (Supplementary Fig.~S17a) --- as a crossover rate should be. It is also compressed at chromosome
+scale: on chromosome~1 the rolling median spans just 0.17--0.23~cM/Mb, the pericentromeric flanks where
+$\pi$ halves show no more than a 5\% dip, and the centromere itself (a 2.5-Mb block that is 80\% repeat and
+almost entirely masked) carries no windows (Supplementary Fig.~S22). The pattern is genome-wide: across
+all 43 scanned autosomes the chromosome-scale rolling median varies by only 10--41\% of each chromosome's
+median, and no chromosome shows a peak more than 25\% above it. The map therefore fixes the genome-wide
+mean well but resolves little broad-scale landscape, and ``nearly uniform'' is in part an estimator
+ceiling; none of the analyses below depend on fine-scale recombination variation.
+\emph{Background selection} is moderate and gene-density-driven: $\pi$ falls with local coding density
+($r=-0.31$; 20--30\% reduction in gene-dense windows) and rises 43\% between exon-adjacent and exon-distant
+windows, while recombination does neither (Supplementary Fig.~S17) --- the classical footprint of linked
+purifying selection \citep{charlesworth1993,mcvicker2009,charlesworth2021}, organised here by gene density
+rather than by the recombination axis. A model-based $B$-map could not be fit under this
 regime (the classical approximation overflows where the deleterious mutation rate exceeds the selection
 coefficient), so local coding fraction serves as the background-selection covariate that the sweep scan
 controls for explicitly. \emph{Protein adaptation} over the divergence timescale is substantial:
@@ -509,8 +520,12 @@ within-arrangement SFS approach to the inversion. Every inversion age scales inv
 and $\mu=3\times10^{-9}$ is the weakest external input; an independent calibration (e.g.\ a karyotyped
 congener such as \textit{I.\ argentinus}) is the clearest route to a mutation-rate-free age. The inversion
 model conditions on a deterministic frequency trajectory and within-arrangement neutrality; it constrains the
-shape of $p(t)$, not the mechanism of balancing selection. The corroborating footprint methods are broad, and
-the recombination-aware decoder is design-informed rather than simulation-calibrated. Candidate sweep genes
+shape of $p(t)$, not the mechanism of balancing selection. The LD-based recombination map has a compressed
+dynamic range at chromosome scale and does not resolve centromeric suppression (Supplementary Fig.~S22);
+it is used only for its genome-wide mean and for the decoder's dwell scaling, and the flatness of
+diversity against recombination (Supplementary Fig.~S17d) should be read with that ceiling in mind. The
+corroborating footprint methods are broad, and the recombination-aware decoder is design-informed rather
+than simulation-calibrated. Candidate sweep genes
 rest on homology to distant cephalopod models and on cross-method concordance; the two enrichment themes are
 statements about gene sets, not about individual confirmed targets.
 

@@ -39,6 +39,9 @@ editable table exports (CSV + `illex_tables.xlsx`) in `tables_export/`.
 | S17 | `figS17_recomb_selection.png` | `plot_recomb_selection.py` | Recombination, gene proximity and selection efficacy |
 | S18 | `figS18_tier1_manhattan.png` | `plot_tier1_manhattan.py` | Genome-wide Tier-1 sweep calls (autosomes + chrZ) |
 | S19 | `figS19_fst_genomewide.png` | (upstream) | Genome-wide per-SNP FST finds no outlier |
+| S20 | `figS20_chr2_karyotype_fst.png` | `plot_chr2_karyotype_fst.py` | Between-karyotype (AA vs BB) FST along chr2 |
+| S21 | `figS21_inversion_go_qq.png` | `plot_inversion_go_qq.py` (+ `inversion_go_permutation_null.py`) | Inversion-gene GO enrichment is null (permutation QQ) |
+| S22 | `figS22_chr1_recomb_landscape.png` | `plot_chr1_recomb_landscape.py` | chr1 ReLERNN landscape + CIs; masked centromere; compressed dynamic range |
 
 ## Tables
 
@@ -57,3 +60,4 @@ Editable exports in `tables_export/` — one CSV per table plus a multi-sheet
 | S4 | `TableS4_goenrich.csv` | `supplement.tex` (stab:goenrich) | Tier-1 GO enrichment |
 | S5 | `TableS5_goclusters.csv` | `supplement.tex` (stab:goclusters) | Functional clusters (BGS-robust) |
 | S6 | `TableS6_candidates.csv` | `supplement.tex` (stab:candidates) | Tier-2 cross-method-concordant genes |
+| S7 | (`inversion_gene_table.tex`; longtable) | `supplement.tex` (stab:invgenes) | The 45 annotated genes captured by the chr2 inversion |

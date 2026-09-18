@@ -1,0 +1,89 @@
+"""Supp: the true chromosome-1 ReLERNN recombination landscape with 95% bootstrap CIs, and
+what it does NOT show. Three tracks: (a) male ReLERNN estimate (15 kb windows) + CI band +
+rolling median; (b) female estimate, whose predictions collapse to a near-constant (IQR
+0.005 cM/Mb) -- degenerate, shown for completeness; (c) nucleotide diversity pi in 10 kb
+windows. The 2.5 Mb block at 45.0-47.5 Mb is 80% repeat (vs 52% chromosome-wide), almost
+entirely inaccessible, and carries no ReLERNN windows: the centromere. pi halves on its
+flanks, but the recombination estimate in those accessible flanks dips only ~5% -- the map's
+chromosome-scale dynamic range is compressed (0.17-0.23 cM/Mb), so a centromeric drop cannot
+be resolved and 'nearly uniform' is in part an estimator ceiling."""
+import os
+os.environ.setdefault("MPLCONFIGDIR", "/dev/shm/mplcache")
+import sys
+_HERE = os.path.dirname(os.path.abspath(__file__))
+_ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE
+sys.path.insert(0, _HERE)
+from figstyle import apply, C, SEXES, despine
+apply()
+import numpy as np, pandas as pd, matplotlib.pyplot as plt
+
+RD = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/11_relernn"
+WIN = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel/results/bgs_diagnostic_windows.tsv"
+OUT = os.path.join(_ROOT, "supp_figures", "figS22_chr1_recomb_landscape.png")
+CHROM = "1"
+GAP = (45.0, 47.5)          # masked, 80%-repeat block: no ReLERNN windows (candidate centromere)
+
+
+def load(proj, name):
+    d = pd.read_csv(f"{RD}/{proj}/proj/{name}.kept.PREDICT.BSCORRECTED.txt", sep="\t")
+    d["chrom"] = d["chrom"].astype(str).str.replace(r"^b'|'$", "", regex=True)
+    d = d[d.chrom == CHROM].copy().sort_values("start")
+    for c in ("recombRate", "CI95LO", "CI95HI"):
+        d[c] = d[c].astype(float) * 1e8
+    d["mid"] = (d.start + d.end) / 2 / 1e6
+    return d
+
+
+m, f = load("run_male_auto", "male"), load("run_female_auto", "female")
+w = pd.read_csv(WIN, sep="\t")
+w = w[w.chrom.astype(str) == CHROM].sort_values("start")
+w["mid"] = (w.start + w.stop) / 2 / 1e6
+L = max(m.mid.max(), f.mid.max(), w.mid.max())
+
+fig, axs = plt.subplots(3, 1, figsize=(13, 8.4), sharex=True, gridspec_kw={"hspace": 0.16})
+for ax in axs:
+    ax.axvspan(*GAP, color=C["faint"], lw=0, zorder=0)
+
+# (a) male
+ax = axs[0]; d = m; col = SEXES["male"]
+ax.fill_between(d.mid, d.CI95LO, d.CI95HI, color=col, alpha=0.22, lw=0, label="95% bootstrap CI")
+ax.plot(d.mid, d.recombRate, color=col, lw=0.6, alpha=0.9, label="male ReLERNN estimate (15 kb windows)")
+roll = d.recombRate.rolling(41, center=True, min_periods=15).median()
+ax.plot(d.mid, roll, color=C["ink"], lw=1.4, label="rolling median (≈0.6 Mb)")
+med = d.recombRate.median(); ax.axhline(med, color=C["muted"], ls=":", lw=0.9)
+broad = d.recombRate.rolling(133, center=True, min_periods=60).median()
+ax.text(GAP[0] + 1.25, 0.47, "masked block\n45.0–47.5 Mb\n80% repeat; no windows\n(centromere)", ha="center",
+        va="top", fontsize=7.5, color=C["ink"])
+ax.text(0.995, 0.06, f"chromosome-scale range of rolling median: {broad.min():.2f}–{broad.max():.2f} cM/Mb "
+        f"({100*(broad.min()/med-1):+.0f}% … {100*(broad.max()/med-1):+.0f}%); pericentromeric flanks −5%",
+        transform=ax.transAxes, ha="right", va="bottom", fontsize=7.5, color=C["muted"])
+ax.set_ylim(0, 0.5); ax.set_ylabel("recombination\n(cM/Mb)")
+ax.set_title(f"a   male ReLERNN map  (median {med:.3f} cM/Mb)", loc="left", fontweight="bold", fontsize=10)
+ax.legend(loc="upper right", frameon=False, fontsize=7.5, ncol=3); despine(ax)
+
+# (b) female -- degenerate
+ax = axs[1]; d = f; col = SEXES["female"]
+ax.fill_between(d.mid, d.CI95LO, d.CI95HI, color=col, alpha=0.22, lw=0)
+ax.plot(d.mid, d.recombRate, color=col, lw=0.6, alpha=0.9)
+q1, q3 = d.recombRate.quantile(.25), d.recombRate.quantile(.75)
+ax.set_ylim(0, 0.5); ax.set_ylabel("recombination\n(cM/Mb)")
+ax.set_title(f"b   female ReLERNN map  (median {d.recombRate.median():.3f}; IQR {q1:.3f}–{q3:.3f} — predictions "
+             "collapse to a near-constant, uninformative)", loc="left", fontweight="bold", fontsize=10)
+despine(ax)
+
+# (c) pi
+ax = axs[2]
+ax.plot(w.mid, w.pi, color=C["accent"], lw=0.5, alpha=0.75, label="π (10 kb windows)")
+ax.plot(w.mid, w.pi.rolling(61, center=True, min_periods=20).median(), color=C["ink"], lw=1.4, label="rolling median (≈0.6 Mb)")
+ax.axhline(w.pi.median(), color=C["muted"], ls=":", lw=0.9)
+fl = w[(w.mid > 43.9) & (w.mid < 45.0)].pi.median(); ctl = w[(w.mid > 40) & (w.mid < 43)].pi.median()
+ax.annotate(f"π halves on the flank\n({fl:.4f} vs {ctl:.4f})", xy=(44.5, fl), xytext=(36, 0.017),
+            fontsize=7.5, ha="center", arrowprops=dict(arrowstyle="-", color=C["muted"], lw=0.8))
+ax.set_ylim(0, w.pi.quantile(0.995) * 1.1); ax.set_ylabel("nucleotide\ndiversity π")
+ax.set_title("c   diversity", loc="left", fontweight="bold", fontsize=10)
+ax.legend(loc="upper right", frameon=False, fontsize=7.5, ncol=2); despine(ax)
+ax.set_xlabel("chromosome 1 position (Mb)")
+axs[0].set_xlim(0, L)
+fig.savefig(OUT, dpi=200, bbox_inches="tight")
+print("wrote", OUT, f"| male median {med:.3f}, rolling range {broad.min():.3f}-{broad.max():.3f}; female IQR {q1:.3f}-{q3:.3f}; "
+      f"flank pi {fl:.4f} vs control {ctl:.4f}")

@@ -214,15 +214,17 @@
 \begin{figure}[h]\centering
   \includegraphics[width=\linewidth]{figS17_recomb_selection.png}
   \caption{\textbf{Recombination, gene proximity and the efficacy of selection.} Per-window statistics
-    ($\sim$50~kb windows, autosomes). \textbf{(a)}~Recombination rate rises with distance from the nearest
-    exon, and \textbf{(b)}~nucleotide diversity $\pi$ does the same ($\rho=+0.29$): gene proximity depresses
-    both, the footprint of linked selection. \textbf{(c)}~$\pi$ falls with local coding density
-    ($\rho=-0.27$) --- background selection reduces diversity where genes are dense, i.e.\ a locally reduced
-    effective size, and it is \emph{gene-density-driven}. \textbf{(d)}~There is \emph{no}
-    diversity--recombination relationship ($\rho\approx0$), unlike \textit{Drosophila} and humans; note also
-    that ReLERNN infers recombination from diversity/LD, so $\pi$ and the recombination estimate are not
-    independent. Linked selection in \illex{} is thus organised by gene density and gene proximity rather than
-    by the recombination-rate axis.}
+    ($\sim$50~kb windows, autosomes). \textbf{(a)}~The control: recombination rate is essentially flat across
+    distance from the nearest exon (0.206$\to$0.217~cM/Mb near$\to$far, a $\sim$6\% range; Spearman
+    $\rho=+0.05$, unchanged when $\pi$ is held fixed, partial $\rho=+0.06$) --- recombination is agnostic to
+    gene content, as it should be. \textbf{(b)}~Nucleotide diversity $\pi$, by contrast, rises steeply with
+    distance from coding sequence ($\rho=+0.29$; +43\% near$\to$far): the footprint of linked selection.
+    \textbf{(c)}~$\pi$ falls with local coding density ($\rho=-0.27$) --- background selection reduces
+    diversity where genes are dense, i.e.\ a locally reduced effective size, and it is
+    \emph{gene-density-driven}. \textbf{(d)}~There is \emph{no} diversity--recombination relationship
+    ($\rho\approx0$), unlike \textit{Drosophila} and humans, because recombination is nearly uniform
+    genome-wide (0.2--0.24~cM/Mb) and cannot organise diversity here. Linked selection in \illex{} is thus
+    structured by gene density and gene proximity rather than by the recombination-rate axis.}
   \label{sfig:recombsel}
 \end{figure}
 
@@ -278,6 +280,22 @@
     (up to $\sim$40$\times$) are small-count artefacts (most rest on 2 of the 29 GO-annotated genes), not
     enrichment (\cref{stab:invgenes}).}
   \label{sfig:invqq}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{figS22_chr1_recomb_landscape.png}
+  \caption{\textbf{The chromosome-1 recombination landscape, and what the LD-based map does not resolve.}
+    \textbf{(a)}~Male ReLERNN estimate in 15~kb windows with 95\% bootstrap CIs and a 0.6-Mb rolling median
+    (median 0.209~cM/Mb). The shaded 2.5-Mb block at 45.0--47.5~Mb is 80\% repeat sequence (vs 52\%
+    chromosome-wide), is almost entirely masked, and carries no ReLERNN windows: the centromere. In the
+    accessible pericentromeric flanks the estimate dips only $\sim$5\%, and across the whole 103~Mb the rolling
+    median spans just 0.17--0.23~cM/Mb ($-20\%$ to $+7\%$ of the median) --- the map's chromosome-scale
+    dynamic range is compressed, so centromeric suppression cannot be resolved and the ``nearly uniform''
+    landscape is in part an estimator ceiling. \textbf{(b)}~The female-only estimate collapses to a
+    near-constant (IQR 0.293--0.298~cM/Mb) and is uninformative; the sex-averaged mean is what the estimator
+    recovers (see main text). \textbf{(c)}~Nucleotide diversity $\pi$ in 10~kb windows halves on the flank of
+    the masked block --- the pericentromeric signature that the recombination estimate in (a) does not show.}
+  \label{sfig:chr1recomb}
 \end{figure}
 
 \clearpage
