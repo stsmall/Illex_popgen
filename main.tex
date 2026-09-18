@@ -1,7 +1,7 @@
 % =====================================================================
 %  Population genomics of Illex illecebrosus
-%  Complete draft, generated from ILLEX_PROJECT_MANUSCRIPT_AND_METHODS.md.
-%  The markdown remains the source of record; keep numbers in sync with it.
+%  Rewritten 2026-09-18 around the chr2 inversion, its coalescent modelling,
+%  and the two-theme (neurodevelopment + photoreception) sweep program.
 %  Build:  make            (pdflatex + bibtex)
 % =====================================================================
 \documentclass[11pt]{article}
@@ -31,9 +31,9 @@
 \newcommand{\Fst}{F_\mathrm{ST}}
 \newcommand{\dxy}{d_\mathrm{xy}}
 
-\title{\textbf{Population genomics of the northern shortfin squid
-       \textit{Illex illecebrosus}: strong expansion, a balancing-selected
-       chromosome-2 inversion, and a genome-wide scan for selective sweeps}}
+\title{\textbf{A balancing-selected chromosome-2 supergene and a neural--photoreceptive
+       program of recent selection in the northern shortfin squid
+       \textit{Illex illecebrosus}}}
 
 \author[1]{[Author One]}
 \author[1,*]{S.\,Small}
@@ -48,382 +48,471 @@
 % =====================================================================
 \begin{abstract}
 \noindent
-The northern shortfin squid \illex{} is a short-lived, highly fecund, broadcast-spawning
-cephalopod that supports major commercial fisheries across the North Atlantic, yet its
-genome-scale population history and the targets of natural selection are unknown. We
-analysed a 350-individual, whole-genome callset spanning 45 autosomes and the Z chromosome.
-The population carries the signature of a strong, ongoing demographic expansion --- genome-wide
-nucleotide diversity $\pi\approx0.0093$ with Tajima's $D\approx-2$ in essentially every window ---
-and a moments-fit history of a $\sim$12-fold size increase from an ancestral $\Ne\approx5.5\times10^{5}$
-to a present $\Ne\approx6.8\times10^{6}$. Consistent with a recent population-genomic survey
-\citep{baker2025}, population structure is confined to a single large inversion on chromosome~2; here we go
-beyond that description to establish what the inversion \emph{is} and to map the genome-wide landscape of
-recent positive selection. The chr2 inversion (chr2:60.54--79.50~Mb,
-$\sim$19~Mb) drives all apparent structure ($\Fst=0.37$ between arrangements, geographic $\Fst\approx0$),
-is non-clinal, and is \emph{not} neutral: two mutation-rate-free arguments and a coalescent fit
-with an ARG simulator that enforces the arrangement barrier show it arose $\sim$850~ka, was maintained
-near a frequency of $\sim$0.74 for most of its history, and has been actively removed to its present
-0.37 over the last $\sim$50--100~ky under selection of order $\Ne s\sim10^{2}$--$10^{3}$. We further
-build a per-sex recombination map, quantify moderate gene-density-driven background selection,
-identify candidate adaptive genes by McDonald--Kreitman tests, and perform a genome-wide selective-sweep
-scan. Because a simulation-trained per-window classifier over-calls sweeps on real, expansion-shaped,
-missing-data-rich genomes, we deploy it as a stratified empirical-outlier detector corroborated by a
-second method, yielding a small, biologically coherent candidate set --- including neural and
-RNA-regulatory genes, a cephalopod-lineage-specific gene under a hard sweep, and, on the Z chromosome,
-a cluster of RNA-regulation and hormone-signalling loci. Our results establish \illex{} as a
-large-$\Ne$, expansion-dominated system in which a single balancing-selected supergene is the sole
-axis of structure, and provide a reusable, honestly-calibrated framework for sweep detection under
-these conditions.
+Chromosomal inversions are increasingly recognised as engines of adaptation, yet for most wild inversions
+we know neither their age, their frequency history, nor whether they are held by selection at all. The
+northern shortfin squid \illex{} --- an annual, semelparous, broadcast-spawning cephalopod with one of the
+largest effective population sizes of any animal --- carries a single $\sim$19~Mb inversion on chromosome~2
+that a recent survey \citep{baker2025} identified as the only axis of population structure. Using
+whole-genome data from 633 individuals across the species' North Atlantic range, we resolve what this
+inversion is and map the genome-wide landscape of recent positive selection around it. The inversion
+(chr2:60.54--79.50~Mb) segregates at a derived frequency of 0.374 with no geographic cline and between-karyotype
+$\Fst=0.37$ against geographic $\Fst\approx0$, ruling out local adaptation. It is not neutral: the rare derived
+arrangement is 2.3-fold more diverse than its frequency can sustain, and a coalescent fit with an
+ancestral-recombination-graph simulator that enforces the arrangement barrier (msinv) dates it to
+$\sim$850~ka, reconstructs a long plateau near $p\approx0.74$, and identifies an active decline to its
+present frequency over the last $\sim$50--100~ky ($\Ne s\sim10^{2}$--$10^{3}$), a history that neutral drift
+cannot produce. The block captures a gene-poor, functionally unremarkable cargo (no gene-ontology enrichment
+against a permutation null) yet accumulates 3{,}513 near-fixed differences whose coding fraction is
+concentrated in nine genes --- the architecture of a balancing-selected supergene. Genome-wide, a
+stratified, cross-method-corroborated sweep scan built for a strongly expanding, unphased genome recovers 662
+Tier-1 and 34 high-confidence Tier-2 sweeps that resolve into two coherent themes, \textbf{neurodevelopment}
+and \textbf{photoreception}: screening for background selection sharpens rather than erodes them (response to
+light $1.9\!\to\!3.1$-fold, response to radiation $1.8\!\to\!2.8$-fold, neuron-projection and cell
+morphogenesis $1.7$--$1.8\!\to\!2.2$--$2.3$-fold). Alongside a cephalopod-lineage-specific gene under a hard
+sweep and a Z-linked RNA-regulation/hormone-signalling cluster, these results portray a large-$\Ne$,
+expansion-dominated genome in which a single balancing-selected supergene structures the population while
+recent directional selection has targeted the sensory and neural program of a fast, migratory, visually
+guided predator.
 \end{abstract}
 
 % =====================================================================
 \section{Introduction}
 
-Cephalopods combine an unusual life history --- semelparity, enormous fecundity, near-total larval
-mortality, and boom--bust recruitment --- with population sizes among the largest of any animal.
-The northern shortfin squid, \illex{}, is an annual, semelparous broadcast spawner distributed across
-the northwest Atlantic shelf and slope, where it supports large and economically important fisheries.
-These traits make it a compelling but under-studied system for population genomics: extreme fecundity
-with high early mortality is the demographic profile that motivates sweepstakes reproductive-success
-models, in which a few individuals contribute disproportionately to each generation, while a large
-effective size sharpens the resolution of both demographic inference and selection scans.
+Chromosomal inversions suppress recombination between arrangements and thereby bind together the alleles
+they capture, allowing co-adapted combinations to persist as segregating ``supergenes''
+\citep{kirkpatrick2010,schwander2014,thompson2014,wellenreuther2018,faria2019}. The best-understood cases
+are those with visible phenotypes and clear selective regimes: mimicry in \textit{Heliconius}
+\citep{jay2021}, alternative reproductive morphs in the ruff \citep{lamichhaney2016}, colony organisation in
+fire ants \citep{wang2013}, life-history transitions in \textit{Mimulus} \citep{lowry2010}. The theory that
+explains why inversions spread is correspondingly well developed for one scenario --- local adaptation with
+migration, in which an inversion is favoured because it protects locally adapted alleles from
+recombination with immigrant haplotypes \citep{kirkpatrick2006,charlesworth2018inv}. Far less is known about
+inversions that segregate at intermediate frequency \emph{without} geographic structure, where the
+maintaining force must be some form of balancing selection --- overdominance, associative overdominance
+generated by the recessive deleterious load that accumulates in a non-recombining block
+\citep{zhao2016,gilbert2020,jay2021}, negative frequency dependence, or temporally fluctuating selection
+\citep{wittmann2017,rudman2022}. For such inversions the key evolutionary quantities --- age, historical
+frequency trajectory, and the sign and strength of selection acting on the arrangement --- are rarely
+estimated, largely because the coalescent inside an inversion is not that of a freely recombining locus:
+arrangements are partially isolated demes exchanging ancestry only by rare double crossovers or gene
+conversion, and their diversity and divergence must be modelled with the barrier explicitly in place
+\citep{navarro2000,guerrero2012,berdan2023}.
 
-A recent population-genomic survey of \illex{} \citep{baker2025} established the population-structure
-picture we confirm here --- weak overall differentiation with a single, striking axis of structure driven by
-a chromosome-2 inversion, recovered by PCA, $\Fst$, and admixture analysis. That description leaves open the
-questions that motivate this study: \emph{why} the inversion segregates as it does, and \emph{where else} in
-the genome selection has acted. We therefore focus on two things that a structure-and-differentiation survey
-does not resolve. First, the evolutionary character of the chr2 inversion: is it a neutral, drifting
-polymorphism or a selected supergene, and if selected, of what kind, what age, and with what frequency
-history? Second, the genome-wide landscape of recent positive selection --- the selective sweeps, on the
-autosomes and the sex chromosome, that a differentiation scan cannot see. Underpinning both, we ask whether
-\illex{}'s demography can be distinguished from the multiple-merger coalescent that its sweepstakes
-reproduction would predict, since the answer licenses every age and selection estimate that follows.
+Cephalopods offer an unusual setting in which to ask these questions. They combine an extreme life
+history --- semelparity, enormous fecundity, near-total early mortality, and boom--bust recruitment --- with
+population sizes among the largest of any animal, and with the most elaborate nervous systems and visual
+systems in the invertebrates \citep{albertin2015,albertin2022,styfhals2022,songcocasey2022}. Their genomes
+show extensive lineage-specific reorganisation and regulatory innovation \citep{schmidbaur2022,liscovitch2017},
+and their photoreception extends beyond the camera eye to dermal opsins and light-driven chromatophore
+control \citep{ramirez2015,kingston2015,yoshida2015}. The northern shortfin squid \illex{} is an annual,
+semelparous broadcast spawner distributed across the northwest Atlantic shelf and slope, performing diel
+vertical migrations through a steep light gradient and supporting large commercial fisheries
+\citep{odor1998,arkhipkin2015}. Its fecundity-with-high-mortality demography is the profile that motivates
+sweepstakes-reproductive-success models, under which a few individuals contribute disproportionately to each
+generation and the genealogy departs from the standard Kingman coalescent
+\citep{hedgecock2011,eldon2006,arnason2023}; a very large effective size, meanwhile, sharpens the resolution
+of both demographic inference and selection scans.
 
-We address these with a whole-genome dataset of 350 \illex{} individuals, supported by an \coin{} outgroup
-for divergence-based inference. We infer demography from the site-frequency spectrum and linkage
-disequilibrium, dissect the chr2 inversion with per-arrangement diversity, divergence, and a
-purpose-built coalescent model of a barrier-bearing chromosome, build a per-sex recombination map,
-quantify background selection, and scan for selective sweeps. Throughout, we treat the mismatch between
-simulated and real neutral genomes not as a nuisance to be hidden but as a finding in its own right that
-dictates how a sweep scan must be framed.
+A recent population-genomic survey of \illex{} \citep{baker2025} established the structure picture we
+confirm here: weak overall differentiation with a single, striking axis of structure on chromosome~2,
+recovered by PCA, $\Fst$, and admixture analysis and attributable to a large inversion. That description
+leaves open the questions that motivate this study. First, \emph{what is} the chromosome-2 inversion --- a
+neutral, drifting polymorphism or a selected supergene, and if selected, of what kind, what age, and with
+what frequency history? Second, \emph{where else} in the genome has recent positive selection acted, and on
+what biology? A differentiation scan cannot answer either: in a population with no geographic structure it
+has nothing to differentiate, and the sweeps of a large-$\Ne$ species leave their footprint in diversity and
+the site-frequency spectrum rather than in $\Fst$. Underpinning both questions is a third: whether
+\illex{}'s demography can be distinguished from the multiple-merger coalescent that its reproductive mode
+predicts, since every age and selection estimate that follows is licensed by that answer.
+
+We address these with whole-genome data from 633 \illex{} individuals spanning eleven fishery-management
+divisions, supported by an \coin{} outgroup for divergence-based inference and by \textit{I.\ argentinus} as
+a recently diverged congener. We dissect the chromosome-2 inversion with per-arrangement diversity and
+divergence, a purpose-built barrier-aware coalescent simulator, and a direct characterisation of its gene
+content and fixed-difference architecture; we infer demography from the site-frequency spectrum and linkage
+disequilibrium and test the coalescent class explicitly; and we scan for selective sweeps with a framework
+designed for the failure mode that strongly expanding, unphased, missing-data-rich genomes impose on
+simulation-trained classifiers \citep{kern2018diploshic,johri2022}. The scan resolves into two coherent
+biological themes --- neurodevelopment and photoreception --- that strengthen, rather than dissolve, when we
+control for background selection.
 
 % =====================================================================
 \section{Results}
 
-\subsection{Sex determination and genome organisation}
-We genotyped 633 \illex{} individuals sampled across eleven NAFO management divisions (\cref{fig:map}) spanning
-$\sim$37--50$^\circ$N (\cref{tab:summary}). Coverage on the Z chromosome cleanly separates the sample into
-\textbf{342 ZZ males and 291 ZO females}, consistent with a ZZ/ZO sex-determination system in which females
-are the heterogametic sex, carrying a single Z with no W chromosome. A chromosome
-previously suspected to be sex-linked (chr42) is autosomal by this criterion and is treated as such
-throughout. All autosomal analyses use both sexes; the Z chromosome, on which males are diploid and females
+\subsection{Sample, sex, and the absence of geographic structure}
+We analysed 633 \illex{} individuals from eleven NAFO management divisions spanning $\sim$37--50$^\circ$N
+(\cref{fig:map}, \cref{tab:summary}). Read coverage on the Z chromosome separates the sample into 342 ZZ
+males and 291 ZO females, consistent with a ZZ/ZO system in which females are the heterogametic sex with a
+single Z and no W (\cref{fig:overview}); a chromosome previously suspected to be sex-linked (chr42) is
+autosomal by this criterion. Autosomal analyses use both sexes; the Z, on which males are diploid and females
 haploid, is analysed separately (\cref{sec:sweep}).
 
-\subsection{Population structure is confined to the chromosome-2 inversion (confirming prior work)}
-Consistent with \citet{baker2025}, a windowed principal-component analysis finds population structure in
-exactly one place in the genome: inside the chromosome-2 inversion, where the among-cluster variance explained
-is $\eta^{2}=0.748$, against $\eta^{2}=0.003$ in collinear sequence and on every other chromosome
-(\cref{fig:overview}). There is no cryptic geographic or cryptic-lineage structure elsewhere, and the residual
-dispersion along the minor PCA axes is attributable to a handful of individuals rather than to any population
-axis (it tracks neither division nor latitude nor coverage). A KING-robust relatedness screen of the autosomal
-genotypes further finds \textbf{no cryptic family structure} --- no duplicate, parent--offspring, or full-sib
-pairs and a single second-degree pair among the 633 individuals (maximum pairwise kinship $0.16$) --- so
-despite the sweepstakes reproductive mode the sample behaves as an effectively unrelated set of individuals,
-and relatedness cannot inflate the diversity or demographic inferences below. Because a per-SNP
-differentiation scan can detect local adaptation that the diversity-based sweep tests would miss --- a
-sensitive test in a population this panmictic --- we also compared per-SNP $\Fst$ among divisions to a
-coalescent neutral null (a single panmictic population simulated under the fitted demography at the empirical
-sample sizes and missingness): across the full callsets (551{,}344 SNPs covering 12{,}007 genes) the
-empirical differentiation lies entirely within the drift expectation --- \emph{no} SNP exceeds the neutral
-maximum, a single intergenic outlier passes the lenient threshold against $\approx$556 expected by chance
-($\sim$555$\times$ fewer than the false-positive rate), and there are \emph{zero} genic outliers --- so there
-is no signal of geographic local adaptation anywhere in the genome, and the chr2 inversion is geographically
-non-clinal (Supplementary Figs.~S2, S19). We treat this
-as an established starting point rather than a result: it confirms the earlier PCA/$\Fst$/admixture picture at
-per-window resolution, means population structure cannot be invoked as a confounder for the analyses that
-follow, and --- most importantly --- reframes the inversion from ``the thing that structures the population''
-into an evolutionary object to be characterised in its own right (\cref{sec:inv}).
+Consistent with \citet{baker2025}, population structure exists in exactly one place in the genome. A
+windowed principal-component analysis finds among-cluster variance $\eta^{2}=0.748$ inside the chromosome-2
+inversion against $\eta^{2}=0.003$ in collinear sequence and on every other chromosome (\cref{fig:overview};
+Supplementary Fig.~S3). The residual dispersion on minor PCA axes tracks neither division, latitude, nor
+coverage (Supplementary Fig.~S1), and a KING-robust relatedness screen \citep{manichaikul2010} finds no
+duplicate, parent--offspring, or full-sib pairs and a single second-degree pair among the 633 individuals
+(maximum kinship 0.16): despite sweepstakes reproduction, the sample behaves as effectively unrelated.
+Because a per-SNP differentiation scan is the most sensitive test for local adaptation in a population this
+panmictic, we compared per-SNP $\Fst$ among divisions to a coalescent neutral null --- a single panmictic
+population simulated under the fitted demography at the empirical sample sizes and missingness. Across the
+full callsets (551{,}344 SNPs in 12{,}007 genes) the empirical differentiation lies entirely within the drift
+expectation: no SNP exceeds the neutral maximum, a single intergenic site passes the lenient threshold against
+$\approx$556 expected by chance, and there are zero genic outliers (Supplementary Figs.~S2, S19). Nucleotide
+diversity and Tajima's $D$ are flat across latitude and pairwise $\Fst$ among divisions is $\approx0$
+throughout (\cref{fig:diversity}). There is therefore no geographic local adaptation anywhere in the genome,
+and the inversion is geographically non-clinal --- which reframes it from ``the thing that structures the
+population'' into an evolutionary object to be characterised in its own right.
 
 \subsection{A large, balancing-selected inversion on chromosome~2}\label{sec:inv}
-The chr2 inversion is the central feature of the \illex{} genome. Local-PCA and a Gaussian-mixture
-karyotype assignment (95.3\% confident) resolve three genotype clusters --- 254 AA, 284 AB, and 95 BB
-individuals --- whose differentiation is karyotypic, not geographic: $\Fst(\mathrm{AA,BB})=0.37$ within
-the inversion against a geographic $\Fst\approx0$. The three karyotypes co-occur throughout the sampled
-range, with no latitudinal cline in arrangement frequency (0.29--0.46 across divisions; Supplementary
-Fig.~S4 and Table~S2). Two independent lines pin the breakpoints to
-\textbf{chr2:60.54--79.50~Mb} (a $\sim$18.96~Mb differentiated body): a step-change in arrangement
-differentiation and a strand flip in a whole-chromosome alignment to \coin{}, which independently confirm
-the right breakpoint. The nominal 60.0--80.0~Mb extent overshoots by $\sim$0.5~Mb at each end.
+
+\paragraph{Identity, breakpoints, and karyotypes.}
+Local PCA \citep{li2019lostruct} and a Gaussian-mixture karyotype assignment (95.3\% confident) resolve three
+genotype clusters on chromosome~2 --- 254 AA, 284 AB, and 95 BB individuals (\cref{fig:inv}a) --- whose
+differentiation is karyotypic, not geographic: $\Fst(\mathrm{AA,BB})=0.37$ inside the inversion against a
+geographic $\Fst\approx0$. Between-karyotype $\Fst$ computed along the whole chromosome is $\approx0$ (median
+0.006) across collinear sequence and jumps to a median of 0.34 (maximum 0.53) inside the inverted body
+(Supplementary Fig.~S20), so the karyotypes are one panmictic population everywhere except within the
+barrier. The three karyotypes co-occur throughout the range with no latitudinal cline in arrangement
+frequency (0.29--0.46 across divisions; \cref{fig:map}; Supplementary Fig.~S6 and Table~S2). Two independent
+lines pin the breakpoints to \textbf{chr2:60.54--79.50~Mb} (a $\sim$18.96~Mb differentiated body): a
+step-change in arrangement differentiation and a strand flip in a whole-chromosome alignment to \coin{}
+(Supplementary Fig.~S11); an extended block of linkage disequilibrium coincides with the same interval
+(Supplementary Fig.~S4).
 
 \paragraph{Polarisation.}
 The derived, inverted arrangement is \textbf{BB, at a present frequency of 0.374}; AA is ancestral and
-standard. This polarisation is the reverse of a naive one based on the reference allele, which is circular
-because the \illex{} reference assembly is itself in the inverted orientation (it carries BB at 86.5\% of
-fixed-different sites). Restricting to the non-circular subset of sites where \coin{} carries the \illex{}
+standard. This is the reverse of the naive polarisation from the reference allele, which is circular because
+the \illex{} reference assembly is itself in the inverted orientation (it carries BB at 86.5\% of
+fixed-different sites). Restricting to the non-circular subset of sites at which \coin{} carries the \illex{}
 alternate allele shows AA to be ancestral (63.0\%) and BB derived --- a single inversion event, with the
-reference simply assembled from an inverted individual.
+reference simply assembled from an inverted individual (Supplementary Table~S3).
 
 \paragraph{The inversion is not neutral.}
-The primary evidence is per-arrangement diversity (\cref{tab:inv}, \cref{fig:inv}). The rare derived
-arrangement is \emph{more} diverse than its current frequency can sustain: $\pi_I/\pi_S=1.356\pm0.048$
-against an equilibrium expectation of $p/(1-p)=0.60$ for a polymorphism held at 0.374 --- a
-2.3-fold \emph{excess}, the signature of an old polymorphism that was once commoner, not a recent rise.
-Two mutation-rate-free diffusion arguments exclude neutrality. First, \emph{attainment}: reaching the
-inferred historical peak frequency of $\sim$0.74 by drift takes at minimum $\sim$1.15~million generations
-at the binding (smallest) $\Ne$, i.e.\ $\sim$1.36$\times$ the entire inferred lifetime of the inversion, and
-up to $17\times$ at present $\Ne$. Second, the \emph{decline}: the observed fall of $0.74\to0.374$ is
-6.7 standard deviations of neutral drift at the fitted duration, and a coalescent profile of the fall
-duration excludes the slow, drift-compatible alternative at $\Delta\chi^{2}\gtrsim8$--80. The arrangement
-was actively removed, not lost to drift.
+The primary evidence is per-arrangement diversity (\cref{tab:inv}, \cref{fig:inv}c). Inside an inversion the
+two arrangements behave as partially isolated demes \citep{navarro2000,guerrero2012}, so at neutral
+equilibrium the diversity of each should scale with its frequency. The rare derived arrangement is instead
+\emph{more} diverse than its frequency can sustain: $\pi_I/\pi_S=1.356\pm0.048$ against an equilibrium
+expectation of $p/(1-p)=0.60$ for a polymorphism held at 0.374 --- a 2.3-fold excess that is the signature
+of an old polymorphism that was once common, not of a recent rise. Two mutation-rate-free diffusion arguments
+exclude neutrality. \emph{Attainment}: reaching the inferred historical peak frequency of $\sim$0.74 by drift
+takes at minimum $\sim$1.15 million generations at the binding (smallest) $\Ne$ --- 1.36$\times$ the entire
+inferred lifetime of the inversion, and up to 17$\times$ at present $\Ne$. \emph{Decline}: the observed fall
+from 0.74 to 0.374 is 6.7 standard deviations of neutral drift at the fitted duration, and a coalescent profile
+of the fall duration excludes the slow, drift-compatible alternative at $\Delta\chi^{2}\gtrsim8$--80
+(Supplementary Fig.~S14). The arrangement was actively removed, not lost to drift.
 
-\paragraph{Age and history.}
-We fit the inversion's age and frequency trajectory with \textbf{msinv}, an ARG-based coalescent simulator
-that enforces the cross-karyotype recombination barrier and outputs tree sequences (\cref{sec:methods}).
-Conditioning on a deterministic frequency trajectory under within-arrangement neutrality --- the model the
-data support, since they constrain the \emph{shape} of $p(t)$, not a site-level mechanism --- the joint fit
-to $\pi_I/\pi_S$, $\dxy/\pi_I$, and the per-arrangement singleton spectrum (\cref{fig:demog}; Supplementary Fig.~S3) gives
-a coalescent age of $\mathbf{\sim}$\textbf{850~ky}. The age is the robustly-determined quantity because it
-is carried by $\dxy$ between arrangements, which is symmetric to the polarisation. The reconstructed history
-is: the inversion arose $\sim$850~ka, coincident with the onset of the population expansion; was maintained
-near $p\approx0.74$ for most of its history; and then fell sharply to 0.374 over $\sim$50--100~ky ending
-$\gtrsim$50--100~ka, under selection of order $\Ne s\sim10^{2}$--$10^{3}$ ($s\approx1.5\times10^{-4}$).
-Every absolute age scales inversely with the mutation rate $\mu=3\times10^{-9}$, which remains the dominant
+\paragraph{Age and frequency history from a barrier-aware coalescent.}
+Estimating an inversion's age requires a coalescent in which the two arrangements exchange ancestry only
+across the barrier; standard simulators do not provide this. We therefore fit the inversion's age and
+frequency trajectory with \textbf{msinv} \citep{msinv}, an ancestral-recombination-graph simulator that
+enforces the cross-karyotype recombination barrier, tracks ancestral material with the hulls-based scheme of
+\citet{kelleher2016}, and outputs tree sequences (\cref{sec:methods}). The data constrain the \emph{shape} of
+the frequency trajectory $p(t)$ rather than any site-level mechanism, so we condition on a deterministic
+trajectory under within-arrangement neutrality and fit jointly to $\pi_I/\pi_S$, $\dxy/\pi_I$, and the
+per-arrangement singleton spectrum (\cref{fig:demog}b; Supplementary Figs.~S5, S14). The coalescent age is
+$\mathbf{\sim850}$~\textbf{ky}. It is the robustly determined quantity because it is carried by $\dxy$ between
+arrangements, which is symmetric to the polarisation --- the age survived the complete reversal of the
+arrangement polarity described above, a check few inversion ages can claim. The reconstructed history is that
+the inversion arose $\sim$850~ka, coincident with the onset of the population expansion (\cref{sec:demog});
+was maintained near $p\approx0.74$ for most of its history; and then fell sharply to 0.374 over
+$\sim$50--100~ky, ending $\gtrsim$50--100~ka, under selection of order $\Ne s\sim10^{2}$--$10^{3}$
+($s\approx1.5\times10^{-4}$). Simulated inversions of 37~kb rescaled to the 19-Mb body reproduce these
+statistics with length-invariance verified over a 25-fold range, and the fitted model reproduces the
+observed joint two-dimensional site-frequency spectrum between arrangements --- near-fixed differences and
+off-diagonal density in the inverted body, collapse to the diagonal in collinear controls (Supplementary
+Fig.~S5). Every absolute age scales inversely with the mutation rate $\mu=3\times10^{-9}$, the dominant
 external uncertainty.
 
 \paragraph{What the inversion is not.}
-Recombination inside the inversion is at the chromosomal background rate by direct measurement (the
-$\sim$19~kb LD windows a recombination-map method reads are blind to the 19-Mb barrier, so the interior rate
-is not a barrier readout), so the differentiation is a consequence of the barrier, not of locally suppressed
-crossing-over. The region is gene-\emph{poor} (30 annotated genes in the differentiated body against a median
-of 50 in random windows of the same size), its annotation is demonstrably incomplete ($\sim$12--14 genes
-missed, recovered by cross-species protein homology), and a previously-reported metabolic Gene-Ontology
-enrichment does not survive a linkage-aware null. No single locus stands out in coding sequence, regulatory
-compartments, per-transcript divergence, or a karyotype-stratified sweep scan: the block is differentiated
-as a unit, which is what a recombination barrier produces. Gene flux between arrangements is not detectable
-in mean $\dxy$, though a residual $\sim$40\% depletion of near-fixed differences in the outermost megabase
-remains after the breakpoints are pinned. The mechanism of balancing selection --- overdominance,
-associative overdominance, frequency dependence, or a moving optimum under fluctuating selection --- is not
-resolved by these data; a shelf-spawning squid whose paralarvae ride the Gulf Stream is a plausible setting
-for temporally fluctuating selection on $\sim$100~ky glacial cycles, but this remains a hypothesis.
+It is not a region of locally suppressed crossing-over: recombination inside the body is at the chromosomal
+background rate by direct measurement (the $\sim$19~kb LD windows a recombination-map method reads are blind
+to a 19-Mb barrier; Supplementary Fig.~S12), so the differentiation is a consequence of the arrangement
+barrier itself. It is not locally adaptive: there is no cline and geographic $\Fst\approx0$, so the
+migration--selection scenario that explains most well-studied inversions \citep{kirkpatrick2006} cannot apply.
+And it is not a swept region: the genome-wide scan below finds \emph{zero} cross-method-concordant sweeps on
+chromosome~2 --- the recombination-map method is broadly elevated and the classifier over-calls across the
+inversion, but the two never co-localise into focal concordance, exactly the pattern expected for a
+balancing-selected supergene rather than a swept locus, and correctly filtered by the concordance requirement.
+Gene flux between arrangements is not detectable in mean $\dxy$, though a residual $\sim$40\% depletion of
+near-fixed differences in the outermost megabase remains after the breakpoints are pinned. The mechanism of
+balancing selection --- overdominance, associative overdominance, frequency dependence, or a moving optimum
+under fluctuating selection --- is not resolved by these data; a shelf-spawning squid whose paralarvae ride
+the Gulf Stream is a plausible setting for temporally fluctuating selection on $\sim$100~ky glacial cycles,
+but this remains a hypothesis.
 
 \paragraph{Gene content and the architecture of arrangement divergence.}
-The block has no functionally coherent cargo and no direct signal of positive selection, yet it carries the
-molecular signature of a young, recombination-suppressed supergene. The body carries 89 gene models, 45 with
-cross-species functional annotation (Supplementary Table~S7); it is gene-poor and functionally scattered
-(lipid metabolism, DNA repair, transcription/splicing, signalling), with no coherent pathway. A gene-ontology
-test of its annotated genes against the genome returns \emph{no} enriched term at FDR$<$0.05 in any ontology,
-and a permutation null confirms this is genuine: the apparent nominal signal (and the eye-catching $\sim$40-fold
-per-term enrichments, which rest on as few as two genes) is smaller than what random gene sets of the same size
-produce (69 vs $86.6\pm60$ nominal terms; permutation $p=0.51$; Supplementary Fig.~S21). The inversion has thus
-captured a gene-poor, functionally unremarkable slice of the genome, not a selected gene set. What
-the arrangements \emph{do} accumulate is divergence-as-a-unit: between-karyotype $\Fst$ is $\approx0$ across
-collinear chromosome~2 but jumps to a median of 0.34 inside the inverted body (Supplementary Fig.~S20), where
-3{,}513 near-fixed differences between the AA and BB arrangements (per-arrangement $|\Delta\mathrm{AF}|\geq0.9$)
-accumulate (Supplementary Fig.~S5). These are overwhelmingly non-coding --- coding sequence is only $\sim$0.2\% of the
-region --- but the exonic fixed differences are $\sim$2.3-fold over-represented relative to that footprint
-and are strikingly \emph{clustered}: all 19 exonic fixed differences fall in just nine genes, led by a
-cytochrome~P450 (\textit{CYP4X1}) and an acidic-repeat protein (four each) and including a
-phospholipase~A2, the ciliary gene \textit{RPGRIP1L}, and a cysteine-rich venom-like protein. Thus, although
-no locus in the block shows a classical sweep and the region is enriched for no function, the coding
-divergence that recombination suppression shelters is concentrated in a handful of genes rather than spread
-evenly --- the expected architecture of a balancing-selected inversion that recombines with its homologue
-only rarely.
+The block has no functionally coherent cargo, yet it carries the molecular signature of a young,
+recombination-suppressed supergene. It is gene-poor --- 89 gene models, 45 with cross-species functional
+annotation, against a median of $\sim$50 annotated genes in random windows of the same size --- and
+functionally scattered: lipid metabolism, DNA repair, transcription and splicing, signalling, with no
+coherent pathway (Supplementary Table~S7). A gene-ontology test of its annotated genes against the genome
+returns \emph{no} enriched term at FDR$<$0.05 in any ontology, and a permutation null shows this is genuine
+rather than a power artefact: random gene sets of the same size produce \emph{more} nominal hits than the
+inversion genes (86.6$\pm$60 vs 69; permutation $p=0.51$), and the eye-catching $\sim$40-fold per-term
+enrichments rest on as few as two genes (Supplementary Fig.~S21). A previously reported metabolic enrichment
+does not survive this null. The inversion has thus captured a functionally unremarkable slice of the genome,
+not a selected gene set --- consistent with a supergene maintained for the arrangement as a whole. What the
+arrangements \emph{do} accumulate is divergence-as-a-unit: 3{,}513 near-fixed differences between AA and BB
+(per-arrangement $|\Delta\mathrm{AF}|\geq0.9$) are spread across the body (Supplementary Fig.~S5). These are
+overwhelmingly non-coding --- coding sequence is only $\sim$0.2\% of the region --- but the exonic fixed
+differences are $\sim$2.3-fold over-represented relative to that footprint and are strikingly
+\emph{clustered}: all 19 fall in just nine genes, led by a cytochrome~P450 (\textit{CYP4X1}) and an
+acidic-repeat protein (four each) and including a phospholipase~A2, the ciliary gene \textit{RPGRIP1L}, and a
+cysteine-rich venom-like protein. Although no locus in the block shows a classical sweep and the region is
+enriched for no function, the coding divergence that recombination suppression shelters is concentrated in a
+handful of genes rather than spread evenly --- the expected architecture of a balancing-selected inversion
+that recombines with its homologue only rarely, and the raw material from which a supergene's mutation load
+and eventual degeneration are built \citep{jay2021,berdan2023}.
 
-\subsection{Demographic history: strong expansion, not multiple mergers}\label{sec:demog}
-Genome-wide, \illex{} shows $\pi\approx0.0093$ and Tajima's $D\approx-2$ in essentially 100\% of windows ---
-an unambiguous, genome-wide signature of population expansion (\cref{tab:demog}, \cref{fig:demog},
-\cref{fig:diversity}).
-A moments fit to the folded SFS gives a growth history from an ancestral $\Ne=\text{547{,}928}$ to a present
-$\Ne=\text{6{,}808{,}096}$ over $\text{769{,}519}$ generations ($\sim$12-fold; generations $\approx$ years for
-this annual species), and this history reproduces both the observed $\pi$ and a full-SFS Tajima's $D=-1.92$
-under forward simulation, ruling out a haploid/diploid scaling error. Stairway~Plot~2 and GONE2 concur on
-strong recent expansion to $\Ne$ in the $1.5$--$1.7\times10^{7}$ range. Because sweepstakes reproduction
-would mimic expansion by inflating rare variants, we tested the coalescent class directly: the observed
-folded SFS is fit far better by a Kingman-plus-growth model than by any multiple-merger (Beta) coalescent
-(shape-deviation $L_1=0.036$ vs a best-$\alpha$ $0.108$), and contemporary $\Ne$ estimates from the SFS and
-from linkage disequilibrium agree --- both inconsistent with a strong multiple-merger process.
+\subsection{Demographic history licenses the inversion model}\label{sec:demog}
+The age and selection estimates above depend on the population's demography and on the coalescent class
+being Kingman. Genome-wide, \illex{} shows $\pi\approx0.0093$ and Tajima's $D\approx-2$ in essentially every
+window \citep{tajima1989} --- an unambiguous, genome-wide signature of expansion (\cref{tab:demog},
+\cref{fig:demog}a, \cref{fig:diversity}). A moments fit to the folded SFS gives growth from an ancestral
+$\Ne=$ 547{,}928 to a present $\Ne=$ 6{,}808{,}096 over 769{,}519 generations ($\sim$12-fold; generations
+$\approx$ years for this annual species), and this history reproduces both the observed $\pi$ and a full-SFS
+Tajima's $D=-1.92$ under forward simulation. Stairway~Plot~2 and GONE2 concur on strong recent expansion to
+$\Ne$ in the $1.5$--$1.7\times10^{7}$ range. Because sweepstakes reproduction would mimic expansion by
+inflating rare variants \citep{eldon2006,hedgecock2011}, we tested the coalescent class directly: the folded
+SFS is fit far better by a Kingman-plus-growth model than by any multiple-merger (Beta) coalescent
+\citep{schweinsberg2003} (shape deviation $L_1=0.036$ vs a best-$\alpha$ 0.108), and contemporary $\Ne$
+estimates from the SFS and from linkage disequilibrium agree --- both inconsistent with a strong
+multiple-merger process. The expansion began $\sim$770~ka, i.e.\ at essentially the same time as the
+inversion arose, which places the supergene's origin at the start of the demographic episode that shapes the
+whole genome.
 
-\subsection{The recombination landscape}\label{sec:recomb}
-A deep-learning recombination-map method applied per sex gives an autosomal rate of $\sim$0.21--0.24~cM/Mb
-(male $0.204$--$0.213$, female $0.288$--$0.290$, sex-averaged $\sim$0.244; Supplementary Fig.~S10). Because the
-estimator reads linkage disequilibrium, it recovers the sex-\emph{averaged} rate, and heterochiasmy is not
-identifiable from it (a male/female autosomal split estimates the same quantity; the apparent gap was an
-artifact of unequal sample sizes). The Z chromosome shows a sex-biased rate, and a sex-averaged, boundary-
-corrected genome map underlies the sweep-scan calibration.
-
-\subsection{Diversity and gene-linked background selection}\label{sec:bgs}
-Nucleotide diversity is reduced in gene-dense regions by 20--30\% ($\pi$ correlates with local coding density
-at $r=-0.31$), a moderate background-selection effect that is gene-density-driven rather than recombination-
-driven (recombination is nearly uniform, \cref{sec:recomb}). A model-based $B$-map could not be fit under this
+\subsection{Genomic context: recombination, background selection, and protein adaptation}
+Three further features of the genome set the stage for the sweep scan. \emph{Recombination} is nearly
+uniform: a deep-learning recombination map built per sex gives an autosomal rate of $\sim$0.21--0.24~cM/Mb
+(sex-averaged $\sim$0.244; Supplementary Fig.~S12); because the estimator reads linkage disequilibrium it
+recovers the sex-averaged rate and heterochiasmy is not identifiable from it. \emph{Background selection} is
+moderate and gene-density-driven rather than recombination-driven: $\pi$ falls with local coding density
+($r=-0.31$; 20--30\% reduction in gene-dense windows) but shows no relationship with recombination rate
+(Supplementary Fig.~S17), the classical pattern of linked purifying selection
+\citep{charlesworth1993,mcvicker2009,charlesworth2021}. A model-based $B$-map could not be fit under this
 regime (the classical approximation overflows where the deleterious mutation rate exceeds the selection
-coefficient), so we use local coding fraction as a background-selection covariate and control for it explicitly
-in the sweep scan (\cref{sec:sweep}). Because the callset is unphased, all diversity statistics are
-site-frequency-spectrum-based ($\pi$, Watterson's $\theta$, Tajima's $D$); haplotype-homozygosity statistics
-are degenerate on these data and are not used.
-
-\subsection{Candidate adaptive genes (McDonald--Kreitman)}\label{sec:mk}
-McDonald--Kreitman tests against the \coin{} outgroup across 20{,}999 genes give a genome-wide proportion of
-adaptive substitutions $\alpha\approx0.34$--0.64. The single most strongly and significantly adaptive gene is
-the splicing factor \textit{SF3B4} ($\alpha=0.64$; a single-copy gene by our annotation). Per-gene power is
-limited --- a genome-wide $\alpha$ of this size resolves cleanly to only a handful of genes --- so we treat the
-MK results as complementary to, rather than overlapping with, the recent-sweep scan below, which detects a
-different (recent, often non-coding) timescale of selection. The second congener used here, \textit{I.\
-argentinus}, is a striking comparator in its own right: it is recently diverged from \illex{} (roughly an
-order of magnitude fewer fixed coding differences than \coin{}; Supplementary Table~S3) yet carries
-near-identical genome-wide diversity ($\pi=0.0092$ by genotype-likelihood estimation on the same accessible
-sites, versus $0.0093$ in \illex{} --- within 1\%) --- two large-$N_e$, expansion-shaped congeners of matched
-standing variation, a comparison the single-species differentiation survey could not make.
+coefficient), so local coding fraction serves as the background-selection covariate that the sweep scan
+controls for explicitly. \emph{Protein adaptation} over the divergence timescale is substantial:
+McDonald--Kreitman tests \citep{mcdonald1991,messer2013mk} against \coin{} across 20{,}999 genes give a
+genome-wide proportion of adaptive substitutions $\alpha\approx0.34$--0.64, with the splicing factor
+\textit{SF3B4} the single most significantly adaptive gene (Supplementary Fig.~S10). Per-gene power is limited,
+so we treat the MK results as complementary to the recent-sweep scan, which detects a different --- recent,
+often non-coding --- timescale of selection. \textit{I.\ argentinus} is a striking comparator: recently
+diverged (an order of magnitude fewer fixed coding differences than \coin{}; Supplementary Table~S3), it
+carries near-identical genome-wide diversity ($\pi=0.0092$ vs 0.0093, within 1\%) --- two large-$\Ne$,
+expansion-shaped congeners of matched standing variation.
 
 \subsection{A genome-wide scan for selective sweeps}\label{sec:sweep}
-We scanned for recent positive selection with a five-class site-frequency/diversity-based deep-learning
-classifier (neutral, hard, soft, linked-hard, linked-soft; 1.1~Mb feature windows of eleven 100~kb
-sub-windows), trained on forward and coalescent simulations under the fitted growth demography
-(\cref{fig:selection}).
+We scanned for recent positive selection with diploS/HIC \citep{schrider2016,kern2018diploshic}, a five-class
+site-frequency/diversity-based classifier (neutral, hard, soft, linked-hard, linked-soft; 1.1~Mb feature
+windows of eleven 100~kb sub-windows) trained on forward and coalescent simulations under the fitted growth
+demography (\cref{fig:selection}; Supplementary Figs.~S7, S8).
 
-\paragraph{Two methodological findings shape the scan.}
-First, a training/scanning feature mismatch --- the model was initially trained on phased-haplotype
-simulation features but applied to unphased genotypes --- inflated linkage-based features by an order of
-magnitude and had to be corrected by retraining on the same unphased feature extractor used to scan; the
-final full-SFS model reaches 81\% class accuracy. Second, and more fundamentally, even the corrected model
-\emph{over-calls} sweeps on the real genome: real neutral windows (accessible, $\geq$5~kb from any gene) carry
-3--8-fold more \emph{within-window spatial heterogeneity} in $\pi$ and $\theta$ than the simulations, even
-though their marginal SFS matches ($D\approx-2$). We ruled out missing-data structure and sample
-incompleteness as the cause; the residual is real per-sub-window diversity variation (mutation-rate variation
-plus background selection) that a uniform-$\theta$ coalescent does not reproduce. We therefore use the
-classifier as a \textbf{stratified empirical-outlier detector} --- ranking a sweep score ($p_\mathrm{hard}+
-p_\mathrm{soft}$) within strata of callable fraction and coding density so that a window is an outlier only
-relative to windows of similar accessibility and gene density --- corroborated by a second, LD-footprint
-method. We also show that an inherited minor-allele-frequency filter was a mistake under strong expansion
-(it discards the rare-variant excess that carries both the expansion and the sweep signal) and move to the
-full spectrum on both the simulation and empirical sides.
+\paragraph{The scan must be framed as an outlier detector.}
+Two methodological findings shape everything that follows. First, a training/scanning feature mismatch ---
+the model was initially trained on phased-haplotype simulation features but applied to unphased genotypes ---
+inflated linkage-based features by an order of magnitude and had to be corrected by retraining on the same
+unphased feature extractor used to scan; the final full-SFS model reaches 81\% class accuracy
+(Supplementary Fig.~S7). Second, and more fundamentally, even the corrected model \emph{over-calls} sweeps on
+the real genome: real neutral windows (accessible, $\geq$5~kb from any gene) carry 3--8-fold more
+within-window spatial heterogeneity in $\pi$ and $\theta$ than the simulations, even though their marginal
+SFS matches ($D\approx-2$). We ruled out missing-data structure and sample incompleteness as the cause; the
+residual is real per-sub-window diversity variation (mutation-rate variation plus background selection) that
+a uniform-$\theta$ coalescent does not reproduce --- a concrete instance of the simulation-to-reality gap
+that current best-practice guidance warns against \citep{johri2022}. We therefore use the classifier as a
+\textbf{stratified empirical-outlier detector}: the sweep score ($p_\mathrm{hard}+p_\mathrm{soft}$) is ranked
+within strata of callable fraction and coding density, so a window is an outlier only relative to windows of
+similar accessibility and gene density, and calls are corroborated by an independent LD-footprint method
+(RAiSD; \citealt{alachiotis2018raisd}) or a composite-likelihood SFS method (SweepFinder2;
+\citealt{nielsen2005,degiorgio2016}). We also show that an inherited minor-allele-frequency filter was a
+mistake under strong expansion (it discards the rare-variant excess that carries both the expansion and the
+sweep signal) and use the full spectrum on both the simulation and empirical sides.
 
 \paragraph{Two tiers of sweep calls.}
-We report sweeps at two levels of stringency (Supplementary Fig.~S13). \textbf{Tier~1} is the diploSHIC
-hard/soft classification itself, spatially resolved by a recombination-aware Markov decoder --- a hidden
-Markov model over the per-100~kb-window classes whose neutral/linked/centre emissions are the
-prior-corrected class posteriors and whose dwell lengths follow the $\sim$400~kb sweep footprint scaled by
-the ReLERNN recombination map (Supplementary Fig.~S13a). Because the genome reads as $\sim$91\% linked-selected
-under strong expansion, the decoder's role is spatial coherence: it keeps hard/soft calls that lie in
-contiguous sweep centres and discards spatially isolated ones. This reduces the raw calls from 1{,}758 to
-717 windows (658 localised calls; 459 hard, 199 soft; 35 on chromosomes~2 and~42), retaining the
-higher-outlier windows (median empirical-outlier percentile 0.98 vs 0.95 for discarded calls;
-Supplementary Fig.~S13b). \textbf{Tier~2} is the subset independently corroborated by an LD/SFS-footprint
-method (RAiSD or SweepFinder2): the 34 cross-method-concordant regions (the diploSHIC-HMM outlier plus at
-least one footprint method). The two tiers agree strongly --- 89\% of
-windows at concordant loci are decoded as sweep centres versus 2.9\% genome-wide (odds ratio 282,
-$p<10^{-46}$), and 30 of the 34 concordant regions contain a Tier-1 centre (Supplementary Fig.~S13c) --- so the
-conservative concordance set is a high-purity subset of the classifier calls, not a disjoint list. Because
-the decoder could not be simulation-calibrated at this genome's recombination density (a dense-ancestry
-bottleneck; see Methods), its dwell parameters are set from the known sweep footprint and the recombination
-map and validated post-hoc by this concordance; we therefore treat Tier~1 as a ranked candidate set and
-Tier~2 as the high-confidence calls. The Z chromosome, which RAiSD and SweepFinder2 do not cover, is
-necessarily diploSHIC-only; it is scanned and localised separately below and contributes four further Tier-1
-calls (genome-wide total 662), now shown alongside the autosomes in the genome-wide sweep figures
-(\cref{fig:selection}; Supplementary Fig.~S17).
+We report sweeps at two levels of stringency (Supplementary Fig.~S13). \textbf{Tier~1} is the diploS/HIC
+hard/soft classification, spatially resolved by a recombination-aware Markov decoder --- a hidden Markov model
+over the per-100~kb-window classes whose neutral/linked/centre emissions are the prior-corrected class
+posteriors and whose dwell lengths follow the $\sim$400~kb sweep footprint scaled by the recombination map
+(Supplementary Fig.~S13a). Because the genome reads as $\sim$91\% linked-selected under strong expansion, the
+decoder's role is spatial coherence: it retains hard/soft calls that lie in contiguous sweep centres and
+discards spatially isolated ones, reducing 1{,}758 raw calls to 717 windows (658 localised autosomal calls;
+459 hard, 199 soft) and preferentially keeping the higher-outlier windows (median empirical-outlier
+percentile 0.98 vs 0.95 for discarded calls; Supplementary Fig.~S13b). \textbf{Tier~2} is the subset
+independently corroborated by a footprint method: the 34 cross-method-concordant regions (a diploS/HIC-HMM
+outlier plus RAiSD or SweepFinder2). The two tiers agree strongly --- 89\% of windows at concordant loci are
+decoded as sweep centres versus 2.9\% genome-wide (odds ratio 282, $p<10^{-46}$), and 30 of the 34 concordant
+regions contain a Tier-1 centre (Supplementary Fig.~S13c) --- so the conservative concordance set is a
+high-purity subset of the classifier calls, not a disjoint list. Because the decoder could not be
+simulation-calibrated at this genome's recombination density (\cref{sec:methods}), its dwell parameters are
+set from the sweep footprint and the recombination map and validated post hoc by this concordance; we treat
+Tier~1 as a ranked candidate set and Tier~2 as the high-confidence calls. The Z chromosome, which the
+footprint methods do not cover, is necessarily diploS/HIC-only; scanned separately in males (below), it
+contributes four further Tier-1 calls, for a genome-wide Tier-1 total of 662 (\cref{fig:selection};
+Supplementary Fig.~S18).
 
-\paragraph{The Tier-1 set is enriched for neural-developmental and RNA-regulatory function.}
-Independently of the cross-method concordance, the 658 autosomal Tier-1 calls overlap 894 genes (476 with GO
-annotation; one-third of the calls fall in gene-poor, often transposon-rich windows and are excluded from the
-enrichment). A gene-ontology analysis (Fisher's exact test, Benjamini--Hochberg FDR, against the
-annotated-gene background on the scanned chromosomes) returns 124 terms at FDR $<0.05$, dominated by two
-coherent themes: \textbf{neural development} (neurogenesis, neuron differentiation, cell-projection and
-axon morphogenesis; 1.5--1.8-fold) and \textbf{transcriptional/RNA-regulatory control} (regulation of RNA
-metabolic and biosynthetic process, transcription). The enrichment is carried entirely by the hard-sweep
-calls (99 enriched terms); the disjoint soft-sweep set has none at FDR $<0.05$ and is underpowered. These
-themes recover and statistically reinforce the smaller Tier-2 concordant set --- whose genes (the apelin
-receptor, \textit{ZEB2}, \textit{Rab3}, \textit{cept1}) fall squarely within them --- indicating that the
-recent-sweep target in \illex{} is a neural-developmental and gene-regulatory program, as expected for a
-behaviourally and neurally complex, fast-developing cephalopod. Screening the Tier-1 calls by background
-selection --- the same per-region test used for the concordant set, retaining only calls whose local $\pi$
-falls below the background-selection expectation given flanking coding density --- keeps \textbf{291 of the
-658} (237 hard, 54 soft). The enrichment not only survives this filter but \emph{strengthens}: 152 terms at
-FDR $<0.05$, with the neural-development and RNA-regulatory folds rising throughout (e.g.\ generation of
-neurons $1.6\!\to\!1.9$, transcription by RNA polymerase~II $1.7\!\to\!2.1$), and a \textbf{photoreception}
-signal (response to light and radiation, $\sim$3-fold) emerging --- a coherent sensory-and-neural adaptive
-program that is not an artefact of reduced diversity in gene-dense regions.
+\paragraph{Two themes: neurodevelopment and photoreception.}
+The 658 autosomal Tier-1 calls overlap 894 genes (476 with GO annotation; one-third of calls fall in
+gene-poor, often transposon-rich windows and are excluded). A gene-ontology enrichment against the
+annotated-gene background (Fisher's exact test, Benjamini--Hochberg FDR; \citealt{benjamini1995}) returns
+124 terms at FDR$<$0.05 (Supplementary Fig.~S15, Table~S4), dominated by \textbf{neural development} ---
+neurogenesis, generation of neurons, neuron development, neuron-projection and cell morphogenesis (1.5--1.8-fold)
+--- together with transcriptional and RNA-regulatory control, and a weaker \textbf{light-response} signal
+(response to light stimulus 1.9-fold, response to radiation 1.8-fold). The enrichment is carried by the
+hard-sweep calls (99 terms); the disjoint soft-sweep set has none at FDR$<$0.05. The decisive test is
+whether these themes are artefacts of background selection --- gene-dense neural loci have lower diversity for
+reasons unrelated to sweeps. We therefore screened every Tier-1 call with the same per-region
+background-selection test used for the concordant set, retaining only calls whose local $\pi$ falls below the
+background-selection expectation given flanking coding density. This keeps 291 of the 658 (237 hard, 54
+soft), and the enrichment does not merely survive the screen --- it \emph{sharpens}. The BGS-robust set
+yields 152 terms at FDR$<$0.05, and every leading term's fold enrichment rises: response to light stimulus
+$1.92\!\to\!3.12$ (FDR $2\times10^{-2}\!\to\!1\times10^{-4}$), response to radiation $1.75\!\to\!2.77$
+(FDR $3\times10^{-2}\!\to\!2\times10^{-4}$), neuron-projection morphogenesis $1.81\!\to\!2.26$, cell
+morphogenesis $1.72\!\to\!2.24$, neuron development $1.59\!\to\!1.97$, generation of neurons
+$1.60\!\to\!1.90$, transcription by RNA polymerase~II $1.73\!\to\!2.08$ (Supplementary Fig.~S15). The
+photoreception signal --- weakest in the full set --- becomes the single most enriched theme after the screen,
+and its more specific child terms (detection of light stimulus $2.5\!\to\!3.9$, phototransduction
+$2.5\!\to\!3.4$) move in the same direction, though with too few genes to reach significance. A shared-gene
+enrichment map of the BGS-robust set resolves the same two connected modules, neural
+development/morphogenesis and light response, with no third (Supplementary Fig.~S16, Table~S5). Because
+background selection can only remove diversity where genes are dense, a signal that grows as gene-dense
+false positives are removed is the opposite of what a BGS artefact would produce: the sweep program in
+\illex{} is a coherent sensory-and-neural one, and it is real.
 
 \paragraph{Candidate sweeps.}
-The scan yields 216 candidate windows and \textbf{34 regions with cross-method concordance}; a per-region
-background-selection test (comparing local $\pi$ to that expected from flanking coding density) isolates
-\textbf{11 high-confidence sweep candidates} in which diversity is reduced beyond the background-selection
-expectation. These carry a biologically coherent set of cephalopod-orthologous genes spanning neural and
-developmental function (\textit{Rab3}, \textit{ZEB2}), cardiovascular/vasculature signalling (\textit{Aplnr}),
-genome-maintenance and stress response (\textit{MACROD2}), and membrane/sphingolipid metabolism (\textit{cept1};
-and, at a locus the annotation had missed, a \emph{ceramide phosphoethanolamine synthase}) --- functions
-consistent with a fast, migratory, cold-water, neurally complex, short-lived animal (\cref{tab:sweep}).
-The single most distinctive autosomal candidate is a \textbf{cephalopod-lineage-specific gene under a hard
-sweep} on chromosome~16 (a tandem-exon transcript with no functional annotation whose direct translation
-matches an uncharacterised protein family in the bobtail squid \textit{Euprymna}, $E=2\times10^{-53}$).
-Fine-scale localisation confirms all 11 candidates as recent sweeps by the sign of Tajima's $D$ at the
-diversity valley, and reassigns two apparent gene-desert signals to transposable-element regions (flagged as
-lower confidence) and one candidate's target to a neighbouring gene. There is no overlap between the sweep
-candidates and the MK-adaptive genes, as expected for their different timescales.
+The Tier-2 concordant regions carry a biologically coherent set of cephalopod-orthologous genes that sit
+squarely within these themes (\cref{tab:sweep}; Supplementary Table~S6): the neural/EMT transcription factor
+\textit{ZEB2}, the synaptic-vesicle GTPase \textit{Rab3}, the apelin receptor \textit{Aplnr}
+(cardiovascular/vasculature signalling), the DNA-damage-response gene \textit{MACROD2}, the phospholipid
+synthase \textit{cept1}, and --- at a locus the annotation had missed --- a ceramide phosphoethanolamine
+synthase. A per-region background-selection test isolates 11 of these as high-confidence candidates in which
+diversity is reduced beyond the background-selection expectation, and fine-scale localisation confirms all 11
+as recent sweeps by the sign of Tajima's $D$ at the diversity valley, reassigning two apparent gene-desert
+signals to transposable-element regions (flagged lower confidence) and one candidate's target to a neighbouring
+gene. The single most distinctive autosomal candidate is a \textbf{cephalopod-lineage-specific gene under a
+hard sweep} on chromosome~16 --- a tandem-exon transcript with no functional annotation whose translation
+matches an uncharacterised protein family in the bobtail squid \textit{Euprymna} ($E=2\times10^{-53}$) ---
+the kind of lineage-specific novelty that cephalopod genomes are known to generate
+\citep{albertin2015,albertin2022}. There is no overlap between the sweep candidates and the MK-adaptive genes,
+as expected for their different timescales.
 
 \paragraph{The Z chromosome.}
 Because males are Z-diploid and females Z-haploid, the Z was scanned separately in the 330 confident ZZ
 males, using a model retrained at the matched sample size (the classifier's features are sample-size
-dependent) and a formal adequacy gate to control for the Z's reduced effective size; the male-only screen was
-independently validated against the 289 haploid females, whose per-window diversity tracks the males' at
-$r=0.996$. Of the four Z Tier-1 calls (three hard, one soft; Supplementary Fig.~S17), three credible,
-gene-localised sweeps survive fine-scale triage, all confirmed as conserved cephalopod genes by direct
-homology: \textbf{Pasilla/Nova-1} (a neuronal alternative-splicing regulator;
-92\% identity to \textit{Octopus}), \textbf{Smaug/samd4a} (a germline RNA-binding translational repressor),
-and \textbf{Esrrg} (an estrogen-related receptor, with an adjacent likely-\textit{cis}-regulatory lncRNA;
-97.5\% identity to \textit{Octopus}) --- a coherent RNA-regulation-and-hormone-signalling signature for a sex
-chromosome. Notably, the \textit{Amnionless}/``Zfest'' sex-determination locus falls just outside the swept
-valley and shows only purifying selection: it is a linked passenger, not the target.
-
-\paragraph{The inversion is not a sweep outlier.}
-Completing the scan across all 45 autosomes plus the Z, chromosome~2 yields \emph{zero} concordant sweeps: the
-recombination-map method is broadly elevated across the inversion and the classifier over-calls there, but the
-two do not co-localise into focal sweep concordance --- exactly the pattern expected for a balancing-selected
-supergene rather than a swept region, and correctly filtered by the concordance requirement.
+dependent) and a formal adequacy gate for the Z's reduced effective size; the male-only screen was validated
+against the 289 haploid females, whose per-window diversity tracks the males' at $r=0.996$. Of the four Z
+Tier-1 calls (three hard, one soft; Supplementary Fig.~S18), three credible, gene-localised sweeps survive
+fine-scale triage, all confirmed as conserved cephalopod genes by direct homology: \textbf{Pasilla/Nova-1}
+(a neuronal alternative-splicing regulator; 92\% identity to \textit{Octopus}), \textbf{Smaug/samd4a} (a
+germline RNA-binding translational repressor), and \textbf{Esrrg} (an estrogen-related receptor with an
+adjacent likely-\textit{cis}-regulatory lncRNA; 97.5\% identity to \textit{Octopus}) --- a coherent
+RNA-regulation-and-hormone-signalling signature on the sex chromosome that echoes the neural theme of the
+autosomes. The \textit{Amnionless}/``Zfest'' sex-determination locus falls just outside the swept valley and
+shows only purifying selection: a linked passenger, not the target.
 
 % =====================================================================
 \section{Discussion}
 
-\illex{} emerges as a large-$\Ne$, expansion-dominated system whose genome carries a single, dramatic axis of
-structure --- a balancing-selected chromosome-2 supergene --- against an otherwise unstructured, weakly
-background-selected background. Where an earlier survey \citep{baker2025} described this structure, our
-contribution is to explain it and to look past it: to show that the chr2 inversion is a selected, datable
-supergene with a specific frequency history, and to resolve the genome-wide sweep landscape --- including on
-the sex chromosome --- that a differentiation scan does not reveal. Three results deserve emphasis.
+\illex{} emerges as a large-$\Ne$, expansion-dominated genome carrying a single dramatic axis of structure
+--- a balancing-selected chromosome-2 supergene --- against an otherwise unstructured, moderately
+background-selected background on which recent directional selection has acted on a specific biology. Where
+the earlier survey \citep{baker2025} described the structure, our contribution is to explain the inversion
+and to look past it.
 
-The inversion is the clearest case. Its rare, derived arrangement is more diverse than its frequency allows,
-which forces a history in which it was once common and is now declining; two mutation-rate-free arguments and
-a barrier-aware coalescent fit converge on an $\sim$850~ky-old polymorphism, coincident with the onset of the
-population expansion, that has been actively removed over the last $\sim$50--100~ky. That the age survived a
-complete reversal of the arrangement polarisation --- because it is carried by the polarisation-symmetric
-divergence between arrangements --- is a useful robustness check that few inversion-age estimates can claim.
-What the data do not resolve is the mechanism of balancing selection or the identity of its target: the block
-is gene-poor and differentiated as a unit, with no single locus standing out, consistent with selection on a
-co-adapted arrangement rather than a single gene.
+\paragraph{The inversion is a datable, declining, balancing-selected supergene.}
+Most inversions whose evolutionary dynamics are understood are maintained by local adaptation with migration
+\citep{kirkpatrick2006,lowry2010,faria2019}; the \illex{} inversion cannot be, because there is no geography
+to adapt to --- arrangement frequency is non-clinal and geographic $\Fst$ is zero everywhere. It must instead
+be held by balancing selection, and the data constrain \emph{how} it has been held with unusual precision.
+The excess diversity of the rare derived arrangement forces a history in which BB was once common; two
+mutation-rate-free arguments and a barrier-aware coalescent fit converge on an $\sim$850~ky-old polymorphism
+that plateaued near 0.74 and has been actively driven down to 0.37 over the last $\sim$50--100~ky. This is a
+qualitatively different object from the classic \textit{Drosophila} inversions, whose frequencies track
+clines and seasons \citep{corbettdetig2012}, and from the human 17q21 inversion, whose signature is a recent
+rise under positive selection \citep{stefansson2005}. It resembles more the mimicry supergene of
+\textit{Heliconius numata}, where an inverted arrangement carries a recessive deleterious load that
+generates associative overdominance and caps its frequency \citep{jay2021}. Associative overdominance is a
+natural candidate here: theory shows it emerges precisely in large, non-recombining blocks once recessive
+load accumulates \citep{zhao2016,gilbert2020}, and the clustered coding divergence we document --- 19 exonic
+fixed differences in nine genes, in a block whose 45 annotated genes show no functional enrichment --- is the
+raw material of such a load. But a two-phase history of plateau followed by decline is also what a moving
+optimum under fluctuating selection produces \citep{wittmann2017,rudman2022}, and a shelf spawner whose
+paralarvae are advected by the Gulf Stream is a plausible target of $\sim$100~ky climate cycles. The data
+constrain the trajectory, not the mechanism. What they do establish is that the arrangement itself, not any
+single gene within it, is the unit of selection: the block is gene-poor, functionally unremarkable,
+differentiated as a unit, and free of sweeps, exactly as expected when recombination suppression is the trait
+under selection \citep{kirkpatrick2010,berdan2023}.
 
-The demographic result matters methodologically as much as biologically. A sweepstakes-reproduction species is
-exactly where one expects multiple-merger coalescents to masquerade as expansion; testing the coalescent class
-directly, rather than assuming Kingman, is what licenses every downstream age and selection estimate here.
+Two features of the inversion analysis are methodologically general. First, the age is carried by the
+polarisation-symmetric divergence between arrangements, so it survived a complete reversal of which
+arrangement is derived --- a reversal forced on us by discovering that the reference genome is itself inverted.
+Reference-orientation circularity is a hazard for any inversion study that polarises from the reference
+allele, and outgroup-based polarisation on non-reference sites is the remedy. Second, the coalescent inside an
+inversion is a two-deme process with a barrier \citep{navarro2000,guerrero2012}, and fitting it requires a
+simulator that enforces the barrier in the ancestral recombination graph rather than approximating the
+arrangements as freely recombining. msinv provides this, and the plateau-and-decline history it recovers is
+not accessible to methods that treat the inversion as a single locus. As the catalogue of wild inversions
+grows \citep{wellenreuther2018,merot2020}, joint estimation of age, trajectory and selection from
+per-arrangement diversity, divergence and the joint SFS offers a route to classifying them by history rather
+than by phenotype.
 
-Finally, the sweep scan is a cautionary and constructive example. Simulation-trained per-window classifiers
-are increasingly standard, but on a strongly expanding, unphased, missing-data-rich genome they over-call
-because real neutral sequence is spatially more heterogeneous than tractable neutral simulations. Rather than
-hide this behind a threshold, we quantified it and let it dictate the framing: a stratified empirical-outlier
-scan with cross-method concordance and an explicit background-selection filter. The resulting candidate set is
-small and biologically coherent --- neural, RNA-regulatory, membrane-lipid, and stress-response genes, a
-lineage-specific novelty under a hard sweep, and a sex-chromosome cluster of RNA-regulation and hormone-
-signalling loci --- and is offered as hypothesis-generating rather than as a list of confirmed targets.
+\paragraph{The sweep program is neural and photoreceptive, and it is robust to background selection.}
+The genome-wide scan resolves into two themes. The first --- neurogenesis, neuron development, and
+neuron-projection and cell morphogenesis --- is what one might expect of a lineage whose defining evolutionary
+innovation is a large, centralised, cell-type-rich nervous system \citep{albertin2015,styfhals2022}, and
+whose genomes are marked by regulatory reorganisation around neural genes \citep{schmidbaur2022}. The
+second, photoreception, is the more surprising and the more \illex{}-specific. Cephalopod photoreception is
+not confined to the camera eye: opsins and phototransduction cascades are expressed in skin and
+chromatophores \citep{ramirez2015,kingston2015}, and the visual system is among the most cell-type-diverse
+sensory structures known in an invertebrate \citep{songcocasey2022,yoshida2015}. \illex{} is a fast,
+visually guided predator that migrates vertically each day through a steep light gradient and seasonally
+across latitude \citep{odor1998}; selection on light detection is biologically apposite. The decisive
+evidence that these themes are real, rather than by-products of reduced diversity at gene-dense neural loci,
+is their behaviour under the background-selection screen. Background selection lowers diversity where genes
+are dense \citep{charlesworth1993,mcvicker2009,charlesworth2021}; a sweep call that is really a BGS artefact
+is therefore \emph{removed} by a test that demands diversity below the BGS expectation, and any enrichment
+riding on such calls should erode. Instead every leading term sharpened --- light response $1.9\!\to\!3.1$,
+radiation $1.8\!\to\!2.8$, morphogenesis $1.7$--$1.8\!\to\!2.2$--$2.3$ --- and the weakest theme became the
+strongest. The sweep program is not an artefact of gene density.
+
+We frame these as candidates rather than confirmed targets, and the framework itself is offered as a
+contribution. Simulation-trained per-window classifiers are increasingly standard
+\citep{schrider2016,kern2018diploshic}, but on a strongly expanding, unphased, missing-data-rich genome they
+over-call because real neutral sequence is spatially more heterogeneous than tractable neutral simulations.
+Rather than hide this behind a threshold, we quantified it and let it dictate the framing --- a stratified
+empirical-outlier scan, cross-method concordance, and an explicit background-selection filter --- in the
+spirit of recent calls for inference that models the confounders it cannot remove \citep{johri2022}. The
+predominance of hard over soft sweeps in the enriched set is consistent with strong selection on new or rare
+variants in a very large population \citep{messer2013soft,schrider2017,harris2018}, though the soft-sweep
+class is underpowered here and we draw no firm conclusion about the mode of adaptation.
+
+\paragraph{Demography, sweepstakes, and what licenses the rest.}
+A sweepstakes-reproduction species is exactly where multiple-merger coalescents are expected to masquerade as
+expansion \citep{eldon2006,hedgecock2011}, and recent work on Atlantic cod argues that pervasive recurrent
+sweeps can themselves generate multiple-merger genealogies \citep{arnason2023}. We tested the coalescent class
+directly rather than assuming it: the SFS is Kingman-plus-growth, not Beta, and SFS- and LD-based $\Ne$ agree.
+That result is what licenses every age and selection estimate above, and it means that \illex{}'s enormous
+fecundity has not, at the genomic scale we can resolve, translated into the skewed genealogies its life
+history would suggest. That the inversion arose at essentially the same time as the expansion began is a
+coincidence worth noting: a supergene established at the onset of a $\sim$12-fold demographic expansion
+would have been carried through that expansion at its plateau frequency, and its subsequent decline is a
+recent event against that backdrop.
 
 % =====================================================================
 \section{Limitations}
 The callset is unphased, so no haplotype-homozygosity statistics are available; sweep detection relies on the
-SFS and diversity alone. The simulation-to-real neutral mismatch that drives classifier over-calling is real
-and unresolved at the level of absolute neutral calling --- our empirical-outlier framing is a principled
-response, not a cure --- and it also defeats a within-arrangement SFS approach to the inversion. Every
-inversion age scales inversely with the mutation rate, and $\mu=3\times10^{-9}$ is the weakest external input;
-an independent calibration (e.g.\ a karyotyped congener) is the clearest route to a mutation-rate-free age.
-The corroborating LD-footprint method is broad and the abandoned frequency-spectrum method was unreliable on
-these data. Candidate sweep genes rest on homology to distant cephalopod models and on cross-method
-concordance; they are candidates, not confirmed adaptive targets.
+SFS and diversity alone, which limits power against soft sweeps in particular. The simulation-to-real neutral
+mismatch that drives classifier over-calling is real and unresolved at the level of absolute neutral calling
+--- our empirical-outlier framing is a principled response, not a cure --- and it also defeats a
+within-arrangement SFS approach to the inversion. Every inversion age scales inversely with the mutation rate,
+and $\mu=3\times10^{-9}$ is the weakest external input; an independent calibration (e.g.\ a karyotyped
+congener such as \textit{I.\ argentinus}) is the clearest route to a mutation-rate-free age. The inversion
+model conditions on a deterministic frequency trajectory and within-arrangement neutrality; it constrains the
+shape of $p(t)$, not the mechanism of balancing selection. The corroborating footprint methods are broad, and
+the recombination-aware decoder is design-informed rather than simulation-calibrated. Candidate sweep genes
+rest on homology to distant cephalopod models and on cross-method concordance; the two enrichment themes are
+statements about gene sets, not about individual confirmed targets.
 
 % =====================================================================
 \section{Methods}\label{sec:methods}
@@ -431,72 +520,88 @@ Full parameter values, software versions, and command-level provenance are in
 Supplementary Table~S1 and in the project repository.
 
 \paragraph{Data.}
-The ingroup is the 350-individual \illex{} subset of the baker\_2025 whole-genome callset (of 633 sequenced),
-mapped to the \texttt{Illex\_F24} primary assembly (45 numbered chromosomes plus the Z). Genotypes are unphased
-and the VCF is variants-only (no invariant sites), so diversity is computed from genotype likelihoods off the
-BAMs rather than from called genotypes. \coin{} is the divergence/MK outgroup. An accessibility mask restricts
-all analyses to callable sites.
+The ingroup is the 633-individual \illex{} whole-genome callset of \citet{baker2025}, mapped to the
+\texttt{Illex\_F24} primary assembly (45 numbered chromosomes plus the Z). Genotypes are unphased and the VCF
+is variants-only (no invariant sites), so diversity is computed from genotype likelihoods off the BAMs rather
+than from called genotypes. \coin{} is the divergence/MK outgroup; \textit{I.\ argentinus} is a secondary
+comparator. An accessibility mask restricts all analyses to callable sites.
 
 \paragraph{Diversity, SFS, and demography.}
-Site-frequency spectra, Watterson's $\theta$, per-window $\pi$ and Tajima's $D$, and per-karyotype spectra were
-computed with ANGSD (\texttt{-doSaf}/\texttt{realSFS}). Demographic history was inferred with Stairway~Plot~2,
-moments, and GONE2, and validated by forward simulation reproducing the observed $\pi$ and $D$. Windowed
-$\pi$, $\dxy$, $\Fst$, and PCA used pg\_gpu.
+Site-frequency spectra, Watterson's $\theta$, per-window $\pi$ and Tajima's $D$, and per-karyotype spectra
+were computed with ANGSD \citep{korneliussen2014angsd} (\texttt{-doSaf}/\texttt{realSFS}); per-population
+statistics were computed per NAFO division and per chromosome (all 45 autosomes plus the Z, the latter in
+males only). Demographic history was inferred with Stairway~Plot~2 \citep{liu2020stairway}, moments
+\citep{jouganous2017moments}, and GONE2 \citep{gone2}, and validated by forward simulation reproducing the
+observed $\pi$ and $D$. The coalescent class was tested by comparing the folded SFS against Kingman-plus-growth
+and Beta-coalescent expectations. Windowed $\pi$, $\dxy$, $\Fst$, and PCA used pg\_gpu \citep{pggpu};
+per-SNP and between-karyotype $\Fst$ used the Hudson estimator \citep{bhatia2013}. Relatedness was screened
+with KING-robust \citep{manichaikul2010}.
 
 \paragraph{Karyotyping and the inversion.}
-Karyotypes were called by local-PCA/lostruct and a Gaussian-mixture model. Arrangement polarisation used an
-AnchorWave \coin{}$\leftrightarrow$\illex{} whole-genome alignment restricted to non-reference-biased sites.
-The inversion's age and frequency trajectory were fit with \textbf{msinv} v0.3.5, an ARG-based coalescent
-simulator that enforces cross-karyotype recombination barriers and outputs tree sequences, implementing the
-hulls-based ancestral-material tracking of \citet{kelleher2016}; it was validated against SLiM, msprime, and
-discoal. \textbf{All coalescent simulations underlying the inversion age and decline inference were generated
-with msinv}, and the complete chr2-inversion analysis --- the fitting code, the simulation configuration, and
-every per-analysis output and figure --- is housed as a dedicated \illex{} module within the msinv repository
-(\texttt{files/illex/}, \texttt{results/illex/}). Simulations used the fitted growth demography,
-$\mu=3\times10^{-9}$, and $r=1.977\times10^{-9}$; statistics were computed on the differentiated body and
-rescaled from a 37-kb simulated inversion with length-invariance verified over a 25-fold range. Breakpoints were pinned by combining arrangement
-differentiation with the AnchorWave alignment; missed genes were recovered by DIAMOND \texttt{blastx} against
-seven cephalopod proteomes, with transposable elements annotated by EarlGrey and transcripts by StringTie.
+Karyotypes were called by local PCA \citep{li2019lostruct} and a Gaussian-mixture model. Arrangement
+polarisation used an AnchorWave \citep{song2022anchorwave} \coin{}$\leftrightarrow$\illex{} whole-genome
+alignment restricted to non-reference-biased sites, with est-sfs \citep{keightley2018estsfs} as a check. The
+inversion's age and frequency trajectory were fit with \textbf{msinv} v0.3.5 \citep{msinv}, an ARG-based
+coalescent simulator that enforces cross-karyotype recombination barriers and outputs tree sequences,
+implementing the hulls-based ancestral-material tracking of \citet{kelleher2016}; it was validated against
+SLiM \citep{haller2019slim}, msprime \citep{baumdicker2022}, and discoal \citep{kern2016discoal}. All
+coalescent simulations underlying the inversion age and decline inference were generated with msinv, and the
+complete chr2-inversion analysis --- fitting code, simulation configuration, and every per-analysis output
+and figure --- is housed as a dedicated \illex{} module within the msinv repository (\texttt{files/illex/},
+\texttt{results/illex/}). Simulations used the fitted growth demography, $\mu=3\times10^{-9}$, and
+$r=1.977\times10^{-9}$; statistics were computed on the differentiated body and rescaled from a 37-kb
+simulated inversion with length-invariance verified over a 25-fold range. Breakpoints were pinned by
+combining arrangement differentiation with the AnchorWave alignment; missed genes were recovered by DIAMOND
+\texttt{blastx} \citep{buchfink2021diamond} against seven cephalopod proteomes, with transposable elements
+annotated by Earl~Grey \citep{baril2024earlgrey} and transcripts by StringTie2 \citep{kovaka2019stringtie}.
+Fixed differences between arrangements were defined as sites with $|\Delta\mathrm{AF}|\geq0.9$ between AA
+($n=254$) and BB ($n=95$) homozygotes; the gene-ontology test of inversion genes used Fisher's exact test
+against the genome-wide annotated-gene background in all three ontologies, with a permutation null of 500
+random gene sets of equal size.
 
 \paragraph{Recombination map.}
-Per-sex recombination maps were built with ReLERNN (SIMULATE$\to$TRAIN$\to$PREDICT$\to$BSCORRECT), dropping
-individuals with no calls on a chromosome and never forcing diploid genotype calls.
+Per-sex recombination maps were built with ReLERNN \citep{adrion2020relernn}
+(SIMULATE$\to$TRAIN$\to$PREDICT$\to$BSCORRECT), dropping individuals with no calls on a chromosome and never
+forcing diploid genotype calls.
 
 \paragraph{Selective-sweep scan.}
-The classifier was diploSHIC (five classes, 1.1~Mb windows of eleven 100~kb sub-windows, twelve diploid
-statistics per sub-window), trained on SLiM~5.2 forward simulations (recapitated with msprime) and pure-msprime
-neutral simulations under the fitted growth demography, at the empirical sample size and with realistic
-structured missingness. The model was trained on the same unphased feature extractor (\texttt{fvecVcf}) used
-to scan, on the full spectrum (no MAF filter). It was used as a stratified empirical-outlier detector (score
+The classifier was diploS/HIC \citep{kern2018diploshic} (five classes, 1.1~Mb windows of eleven 100~kb
+sub-windows, twelve diploid statistics per sub-window), trained on SLiM~5.2 forward simulations
+\citep{haller2019slim} (recapitated with msprime; \citealt{kelleher2018}) and pure-msprime neutral
+simulations under the fitted growth demography, at the empirical sample size and with realistic structured
+missingness. The model was trained on the same unphased feature extractor (\texttt{fvecVcf}) used to scan, on
+the full spectrum (no MAF filter). It was used as a stratified empirical-outlier detector (score
 $p_\mathrm{hard}+p_\mathrm{soft}$ ranked within callable-fraction $\times$ coding-density strata), corroborated
-by RAiSD; SweepFinder2 and a $B$-value calculator were evaluated but not used for reported results. The Z
-chromosome was scanned in males only with a model retrained at $n=330$ and passed a comparative feature-adequacy
-gate, then validated against the haploid females. Candidate genes were annotated with EnTAP and screened by
-DIAMOND against cephalopod proteomes; a per-region background-selection test compared local $\pi$ to the
-flanking-coding-density expectation. The per-window classifications were spatially resolved into Tier-1
-calls with a recombination-aware hidden Markov model (neutral / linked / sweep-centre states; emissions are
-the prior-corrected collapsed class posteriors; dwell lengths set from the $\sim$400~kb sweep footprint
-scaled by the ReLERNN sex-averaged map, with a constant-rate fallback on chromosomes~2 and~42). A
-simulation calibration of the decoder was attempted but proved infeasible on this genome: at $\Ne$-scale
-recombination the recapitated ancestral recombination graphs carry $\sim$3.4$\times10^{5}$ marginal trees
-per 2.5~Mb, making the tree-sequence genotype ascertainment for the training scan prohibitively slow
-($>$2.7~h per segment). The decoder's dwell parameters are therefore design-informed from the sweep
-footprint and the recombination map rather than fit to simulations, and are validated post-hoc by the
-89\%/2.9\% Tier-1--Tier-2 concordance (Supplementary Fig.~S13).
+by RAiSD \citep{alachiotis2018raisd} and SweepFinder2 \citep{degiorgio2016}. The per-window classifications
+were spatially resolved into Tier-1 calls with a recombination-aware hidden Markov model (neutral / linked /
+sweep-centre states; emissions are the prior-corrected collapsed class posteriors; dwell lengths set from the
+$\sim$400~kb sweep footprint scaled by the ReLERNN sex-averaged map, with a constant-rate fallback on
+chromosomes~2 and~42 and the Z). A simulation calibration of the decoder was attempted but proved infeasible:
+at $\Ne$-scale recombination the recapitated ancestral recombination graphs carry $\sim$3.4$\times10^{5}$
+marginal trees per 2.5~Mb, making tree-sequence genotype ascertainment for a training scan prohibitively slow
+($>$2.7~h per segment); the dwell parameters are therefore design-informed and validated post hoc by the
+89\%/2.9\% Tier-1--Tier-2 concordance (Supplementary Fig.~S13). The Z chromosome was scanned in males only
+with a model retrained at $n=330$ and passed a comparative feature-adequacy gate, then validated against the
+haploid females. Candidate genes were annotated with EnTAP and screened by DIAMOND against cephalopod
+proteomes. Gene-ontology enrichment of Tier-1 genes used Fisher's exact test against the annotated-gene
+background on the scanned chromosomes with Benjamini--Hochberg FDR \citep{benjamini1995}; the
+background-selection screen retained calls whose local $\pi$ fell below the expectation from flanking coding
+density ($\hat\pi=0.01059-0.16547\cdot f_\mathrm{CDS}$; standardised residual $\leq-0.3$).
 
 \paragraph{McDonald--Kreitman.}
-MK tests used mkado against the \coin{} outgroup over 20{,}999 genes.
+MK tests used mkado \citep{mkado} against the \coin{} outgroup over 20{,}999 genes, with degeneracy
+annotated by degenotate \citep{degenotate}.
 
 % =====================================================================
 \section*{Data and code availability}
-The analysis code, per-step results, and the working project document
-(\texttt{ILLEX\_PROJECT\_MANUSCRIPT\_AND\_METHODS.md}) are in the project repository. The coalescent
+The manuscript, all figures and tables, their generating scripts, and editable table exports are in the
+manuscript repository (\url{https://github.com/stsmall/Illex_popgen}); a section-by-section index of every
+figure and table source file is provided there as \texttt{FIGURES\_AND\_TABLES\_INDEX.md}. The coalescent
 simulations for the inversion analysis (\cref{sec:inv}) were generated with \texttt{msinv} v0.3.5, a general
-ARG-based inversion-coalescent simulator (\url{https://github.com/stsmall/msinv}, MIT); it is not specific to
-\illex{}, but this study's complete \illex{}-specific inversion analysis --- fitting code, simulation
-configuration, tabulated outputs, and the inversion figures --- is contained within that repository under
-\texttt{files/illex/} and \texttt{results/illex/}. A section-by-section index of every figure and table source
-file is provided as \texttt{FIGURES\_AND\_TABLES\_INDEX.md}.
+ARG-based inversion-coalescent simulator (\url{https://github.com/stsmall/msinv}, MIT); this study's complete
+\illex{}-specific inversion analysis --- fitting code, simulation configuration, tabulated outputs, and the
+inversion figures --- is contained within that repository under \texttt{files/illex/} and
+\texttt{results/illex/}.
 
 \section*{Acknowledgements}
 [TODO: funding, sequencing, sample collection, computing.]
@@ -508,7 +613,7 @@ file is provided as \texttt{FIGURES\_AND\_TABLES\_INDEX.md}.
   \caption{\textbf{Sampling and chromosome-2 arrangement frequency.} \illex{} sampled across eleven NAFO
     divisions ($\sim$37--50$^\circ$N); pies show the AA/AB/BB karyotype composition at each division (sized by
     $N$). The inverted (BB) frequency is non-clinal (0.29--0.46 across latitude), consistent with geographic
-    $\Fst\approx0$.}
+    $\Fst\approx0$ --- the inversion is not locally adaptive.}
   \label{fig:map}
 \end{figure}
 
@@ -516,10 +621,10 @@ file is provided as \texttt{FIGURES\_AND\_TABLES\_INDEX.md}.
   \includegraphics[width=\linewidth]{fig2_overview.png}
   \caption{\textbf{No population structure outside chr2, and the sex assignment} (recapitulating
     \citealt{baker2025}). \textbf{(a)} Genome-wide autosomal PCA with chr2 excluded --- a single
-    undifferentiated cloud. \textbf{(b)} chrZ PCA (mild male/female separation). \textbf{(c)} chrZ:autosome
-    coverage ratio (chr42-corrected for a shared mapping bias) by sex: ZZ males at $\sim$1.0 (two Z copies);
-    ZO females clearly lower, near the single-copy expectation (there is no W) --- the residual offset above
-    0.5 is most likely a low-coverage calibration artifact rather than biology. 342 males / 291 females.}
+    undifferentiated cloud. \textbf{(b)} chrZ PCA (mild male/female separation). \textbf{(c)} chrZ:chr1
+    read-coverage ratio by individual: ZZ males at $\sim$1.0 (two Z copies), ZO females near the single-copy
+    expectation (there is no W); individuals in the ambiguous band are left unassigned. 342 males / 291
+    females.}
   \label{fig:overview}
 \end{figure}
 
@@ -527,9 +632,10 @@ file is provided as \texttt{FIGURES\_AND\_TABLES\_INDEX.md}.
   \includegraphics[width=\linewidth]{fig3_inversion.png}
   \caption{\textbf{The chromosome-2 inversion.} \textbf{(a)} chr2 PCA resolves three karyotype clusters
     (AA/AB/BB). \textbf{(b)} $\Fst$ between arrangements along chr2 --- the inversion (60.54--79.50~Mb,
-    shaded) is the only differentiated region (median $\Fst=0.37$ vs 0.01 collinear). \textbf{(c)}
-    Per-arrangement diversity across the inversion: the derived, inverted BB arrangement is \emph{more}
-    diverse than the ancestral AA ($\pi_I/\pi_S=1.36$), and $\dxy$ exceeds both.}
+    shaded) is the only differentiated region (median $\Fst=0.37$ vs 0.01 collinear; whole-chromosome view in
+    Supplementary Fig.~S20). \textbf{(c)} Per-arrangement diversity across the inversion: the derived, inverted
+    BB arrangement is \emph{more} diverse than the ancestral AA ($\pi_I/\pi_S=1.36$) despite its lower
+    frequency, and $\dxy$ exceeds both --- the signature of an old, formerly common polymorphism.}
   \label{fig:inv}
 \end{figure}
 
@@ -539,12 +645,11 @@ file is provided as \texttt{FIGURES\_AND\_TABLES\_INDEX.md}.
     population size over time: Stairway~Plot~2 (median $\pm$95\% CI), the moments 2-epoch growth model with
     its Godambe (GIM) 95\% parameter-CI envelope (expansion $12.4\times\pm9\%$, $T\approx770$~ky~$\pm16\%$),
     GONE2 for the recent past, and a single momentsLD LD-$\Ne$ point (rate-corrected; only the contemporary
-    point is shown because its time-varying fit is non-identifiable). \textbf{(b-i)} Fitted inversion
-    trajectory:
-    the derived (BB) arrangement arose $\sim$850~ka, was held near $p\approx0.74$, and declined to 0.374,
-    with the neutral-drift envelope. \textbf{(b-ii, b-iii)} $\Delta\chi^{2}$ profiles locating the end
-    ($t_\mathrm{decline}$) and duration ($t_\mathrm{fall}$) of the decline; the fall was recent and fast,
-    excluding neutral drift-out.}
+    point is shown because its time-varying fit is non-identifiable). \textbf{(b)} Inversion trajectory fit
+    with the barrier-aware coalescent simulator msinv: the derived (BB) arrangement arose $\sim$850~ka ---
+    coincident with the onset of expansion in (a) --- was held near $p\approx0.74$, and declined to 0.374;
+    the neutral-drift envelope is shown for comparison. $\Delta\chi^{2}$ profiles locating the end and duration
+    of the decline are in Supplementary Fig.~S14; the fall was recent and fast, excluding neutral drift-out.}
   \label{fig:demog}
 \end{figure}
 
@@ -552,25 +657,26 @@ file is provided as \texttt{FIGURES\_AND\_TABLES\_INDEX.md}.
   \includegraphics[width=\linewidth]{fig5_selection.png}
   \caption{\textbf{The genome-wide selective-sweep scan.} Sweep signal across the genome (chromosomes
     concatenated). The classifier reads the genome as pervasively \emph{linked}-selected
-    ($\sim$91\% linked-hard/soft; neutral $\sim$1\%; true hard/soft only a few percent), so raw diploSHIC
-    calls are filtered by cross-method concordance (a diploSHIC-HMM outlier plus RAiSD or SweepFinder2) and a
+    ($\sim$91\% linked-hard/soft; neutral $\sim$1\%; true hard/soft only a few percent), so raw diploS/HIC
+    calls are filtered by cross-method concordance (a diploS/HIC-HMM outlier plus RAiSD or SweepFinder2) and a
     background-selection test; the corroborated, background-selection-robust candidates (35 windows across 34
     regions; highlighted) stand out above the discounted background, with key genes labelled. Chromosome-Z
-    Tier-1 calls (diamonds) are male-based and diploSHIC-only --- RAiSD/SweepFinder2 do not cover the Z --- so
-    they cannot enter the concordance filter. The full scan pipeline is shown in Supplementary Fig.~S6.}
+    Tier-1 calls (diamonds) are male-based and diploS/HIC-only --- the footprint methods do not cover the Z ---
+    so they cannot enter the concordance filter. Chromosome~2 carries no concordant sweep. The full scan
+    pipeline is shown in Supplementary Fig.~S8.}
   \label{fig:selection}
 \end{figure}
 
 \begin{figure}[p]\centering
   \includegraphics[width=\linewidth]{fig6_diversity.png}
   \caption{\textbf{Diversity is uniform and there is no geographic structure.} \textbf{(a)} Nucleotide
-    diversity $\pi$ and \textbf{(b)} Tajima's $D$ per NAFO division, ordered south$\to$north (coloured by
-    latitude) --- both are flat across latitude (no cline), and $D$ is negative in every population, the
-    signature of strong expansion. \textbf{(c)} Pairwise $\Fst$ among divisions as a clustered heatmap with
-    dendrogram: every value is $\approx0$ ($-0.017$ to $-0.004$) and the clustering follows sample size, not
-    geography --- no population structure. ($\pi$/$D$ estimated by ANGSD genotype likelihoods, large
-    divisions subsampled to $n=25$; $\Fst$ genome-wide by pg\_gpu. Per-chromosome distributions:
-    Supplementary Fig.~S7.)}
+    diversity $\pi$ and \textbf{(b)} Tajima's $D$ per NAFO division, ordered south$\to$north --- both are
+    flat across latitude (no cline), and $D$ is negative in every population, the signature of strong
+    expansion. \textbf{(c)} Pairwise $\Fst$ among divisions as a clustered heatmap with dendrogram: every
+    value is $\approx0$ ($-0.017$ to $-0.004$) and the clustering follows sample size, not geography --- no
+    population structure. ($\pi$/$D$ estimated by ANGSD genotype likelihoods over all 45 autosomes plus the
+    Z, large divisions subsampled to $n=25$; $\Fst$ genome-wide by pg\_gpu. Per-chromosome distributions:
+    Supplementary Fig.~S9.)}
   \label{fig:diversity}
 \end{figure}
 
@@ -583,7 +689,7 @@ file is provided as \texttt{FIGURES\_AND\_TABLES\_INDEX.md}.
     \toprule
     Quantity & Value \\
     \midrule
-    Species / callset            & \illex{}; baker\_2025 whole-genome \\
+    Species / callset            & \illex{}; \citet{baker2025} whole-genome \\
     Individuals (karyotyped)     & 633 \\
     Sex (chrZ coverage)          & 342 ZZ males / 291 ZO females \\
     Sampling                     & 11 NAFO divisions, $\sim$37--50$^\circ$N \\
@@ -615,6 +721,8 @@ file is provided as \texttt{FIGURES\_AND\_TABLES\_INDEX.md}.
     Coalescent age $t_\mathrm{inv}$ & $\sim$850~ky ($\propto 1/\mu$, $\mu=3\times10^{-9}$) \\
     Decline                        & $0.74\to0.374$ over $\sim$50--100~ky, ending $\gtrsim$50--100~ka \\
     Selection on decline           & $\Ne s\sim10^{2}$--$10^{3}$ ($s\approx1.5\times10^{-4}$) \\
+    Gene content                   & 89 gene models (45 annotated); no GO enrichment (permutation $p=0.51$) \\
+    Fixed differences (AA vs BB)   & 3{,}513 ($|\Delta\mathrm{AF}|\geq0.9$); 19 exonic, in 9 genes \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -643,7 +751,7 @@ file is provided as \texttt{FIGURES\_AND\_TABLES\_INDEX.md}.
     chromosome, including the Z-chromosome set. Autosomal rows are the 11 background-selection-robust
     candidates (of 34 concordant regions); Z rows (marked) are the fine-scale-confirmed sweeps from the
     males-only scan. Genes are cephalopod orthologs. Class: hard/soft sweep. Full machine-readable tables:
-    \texttt{outlier\_scan/} (Supplementary Table~S3).}
+    Supplementary Table~S6.}
   \label{tab:sweep}
   \begin{tabular}{lll}
     \toprule
