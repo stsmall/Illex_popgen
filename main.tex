@@ -560,9 +560,11 @@ Full parameter values, software versions, and command-level provenance are in
 Supplementary Table~S1 and in the project repository.
 
 \paragraph{Data.}
-The ingroup is the 633-individual \illex{} whole-genome callset from the sequencing programme described by
-\citet{baker2025}, mapped to the
-\texttt{Illex\_F24} primary assembly (45 numbered chromosomes plus the Z). Genotypes are unphased and the VCF
+The ingroup is all 633 \illex{} individuals whole-genome sequenced by \citet{baker2025} (ENA project
+PRJEB101095; collected 2022--2023 across eleven NAFO divisions, every individual with coordinates), of which
+that study retained 540 after its own quality filters. We re-processed the raw reads from scratch: mapping to
+the \texttt{Illex\_F24} primary assembly (45 numbered chromosomes plus the Z) and joint variant calling
+(Supplementary Table~S1). Genotypes are unphased and the VCF
 is variants-only (no invariant sites), so diversity is computed from genotype likelihoods off the BAMs rather
 than from called genotypes. \coin{} is the divergence/MK outgroup; \textit{I.\ argentinus} is a secondary
 comparator. An accessibility mask restricts all analyses to callable sites.
