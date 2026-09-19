@@ -35,8 +35,9 @@
        program of recent selection in the northern shortfin squid
        \textit{Illex illecebrosus}}}
 
-\author[1]{[Author One]}
-\author[1,*]{S.\,Small}
+\author[1,*]{Scott T.\,Small}
+\author[1]{Silas Tittes}
+\author[1]{Andrew D.\,Kern}
 \affil[1]{Institute of Ecology and Evolution, University of Oregon, Eugene, OR, USA}
 \affil[*]{Correspondence: ssmall@uoregon.edu}
 \date{Draft \today}
@@ -51,10 +52,10 @@
 Chromosomal inversions are increasingly recognised as engines of adaptation, yet for most wild inversions
 we know neither their age, their frequency history, nor whether they are held by selection at all. The
 northern shortfin squid \illex{} --- an annual, semelparous, broadcast-spawning cephalopod with one of the
-largest effective population sizes of any animal --- carries a single $\sim$19~Mb inversion on chromosome~2
-that a recent survey \citep{baker2025} identified as the only axis of population structure. Using
-whole-genome data from 633 individuals across the species' North Atlantic range, we resolve what this
-inversion is and map the genome-wide landscape of recent positive selection around it. The inversion
+largest effective population sizes of any animal --- was recently shown to be panmictic across its
+northwest Atlantic range \citep{baker2025}. Using whole-genome data from 633 individuals across that range,
+we show that this unstructured genome carries a single $\sim$19~Mb inversion on chromosome~2, resolve what
+the inversion is, and map the genome-wide landscape of recent positive selection around it. The inversion
 (chr2:60.54--79.50~Mb) segregates at a derived frequency of 0.374 with no geographic cline and between-karyotype
 $\Fst=0.37$ against geographic $\Fst\approx0$, ruling out local adaptation. It is not neutral: the rare derived
 arrangement is 2.3-fold more diverse than its frequency can sustain, and a coalescent fit with an
@@ -102,9 +103,10 @@ Cephalopods offer an unusual setting in which to ask these questions. They combi
 history --- semelparity, enormous fecundity, near-total early mortality, and boom--bust recruitment --- with
 population sizes among the largest of any animal, and with the most elaborate nervous systems and visual
 systems in the invertebrates \citep{albertin2015,albertin2022,styfhals2022,songcocasey2022}. Their genomes
-show extensive lineage-specific reorganisation and regulatory innovation \citep{schmidbaur2022,liscovitch2017},
+show extensive lineage-specific reorganisation \citep{schmidbaur2022} and pervasive RNA-editing-based
+transcriptome plasticity \citep{liscovitch2017},
 and their photoreception extends beyond the camera eye to dermal opsins and light-driven chromatophore
-control \citep{ramirez2015,kingston2015,yoshida2015}. The northern shortfin squid \illex{} is an annual,
+control \citep{mathger2010,ramirez2015,kingston2015}. The northern shortfin squid \illex{} is an annual,
 semelparous broadcast spawner distributed across the northwest Atlantic shelf and slope, performing diel
 vertical migrations through a steep light gradient and supporting large commercial fisheries
 \citep{odor1998,arkhipkin2015}. Its fecundity-with-high-mortality demography is the profile that motivates
@@ -113,10 +115,11 @@ generation and the genealogy departs from the standard Kingman coalescent
 \citep{hedgecock2011,eldon2006,arnason2023}; a very large effective size, meanwhile, sharpens the resolution
 of both demographic inference and selection scans.
 
-A recent population-genomic survey of \illex{} \citep{baker2025} established the structure picture we
-confirm here: weak overall differentiation with a single, striking axis of structure on chromosome~2,
-recovered by PCA, $\Fst$, and admixture analysis and attributable to a large inversion. That description
-leaves open the questions that motivate this study. First, \emph{what is} the chromosome-2 inversion --- a
+A recent population-genomic survey of \illex{} \citep{baker2025} found no genetic structure across more
+than 2{,}500~km of range and no evidence of large structural variants, and recommended management as a
+single stock. We confirm the panmixia here, but find beneath it a single, striking axis of structure on
+chromosome~2 --- recovered by PCA, $\Fst$, and windowed local PCA and attributable to a large inversion ---
+that raises the questions motivating this study. First, \emph{what is} the chromosome-2 inversion --- a
 neutral, drifting polymorphism or a selected supergene, and if selected, of what kind, what age, and with
 what frequency history? Second, \emph{where else} in the genome has recent positive selection acted, and on
 what biology? A differentiation scan cannot answer either: in a population with no geographic structure it
@@ -147,7 +150,8 @@ single Z and no W (\cref{fig:overview}); a chromosome previously suspected to be
 autosomal by this criterion. Autosomal analyses use both sexes; the Z, on which males are diploid and females
 haploid, is analysed separately (\cref{sec:sweep}).
 
-Consistent with \citet{baker2025}, population structure exists in exactly one place in the genome. A
+Consistent with the range-wide panmixia reported by \citet{baker2025}, population structure exists in
+exactly one place in the genome, and that place is not geographic. A
 windowed principal-component analysis along chromosome~2 localises the three-cluster structure to the
 inversion (among-cluster variance $\eta^{2}=0.748$ inside it against $\eta^{2}=0.003$ in collinear sequence;
 Supplementary Fig.~S3), and two genome-wide tests show it is unique. First, the chromosome-2 karyotype
@@ -213,8 +217,8 @@ of the fall duration excludes the slow, drift-compatible alternative at $\Delta\
 Estimating an inversion's age requires a coalescent in which the two arrangements exchange ancestry only
 across the barrier; standard simulators do not provide this. We therefore fit the inversion's age and
 frequency trajectory with \textbf{msinv} \citep{msinv}, an ancestral-recombination-graph simulator that
-enforces the cross-karyotype recombination barrier, tracks ancestral material with the hulls-based scheme of
-\citet{kelleher2016}, and outputs tree sequences (\cref{sec:methods}). The data constrain the \emph{shape} of
+enforces the cross-karyotype recombination barrier, tracks ancestral material with a hull-based scheme in
+the msprime lineage \citep{kelleher2016,baumdicker2022}, and outputs tree sequences (\cref{sec:methods}). The data constrain the \emph{shape} of
 the frequency trajectory $p(t)$ rather than any site-level mechanism, so we condition on a deterministic
 trajectory under within-arrangement neutrality and fit jointly to $\pi_I/\pi_S$, $\dxy/\pi_I$, and the
 per-arrangement singleton spectrum (\cref{fig:demog}b; Supplementary Figs.~S5, S14). The coalescent age is
@@ -275,13 +279,13 @@ and eventual degeneration are built \citep{jay2021,berdan2023}.
 \subsection{Demographic history licenses the inversion model}\label{sec:demog}
 The age and selection estimates above depend on the population's demography and on the coalescent class
 being Kingman. Genome-wide, \illex{} shows $\pi\approx0.0093$ and Tajima's $D\approx-2$ in essentially every
-window \citep{tajima1989} --- an unambiguous, genome-wide signature of expansion (\cref{tab:demog},
+window \citep{tajima1989,tajima1989b} --- an unambiguous, genome-wide signature of expansion (\cref{tab:demog},
 \cref{fig:demog}a, \cref{fig:diversity}). A moments fit to the folded SFS gives growth from an ancestral
 $\Ne=$ 547{,}928 to a present $\Ne=$ 6{,}808{,}096 over 769{,}519 generations ($\sim$12-fold; generations
 $\approx$ years for this annual species), and this history reproduces both the observed $\pi$ and a full-SFS
 Tajima's $D=-1.92$ under forward simulation. Stairway~Plot~2 and GONE2 concur on strong recent expansion to
 $\Ne$ in the $1.5$--$1.7\times10^{7}$ range. Because sweepstakes reproduction would mimic expansion by
-inflating rare variants \citep{eldon2006,hedgecock2011}, we tested the coalescent class directly: the folded
+inflating rare variants \citep{eldon2006,hedgecock2011,eldon2015}, we tested the coalescent class directly: the folded
 SFS is fit far better by a Kingman-plus-growth model than by any multiple-merger (Beta) coalescent
 \citep{schweinsberg2003} (shape deviation $L_1=0.036$ vs a best-$\alpha$ 0.108), and contemporary $\Ne$
 estimates from the SFS and from linkage disequilibrium agree --- both inconsistent with a strong
@@ -445,8 +449,8 @@ shows only purifying selection: a linked passenger, not the target.
 \illex{} emerges as a large-$\Ne$, expansion-dominated genome carrying a single dramatic axis of structure
 --- a balancing-selected chromosome-2 supergene --- against an otherwise unstructured, moderately
 background-selected background on which recent directional selection has acted on a specific biology. Where
-the earlier survey \citep{baker2025} described the structure, our contribution is to explain the inversion
-and to look past it.
+the earlier survey \citep{baker2025} established panmixia for management, our contribution is to find the
+inversion beneath it, to explain it, and to look past it.
 
 \paragraph{The inversion is a datable, declining, balancing-selected supergene.}
 Most inversions whose evolutionary dynamics are understood are maintained by local adaptation with migration
@@ -457,15 +461,16 @@ The excess diversity of the rare derived arrangement forces a history in which B
 mutation-rate-free arguments and a barrier-aware coalescent fit converge on an $\sim$850~ky-old polymorphism
 that plateaued near 0.74 and has been actively driven down to 0.37 over the last $\sim$50--100~ky. This is a
 qualitatively different object from the classic \textit{Drosophila} inversions, whose frequencies track
-clines and seasons \citep{corbettdetig2012}, and from the human 17q21 inversion, whose signature is a recent
+clines and seasons \citep{corbettdetig2012,kapun2019}, and from the human 17q21 inversion, whose signature is a recent
 rise under positive selection \citep{stefansson2005}. It resembles more the mimicry supergene of
 \textit{Heliconius numata}, where an inverted arrangement carries a recessive deleterious load that
 generates associative overdominance and caps its frequency \citep{jay2021}. Associative overdominance is a
 natural candidate here: theory shows it emerges precisely in large, non-recombining blocks once recessive
-load accumulates \citep{zhao2016,gilbert2020}, and the clustered coding divergence we document --- 19 exonic
+load accumulates \citep{zhao2016,gilbert2020,berdan2021}, and the clustered coding divergence we document --- 19 exonic
 fixed differences in nine genes, in a block whose 45 annotated genes show no functional enrichment --- is the
-raw material of such a load. But a two-phase history of plateau followed by decline is also what a moving
-optimum under fluctuating selection produces \citep{wittmann2017,rudman2022}, and a shelf spawner whose
+raw material of such a load. But a two-phase history of plateau followed by decline is also what selection toward a shifting
+optimum can produce \citep{matuszewski2015}; fluctuating selection is demonstrably strong in wild populations
+\citep{wittmann2017,rudman2022}, and a shelf spawner whose
 paralarvae are advected by the Gulf Stream is a plausible target of $\sim$100~ky climate cycles. The data
 constrain the trajectory, not the mechanism. What they do establish is that the arrangement itself, not any
 single gene within it, is the unit of selection: the block is gene-poor, functionally unremarkable,
@@ -492,8 +497,8 @@ innovation is a large, centralised, cell-type-rich nervous system \citep{alberti
 whose genomes are marked by regulatory reorganisation around neural genes \citep{schmidbaur2022}. The
 second, photoreception, is the more surprising and the more \illex{}-specific. Cephalopod photoreception is
 not confined to the camera eye: opsins and phototransduction cascades are expressed in skin and
-chromatophores \citep{ramirez2015,kingston2015}, and the visual system is among the most cell-type-diverse
-sensory structures known in an invertebrate \citep{songcocasey2022,yoshida2015}. \illex{} is a fast,
+chromatophores \citep{ramirez2015,kingston2015}, and the visual system is highly cell-type-diverse, with optic lobes
+elaborated convergently with those of vertebrates \citep{songcocasey2022,styfhals2022,yoshida2015}. \illex{} is a fast,
 visually guided predator that migrates vertically each day through a steep light gradient and seasonally
 across latitude \citep{odor1998}; selection on light detection is biologically apposite. The decisive
 evidence that these themes are real, rather than by-products of reduced diversity at gene-dense neural loci,
@@ -511,9 +516,12 @@ over-call because real neutral sequence is spatially more heterogeneous than tra
 Rather than hide this behind a threshold, we quantified it and let it dictate the framing --- a stratified
 empirical-outlier scan, cross-method concordance, and an explicit background-selection filter --- in the
 spirit of recent calls for inference that models the confounders it cannot remove \citep{johri2022}. The
-predominance of hard over soft sweeps in the enriched set is consistent with strong selection on new or rare
-variants in a very large population \citep{messer2013soft,schrider2017,harris2018}, though the soft-sweep
-class is underpowered here and we draw no firm conclusion about the mode of adaptation.
+predominance of hard over soft sweeps in the enriched set is notable because a population this large is
+expected to adapt mainly by soft sweeps from standing variation \citep{messer2013soft}; a hard-sweep excess
+instead points to strong selection on new or rare variants with a small mutational target
+\citep{hermisson2005,harris2018}, in contrast to humans, where soft sweeps appear to dominate
+\citep{schrider2017}; the soft-sweep class is underpowered here, however, and we draw no firm conclusion about
+the mode of adaptation.
 
 \paragraph{Demography, sweepstakes, and what licenses the rest.}
 A sweepstakes-reproduction species is exactly where multiple-merger coalescents are expected to masquerade as
@@ -552,7 +560,8 @@ Full parameter values, software versions, and command-level provenance are in
 Supplementary Table~S1 and in the project repository.
 
 \paragraph{Data.}
-The ingroup is the 633-individual \illex{} whole-genome callset of \citet{baker2025}, mapped to the
+The ingroup is the 633-individual \illex{} whole-genome callset from the sequencing programme described by
+\citet{baker2025}, mapped to the
 \texttt{Illex\_F24} primary assembly (45 numbered chromosomes plus the Z). Genotypes are unphased and the VCF
 is variants-only (no invariant sites), so diversity is computed from genotype likelihoods off the BAMs rather
 than from called genotypes. \coin{} is the divergence/MK outgroup; \textit{I.\ argentinus} is a secondary
@@ -575,7 +584,8 @@ polarisation used an AnchorWave \citep{song2022anchorwave} \coin{}$\leftrightarr
 alignment restricted to non-reference-biased sites, with est-sfs \citep{keightley2018estsfs} as a check. The
 inversion's age and frequency trajectory were fit with \textbf{msinv} v0.3.5 \citep{msinv}, an ARG-based
 coalescent simulator that enforces cross-karyotype recombination barriers and outputs tree sequences,
-implementing the hulls-based ancestral-material tracking of \citet{kelleher2016}; it was validated against
+implementing hull-based ancestral-material tracking in the msprime lineage \citep{kelleher2016,baumdicker2022};
+it was validated against
 SLiM \citep{haller2019slim}, msprime \citep{baumdicker2022}, and discoal \citep{kern2016discoal}. All
 coalescent simulations underlying the inversion age and decline inference were generated with msinv, and the
 complete chr2-inversion analysis --- fitting code, simulation configuration, and every per-analysis output
@@ -599,7 +609,7 @@ forcing diploid genotype calls.
 \paragraph{Selective-sweep scan.}
 The classifier was diploS/HIC \citep{kern2018diploshic} (five classes, 1.1~Mb windows of eleven 100~kb
 sub-windows, twelve diploid statistics per sub-window), trained on SLiM~5.2 forward simulations
-\citep{haller2019slim} (recapitated with msprime; \citealt{kelleher2018}) and pure-msprime neutral
+\citep{haller2019slim} (recapitated with msprime; \citealt{kelleher2018,haller2019recap}) and pure-msprime neutral
 simulations under the fitted growth demography, at the empirical sample size and with realistic structured
 missingness. The model was trained on the same unphased feature extractor (\texttt{fvecVcf}) used to scan, on
 the full spectrum (no MAF filter). It was used as a stratified empirical-outlier detector (score
@@ -651,8 +661,8 @@ inversion figures --- is contained within that repository under \texttt{files/il
 
 \begin{figure}[p]\centering
   \includegraphics[width=\linewidth]{fig2_overview.png}
-  \caption{\textbf{No population structure outside chr2, and the sex assignment} (recapitulating
-    \citealt{baker2025}). \textbf{(a)} Genome-wide autosomal PCA with chr2 excluded --- a single
+  \caption{\textbf{No population structure outside chr2, and the sex assignment} (consistent with the
+    range-wide panmixia of \citealt{baker2025}). \textbf{(a)} Genome-wide autosomal PCA with chr2 excluded --- a single
     undifferentiated cloud. \textbf{(b)} chrZ PCA (mild male/female separation). \textbf{(c)} chrZ:chr1
     read-coverage ratio by individual: ZZ males at $\sim$1.0 (two Z copies), ZO females near the single-copy
     expectation (there is no W); individuals in the ambiguous band are left unassigned. 342 males / 291
