@@ -5,7 +5,7 @@ latitude). Latitude is the empirical division mean_lat; longitude is the NAFO
 standard-zone centroid (approximate). Karyotype pies (AA/AB/BB) sized by sqrt(N).
 """
 import sys
-sys.path.insert(0, "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript")
+sys.path.insert(0, "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/scripts")
 from figstyle import apply, KARYO, C, despine
 apply()
 import numpy as np, pandas as pd
@@ -47,7 +47,8 @@ for _, row in DIV.iterrows():
     r = 0.55 + 1.1 * np.sqrt(n / Nmax)   # radius in degrees
     pie_at(ax, row["lon"], row["mean_lat"], fr,
            [KARYO["AA"], KARYO["AB"], KARYO["BB"]], r)
-    ax.text(row["lon"], row["mean_lat"] - r - 0.35, row["division"], ha="center",
+    lab = row["division"] if row["N"] >= 5 else f'{row["division"]} (n={int(row["N"])})'
+    ax.text(row["lon"], row["mean_lat"] - r - 0.35, lab, ha="center",
             va="top", fontsize=7.5, color=C["ink"], transform=ccrs.PlateCarree(), zorder=6)
 
 # legend

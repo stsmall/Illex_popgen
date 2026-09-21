@@ -1,4 +1,4 @@
-import sys; sys.path.insert(0, '/sietch_colab/data_share/illex/popgen_data/analysis/manuscript')
+import sys; sys.path.insert(0, '/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/scripts')
 from figstyle import apply, C, despine, save
 apply()
 import matplotlib.pyplot as plt
@@ -94,6 +94,10 @@ genes = [
     ("32", 9_300_000, "MACROD2"),
     ("5", 38_000_000, "cept1"),
     ("16", 35_300_000, "novel"),
+    # chrZ Tier-1 sweep genes (male-based scan; Table 4 "Z" rows)
+    ("Z", 20_800_000, "Pasilla"),
+    ("Z", 23_600_000, "Smaug"),
+    ("Z", 30_700_000, "Esrrg"),
 ]
 
 fig, ax = plt.subplots(figsize=(9.5, 3.4))
@@ -149,11 +153,19 @@ if zt1:
                    linewidths=0.4, zorder=5)
 
 # label a handful of the strongest named candidate genes
-label_offsets = [(0, 6), (0, 6), (-16, 6), (0, 6), (12, 6)]
+label_offsets = [(0, 6), (0, 6), (-16, 6), (0, 6), (12, 6), (0, 0), (0, 0), (0, 0)]
+Z_LABEL_POS = {"Smaug": (1.012, 0.86), "Pasilla": (1.012, 0.46), "Esrrg": (1.012, 0.30)}
 for (chrom, pos, name), (dx, dy) in zip(genes, label_offsets):
     win_start = pos + 1
     hit = [r for r in rows if r["chrom"] == chrom and r["start"] == win_start]
     x = gpos(chrom, pos + 50_000)
+    if chrom == "Z":   # Z genes: anchor to nearest Tier-1 diamond, label in the right margin w/ leader
+        near = min(zt1, key=lambda t: abs(t[0] - x)) if zt1 else None
+        y = near[1] if near else Y_THRESH
+        ax.annotate(name, xy=(x, y), xytext=Z_LABEL_POS[name], textcoords="axes fraction",
+                    ha="left", va="center", fontsize=7.5, style="italic", color=C["ink"], zorder=5,
+                    arrowprops=dict(arrowstyle="-", color=C["muted"], lw=0.6, shrinkA=0, shrinkB=2))
+        continue
     y = hit[0]["y"] if hit else Y_THRESH
     ax.annotate(name, xy=(x, y), xytext=(dx, dy), textcoords="offset points",
                 ha="center", va="bottom", fontsize=7.5, style="italic",
@@ -190,7 +202,7 @@ tick_pos = [offset[c] + chrom_len[c] / 2 for c in chroms]
 tick_lab = [(c if (c.isdigit() and int(c) % 2 == 1) else ("Z" if c == "Z" else "")) for c in chroms]
 ax.set_xticks(tick_pos)
 ax.set_xticklabels(tick_lab, fontsize=6)
-ax.set_xlim(-cum * 0.006, cum * 1.006)   # margins so chrZ markers are not clipped
+ax.set_xlim(-cum * 0.006, cum * 1.012)    # right margin so chrZ markers and gene labels are not clipped
 ymax = max(r["y"] for r in rows)
 ax.set_ylim(-0.15, ymax + 0.5)
 ax.set_yticks([0, Y_THRESH, ymax])

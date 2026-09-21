@@ -12,8 +12,11 @@ Panels
      inversion (60.54-79.50 Mb) is the only differentiated region.
      Data: msinv results/illex/karyotype_fst_scan.tsv (chrom '2' rows)
   c  per-arrangement diversity (d_xy, pi_BB inverted, pi_AA ancestral) across
-     the inversion -- shows the inverted arrangement is the MORE diverse one.
-     Data: msinv results/illex/empirical_jackknife_windows.csv
+     the inversion plus 20 Mb of collinear sequence on each side (40-100 Mb) --
+     shows the inverted arrangement is the MORE diverse one and that the three
+     curves collapse together outside the breakpoints.
+     Data: steps/03_karyotype/inversion_content/flank_div/chr2_40_100_karyo_windows_snps.csv
+     (compute_flank_div.py: pg_gpu windowed pi/dxy, 100 kb, AA n=254 / BB n=95)
 
 Panels b/c reproduce the data + logic of ``_fst_chr2``/``_diversity`` and the
 manu_fig_inv_fst / manu_fig_inv_diversity functions in
@@ -21,7 +24,7 @@ manu_fig_inv_fst / manu_fig_inv_diversity functions in
 re-plotted natively in the shared manuscript style rather than reusing the PNGs.
 """
 import sys
-sys.path.insert(0, "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript")
+sys.path.insert(0, "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/scripts")
 from figstyle import apply, C, KARYO, despine
 apply()
 import matplotlib.pyplot as plt
@@ -35,7 +38,8 @@ from sklearn.mixture import GaussianMixture
 KARYO_COORDS = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/chr2_karyo_coords.tsv"
 RESULTS = "/sietch_colab/ssmall/projects/msinv_dir/inversion_sims/files/results/illex"
 FST_SCAN = f"{RESULTS}/karyotype_fst_scan.tsv"
-DIV_WINDOWS = f"{RESULTS}/empirical_jackknife_windows.csv"
+DIV_WINDOWS = ("/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/inversion_content/"
+               "flank_div/chr2_40_100_karyo_windows_snps.csv")   # chr2:40-100 Mb, biallelic SNPs, same pg_gpu recipe as msinv
 OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/figures/fig3_inversion.png"
 
 BP_L, BP_R = 60_540_000, 79_500_000     # pinned inversion breakpoints (Mb)
@@ -83,7 +87,7 @@ def main():
     fw, ff = _fst_chr2()
     mid, pAA, pBB, dxy = _diversity()
 
-    fig = plt.figure(figsize=(9.0, 6.4))
+    fig = plt.figure(figsize=(9.0, 6.8))
     gs = GridSpec(2, 2, width_ratios=[1.0, 1.55], height_ratios=[1.0, 0.85],
                   hspace=0.42, wspace=0.32, figure=fig)
 
@@ -116,21 +120,22 @@ def main():
 
     # ---- c. per-arrangement diversity across the inversion ----------------
     ax = fig.add_subplot(gs[1, :])
+    ax.axvspan(BP_L / 1e6, BP_R / 1e6, color=C["shade"], lw=0, zorder=0)
     COLINEAR_DXY = 1.270   # median d_xy(AA,BB) in matched colinear control windows (x1e-3)
     ax.axhline(COLINEAR_DXY, ls="--", lw=1.0, color=C["warm"], alpha=0.65, zorder=1,
-               label=r"colinear $d_{xy}$ (control)")
+               label=r"collinear $d_{xy}$ (matched controls, 10–30 Mb)")
     ax.plot(mid, dxy * 1e3, lw=1.1, color=C["warm"], label=r"$d_{xy}$ (AA, BB)")
     ax.plot(mid, pBB * 1e3, lw=1.1, color=KARYO["BB"], label=r"$\pi_{BB}$ (inverted)")
     ax.plot(mid, pAA * 1e3, lw=1.1, color=KARYO["AA"], label=r"$\pi_{AA}$ (ancestral)")
-    ax.set_xlim(60, 80)
-    ax.set_ylim(0, 5.1)
-    ax.set_yticks([0, 1, 2, 3, 4])
+    ax.set_xlim(40, 100)
+    ax.set_xticks([40, 50, 60, 70, 80, 90, 100])
+    ymax = float(np.nanpercentile(dxy * 1e3, 99.8)) * 1.05
+    ax.set_ylim(0, ymax)
     ax.set_xlabel("chr2 position (Mb)")
     ax.set_ylabel(r"diversity  ($\times 10^{-3}$)")
-    ax.legend(loc="upper left", ncol=3, borderaxespad=0.2, columnspacing=1.4,
-              handlelength=1.6, handletextpad=0.4, frameon=True,
-              facecolor="white", edgecolor="none", framealpha=0.85)
-    ax.set_title("c", loc="left", fontweight="bold")
+    ax.legend(loc="lower left", bbox_to_anchor=(0.0, 1.01), ncol=4, borderaxespad=0.0,
+              columnspacing=1.4, handlelength=1.6, handletextpad=0.4, frameon=False)
+    ax.set_title("c", loc="left", fontweight="bold", pad=22)
     despine(ax)
 
     fig.savefig(OUT)

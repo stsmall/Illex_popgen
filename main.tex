@@ -677,9 +677,12 @@ inversion figures --- is contained within that repository under \texttt{files/il
   \caption{\textbf{The chromosome-2 inversion.} \textbf{(a)} chr2 PCA resolves three karyotype clusters
     (AA/AB/BB). \textbf{(b)} $\Fst$ between arrangements along chr2 --- the inversion (60.54--79.50~Mb,
     shaded) is the only differentiated region (median $\Fst=0.37$ vs 0.01 collinear; whole-chromosome view in
-    Supplementary Fig.~S20). \textbf{(c)} Per-arrangement diversity across the inversion: the derived, inverted
-    BB arrangement is \emph{more} diverse than the ancestral AA ($\pi_I/\pi_S=1.36$) despite its lower
-    frequency, and $\dxy$ exceeds both --- the signature of an old, formerly common polymorphism.}
+    Supplementary Fig.~S20). \textbf{(c)} Per-arrangement diversity across the inversion (shaded) and 20~Mb of
+    collinear sequence on either side: inside the breakpoints the derived, inverted BB arrangement is
+    \emph{more} diverse than the ancestral AA ($\pi_I/\pi_S=1.36$) despite its lower frequency, and $\dxy$
+    exceeds both --- the signature of an old, formerly common polymorphism; outside them the three curves
+    collapse onto one another at the collinear $d_{xy}$ (dashed), as expected where the arrangements
+    recombine freely.}
   \label{fig:inv}
 \end{figure}
 
@@ -705,8 +708,9 @@ inversion figures --- is contained within that repository under \texttt{files/il
     calls are filtered by cross-method concordance (a diploS/HIC-HMM outlier plus RAiSD or SweepFinder2) and a
     background-selection test; the corroborated, background-selection-robust candidates (35 windows across 34
     regions; highlighted) stand out above the discounted background, with key genes labelled. Chromosome-Z
-    Tier-1 calls (diamonds) are male-based and diploS/HIC-only --- the footprint methods do not cover the Z ---
-    so they cannot enter the concordance filter. Chromosome~2 carries no concordant sweep. The full scan
+    Tier-1 calls (diamonds; \textit{Pasilla}, \textit{Smaug}, \textit{Esrrg} labelled) are male-based and
+    diploS/HIC-only --- the footprint methods do not cover the Z --- so they cannot enter the concordance
+    filter. Chromosome~2 carries no concordant sweep. The full scan
     pipeline is shown in Supplementary Fig.~S8.}
   \label{fig:selection}
 \end{figure}
@@ -714,7 +718,8 @@ inversion figures --- is contained within that repository under \texttt{files/il
 \begin{figure}[p]\centering
   \includegraphics[width=\linewidth]{fig6_diversity.png}
   \caption{\textbf{Diversity is uniform and there is no geographic structure.} \textbf{(a)} Nucleotide
-    diversity $\pi$ and \textbf{(b)} Tajima's $D$ per NAFO division, ordered south$\to$north --- both are
+    diversity $\pi$ and \textbf{(b)} Tajima's $D$ per NAFO division (ten of the eleven sampled divisions;
+    3N, with a single individual, cannot support per-population estimates), ordered south$\to$north --- both are
     flat across latitude (no cline), and $D$ is negative in every population, the signature of strong
     expansion. \textbf{(c)} Pairwise $\Fst$ among divisions as a clustered heatmap with dendrogram: every
     value is $\approx0$ ($-0.017$ to $-0.004$) and the clustering follows sample size, not geography --- no
