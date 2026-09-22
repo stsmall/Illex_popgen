@@ -195,7 +195,7 @@ differentiation alone.
 
 \subsection{Sample, sex, and the absence of geographic structure}
 We analysed 633 \illex{} individuals from eleven NAFO management divisions spanning $\sim$37--50$^\circ$N
-(\cref{fig:map}, \cref{tab:summary}). Read coverage on the Z chromosome separates the sample into 342 ZZ
+(\cref{fig:map}, \cref{tab:summary}; every collection event with its source and depth is listed in Supplementary Table~S8). Read coverage on the Z chromosome separates the sample into 342 ZZ
 males and 291 ZO females, consistent with a ZZ/ZO system \citep{coffing2025} (\cref{fig:overview}). Autosomal analyses use both sexes; the Z, on which males are diploid and females
 haploid, is analysed separately (\cref{sec:sweep}).
 
@@ -218,7 +218,7 @@ panmictic, we compared per-SNP $\Fst$ among divisions to a coalescent neutral nu
 $\approx$556 expected by chance, and there are zero genic outliers (Supplementary Figs.~S2, S19). Nucleotide
 diversity and Tajima's $D$ are flat across latitude and pairwise $\Fst$ among divisions is $\approx0$
 throughout (\cref{fig:diversity}). There is therefore no geographic local adaptation anywhere in the genome,
-and the inversion itself is geographically non-clinal (\cref{fig:map}; Supplementary Fig.~S6 and Table~S2).
+and the inversion itself is geographically non-clinal (\cref{fig:map}; Supplementary Fig.~S6 and Table~S2). Nor does arrangement frequency track capture depth, which spans 3 to 613~m across collection events (Supplementary Table~S8): across 539 individuals with recorded depth the correlation between depth and the number of inverted chromosomes carried is $\rho=-0.08$ ($p=0.08$), and within the six divisions sampled at more than one depth it is $\rho=+0.04$ (within-division permutation $p=0.49$). A weak negative slope across collection events ($p=0.04$) is carried entirely by the two shallow, jig-caught Newfoundland (3K) samples and disappears when they are removed ($p=0.23$), so it cannot be separated from gear and location.
 
 \subsection{A large, balancing-selected inversion on chromosome~2}\label{sec:inv}
 
@@ -297,7 +297,7 @@ inversion arose, which places the supergene's origin at the start of the demogra
 whole genome.
 
 \subsection{Genomic context: recombination, background selection, and protein adaptation}
-Three further features of the genome set the stage for the sweep scan. Recombination, as estimated by a deep-learning LD-based map, is $\sim$0.20~cM/Mb on the autosomes (male-map median 0.200 raw and 0.213 after bootstrap correction; 0.244 when the male and female maps are averaged; Supplementary Fig.~S12). Because the estimator reads linkage disequilibrium it recovers the sex-averaged rate whichever sex is sampled, so heterochiasmy is not identifiable from it and the maps were built per sex only for historical reasons; the female-only map in fact collapses to a near-constant and is uninformative, and the male map is used throughout. The map is flat with respect to gene content: the rate varies by only $\sim$6\% between windows adjacent to exons and windows $>$100~kb from any exon, unchanged when $\pi$ is held fixed (Supplementary Fig.~S17a), as a crossover rate should be. It is also compressed at chromosome
+Three further features of the genome set the stage for the sweep scan. Recombination, as estimated by a deep-learning LD-based map, is $\sim$0.20~cM/Mb on the autosomes (median 0.200; Supplementary Fig.~S12). Because the estimator reads linkage disequilibrium it recovers the sex-averaged rate, so heterochiasmy is not identifiable from it. The map is flat with respect to gene content: the rate varies by only $\sim$6\% between windows adjacent to exons and windows $>$100~kb from any exon, unchanged when $\pi$ is held fixed (Supplementary Fig.~S17a), as a crossover rate should be. It is also compressed at chromosome
 scale: on chromosome~1 the rolling median spans just 0.17--0.23~cM/Mb, the pericentromeric flanks where
 $\pi$ halves show no more than a 5\% dip, and the centromere itself (a 2.5-Mb block that is 80\% repeat and
 almost entirely masked) carries no windows (Supplementary Fig.~S22). The pattern is genome-wide: across
@@ -310,7 +310,7 @@ Background selection is moderate and gene-density-driven: $\pi$ falls with local
 windows, while recombination does neither (Supplementary Fig.~S17), the classical footprint of linked purifying selection \citep{charlesworth1993,mcvicker2009,charlesworth2021}, organised here by gene density
 rather than by the recombination axis. Diversity is also heterogeneous at the megabase scale: 22 blocks of
 $\geq$1~Mb on 17 chromosomes carry 2--4$\times$ the chromosome-median $\pi$ with less-negative Tajima's $D$
-(e.g.\ chr1:24--31~Mb, $\pi=0.020$; Supplementary Fig.~S22c). We tested these against every structural
+(e.g.\ chr1:24--31~Mb, $\pi=0.020$; Supplementary Fig.~S22b). We tested these against every structural
 explanation and they fail all of them: local PCA finds no karyotype clusters (unlike the chr2 positive
 control), there is no heterozygosity excess, no excess-heterozygosity filtering loss, and no per-individual
 depth anomaly, and their allele-frequency spectrum is identical to flanking sequence; they simply carry $\sim$2.5$\times$ more SNPs. They are gene-poor (coding fraction 0.001), largely unalignable to \coin{}
@@ -525,8 +525,7 @@ Supplementary Table~S1 and in the project repository.
 \paragraph{Data.}
 The ingroup is all 633 \illex{} individuals whole-genome sequenced by \citet{baker2025} (ENA project
 PRJEB101095; collected 2022--2023 across eleven NAFO divisions, every individual with coordinates), of which
-that study retained 540: 616 passed its genotyping quality filters and a further 76 were removed for $>$25\%
-missing genotypes, a consequence of the 46\% mean read-alignment rate to the \textit{Thysanoteuthis} reference.
+that study retained 540, excluding 93: 616 passed its genotyping quality filters and a further 76 were removed for $>$25\% missing genotypes, a consequence of the 46\% mean read-alignment rate to the \textit{Thysanoteuthis} reference.
 Against the conspecific assembly no individual-level exclusion was needed. We re-processed the raw reads from scratch: mapping to
 the \texttt{Illex\_F24} primary assembly (45 numbered chromosomes plus the Z) and joint variant calling
 (Supplementary Table~S1). Genotypes are unphased and the VCF
@@ -568,7 +567,7 @@ against the genome-wide annotated-gene background in all three ontologies, with 
 random gene sets of equal size. Gene density was compared with all autosomal windows of the inversion's length (18.96~Mb, 0.5-Mb step) using the same gene models. The two drift arguments are diffusion results for an unlinked neutral allele: the expected time for a new neutral mutation to first reach frequency $x$, conditional on reaching it, was evaluated in units of $\Ne$ ($2.107\,\Ne$ at $x=0.74$) at each $\Ne$ along the fitted demography, and the drift standard deviation of allele frequency over the fitted decline was computed as $\sqrt{p(1-p)\,t/(2\Ne)}$ with $\Ne$ taken from the fitted growth model over that interval. The load test stratified coding sites inside the body and in a matched collinear control by codon degeneracy (degenotate zero-fold versus four-fold) and compared the zero-fold fraction in the upper tail of per-site between-arrangement $\Fst$ (genotype-likelihood based, $n=40$ per karyotype) with the region's own coding sites by Fisher's exact test; per-transcript $\dxy$ between arrangements was normalised to its 100-kb window and compared with the distribution across control transcripts.
 
 \paragraph{Recombination map.}
-Per-sex recombination maps were built with ReLERNN \citep{adrion2020relernn}
+A recombination map was built with ReLERNN \citep{adrion2020relernn}
 (SIMULATE$\to$TRAIN$\to$PREDICT$\to$BSCORRECT), dropping individuals with no calls on a chromosome and never
 forcing diploid genotype calls.
 

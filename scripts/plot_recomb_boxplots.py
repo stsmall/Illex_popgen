@@ -44,7 +44,7 @@ for i, patch in enumerate(bp["boxes"]):
     fc = "#f6d5c4" if labels[i] == "2 col" else "#D55E00" if labels[i] == "2 inv" else C["faint"]
     patch.set(facecolor=fc, edgecolor=C["muted"], lw=0.7)
 pos = len(data)
-for lab, d, col in (("Z♂", zm, SEXES["male"]), ("Z♀", zf, SEXES["female"])):
+for lab, d, col in (("Z", zm, C["accent"]),):
     if d is not None:
         b = ax.boxplot([d.cM.to_numpy()], positions=[pos], widths=0.7, showfliers=False, patch_artist=True,
                        medianprops=dict(color="black", lw=1.1))
@@ -52,15 +52,15 @@ for lab, d, col in (("Z♂", zm, SEXES["male"]), ("Z♀", zf, SEXES["female"])):
         labels.append(lab); pos += 1
 auto_med = float(np.median(np.concatenate([per[c] for c in autos])))
 ax.axhline(auto_med, ls="--", lw=1.0, color=C["ink"], zorder=0)
-ax.text(0.0, 1.02, f"dashed line: autosomal median {auto_med:.3f} cM/Mb", transform=ax.transAxes, fontsize=7.5, color=C["muted"], va="bottom")
+ax.text(1.0, 1.01, f"dashed line: autosomal median {auto_med:.3f} cM/Mb", transform=ax.transAxes, fontsize=7.5, color=C["muted"], va="bottom", ha="right")
 pct = (pd.Series({c: np.median(per[c]) for c in autos}) < np.median(chr2.cM)).mean() * 100
 ax.annotate(f"chr2: median {np.median(chr2.cM):.3f} ({pct:.0f}th percentile of autosomes)\n"
             f"inverted body {np.median(c2_inv):.3f} vs collinear {np.median(c2_col):.3f}: no suppression",
-            xy=(len(autos) + 0.5, np.median(c2_inv)), xytext=(len(autos) - 9, 0.335), fontsize=7.5, ha="center",
+            xy=(len(autos) + 0.5, np.median(c2_inv)), xytext=(len(autos) - 9, 0.29), fontsize=7.5, ha="center",
             color=C["ink"], arrowprops=dict(arrowstyle="-", color=C["muted"], lw=0.7))
 ax.set_xticks(np.arange(len(labels))); ax.set_xticklabels(labels, fontsize=6.5, rotation=90)
 ax.set_ylabel("recombination rate (cM/Mb)"); ax.set_ylim(0, None)
-ax.set_xlabel("chromosome  (male-network raw predictions; chr2 split into collinear flanks vs inverted body; Z male/female)")
+ax.set_xlabel("chromosome  (chr2 split into collinear flanks vs inverted body)")
 ax.set_title("Per-chromosome recombination-rate distribution", loc="left", fontweight="bold")
 despine(ax); fig.savefig(OUT, dpi=200, bbox_inches="tight")
 print("wrote", OUT, f"| auto median {auto_med:.4f} chr2 {np.median(chr2.cM):.4f} inv {np.median(c2_inv):.4f} col {np.median(c2_col):.4f} pct {pct:.0f}",
