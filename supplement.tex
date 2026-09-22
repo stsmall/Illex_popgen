@@ -164,13 +164,13 @@
   \caption{\textbf{Recombination-aware Markov decoder for the Tier-1 sweep calls.} A hidden Markov model over
     the per-100~kb-window diploSHIC classification (emissions $=$ prior-corrected class posteriors; dwell
     lengths from the $\sim$400~kb sweep footprint scaled by the ReLERNN map; design-informed, not
-    simulation-calibrated). \textbf{(a)}~The decoder at a representative concordant sweep (chromosome~6):
+    simulation-calibrated). \textbf{(a)}~The decoder at a representative concordant sweep (chromosome~35, \textit{ZEB2}):
     the sweep posterior $p_\mathrm{hard}+p_\mathrm{soft}$ per window and the Viterbi state track
     (neutral / linked / centre); it localises the centre inside the linked envelope and overrides spatially
-    isolated high-posterior windows (e.g.\ near 12.05~Mb). \textbf{(b)}~Markov correction reduces the raw
-    hard/soft calls from 1{,}758 to 717 spatially-coherent calls ($-59\%$). \textbf{(c)}~89\% of windows at
+    isolated high-posterior windows (e.g.\ near 38.35~Mb). \textbf{(b)}~Markov correction reduces the raw
+    hard/soft calls from 1{,}651 to 677 spatially coherent calls ($-59\%$). \textbf{(c)}~88\% of windows at
     the Tier-2 cross-method-concordant loci are decoded as sweep centres versus 2.9\% genome-wide (odds
-    ratio 282, $p<10^{-46}$; 30 of 34 concordant regions recovered).}
+    ratio 242, $p<10^{-30}$; 21 of 24 concordant regions recovered).}
   \label{sfig:markov}
 \end{figure}
 
@@ -186,8 +186,7 @@
 \begin{figure}[h]\centering
   \includegraphics[width=.9\linewidth]{figS15_gsea.png}
   \caption{\textbf{GO enrichment of the diploSHIC-HMM sweep genes} (biological process; terms significant at
-    FDR$<$0.05 in both sets). Paired dot plot: each term is shown for the full Tier-1 set (blue circle; 658
-    calls) and for its background-selection-robust subset (orange diamond; 291 calls), with $x=$ fold
+    FDR$<$0.05 in both sets). Paired dot plot: each term is shown for the full Tier-1 set (blue circle; 623 calls) and for its background-selection-robust subset (orange diamond; 291 calls), with $x=$ fold
     enrichment and marker area $=$ number of sweep genes carrying the term. The grey arrow marks the shift
     between the two sets: the BGS screen consistently \emph{sharpens} the enrichment (rightward), and most
     strongly for the light-response / photoreception terms (response to light stimulus $1.9\to3.1\times$;
@@ -229,9 +228,8 @@
   \includegraphics[width=\linewidth]{figS18_tier1_manhattan.png}
   \caption{\textbf{Genome-wide diploSHIC-HMM (Tier-1) sweep calls.} Per-100~kb-window empirical-outlier
     sweep score (rank within callability $\times$ coding-density strata) across all 45 autosomes plus the
-    Z chromosome (662 calls total; 462 hard, 200 soft). The Markov-decoded Tier-1 calls are highlighted by
-    class (hard, soft), and the background-selection-robust subset (\S\,BGS screen; 291 of the 658 autosomal
-    calls) is ringed. The four chromosome-Z calls come from the male-only ($n{=}330$) diploSHIC scan and are
+    Z chromosome (627 calls total; 440 hard, 187 soft). The Markov-decoded Tier-1 calls are highlighted by
+    class (hard, soft), and the background-selection-robust subset (\S\,BGS screen; 291 of the 623 autosomal calls) is ringed. The four chromosome-Z calls come from the male-only ($n{=}330$) diploSHIC scan and are
     diploSHIC-only (RAiSD/SweepFinder2 do not cover the Z). The calls are distributed across the genome with
     no single dominant locus.}
   \label{sfig:t1man}
@@ -287,7 +285,7 @@
 
 \begin{figure}[h]\centering
   \includegraphics[width=\linewidth]{figS23_pi_blocks_by_division.png}
-  \caption{\textbf{The 22 elevated-diversity blocks are shared by every sampling division.} \textbf{(a)}~Nucleotide diversity across chr1:19--36~Mb computed separately in each of the ten divisions with more than one individual (ANGSD, 50-kb windows, lines coloured by division latitude); the 24.0--31.3~Mb block (shaded) carries 2.2--2.4 times the flanking diversity in every division. \textbf{(b)}~Between-division Hudson $\Fst$ over the same span (all 45 division pairs, 100-kb windows) is lower inside the block than in the flanks (0.014 vs 0.015); the same holds for the three strongest blocks (chr30:17.3--18.5, chr23:0.1--5.6 and chr38:61.5--68.0~Mb; 0.006--0.007 inside vs 0.014--0.015 outside). \textbf{(c)}~Block-to-flank diversity ratio per division for all 22 blocks: the excess varies by only 1--6\% among divisions, so no block is driven by a subset of the sample. The blocks are gene-poor (a third or less of their chromosome's gene density), largely unalignable to \coin{} (chr1 block 35\% vs 87--89\% of flanking bases) and more divergent where aligned (3.3\% vs 1.9--2.1\%). On chr1 there is no depth anomaly (per-individual block-to-flank read ratio median 0.95, IQR 0.94--0.97), no excess heterozygosity, and no loss to the excess-heterozygosity filter. Across blocks, however, the diversity excess scales with a shift of Tajima's $D$ toward zero (Spearman $\rho=0.75$, $p=5\times10^{-5}$; strongest blocks $D\approx-0.7$ to $-1.1$ against $\approx-2$ genome-wide), which indicates an excess of intermediate-frequency variants in the strongest blocks (Supplementary Table~S9).}
+  \caption{\textbf{The 22 elevated-diversity blocks are shared by every sampling division.} \textbf{(a)}~Nucleotide diversity across chr1:19--36~Mb computed separately in each of the ten divisions with more than one individual (ANGSD, 50-kb windows, lines coloured by division latitude); the 24.0--31.3~Mb block (shaded) carries 2.2--2.4 times the flanking diversity in every division. \textbf{(b)}~Between-division Hudson $\Fst$ over the same span (all 45 division pairs, 100-kb windows) is lower inside the block than in the flanks (0.014 vs 0.015); the same holds for the three strongest blocks (chr30:17.3--18.5, chr23:0.1--5.6 and chr38:61.5--68.0~Mb; 0.006--0.007 inside vs 0.014--0.015 outside). \textbf{(c)}~Block-to-flank diversity ratio per division for all 22 blocks: the excess varies by only 1--6\% among divisions, so no block is driven by a subset of the sample. Read depth separates the blocks into collapsed duplications (depth raised in every individual, up to 2.2 times the flanks in the population sample and 2.7 and 2.4 times in long reads from the assembly individual and a second individual, with five to six times the flanking density of heterozygous sites at skewed allele fractions in single diploid genomes), under-mapped divergent haplotypes (short-read depth 0.6--0.9 times the flanks, with a much smaller deficit in long reads), and gene-poor regions of elevated diversity with normal depth (Supplementary Table~S9). Genotype-likelihood diversity at mapping quality 60 retains most of the excess (for example chr30 6.4 to 5.8 times, chr23 5.2 to 4.0 times), because reads from unassembled copies map uniquely to the single assembled copy. All 22 blocks are masked from the sweep scan and gene-set analyses.}
   \label{sfig:piblocks}
 \end{figure}
 
@@ -374,35 +372,34 @@
 % ---- S4: Tier-1 GO enrichment ----
 \begin{table}[h]\centering
   \caption{\textbf{Gene-ontology enrichment of the Tier-1 (diploSHIC-only, Markov-corrected) sweep genes.}
-    The 658 Tier-1 calls overlap 894 genes (476 GO-annotated); enrichment by Fisher's exact test against the
+    The 623 Tier-1 calls overlap 885 genes (475 GO-annotated); enrichment by Fisher's exact test against the
     annotated-gene background on the scanned chromosomes, Benjamini--Hochberg FDR. 124 biological-process terms
     reach FDR$<$0.05 --- representative terms shown, spanning the two dominant themes (neural development;
     RNA-regulatory/transcriptional control). All are carried by the hard-sweep calls; the soft-sweep gene set
-    has no term at FDR$<$0.05. Full machine-readable table: \texttt{hmm\_decode/tier1\_GO\_enrichment.tsv}.}
+    has no term at FDR$<$0.05. Full machine-readable table: \texttt{hmm\_decode\_masked/tier1\_GO\_enrichment.tsv}.}
   \label{stab:goenrich}
   \begin{tabular}{llrrr}
     \toprule
     GO id & term (biological process) & genes (T1/bg) & fold & FDR \\
     \midrule
-    GO:0048699 & generation of neurons & 124/1444 & 1.60 & $1.5\times10^{-4}$ \\
-    GO:0022008 & neurogenesis & 126/1511 & 1.55 & $1.6\times10^{-4}$ \\
-    GO:0030182 & neuron differentiation & 91/1076 & 1.57 & $1.5\times10^{-3}$ \\
-    GO:0030154 & cell differentiation & 187/2553 & 1.36 & $3.7\times10^{-4}$ \\
-    GO:0009887 & animal organ morphogenesis & 96/1116 & 1.60 & $8.3\times10^{-4}$ \\
-    GO:0050767 & regulation of neurogenesis & 67/695 & 1.79 & $9.4\times10^{-4}$ \\
-    GO:0000902 & cell morphogenesis & 72/776 & 1.72 & $1.3\times10^{-3}$ \\
+    GO:0048699 & generation of neurons & 123/1441 & 1.59 & $2.0\times10^{-4}$ \\
+    GO:0022008 & neurogenesis & 125/1508 & 1.54 & $2.6\times10^{-4}$ \\
+    GO:0030182 & neuron differentiation & 91/1075 & 1.57 & $1.6\times10^{-3}$ \\
+    GO:0030154 & cell differentiation & 186/2548 & 1.36 & $5.4\times10^{-4}$ \\
+    GO:0009887 & animal organ morphogenesis & 96/1115 & 1.60 & $8.9\times10^{-4}$ \\
+    GO:0050767 & regulation of neurogenesis & 66/693 & 1.77 & $1.3\times10^{-3}$ \\
+    GO:0000902 & cell morphogenesis & 72/775 & 1.73 & $1.3\times10^{-3}$ \\
     GO:0007409 & axonogenesis & 45/463 & 1.81 & $1.0\times10^{-2}$ \\
-    GO:0048858 & cell projection morphogenesis & 59/610 & 1.80 & $1.6\times10^{-3}$ \\
-    GO:0051252 & regulation of RNA metabolic process & 145/1922 & 1.40 & $1.3\times10^{-3}$ \\
-    GO:2001141 & regulation of RNA biosynthetic process & 135/1770 & 1.42 & $1.5\times10^{-3}$ \\
+    GO:0048858 & cell projection morphogenesis & 59/609 & 1.80 & $1.6\times10^{-3}$ \\
+    GO:0051252 & regulation of RNA metabolic process & 145/1920 & 1.40 & $1.3\times10^{-3}$ \\
+    GO:2001141 & regulation of RNA biosynthetic process & 135/1768 & 1.42 & $1.6\times10^{-3}$ \\
     \bottomrule
   \end{tabular}
 \end{table}
 
 % ---- S5: GO functional clusters (BGS-robust Tier-1) ----
 \begin{table}[h]\centering
-  \caption{\textbf{Functional clusters of the background-selection-robust Tier-1 sweep genes.} The 152
-    enriched biological-process GO terms (FDR$<$0.05) of the BGS-robust set (\cref{sfig:gsea}), grouped
+  \caption{\textbf{Functional clusters of the background-selection-robust Tier-1 sweep genes.} The 151 enriched biological-process GO terms (FDR$<$0.05) of the BGS-robust set (\cref{sfig:gsea}), grouped
     into functional clusters by term semantics. Neural development and cell morphogenesis/differentiation
     dominate, with RNA-regulatory control and organ development, and a distinct photoreception/sensory
     cluster.}
@@ -411,7 +408,7 @@
     \toprule
     functional cluster & terms & fold range & representative term (min FDR) \\
     \midrule
-    Neural development & 22 & 1.6--22.2 & generation of neurons ($3\times10^{-5}$) \\
+    Neural development & 21 & 1.6--22.2 & generation of neurons ($3\times10^{-5}$) \\
     Cell morphogenesis \& differentiation & 17 & 1.5--2.2 & cell development ($2\times10^{-5}$) \\
     RNA / transcription regulation & 14 & 1.5--2.1 & reg.\ RNA metabolic process ($9\times10^{-4}$) \\
     Organ / anatomical development & 13 & 1.2--2.5 & system development ($3\times10^{-3}$) \\
@@ -423,14 +420,14 @@
 
 % ---- S6: Tier-2 cross-method-concordant genes ----
 \begin{table}[h]\centering
-  \caption{\textbf{Tier-2 (cross-method-concordant) sweep genes.} The 34 genome-wide-scan regions where
+  \caption{\textbf{Tier-2 (cross-method-concordant) sweep genes.} The 24 genome-wide-scan regions where
     the diploSHIC-HMM sweep signal is independently corroborated by an LD/SFS-footprint method (RAiSD or
-    SweepFinder2). Seven regions carry a named protein-coding gene (12 genes, listed); the remaining
+    SweepFinder2). Nine regions carry a named protein-coding gene (14 genes, listed); the remaining
     concordant regions are gene deserts or uncharacterised loci. Coordinates in Mb; $\alpha$ and DoS from
     the McDonald--Kreitman test against \textit{I.~coindetii} (`--' where the test is unpowered, i.e.\ too
-    few fixed/polymorphic sites). The full candidate set --- all 216 windows, the 34 concordant regions,
-    and the per-region background-selection test --- is provided as machine-readable tables
-    (\texttt{outlier\_scan\_45/\{windows,regions\}.tsv} and the \texttt{concordant} gene/MK/BGS tables).}
+    few fixed/polymorphic sites). The full candidate set, comprising all 227 diploSHIC-outlier regions, the 24 concordant regions
+    and the per-region background-selection test, is provided as machine-readable tables
+    (\texttt{outlier\_scan\_45\_masked/\{windows,regions\}.tsv} and the \texttt{concordant} gene/MK/BGS tables).}
   \label{stab:candidates}
   \begin{tabular}{llllrr}
     \toprule
@@ -440,8 +437,10 @@
     1:85.5 & hard & \textit{eif3h} & Eukaryotic translation initiation factor 3 & 0.69 & +0.20 \\
     1:85.5 & hard & \textit{babam1} & BRISC and BRCA1-A complex member 1 & -- & -0.48 \\
     1:85.5 & hard & \textit{ttc39b} & Tetratricopeptide repeat protein 39B & -- & -0.27 \\
+    2:84.8 & hard & \textit{NDRG3} & Protein NDRG3 & -- & -0.18 \\
     5:38.0 & hard & \textit{cept1} & Choline/ethanolaminephosphotransferase 1 & -- & -1.00 \\
     5:38.0 & hard & \textit{Arsi} & Arylsulfatase I & -- & -0.25 \\
+    6:3.0 & hard & \textit{Rexo1} & RNA exonuclease 1 homolog & -- & -0.53 \\
     13:73.2 & hard & \textit{Rab3} & Ras-related protein Rab-3 & -- & -0.17 \\
     13:73.2 & hard & \textit{hyi} & Putative hydroxypyruvate isomerase & -- & -0.64 \\
     13:73.2 & hard & \textit{Vps28} & Vacuolar protein sorting-associated protein 28 & -- & -- \\

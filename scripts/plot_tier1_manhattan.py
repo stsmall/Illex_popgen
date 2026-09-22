@@ -5,7 +5,7 @@ subset is marked. Shows where the diploSHIC-HMM calls fall genome-wide."""
 import os
 os.environ.setdefault("MPLCONFIGDIR", "/dev/shm/mplcache")
 import sys
-sys.path.insert(0, "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript")
+sys.path.insert(0, "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/scripts")
 from figstyle import apply, C, despine
 apply()
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
@@ -14,19 +14,19 @@ D = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel
 OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/supp_figures/figS18_tier1_manhattan.png"
 HARD, SOFT, ROBUST = "#D55E00", "#E69F00", "#000000"
 
-win = pd.read_csv(f"{D}/outlier_scan_45/windows.tsv", sep="\t")
+win = pd.read_csv(f"{D}/outlier_scan_45_masked/windows.tsv", sep="\t")
 win["chrom"] = win["chrom"].astype(str)
 # append chrZ windows (male-based n=330 diploSHIC scan; diploSHIC-only, no RAiSD/SF2 on Z)
 winZ = pd.read_csv(f"{D}/outlier_scan_Z/windows.tsv", sep="\t")
 winZ["chrom"] = winZ["chrom"].astype(str)
 win = pd.concat([win, winZ], ignore_index=True)
-t1 = pd.read_csv(f"{D}/hmm_decode/tier1_markov_calls.tsv", sep="\t")
+t1 = pd.read_csv(f"{D}/hmm_decode_masked/tier1_markov_calls.tsv", sep="\t")
 t1["chrom"] = t1["chrom"].astype(str)
 # append chrZ Tier-1 Markov calls (diploSHIC-only Tier-1; no BGS ring, no concordance)
-t1Z = pd.read_csv(f"{D}/hmm_decode/tier1_markov_calls_Z.tsv", sep="\t")
+t1Z = pd.read_csv(f"{D}/hmm_decode_masked/tier1_markov_calls_Z.tsv", sep="\t")
 t1Z["chrom"] = t1Z["chrom"].astype(str)
 t1 = pd.concat([t1, t1Z], ignore_index=True)
-rob = pd.read_csv(f"{D}/hmm_decode/tier1_BGS_robust_calls.tsv", sep="\t")
+rob = pd.read_csv(f"{D}/hmm_decode_masked/tier1_BGS_robust_calls.tsv", sep="\t")
 rob["chrom"] = rob["chrom"].astype(str)
 
 # cumulative genome coordinate

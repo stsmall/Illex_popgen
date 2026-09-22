@@ -10,7 +10,7 @@ c. Two-tier agreement: fraction of windows decoded as sweep-centre at the Tier-2
    cross-method-concordant loci vs the genome background.
 """
 import sys
-sys.path.insert(0, "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript")
+sys.path.insert(0, "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/scripts")
 from figstyle import apply, C, despine
 apply()
 import numpy as np, pandas as pd
@@ -20,7 +20,7 @@ from matplotlib.patches import Patch
 
 D = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel"
 R = f"{D}/results/empirical_scan_fullsfs"
-HMM = f"{R}/hmm_decode"
+HMM = f"{R}/hmm_decode_masked"
 OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/supp_figures/figS13_markov.png"
 
 HARD = "#D55E00"   # vermillion
@@ -29,29 +29,29 @@ LINK = "#BBBBBB"
 NEUT = "#EDEDED"
 STATE_COL = {"C": HARD, "LL": LINK, "LR": LINK, "N": "#8A8A8A", "GAP": "white"}
 
-win = pd.read_csv(f"{R}/outlier_scan_45/windows.tsv", sep="\t")
+win = pd.read_csv(f"{R}/outlier_scan_45_masked/windows.tsv", sep="\t")
 win["chrom"] = win["chrom"].astype(str)
 win["pC"] = win["p_hard"] + win["p_soft"]
 sp = pd.read_csv(f"{HMM}/state_path.tsv.gz", sep="\t")
 sp["chrom"] = sp["chrom"].astype(str)
 
 # ---------- summary numbers (from tier1_markov.py) ----------
-RAW_HARD, RAW_SOFT = 1094, 664           # raw diploSHIC argmax hard / soft windows
-MK_HARD, MK_SOFT = 500, 217              # Markov-retained C windows, by peak pC
-CONC_RETAIN, BG_RETAIN = 0.89, 0.029     # % windows Markov-C at concordant loci vs genome
-OR_ENR, P_ENR = 282.0, 1.07e-47
-N_CONC_REC, N_CONC = 30, 34
+RAW_HARD, RAW_SOFT = 1034, 617           # raw diploSHIC argmax hard / soft windows
+MK_HARD, MK_SOFT = 475, 202              # Markov-retained C windows, by peak pC
+CONC_RETAIN, BG_RETAIN = 0.88, 0.029     # % windows Markov-C at concordant loci vs genome
+OR_ENR, P_ENR = 241.8, 6.29e-31   # masked scan (tier1_markov_masked.py)
+N_CONC_REC, N_CONC = 21, 24
 
 fig = plt.figure(figsize=(12.5, 4.2))
 gs = gridspec.GridSpec(1, 3, width_ratios=[1.55, 1.0, 1.0], wspace=0.34,
                        left=0.06, right=0.985, top=0.88, bottom=0.14)
 
-# ===== panel a: model in action, chr6 zoom (main bars + state strip) =====
+# ===== panel a: model in action, chr35 (ZEB2) zoom (main bars + state strip) =====
 gsa = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=gs[0, 0],
                                        height_ratios=[6, 0.7], hspace=0.08)
 axa = fig.add_subplot(gsa[0])
 axt = fig.add_subplot(gsa[1], sharex=axa)
-c, lo, hi = "6", 11_000_000, 15_000_000
+c, lo, hi = "35", 37_000_000, 41_000_000
 wc = win[(win.chrom == c) & (win.start >= lo) & (win.end <= hi)].sort_values("start")
 sc = sp[(sp.chrom == c) & (sp.start >= lo) & (sp.start <= hi)].sort_values("start")
 xm = (wc.start.to_numpy() + wc.end.to_numpy()) / 2 / 1e6
@@ -75,7 +75,7 @@ for _, r in sc.iterrows():
                                 color=STATE_COL.get(r.state, "white"), lw=0))
 axt.set_ylim(0, 1); axt.set_yticks([0.5]); axt.set_yticklabels(["HMM state"], fontsize=7.5)
 axt.tick_params(axis="y", length=0)
-axt.set_xlabel("chromosome 6 position (Mb)")
+axt.set_xlabel("chromosome 35 position (Mb)")
 axt.set_xlim(lo/1e6, hi/1e6)
 for s in axt.spines.values():
     s.set_visible(False)
@@ -109,7 +109,7 @@ for b, v in zip(bars, [CONC_RETAIN*100, BG_RETAIN*100]):
     axc.text(b.get_x()+b.get_width()/2, v + 2, f"{v:.0f}%", ha="center", va="bottom",
              fontsize=9, fontweight="bold")
 axc.set_title("c   Two-tier agreement", loc="left", fontweight="bold")
-axc.text(0.5, 0.80, f"OR = {OR_ENR:.0f}\n$p<10^{{-46}}$\n{N_CONC_REC}/{N_CONC} concordant\nrecovered",
+axc.text(0.5, 0.80, f"OR = {OR_ENR:.0f}\n$p<10^{{-30}}$\n{N_CONC_REC}/{N_CONC} concordant\nrecovered",
          transform=axc.transAxes, ha="center", va="center", fontsize=8, color=C["ink"],
          bbox=dict(boxstyle="round,pad=0.4", fc="white", ec=C["muted"], lw=0.6))
 despine(axc); axc.tick_params(axis="x", length=0)

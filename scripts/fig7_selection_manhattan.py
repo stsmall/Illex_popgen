@@ -8,12 +8,12 @@ import csv
 
 # 45-chromosome outlier scan (includes chr2 and chr42; the older
 # outlier_scan/windows.tsv is a stale 43-chromosome run missing both)
-WINDOWS = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel/results/empirical_scan_fullsfs/outlier_scan_45/windows.tsv"
+WINDOWS = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel/results/empirical_scan_fullsfs/outlier_scan_45_masked/windows.tsv"
 # chrZ (male-based n=330 diploSHIC scan). RAiSD/SweepFinder2 do NOT cover chrZ, so
 # Z windows are diploSHIC-only (n_methods<=1, never a >=2-method "confirmed candidate");
 # the Z Tier-1 hard/soft calls are overlaid separately below.
 WINDOWS_Z = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel/results/empirical_scan_fullsfs/outlier_scan_Z/windows.tsv"
-TIER1_Z = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel/results/empirical_scan_fullsfs/hmm_decode/tier1_markov_calls_Z.tsv"
+TIER1_Z = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel/results/empirical_scan_fullsfs/hmm_decode_masked/tier1_markov_calls_Z.tsv"
 # chrZ Tier-1 calls are one category (diploSHIC-only, male-based) -> a single distinct
 # colour (blue, the male convention used elsewhere), not the orange sweep-candidate family
 HARD_Z = SOFT_Z = "#0072B2"
@@ -173,8 +173,10 @@ for (chrom, pos, name), (dx, dy) in zip(genes, label_offsets):
 
 # note on the filtering cascade -- placed ABOVE the plot (top margin) so it never covers points
 n_out = len(outlier_only) + len(candidates)
+import pandas as _pd
+_reg = _pd.read_csv(WINDOWS.replace('windows.tsv', 'regions.tsv'), sep='\t'); N_REG = int((_reg.max_nmethods >= 2).sum())
 ax.text(0.0, 1.20,
-         f"{n_out} stratified outliers  →  {len(candidates)} corroborated windows in 34 regions "
+         f"{n_out} stratified outliers  →  {len(candidates)} corroborated windows in {N_REG} regions "
          "(diploSHIC-HMM outlier + a footprint method; Tier-2)",
          transform=ax.transAxes, ha="left", va="bottom", fontsize=6.8,
          color=C["ink"])

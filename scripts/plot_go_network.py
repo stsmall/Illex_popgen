@@ -7,14 +7,14 @@ connected modules of neural development and photoreception. Run under bioinfo-bu
 import os
 os.environ.setdefault("MPLCONFIGDIR", "/dev/shm/mplcache")
 import sys
-sys.path.insert(0, "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript")
+sys.path.insert(0, "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/scripts")
 from figstyle import apply, C, despine
 apply()
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
 import matplotlib.patheffects as pe
 import networkx as nx
 
-D = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel/results/empirical_scan_fullsfs/hmm_decode"
+D = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel/results/empirical_scan_fullsfs/hmm_decode_masked"
 OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/supp_figures/figS16_go_network.png"
 
 enr = pd.read_csv(f"{D}/tier1_BGS_GO_enrichment.tsv", sep="\t")

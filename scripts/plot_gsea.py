@@ -6,7 +6,7 @@ were the same set and "hard"/"bgs" read like parallel categories when they are a
 sub-classification and a screen.
 
 This is a PAIRED dot plot on a single shared term axis:
-  * blue circle    = all Tier-1 sweep genes (658 diploSHIC-HMM calls -> 476 GO-annotated)
+  * blue circle    = all Tier-1 sweep genes (623 diploSHIC-HMM calls -> 475 GO-annotated)
   * orange diamond = the background-selection-robust subset (291 calls) -- the genes whose
                      local diversity reduction exceeds the background-selection expectation.
 A grey arrow shows how each term's fold enrichment shifts between the two sets; the BGS
@@ -20,14 +20,15 @@ import os
 os.environ.setdefault("MPLCONFIGDIR", "/dev/shm/mplcache")
 import sys
 _HERE = os.path.dirname(os.path.abspath(__file__))
+_ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE
 sys.path.insert(0, _HERE)
 from figstyle import apply, C, despine
 apply()
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
-D = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel/results/empirical_scan_fullsfs/hmm_decode"
-OUT = os.path.join(_HERE, "supp_figures", "figS15_gsea.png")
+D = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_seqmodel/results/empirical_scan_fullsfs/hmm_decode_masked"
+OUT = os.path.join(_ROOT, "supp_figures", "figS15_gsea.png")
 COL_T1, COL_BG = C["accent"], C["warm"]   # blue = all Tier-1, orange = BGS-robust
 
 # generic parent terms that carry no biology, plus deprecated GO ("obsolete ...") --
@@ -99,7 +100,7 @@ despine(ax)
 
 # --- legends: series identity + gene-count size ---
 set_leg = [Line2D([], [], marker="o", ls="", mfc=COL_T1, mec="white", ms=9,
-                  label="all Tier-1 (658 calls)"),
+                  label="all Tier-1 (623 calls)"),
            Line2D([], [], marker="D", ls="", mfc=COL_BG, mec="white", ms=8,
                   label="BGS-robust subset (291)")]
 l1 = ax.legend(handles=set_leg, loc="lower right", fontsize=8.5, frameon=False,

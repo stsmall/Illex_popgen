@@ -68,8 +68,7 @@ the arrangement as a long-lived supergene rather than on a single locally adapti
 locus.
 
 Outside the inversion, demographic analyses support strong expansion (genome-wide Tajima's $D\approx-2$) to a present effective population size of roughly seven million. A stratified,
-cross-method-corroborated scan for recent positive selection identified 662 candidate
-sweep windows, including 34 high-confidence regions independently supported by
+cross-method-corroborated scan for recent positive selection identified 627 candidate sweep windows, including 24 high-confidence regions independently supported by
 multiple methods. Sweep-associated genes show strong and background-selection-robust
 enrichment for two biological themes, neurodevelopment and photoreception, with additional candidates involving lineage-specific genes and Z-linked RNA-regulatory
 and hormone-signalling loci. Together, these results reveal two contrasting modes of
@@ -255,7 +254,7 @@ $\sim$50--100~ky, ending $\gtrsim$50--100~ka, under selection of order $\Ne s\si
 statistics with length-invariance verified over a 25-fold range, and the fitted model reproduces the
 observed joint two-dimensional site-frequency spectrum between arrangements, with near-fixed differences and off-diagonal density in the inverted body and a collapse to the diagonal in collinear controls (Supplementary Fig.~S5). Every absolute age scales inversely with the assumed mutation rate $\mu=3\times10^{-9}$, which is the weakest external input to these estimates.
 
-\paragraph{What the inversion is not.} It is not a region of locally suppressed crossing-over. The LD-based recombination map does not register the inversion at all. The estimated rate inside the inverted body equals that of the collinear flanks (medians 0.2015 and 0.2023~cM/Mb), and chromosome~2 as a whole is an ordinary autosome (median 0.202 against an autosomal median of 0.200, the 60th percentile of per-chromosome medians on the same male map; Supplementary Fig.~S12). This is what an estimator that reads linkage disequilibrium in $\sim$19-kb windows should do, because within each arrangement recombination is normal and the barrier operates only between arrangements at the scale of the whole 19-Mb block. The barrier is instead demonstrated directly by the arrangement differentiation, the coincident LD block, and the joint site-frequency spectrum (\cref{fig:inv}b; Supplementary Figs.~S4, S5), and the differentiation is therefore a consequence of the arrangement barrier rather than of a local crossover cold spot. It is not locally adaptive, since there is no cline and geographic $\Fst\approx0$, and the migration-selection scenario that explains most well-studied inversions \citep{kirkpatrick2006} cannot apply. And it is not a swept region, because the genome-wide scan below finds no cross-method-concordant sweep on chromosome~2. The RAiSD footprint statistic is broadly elevated and the classifier over-calls across the inversion, but the two never co-localise into focal concordance, as expected for a balancing-selected supergene rather than a swept locus, and the concordance requirement filters these calls correctly.
+\paragraph{What the inversion is not.} It is not a region of locally suppressed crossing-over. The LD-based recombination map does not register the inversion at all. The estimated rate inside the inverted body equals that of the collinear flanks (medians 0.2015 and 0.2023~cM/Mb), and chromosome~2 as a whole is an ordinary autosome (median 0.202 against an autosomal median of 0.200, the 60th percentile of per-chromosome medians on the same male map; Supplementary Fig.~S12). This is what an estimator that reads linkage disequilibrium in $\sim$19-kb windows should do, because within each arrangement recombination is normal and the barrier operates only between arrangements at the scale of the whole 19-Mb block. The barrier is instead demonstrated directly by the arrangement differentiation, the coincident LD block, and the joint site-frequency spectrum (\cref{fig:inv}b; Supplementary Figs.~S4, S5), and the differentiation is therefore a consequence of the arrangement barrier rather than of a local crossover cold spot. It is not locally adaptive, since there is no cline and geographic $\Fst\approx0$, and the migration-selection scenario that explains most well-studied inversions \citep{kirkpatrick2006} cannot apply. And it is not a swept region, because the genome-wide scan below finds no cross-method-concordant sweep inside the inversion. The RAiSD footprint statistic is broadly elevated and the classifier over-calls across the inversion, but the two never co-localise into focal concordance, as expected for a balancing-selected supergene rather than a swept locus, and the concordance requirement filters these calls correctly.
 Gene flux between arrangements is not detectable in mean $\dxy$, though a residual $\sim$40\% depletion of
 near-fixed differences appears in the outermost megabase around the breakpoints. The mechanism of
 balancing selection, i.e., overdominance, associative overdominance, frequency dependence, or a moving optimum
@@ -297,16 +296,7 @@ ceiling; none of the analyses below depend on fine-scale recombination variation
 Background selection is moderate and gene-density-driven. Nucleotide diversity falls with local coding density
 ($r=-0.31$; 20--30\% reduction in gene-dense windows) and rises 43\% between exon-adjacent and exon-distant
 windows, while recombination does neither (Supplementary Fig.~S17), the classical footprint of linked purifying selection \citep{charlesworth1993,mcvicker2009,charlesworth2021}, organised here by gene density
-rather than by the recombination axis. Diversity is also heterogeneous at the megabase scale, where 22 blocks of
-$\geq$1~Mb on 17 chromosomes carry 2--4$\times$ the chromosome-median $\pi$ with less-negative Tajima's $D$
-(e.g.\ chr1:24--31~Mb, $\pi=0.020$; Supplementary Fig.~S23, Table~S9). Every block is present at the same strength in each of the ten sampling divisions (block-to-flank ratio varying by 1--6\% among divisions), and between-division $\Fst$ is no higher inside the blocks than outside, so none is a regional or population-specific feature (Supplementary Fig.~S23). Nor do they carry the long-range linkage disequilibrium of a segregating inversion. The chromosome-2 inversion shows $r^2$ at $>$1~Mb 3.5 times that of its flanks, whereas every block tested is indistinguishable from flanking sequence (Supplementary Fig.~S24). We tested these against every structural
-explanation and they fail all of them. Local PCA finds no karyotype clusters (unlike the chr2 positive
-control), there is no heterozygosity excess, no excess-heterozygosity filtering loss, and no per-individual
-depth anomaly, and their allele-frequency spectrum is identical to flanking sequence; they simply carry $\sim$2.5$\times$ more SNPs. They are gene-poor (coding fraction 0.001), largely unalignable to \coin{}
-(35\% vs $\sim$88\% of bases aligned) and 1.7-fold more divergent where alignable, and low-coverage
-\textit{I.\ argentinus} reads also call $\sim$3$\times$ more variants in them. They are therefore
-fast-evolving, largely lineage-specific gene deserts, shaped by elevated mutation input and relaxed linked selection, not structural polymorphisms, and the chromosome-2 inversion remains the genome's only segregating
-karyotype. A model-based $B$-map could not be fit under this
+rather than by the recombination axis. Diversity is also heterogeneous at the megabase scale. Twenty-two blocks of $\geq$1~Mb on 17 chromosomes (129~Mb, 3.9\% of the autosomes) carry 2--6 times the chromosome-median $\pi$ with less negative Tajima's $D$ (Supplementary Table~S9). They are present at the same strength in every sampling division, are no more differentiated among divisions than flanking sequence, and lack the long-range linkage disequilibrium of a segregating inversion (Supplementary Figs.~S23, S24). Read depth resolves them into three kinds. In six, depth is raised in every individual (1.2--2.2 times the flanks across the population sample, and up to 2.7 and 2.4 times in long reads from the individual used for the assembly and a second individual), and a single diploid genome carries five to six times the flanking density of heterozygous sites at skewed allele fractions, the signature of duplicated sequence collapsed into one copy in the assembly. In eight, depth is reduced to 0.6--0.9 times the flanks in every individual, indicating haplotypes too divergent from the reference for many short reads to map; long reads, which span the divergent sequence, show a much smaller deficit. The remaining eight have normal depth and mapping and are gene-poor regions of genuinely elevated diversity. Summary statistics cannot separate any of these from the footprints of selection, so all 22 blocks were excluded from the sweep scan and the gene-set analyses. They hold 5\% of accessible sites, and excluding them lowers genome-wide $\pi$ by 9\% while shifting Tajima's $D$ by less than 0.02, within the uncertainty of the demographic fit. A model-based $B$-map could not be fit under this
 regime (the classical approximation overflows where the deleterious mutation rate exceeds the selection
 coefficient), so local coding fraction serves as the background-selection covariate that the sweep scan
 controls for explicitly. Protein adaptation over the divergence timescale is substantial. McDonald--Kreitman tests \citep{mcdonald1991,messer2013mk} against \coin{} across 20{,}999 genes give a
@@ -340,37 +330,32 @@ sweep signal) and use the full spectrum on both the simulation and empirical sid
 We report sweeps at two levels of stringency (Supplementary Fig.~S13). Tier~1 is the diploS/HIC hard/soft classification, spatially resolved by a recombination-aware Markov decoder, a hidden Markov model over the per-window (100~kb) classes with neutral, linked, and sweep-centre states whose emissions are the
 prior-corrected class posteriors and whose dwell lengths follow the $\sim$400~kb sweep footprint scaled by
 the recombination map (Supplementary Fig.~S13a). Because the genome reads as $\sim$91\% linked-selected under strong expansion, the decoder's role is spatial coherence. It retains hard/soft calls that lie in contiguous sweep centres and
-discards spatially isolated ones, reducing 1{,}758 raw calls to 717 windows (658 localised autosomal calls;
-459 hard, 199 soft) and preferentially keeping the higher-outlier windows (median empirical-outlier
+discards spatially isolated ones, reducing 1{,}651 raw calls to 677 windows (623 localised autosomal calls; 437 hard, 186 soft) and preferentially keeping the higher-outlier windows (median empirical-outlier
 percentile 0.98 vs 0.95 for discarded calls; Supplementary Fig.~S13b). Tier~2 is the subset
-independently corroborated by a footprint method, namely the 34 cross-method-concordant regions (a diploS/HIC-HMM
-outlier plus RAiSD or SweepFinder2). The two tiers agree strongly, with 89\% of windows at concordant loci are
-decoded as sweep centres versus 2.9\% genome-wide (odds ratio 282, $p<10^{-46}$), and 30 of the 34 concordant
+independently corroborated by a footprint method, namely the 24 cross-method-concordant regions (a diploS/HIC-HMM
+outlier plus RAiSD or SweepFinder2). The two tiers agree strongly, with 88\% of windows at concordant loci decoded as sweep centres versus 2.9\% genome-wide (odds ratio 242, $p<10^{-30}$), and 21 of the 24 concordant
 regions contain a Tier-1 centre (Supplementary Fig.~S13c), so the conservative concordance set is a
 high-purity subset of the classifier calls, not a disjoint list. Because the decoder could not be
 simulation-calibrated at this genome's recombination density (\cref{sec:methods}), its dwell parameters are
 set from the sweep footprint and the recombination map and validated post hoc by this concordance; we treat
 Tier~1 as a ranked candidate set and Tier~2 as the high-confidence calls. The Z chromosome, which the
 footprint methods do not cover, is necessarily diploS/HIC-only; scanned separately in males (below), it
-contributes four further Tier-1 calls, for a genome-wide Tier-1 total of 662 (\cref{fig:selection};
+contributes four further Tier-1 calls, for a genome-wide Tier-1 total of 627 (\cref{fig:selection};
 Supplementary Fig.~S18).
 
 \paragraph{Neurodevelopment and photoreception.}
-The 658 autosomal Tier-1 calls overlap 894 genes (476 with GO annotation; one-third of calls fall in
+The 623 autosomal Tier-1 calls overlap 885 genes (475 with GO annotation; one-third of calls fall in
 gene-poor, often transposon-rich windows and are excluded). A gene-ontology enrichment against the
 annotated-gene background (Fisher's exact test, Benjamini--Hochberg FDR; \citealt{benjamini1995}) returns
 124 terms at FDR$<$0.05 (Supplementary Fig.~S15, Table~S4), dominated by neural development (neurogenesis, generation of neurons, neuron development, neuron-projection and cell morphogenesis; 1.5--1.8-fold), together with transcriptional and RNA-regulatory control, and a weaker light-response signal
 (response to light stimulus 1.9-fold, response to radiation 1.8-fold). The enrichment is carried by the
-hard-sweep calls (99 terms); the disjoint soft-sweep set has none at FDR$<$0.05. The decisive test is
+hard-sweep calls (98 terms); the disjoint soft-sweep set has none at FDR$<$0.05. The decisive test is
 whether these themes are artefacts of background selection, since gene-dense neural loci have lower diversity for reasons unrelated to sweeps. We therefore screened every Tier-1 call with the same per-region
 background-selection test used for the concordant set, retaining only calls whose local $\pi$ falls below the
-background-selection expectation given flanking coding density. This keeps 291 of the 658 (237 hard, 54
+background-selection expectation given flanking coding density. This keeps 291 of the 623 (237 hard, 54
 soft), and the enrichment does not merely survive the screen; it sharpens. The BGS-robust set
-yields 152 terms at FDR$<$0.05, and every leading term's fold enrichment rises, including response to light stimulus
-$1.92\!\to\!3.12$ (FDR $2\times10^{-2}\!\to\!1\times10^{-4}$), response to radiation $1.75\!\to\!2.77$
-(FDR $3\times10^{-2}\!\to\!2\times10^{-4}$), neuron-projection morphogenesis $1.81\!\to\!2.26$, cell
-morphogenesis $1.72\!\to\!2.24$, neuron development $1.59\!\to\!1.97$, generation of neurons
-$1.60\!\to\!1.90$, transcription by RNA polymerase~II $1.73\!\to\!2.08$ (Supplementary Fig.~S15). The photoreception signal, the weakest in the full set, becomes the single most enriched theme after the screen,
+yields 151 terms at FDR$<$0.05, and every leading term's fold enrichment rises, including response to light stimulus
+$1.94\!\to\!3.15$ (FDR $2\times10^{-2}\!\to\!9\times10^{-5}$), response to radiation $1.76\!\to\!2.79$ (FDR $3\times10^{-2}\!\to\!2\times10^{-4}$), neuron-projection morphogenesis $1.81\!\to\!2.25$, cell morphogenesis $1.73\!\to\!2.24$, neuron development $1.59\!\to\!1.97$, generation of neurons $1.59\!\to\!1.90$, transcription by RNA polymerase~II $1.73\!\to\!2.08$ (Supplementary Fig.~S15). The photoreception signal, the weakest in the full set, becomes the single most enriched theme after the screen,
 and its more specific child terms (detection of light stimulus $2.5\!\to\!3.9$, phototransduction
 $2.5\!\to\!3.4$) move in the same direction, though with too few genes to reach significance. A shared-gene
 enrichment map of the BGS-robust set resolves the same two connected modules, neural
@@ -458,7 +443,7 @@ evidence that these themes are real, rather than by-products of reduced diversit
 is their behaviour under the background-selection screen. Background selection lowers diversity where genes
 are dense \citep{charlesworth1993,mcvicker2009,charlesworth2021}; a sweep call that is really a BGS artefact
 is therefore removed by a test that demands diversity below the BGS expectation, and any enrichment
-riding on such calls should erode. Instead every leading term sharpened (light response $1.9\!\to\!3.1$, radiation $1.8\!\to\!2.8$, morphogenesis $1.7$--$1.8\!\to\!2.2$--$2.3$) and the weakest theme became the strongest. The sweep program is not an artefact of gene density.
+riding on such calls should erode. Instead every leading term sharpened (light response $1.9\!\to\!3.2$, radiation $1.8\!\to\!2.8$, morphogenesis $1.7$--$1.8\!\to\!2.2$--$2.3$) and the weakest theme became the strongest. The sweep program is not an artefact of gene density.
 
 We frame these as candidates rather than confirmed targets, and the framework itself is offered as a
 contribution. Simulation-trained per-window classifiers are increasingly standard
@@ -514,7 +499,7 @@ the \texttt{Illex\_F24} primary assembly (45 numbered chromosomes plus the Z) an
 (Supplementary Table~S1). Genotypes are unphased and the VCF
 is variants-only (no invariant sites), so diversity is computed from genotype likelihoods off the BAMs rather
 than from called genotypes. \coin{} is the divergence/MK outgroup; \textit{I.\ argentinus} is a secondary
-comparator. An accessibility mask restricts all analyses to callable sites.
+comparator. An accessibility mask restricts all analyses to callable sites, and the 22 anomalous-diversity blocks of Supplementary Table~S9 are additionally excluded from the sweep scan and gene-set analyses. Blocks were called where the rolling median of 10-kb $\pi$ exceeded twice the chromosome median over $\geq$1~Mb, and were characterised by per-individual read depth relative to 5-Mb flanks in all 633 individuals (samtools bedcov at mapping quality 0 and 20), long-read depth and heterozygous-site allele fractions in the two individuals with PacBio HiFi data aligned to the assembly, genotype-likelihood $\pi$ at mapping quality 60, per-division $\pi$ and between-division Hudson $\Fst$, and genotype linkage disequilibrium among common SNPs.
 
 \paragraph{Diversity, SFS, and demography.}
 Site-frequency spectra, Watterson's $\theta$, per-window $\pi$ and Tajima's $D$, and per-karyotype spectra
@@ -568,7 +553,7 @@ sweep-centre states; emissions are the prior-corrected collapsed class posterior
 $\sim$400~kb sweep footprint scaled by the ReLERNN sex-averaged map, with a constant-rate fallback on
 chromosomes~2 and~42 and the Z). A simulation calibration of the decoder was attempted but proved infeasible, because at $\Ne$-scale recombination the recapitated ancestral recombination graphs carry $\sim$3.4$\times10^{5}$
 marginal trees per 2.5~Mb, making tree-sequence genotype ascertainment for a training scan prohibitively slow
-($>$2.7~h per segment); the dwell parameters are therefore design-informed and validated post hoc by the 89\%/2.9\% Tier-1 to Tier-2 concordance (Supplementary Fig.~S13). The Z chromosome was scanned in males only
+($>$2.7~h per segment); the dwell parameters are therefore design-informed and validated post hoc by the 88\%/2.9\% Tier-1 to Tier-2 concordance (Supplementary Fig.~S13). The Z chromosome was scanned in males only
 with a model retrained at $n=330$ and passed a comparative feature-adequacy gate, then validated against the
 haploid females. Candidate genes were annotated with EnTAP and screened by DIAMOND against cephalopod
 proteomes. Gene-ontology enrichment of Tier-1 genes used Fisher's exact test against the annotated-gene
@@ -642,10 +627,9 @@ ARG-based inversion-coalescent simulator (\url{https://github.com/stsmall/msinv}
     concatenated). The classifier reads the genome as pervasively linked-selected
     ($\sim$91\% linked-hard/soft; neutral $\sim$1\%; true hard/soft only a few percent), so raw diploS/HIC
     calls are filtered by cross-method concordance (a diploS/HIC-HMM outlier plus RAiSD or SweepFinder2) and a
-    background-selection test; the corroborated, background-selection-robust candidates (35 windows across 34
-    regions; highlighted) stand out above the discounted background, with key genes labelled. Chromosome-Z
+    background-selection test; the corroborated, background-selection-robust candidates (25 windows across 24 regions; highlighted) stand out above the discounted background, with key genes labelled. Chromosome-Z
     Tier-1 calls (diamonds; \textit{Pasilla}, \textit{Smaug}, \textit{Esrrg} labelled) are male-based and diploS/HIC-only (the footprint methods do not cover the Z), so they cannot enter the concordance
-    filter. Chromosome~2 carries no concordant sweep. The full scan
+    filter. The chromosome-2 inversion carries no concordant sweep. The full scan
     pipeline is shown in Supplementary Fig.~S8.}
   \label{fig:selection}
 \end{figure}
@@ -731,7 +715,7 @@ ARG-based inversion-coalescent simulator (\url{https://github.com/stsmall/msinv}
 \begin{table}[t]\centering
   \caption{\textbf{High-confidence selective-sweep candidates}, grouped by biological function and ordered by
     chromosome, including the Z-chromosome set. Autosomal rows are the 11 background-selection-robust
-    candidates (of 34 concordant regions); Z rows (marked) are the fine-scale-confirmed sweeps from the
+    candidates (of 24 concordant regions); Z rows (marked) are the fine-scale-confirmed sweeps from the
     males-only scan. Genes are cephalopod orthologs. Class: hard/soft sweep. Full machine-readable tables:
     Supplementary Table~S6.}
   \label{tab:sweep}
