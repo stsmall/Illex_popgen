@@ -525,7 +525,9 @@ Supplementary Table~S1 and in the project repository.
 \paragraph{Data.}
 The ingroup is all 633 \illex{} individuals whole-genome sequenced by \citet{baker2025} (ENA project
 PRJEB101095; collected 2022--2023 across eleven NAFO divisions, every individual with coordinates), of which
-that study retained 540 after its own quality filters. We re-processed the raw reads from scratch: mapping to
+that study retained 540: 616 passed its genotyping quality filters and a further 76 were removed for $>$25\%
+missing genotypes, a consequence of the 46\% mean read-alignment rate to the \textit{Thysanoteuthis} reference.
+Against the conspecific assembly no individual-level exclusion was needed. We re-processed the raw reads from scratch: mapping to
 the \texttt{Illex\_F24} primary assembly (45 numbered chromosomes plus the Z) and joint variant calling
 (Supplementary Table~S1). Genotypes are unphased and the VCF
 is variants-only (no invariant sites), so diversity is computed from genotype likelihoods off the BAMs rather
@@ -614,8 +616,8 @@ ARG-based inversion-coalescent simulator (\url{https://github.com/stsmall/msinv}
 \begin{figure}[p]\centering
   \includegraphics[width=.72\linewidth]{fig1_map.png}
   \caption{\textbf{Sampling and chromosome-2 arrangement frequency.} \illex{} sampled across eleven NAFO
-    divisions ($\sim$37--50$^\circ$N); pies show the AA/AB/BB karyotype composition at each division (sized by
-    $N$). The inverted (BB) frequency is non-clinal (0.29--0.46 across latitude), consistent with geographic $\Fst\approx0$: the inversion is not locally adaptive.}
+    divisions ($\sim$37--50$^\circ$N); pies are placed at the mean sampling coordinates of each division and show
+    the AA/AB/BB karyotype composition there (sized by $N$). The inverted (BB) frequency is non-clinal (0.29--0.46 across latitude), consistent with geographic $\Fst\approx0$: the inversion is not locally adaptive.}
   \label{fig:map}
 \end{figure}
 

@@ -1,8 +1,8 @@
 """Fig 1 map: NW-Atlantic sampling with per-NAFO-division karyotype pies.
 
 Shows sampling geography AND the non-cline (pie composition ~constant across
-latitude). Latitude is the empirical division mean_lat; longitude is the NAFO
-standard-zone centroid (approximate). Karyotype pies (AA/AB/BB) sized by sqrt(N).
+latitude). Pies sit at the mean sampling latitude/longitude of each division
+(Baker et al. 2025 sample metadata). Karyotype pies (AA/AB/BB) sized by sqrt(N).
 """
 import sys
 sys.path.insert(0, "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/scripts")
@@ -15,11 +15,12 @@ import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 
 DIV = pd.read_csv("/sietch_colab/data_share/illex/popgen_data/analysis/steps/04_hwe_cline/karyo_by_division.tsv", sep="\t")
-# approximate NAFO division centroid longitudes (deg W); latitude uses data mean_lat
-LON = {"3K": -52.0, "3N": -49.5, "3O": -52.5, "4R": -59.5, "4S": -62.0,
-       "4T": -63.5, "4W": -60.5, "4X": -66.0, "6A": -73.0, "6B": -73.8, "6C": -75.0}
-DIV = DIV[DIV["division"].isin(LON)].copy()
-DIV["lon"] = DIV["division"].map(LON)
+# pie positions = mean sampling coordinates of each division (Baker et al. 2025 metadata), so the
+# map matches the actual collection sites rather than nominal NAFO-division centroids
+META = pd.read_csv("/sietch_colab/data_share/illex/popgen_data/seq_data/baker_2025/docs/Squid_Meta_Sept2024_Simple.txt", sep="\t")
+POS = META.groupby("Zone")[["Lat", "Lon"]].mean()
+DIV = DIV[DIV["division"].isin(POS.index)].copy()
+DIV["lon"] = DIV["division"].map(POS["Lon"]); DIV["mean_lat"] = DIV["division"].map(POS["Lat"])
 
 fig = plt.figure(figsize=(6.4, 7.2))
 ax = plt.axes(projection=ccrs.PlateCarree())
