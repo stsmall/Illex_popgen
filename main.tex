@@ -36,7 +36,7 @@
        \textit{Illex illecebrosus}}}
 
 \author[1,*]{Scott T.\,Small}
-\author[1]{Silas Tittes}
+\author[1]{Silas B.\,Tittes}
 \author[1]{Andrew D.\,Kern}
 \affil[1]{Institute of Ecology and Evolution, University of Oregon, Eugene, OR, USA}
 \affil[*]{Correspondence: ssmall@uoregon.edu}
@@ -49,95 +49,151 @@
 % =====================================================================
 \begin{abstract}
 \noindent
-Chromosomal inversions are increasingly recognised as engines of adaptation, yet for most wild inversions
-we know neither their age, their frequency history, nor whether they are held by selection at all. The
-northern shortfin squid \illex{} --- an annual, semelparous, broadcast-spawning cephalopod with one of the
-largest effective population sizes of any animal --- was recently shown to be panmictic across its
-northwest Atlantic range \citep{baker2025}. Using whole-genome data from 633 individuals across that range,
-we show that this unstructured genome carries a single $\sim$19~Mb inversion on chromosome~2, resolve what
-the inversion is, and map the genome-wide landscape of recent positive selection around it. The inversion
-(chr2:60.54--79.50~Mb) segregates at a derived frequency of 0.374 with no geographic cline and between-karyotype
-$\Fst=0.37$ against geographic $\Fst\approx0$, ruling out local adaptation. It is not neutral: the rare derived
-arrangement is 2.3-fold more diverse than its frequency can sustain, and a coalescent fit with an
-ancestral-recombination-graph simulator that enforces the arrangement barrier (msinv) dates it to
-$\sim$850~ka, reconstructs a long plateau near $p\approx0.74$, and identifies an active decline to its
-present frequency over the last $\sim$50--100~ky ($\Ne s\sim10^{2}$--$10^{3}$), a history that neutral drift
-cannot produce. The block captures a gene-poor, functionally unremarkable cargo (no gene-ontology enrichment
-against a permutation null) yet accumulates 3{,}513 near-fixed differences whose coding fraction is
-concentrated in nine genes --- the architecture of a balancing-selected supergene. Genome-wide, a
-stratified, cross-method-corroborated sweep scan built for a strongly expanding, unphased genome recovers 662
-Tier-1 and 34 high-confidence Tier-2 sweeps that resolve into two coherent themes, \textbf{neurodevelopment}
-and \textbf{photoreception}: screening for background selection sharpens rather than erodes them (response to
-light $1.9\!\to\!3.1$-fold, response to radiation $1.8\!\to\!2.8$-fold, neuron-projection and cell
-morphogenesis $1.7$--$1.8\!\to\!2.2$--$2.3$-fold). Alongside a cephalopod-lineage-specific gene under a hard
-sweep and a Z-linked RNA-regulation/hormone-signalling cluster, these results portray a large-$\Ne$,
-expansion-dominated genome in which a single balancing-selected supergene structures the population while
-recent directional selection has targeted the sensory and neural program of a fast, migratory, visually
-guided predator.
+Highly dispersive marine species can show little geographic population structure while
+harbouring substantial adaptive genomic variation. Here we use a chromosome-level
+reference genome and whole-genome data from 633 northern shortfin squid,
+\illex{}, sampled across the Northwest Atlantic to resolve genomic variation that was
+previously inaccessible using a divergent reference assembly. We confirm essentially
+complete range-wide panmixia, but identify a single major axis of genomic structure:
+a $\sim$19~Mb inversion on chromosome~2. The derived arrangement segregates at a
+frequency of 0.374, occurs throughout the species' range without a geographic cline,
+and reaches $\Fst=0.37$ between alternative homozygotes despite geographic
+$\Fst\approx0$. Its evolutionary history is inconsistent with neutral drift. The
+rarer derived arrangement retains 2.3-fold more diversity than expected from its
+present frequency, and barrier-aware coalescent modelling dates the polymorphism to
+$\sim$850~ka, reconstructing a prolonged period near frequency $p\approx0.74$
+followed by an active decline over the last $\sim$50--100~ky. The inversion is
+gene-poor and lacks functional enrichment, but contains thousands of near-fixed
+differences concentrated across the non-recombining block, supporting selection on
+the arrangement as a long-lived supergene rather than on a single locally adaptive
+locus.
+
+Outside the inversion, demographic analyses support strong expansion (Tajima's $D=-1.5$)
+and an effective population size exceeding 4 million.A stratified,
+cross-method-corroborated scan for recent positive selection identified 662 candidate
+sweep windows, including 34 high-confidence regions independently supported by
+multiple methods. Sweep-associated genes show strong and background-selection-robust
+enrichment for two biological themes: neurodevelopment and photoreception, with
+additional candidates involving lineage-specific genes and Z-linked RNA-regulatory
+and hormone-signalling loci. Together, these results reveal two contrasting modes of
+adaptation in an otherwise panmictic marine species: a long-lived chromosomal
+polymorphism maintained by balancing selection and recent directional selection on
+sensory and neural functions. More broadly, they demonstrate how a conspecific
+reference genome can expose structural and adaptive variation that is largely
+invisible to geographic differentiation alone.
 \end{abstract}
 
 % =====================================================================
 \section{Introduction}
 
-Chromosomal inversions suppress recombination between arrangements and thereby bind together the alleles
-they capture, allowing co-adapted combinations to persist as segregating ``supergenes''
-\citep{kirkpatrick2010,schwander2014,thompson2014,wellenreuther2018,faria2019}. The best-understood cases
-are those with visible phenotypes and clear selective regimes: mimicry in \textit{Heliconius}
-\citep{jay2021}, alternative reproductive morphs in the ruff \citep{lamichhaney2016}, colony organisation in
-fire ants \citep{wang2013}, life-history transitions in \textit{Mimulus} \citep{lowry2010}. The theory that
-explains why inversions spread is correspondingly well developed for one scenario --- local adaptation with
-migration, in which an inversion is favoured because it protects locally adapted alleles from
-recombination with immigrant haplotypes \citep{kirkpatrick2006,charlesworth2018inv}. Far less is known about
-inversions that segregate at intermediate frequency \emph{without} geographic structure, where the
-maintaining force must be some form of balancing selection --- overdominance, associative overdominance
-generated by the recessive deleterious load that accumulates in a non-recombining block
-\citep{zhao2016,gilbert2020,jay2021}, negative frequency dependence, or temporally fluctuating selection
-\citep{wittmann2017,rudman2022}. For such inversions the key evolutionary quantities --- age, historical
-frequency trajectory, and the sign and strength of selection acting on the arrangement --- are rarely
-estimated, largely because the coalescent inside an inversion is not that of a freely recombining locus:
-arrangements are partially isolated demes exchanging ancestry only by rare double crossovers or gene
-conversion, and their diversity and divergence must be modelled with the barrier explicitly in place
+Marine populations with enormous census sizes and high dispersal present a persistent
+problem for population genetics: weak geographic differentiation can coexist with
+substantial evolutionarily important variation that is invisible to conventional
+population-structure analyses. This problem is especially acute in pelagic cephalopods.
+Ommastrephid squids are short-lived, semelparous, highly fecund, and capable of extensive
+dispersal during both early life and adulthood, producing large and often highly variable
+populations whose abundance is closely coupled to oceanographic conditions
+\citep{odor1998,arkhipkin2015}. The northern shortfin squid \illex{} exemplifies this
+life history. It is an annual, semelparous broadcast spawner distributed across more than
+2{,}500~km of the Northwest Atlantic shelf and slope, from the Mid-Atlantic Bight to
+Newfoundland and Labrador, where it supports major commercial fisheries in both U.S. and
+Canadian waters \citep{odor1998,arkhipkin2015,baker2025}. Recruitment and distribution
+are strongly influenced by transport in the Gulf Stream and associated shelf--slope
+circulation, while adults undertake extensive horizontal and diel vertical migrations.
+Together, high dispersal, extreme fecundity, and large population size predict little
+persistent geographic structure even while providing abundant substrate for natural
+selection.
+
+These same characteristics complicate genomic inference. The fecundity-with-high-mortality
+demography of \illex{} is the profile that motivates sweepstakes-reproductive-success
+models, in which a small and variable fraction of adults contributes disproportionately
+to each generation \citep{hedgecock2011,eldon2006,arnason2023}. Large effective population size can
+simultaneously increase the efficacy of weak selection, preserve abundant standing
+variation, and generate very short linkage disequilibrium, making population history and
+recent selection difficult to disentangle. More generally, genomic analysis of
+cephalopods has lagged behind that of many commercially important vertebrates because
+their genomes are large, repeat rich, and extensively reorganised relative to other
+molluscs \citep{albertin2015,albertin2022,schmidbaur2022,coffing2025,coffing2026}. Until recently, these %need to add Coffing et al papers
+limitations were particularly severe for \illex{}, for which no conspecific
+chromosome-level reference genome was available.
+
+The first range-wide population-genomic analysis of \illex{} provided a critical
+baseline. Using whole-genome data from 540 specimens collected across more than 40 sites,
+\citet{baker2025} found essentially no geographic genetic structure across the species'
+Northwest Atlantic range, consistent with extensive connectivity mediated by early-life
+dispersal and adult migration. That study consequently supported treatment of \illex{}
+as a single, highly connected stock. However, in the absence of a conspecific assembly,
+reads were mapped to the chromosome-level genome of the distantly related diamondback
+squid \textit{Thysanoteuthis rhombus}, approximately 51 million years divergent, with a
+mean alignment rate of only $\sim$46%. Such divergence necessarily restricts inference
+to the fraction of the genome sufficiently conserved to map reliably and reduces power
+in precisely the regions most likely to contain lineage-specific sequence, structural
+polymorphism, and rapidly evolving loci. Baker et al. therefore found no evidence of
+large structural variants, but explicitly identified reference divergence as a limitation
+on their ability to detect them.
+
+Chromosomal inversions are particularly susceptible to this problem because their
+evolutionary importance derives not simply from their breakpoints but from the long
+haplotypes they maintain. Inversions suppress recombination between alternative
+arrangements and can thereby preserve combinations of alleles as segregating
+``supergenes'' \citep{kirkpatrick2010,schwander2014,thompson2014,wellenreuther2018,
+faria2019}. Many of the best-characterised examples have conspicuous phenotypic effects
+or occur in spatially structured populations, including mimicry in \textit{Heliconius}
+\citep{jay2021}, alternative reproductive morphs in the ruff \citep{lamichhaney2016},
+colony organisation in fire ants \citep{wang2013}, and life-history variation in
+\textit{Mimulus} \citep{lowry2010}. Correspondingly, much inversion theory has focused
+on local adaptation with migration, where suppressed recombination protects locally
+favoured combinations of alleles from gene flow
+\citep{kirkpatrick2006,charlesworth2018inv}. Inversions maintained at intermediate
+frequency \emph{without} geographic structure pose a different problem. Their persistence
+instead implies balancing processes such as overdominance, associative overdominance
+generated by recessive deleterious load \citep{zhao2016,gilbert2020,jay2021}, negative
+frequency dependence, or temporally fluctuating selection
+\citep{wittmann2017,rudman2022}. Distinguishing these histories from neutral drift
+requires reconstructing the age and frequency history of the arrangements while
+accounting explicitly for the recombination barrier between them
 \citep{navarro2000,guerrero2012,berdan2023}.
 
-Cephalopods offer an unusual setting in which to ask these questions. They combine an extreme life
-history --- semelparity, enormous fecundity, near-total early mortality, and boom--bust recruitment --- with
-population sizes among the largest of any animal, and with the most elaborate nervous systems and visual
-systems in the invertebrates \citep{albertin2015,albertin2022,styfhals2022,songcocasey2022}. Their genomes
-show extensive lineage-specific reorganisation \citep{schmidbaur2022} and pervasive RNA-editing-based
-transcriptome plasticity \citep{liscovitch2017},
-and their photoreception extends beyond the camera eye to dermal opsins and light-driven chromatophore
-control \citep{mathger2010,ramirez2015,kingston2015}. The northern shortfin squid \illex{} is an annual,
-semelparous broadcast spawner distributed across the northwest Atlantic shelf and slope, performing diel
-vertical migrations through a steep light gradient and supporting large commercial fisheries
-\citep{odor1998,arkhipkin2015}. Its fecundity-with-high-mortality demography is the profile that motivates
-sweepstakes-reproductive-success models, under which a few individuals contribute disproportionately to each
-generation and the genealogy departs from the standard Kingman coalescent
-\citep{hedgecock2011,eldon2006,arnason2023}; a very large effective size, meanwhile, sharpens the resolution
-of both demographic inference and selection scans.
+A chromosome-level \illex{} genome also creates an opportunity to ask where selection
+has acted outside large structural polymorphisms. Cephalopods provide an unusual setting
+for this question because extreme life history is coupled to exceptional sensory and
+neural complexity. Coleoid genomes exhibit substantial lineage-specific reorganisation
+\citep{schmidbaur2022}, extensive RNA-editing-based transcriptomic plasticity
+\citep{liscovitch2017}, and elaborate nervous and visual systems
+\citep{albertin2015,albertin2022,styfhals2022,songcocasey2022}. In squids, vision
+operates across large changes in depth and illumination during diel vertical migration,
+and photoreception extends beyond the camera eye to dermal opsins and light-responsive
+chromatophore systems \citep{mathger2010,ramirez2015,kingston2015}. In a large, highly
+connected population where geographic $\Fst$ provides little leverage for detecting
+adaptation, recent positive selection should instead be evident primarily through local
+distortions of diversity, linkage disequilibrium, and the site-frequency spectrum.
+Correctly interpreting those signals, however, requires first establishing the demographic
+and genealogical background against which they arose.
 
-A recent population-genomic survey of \illex{} \citep{baker2025} found no genetic structure across more
-than 2{,}500~km of range and no evidence of large structural variants, and recommended management as a
-single stock. We confirm the panmixia here, but find beneath it a single, striking axis of structure on
-chromosome~2 --- recovered by PCA, $\Fst$, and windowed local PCA and attributable to a large inversion ---
-that raises the questions motivating this study. First, \emph{what is} the chromosome-2 inversion --- a
-neutral, drifting polymorphism or a selected supergene, and if selected, of what kind, what age, and with
-what frequency history? Second, \emph{where else} in the genome has recent positive selection acted, and on
-what biology? A differentiation scan cannot answer either: in a population with no geographic structure it
-has nothing to differentiate, and the sweeps of a large-$\Ne$ species leave their footprint in diversity and
-the site-frequency spectrum rather than in $\Fst$. Underpinning both questions is a third: whether
-\illex{}'s demography can be distinguished from the multiple-merger coalescent that its reproductive mode
-predicts, since every age and selection estimate that follows is licensed by that answer.
+Here we use a chromosome-level, annotated reference genome for \illex{} recently made available in \citet{Small2026} to reanalyse
+range-wide whole-genome variation at substantially greater genomic resolution. Our
+dataset comprises 633 individuals spanning eleven fishery-management divisions \citep{Baker2025}, together
+with \coin{} \citep{?COIN} as an outgroup for divergence-based inference and %?COIN needs a reference
+\textit{I.\ argentinus} as a recently diverged congener \citep{Small2026}. We first test whether the
+range-wide panmixia reported by \citet{baker2025} persists when reads are mapped to a
+conspecific reference and ask whether previously inaccessible structural variation becomes
+apparent. This reveals a single $\sim$19~Mb inversion on chromosome~2 that segregates
+across the range despite an otherwise essentially unstructured genome. We then ask
+whether this inversion is a neutral polymorphism or a selected supergene by combining
+arrangement-specific diversity and divergence with a barrier-aware coalescent model that
+reconstructs its age and historical frequency trajectory. In parallel, we infer
+population history from the site-frequency spectrum and linkage disequilibrium, explicitly
+evaluate whether the data require a multiple-merger rather than Kingman coalescent, and
+scan the remaining genome for recent positive selection using complementary methods
+\citep{kern2018diploshic,johri2022}. %is johri the correct reference, raisd and sf2
+These analyses resolve two distinct forms of genomic
+adaptation in an otherwise panmictic species: a long-lived, balancing-selected
+chromosomal polymorphism and a genome-wide set of recent sweeps concentrated in
+neurodevelopmental and photoreceptive functions. Together, they show how a conspecific
+genome transforms the apparent genomic landscape of a highly connected marine species,
+revealing structural and adaptive variation that is largely invisible to geographic
+differentiation alone.
 
-We address these with whole-genome data from 633 \illex{} individuals spanning eleven fishery-management
-divisions, supported by an \coin{} outgroup for divergence-based inference and by \textit{I.\ argentinus} as
-a recently diverged congener. We dissect the chromosome-2 inversion with per-arrangement diversity and
-divergence, a purpose-built barrier-aware coalescent simulator, and a direct characterisation of its gene
-content and fixed-difference architecture; we infer demography from the site-frequency spectrum and linkage
-disequilibrium and test the coalescent class explicitly; and we scan for selective sweeps with a framework
-designed for the failure mode that strongly expanding, unphased, missing-data-rich genomes impose on
-simulation-trained classifiers \citep{kern2018diploshic,johri2022}. The scan resolves into two coherent
-biological themes --- neurodevelopment and photoreception --- that strengthen, rather than dissolve, when we
-control for background selection.
 
 % =====================================================================
 \section{Results}
@@ -145,9 +201,8 @@ control for background selection.
 \subsection{Sample, sex, and the absence of geographic structure}
 We analysed 633 \illex{} individuals from eleven NAFO management divisions spanning $\sim$37--50$^\circ$N
 (\cref{fig:map}, \cref{tab:summary}). Read coverage on the Z chromosome separates the sample into 342 ZZ
-males and 291 ZO females, consistent with a ZZ/ZO system in which females are the heterogametic sex with a
-single Z and no W (\cref{fig:overview}); a chromosome previously suspected to be sex-linked (chr42) is
-autosomal by this criterion. Autosomal analyses use both sexes; the Z, on which males are diploid and females
+males and 291 ZO females, consistent with a ZZ/ZO system \citep{Coffing2025}
+(\cref{fig:overview}); Autosomal analyses use both sexes; the Z, on which males are diploid and females
 haploid, is analysed separately (\cref{sec:sweep}).
 
 Consistent with the range-wide panmixia reported by \citet{baker2025}, population structure exists in
@@ -163,17 +218,16 @@ only on chromosome~2 (three clusters, $\Delta\mathrm{BIC}=199$, cluster separati
 (\cref{fig:overview}). The residual dispersion on minor PCA axes tracks neither division, latitude, nor
 coverage (Supplementary Fig.~S1), and a KING-robust relatedness screen \citep{manichaikul2010} finds no
 duplicate, parent--offspring, or full-sib pairs and a single second-degree pair among the 633 individuals
-(maximum kinship 0.16): despite sweepstakes reproduction, the sample behaves as effectively unrelated.
+(maximum kinship 0.16), effectively unrelated.
 Because a per-SNP differentiation scan is the most sensitive test for local adaptation in a population this
 panmictic, we compared per-SNP $\Fst$ among divisions to a coalescent neutral null --- a single panmictic
 population simulated under the fitted demography at the empirical sample sizes and missingness. Across the
-full callsets (551{,}344 SNPs in 12{,}007 genes) the empirical differentiation lies entirely within the drift
+full callsets (551{,}344 SNPs in 12{,}007 genes) the empirical differentiation lies entirely within the drift % what is the 551 here? sample size is 633
 expectation: no SNP exceeds the neutral maximum, a single intergenic site passes the lenient threshold against
 $\approx$556 expected by chance, and there are zero genic outliers (Supplementary Figs.~S2, S19). Nucleotide
 diversity and Tajima's $D$ are flat across latitude and pairwise $\Fst$ among divisions is $\approx0$
 throughout (\cref{fig:diversity}). There is therefore no geographic local adaptation anywhere in the genome,
-and the inversion is geographically non-clinal --- which reframes it from ``the thing that structures the
-population'' into an evolutionary object to be characterised in its own right.
+and the inversion is geographically non-clinal. % figure to go w/ the this statement figS6?
 
 \subsection{A large, balancing-selected inversion on chromosome~2}\label{sec:inv}
 
@@ -191,7 +245,7 @@ step-change in arrangement differentiation and a strand flip in a whole-chromoso
 (Supplementary Fig.~S11); an extended block of linkage disequilibrium coincides with the same interval
 (Supplementary Fig.~S4).
 
-\paragraph{Polarisation.}
+\paragraph{Reference genome carries derived inversion}
 The derived, inverted arrangement is \textbf{BB, at a present frequency of 0.374}; AA is ancestral and
 standard. This is the reverse of the naive polarisation from the reference allele, which is circular because
 the \illex{} reference assembly is itself in the inverted orientation (it carries BB at 86.5\% of
@@ -199,32 +253,31 @@ fixed-different sites). Restricting to the non-circular subset of sites at which
 alternate allele shows AA to be ancestral (63.0\%) and BB derived --- a single inversion event, with the
 reference simply assembled from an inverted individual (Supplementary Table~S3).
 
-\paragraph{The inversion is not neutral.}
+\paragraph{The inversion does not follow neutral trajectory.}
 The primary evidence is per-arrangement diversity (\cref{tab:inv}, \cref{fig:inv}c). Inside an inversion the
 two arrangements behave as partially isolated demes \citep{navarro2000,guerrero2012}, so at neutral
 equilibrium the diversity of each should scale with its frequency. The rare derived arrangement is instead
 \emph{more} diverse than its frequency can sustain: $\pi_I/\pi_S=1.356\pm0.048$ against an equilibrium
 expectation of $p/(1-p)=0.60$ for a polymorphism held at 0.374 --- a 2.3-fold excess that is the signature
-of an old polymorphism that was once common, not of a recent rise. Two mutation-rate-free diffusion arguments
+of an old polymorphism that was once common, not of a recent rise. Two mutation-rate-free diffusion arguments % do we need more detail here?
 exclude neutrality. \emph{Attainment}: reaching the inferred historical peak frequency of $\sim$0.74 by drift
-takes at minimum $\sim$1.15 million generations at the binding (smallest) $\Ne$ --- 1.36$\times$ the entire
+takes at minimum $\sim$1.15 million generations at the smallest $\Ne$ --- 1.36$\times$ the entire
 inferred lifetime of the inversion, and up to 17$\times$ at present $\Ne$. \emph{Decline}: the observed fall
 from 0.74 to 0.374 is 6.7 standard deviations of neutral drift at the fitted duration, and a coalescent profile
 of the fall duration excludes the slow, drift-compatible alternative at $\Delta\chi^{2}\gtrsim8$--80
-(Supplementary Fig.~S14). The arrangement was actively removed, not lost to drift.
+(Supplementary Fig.~S14). Thus the best fit model supports that the inversion was not lost due to drift alone.
 
-\paragraph{Age and frequency history from a barrier-aware coalescent.}
+\paragraph{Age and frequency history of the inversion.}
 Estimating an inversion's age requires a coalescent in which the two arrangements exchange ancestry only
 across the barrier; standard simulators do not provide this. We therefore fit the inversion's age and
 frequency trajectory with \textbf{msinv} \citep{msinv}, an ancestral-recombination-graph simulator that
-enforces the cross-karyotype recombination barrier, tracks ancestral material with a hull-based scheme in
-the msprime lineage \citep{kelleher2016,baumdicker2022}, and outputs tree sequences (\cref{sec:methods}). The data constrain the \emph{shape} of
+enforces the cross-karyotype recombination barrier, tracks ancestral material and outputs tree sequences (\cref{sec:methods}).
+The data constrain the \emph{shape} of
 the frequency trajectory $p(t)$ rather than any site-level mechanism, so we condition on a deterministic
 trajectory under within-arrangement neutrality and fit jointly to $\pi_I/\pi_S$, $\dxy/\pi_I$, and the
 per-arrangement singleton spectrum (\cref{fig:demog}b; Supplementary Figs.~S5, S14). The coalescent age is
 $\mathbf{\sim850}$~\textbf{ky}. It is the robustly determined quantity because it is carried by $\dxy$ between
-arrangements, which is symmetric to the polarisation --- the age survived the complete reversal of the
-arrangement polarity described above, a check few inversion ages can claim. The reconstructed history is that
+arrangements, which is symmetric to the polarisation. The reconstructed history is that
 the inversion arose $\sim$850~ka, coincident with the onset of the population expansion (\cref{sec:demog});
 was maintained near $p\approx0.74$ for most of its history; and then fell sharply to 0.374 over
 $\sim$50--100~ky, ending $\gtrsim$50--100~ka, under selection of order $\Ne s\sim10^{2}$--$10^{3}$
@@ -232,54 +285,49 @@ $\sim$50--100~ky, ending $\gtrsim$50--100~ka, under selection of order $\Ne s\si
 statistics with length-invariance verified over a 25-fold range, and the fitted model reproduces the
 observed joint two-dimensional site-frequency spectrum between arrangements --- near-fixed differences and
 off-diagonal density in the inverted body, collapse to the diagonal in collinear controls (Supplementary
-Fig.~S5). Every absolute age scales inversely with the mutation rate $\mu=3\times10^{-9}$, the dominant
-external uncertainty.
+Fig.~S5). However, with accepted caveat that every absolute age scales inversely with the mutation rate $\mu=3\times10^{-9}$, which may contain rate uncertainty or variation.
 
-\paragraph{What the inversion is not.}
-It is not a region of locally suppressed crossing-over: recombination inside the body is at the chromosomal
-background rate by direct measurement (the $\sim$19~kb LD windows a recombination-map method reads are blind
+\paragraph{Characterizing the inversion.}
+It is not a region of locally suppressed crossing-over since recombination inside the body is at the chromosomal
+background rate by direct measurement (the $\sim$19~kb LD windows a recombination-map method reads are blind % is this true? FigS12 show chr2 inv and col supressed.
 to a 19-Mb barrier; Supplementary Fig.~S12), so the differentiation is a consequence of the arrangement
-barrier itself. It is not locally adaptive: there is no cline and geographic $\Fst\approx0$, so the
+barrier itself. It is not locally adaptive since there is no cline and geographic $\Fst\approx0$, and the
 migration--selection scenario that explains most well-studied inversions \citep{kirkpatrick2006} cannot apply.
-And it is not a swept region: the genome-wide scan below finds \emph{zero} cross-method-concordant sweeps on
-chromosome~2 --- the recombination-map method is broadly elevated and the classifier over-calls across the
-inversion, but the two never co-localise into focal concordance, exactly the pattern expected for a
-balancing-selected supergene rather than a swept locus, and correctly filtered by the concordance requirement.
+And it is not a swept region because the genome-wide scan below finds zero cross-method-concordant sweeps on
+chromosome~2. Although, we find that the recombination-map method is broadly elevated and the classifier over-calls across the
+inversion, but the two never co-localise into focal concordance, expected for a
+balancing-selected supergene rather than a swept locus. These were correctly filtered by the concordance requirement.
 Gene flux between arrangements is not detectable in mean $\dxy$, though a residual $\sim$40\% depletion of
-near-fixed differences in the outermost megabase remains after the breakpoints are pinned. The mechanism of
-balancing selection --- overdominance, associative overdominance, frequency dependence, or a moving optimum
-under fluctuating selection --- is not resolved by these data; a shelf-spawning squid whose paralarvae ride
-the Gulf Stream is a plausible setting for temporally fluctuating selection on $\sim$100~ky glacial cycles,
-but this remains a hypothesis.
+near-fixed differences appears in the outermost megabase around the breakpoints. The mechanism of
+balancing selection, i.e., overdominance, associative overdominance, frequency dependence, or a moving optimum
+under fluctuating selection, is not resolved by these data. Though probable that a shelf-spawning squid whose paralarvae ride
+the Gulf Stream would experience temporally fluctuating selection on $\sim$100~ky glacial cycles, however this remains a hypothesis.
 
 \paragraph{Gene content and the architecture of arrangement divergence.}
-The block has no functionally coherent cargo, yet it carries the molecular signature of a young,
-recombination-suppressed supergene. It is gene-poor --- 89 gene models, 45 with cross-species functional
-annotation, against a median of $\sim$50 annotated genes in random windows of the same size --- and
-functionally scattered: lipid metabolism, DNA repair, transcription and splicing, signalling, with no
+The inversion has no functionally significant enrichment, yet it carries the molecular signature of a young,
+recombination-suppressed supergene. It is by comparison, gene-poor with only 89 gene models, 45 with cross-species functional
+annotation, against a median of $\sim$50 annotated genes in random windows of the same size %how is that gene poor, it is above the median, what percentile?
+Overall functional classes are diverse, with lipid metabolism, DNA repair, transcription and splicing, signalling, and no
 coherent pathway (Supplementary Table~S7). A gene-ontology test of its annotated genes against the genome
-returns \emph{no} enriched term at FDR$<$0.05 in any ontology, and a permutation null shows this is genuine
-rather than a power artefact: random gene sets of the same size produce \emph{more} nominal hits than the
-inversion genes (86.6$\pm$60 vs 69; permutation $p=0.51$), and the eye-catching $\sim$40-fold per-term
-enrichments rest on as few as two genes (Supplementary Fig.~S21). A previously reported metabolic enrichment
-does not survive this null. The inversion has thus captured a functionally unremarkable slice of the genome,
-not a selected gene set --- consistent with a supergene maintained for the arrangement as a whole. What the
-arrangements \emph{do} accumulate is divergence-as-a-unit: 3{,}513 near-fixed differences between AA and BB
-(per-arrangement $|\Delta\mathrm{AF}|\geq0.9$) are spread across the body (Supplementary Fig.~S5). These are
-overwhelmingly non-coding --- coding sequence is only $\sim$0.2\% of the region --- but the exonic fixed
-differences are $\sim$2.3-fold over-represented relative to that footprint and are strikingly
-\emph{clustered}: all 19 fall in just nine genes, led by a cytochrome~P450 (\textit{CYP4X1}) and an
+returns no enriched terms at FDR$<$0.05, and a permutation null shows this is not a power artefact 
+with random gene sets of the same size produce more nominal hits than the
+inversion genes (86.6$\pm$60 vs 69; permutation $p=0.51$).Even with a $\sim$40-fold per-term
+enrichments, it only depends on as few as two genes (Supplementary Fig.~S21).
+The inversion has thus captured a functionally unremarkable slice of the genome,
+not a selected gene set but a supergene maintained for the arrangement as a whole. What the
+arrangements do accumulate is divergence-as-a-unit: 3{,}513 near-fixed differences between AA and BB
+(per-arrangement $|\Delta\mathrm{AF}|\geq0.9$) are spread across the inversion (Supplementary Fig.~S5). These are
+overwhelmingly non-coding since coding sequence is only $\sim$0.2\% of the region, but the exonic fixed
+differences are $\sim$2.3-fold over-represented and clustered.All 19 fall in just nine genes, led by a cytochrome~P450 (\textit{CYP4X1}) and an
 acidic-repeat protein (four each) and including a phospholipase~A2, the ciliary gene \textit{RPGRIP1L}, and a
-cysteine-rich venom-like protein. Although no locus in the block shows a classical sweep and the region is
-enriched for no function, the coding divergence that recombination suppression shelters is concentrated in a
-handful of genes rather than spread evenly --- the expected architecture of a balancing-selected inversion
+cysteine-rich venom-like protein.The expected architecture of a balancing-selected inversion
 that recombines with its homologue only rarely, and the raw material from which a supergene's mutation load
-and eventual degeneration are built \citep{jay2021,berdan2023}.
+and eventual degeneration are built \citep{jay2021,berdan2023}. % did we test mutational load?
 
-\subsection{Demographic history licenses the inversion model}\label{sec:demog}
+\subsection{Demographic history show and expanding population}\label{sec:demog}
 The age and selection estimates above depend on the population's demography and on the coalescent class
 being Kingman. Genome-wide, \illex{} shows $\pi\approx0.0093$ and Tajima's $D\approx-2$ in essentially every
-window \citep{tajima1989,tajima1989b} --- an unambiguous, genome-wide signature of expansion (\cref{tab:demog},
+window \citep{tajima1989,tajima1989b}.An unambiguous, genome-wide signature of expansion (\cref{tab:demog},
 \cref{fig:demog}a, \cref{fig:diversity}). A moments fit to the folded SFS gives growth from an ancestral
 $\Ne=$ 547{,}928 to a present $\Ne=$ 6{,}808{,}096 over 769{,}519 generations ($\sim$12-fold; generations
 $\approx$ years for this annual species), and this history reproduces both the observed $\pi$ and a full-SFS
@@ -288,7 +336,7 @@ $\Ne$ in the $1.5$--$1.7\times10^{7}$ range. Because sweepstakes reproduction wo
 inflating rare variants \citep{eldon2006,hedgecock2011,eldon2015}, we tested the coalescent class directly: the folded
 SFS is fit far better by a Kingman-plus-growth model than by any multiple-merger (Beta) coalescent
 \citep{schweinsberg2003} (shape deviation $L_1=0.036$ vs a best-$\alpha$ 0.108), and contemporary $\Ne$
-estimates from the SFS and from linkage disequilibrium agree --- both inconsistent with a strong
+estimates from the SFS and from linkage disequilibrium agree where both are inconsistent with a strong
 multiple-merger process. The expansion began $\sim$770~ka, i.e.\ at essentially the same time as the
 inversion arose, which places the supergene's origin at the start of the demographic episode that shapes the
 whole genome.
