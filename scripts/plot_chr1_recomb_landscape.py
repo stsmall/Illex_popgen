@@ -40,7 +40,7 @@ w = w[w.chrom.astype(str) == CHROM].sort_values("start")
 w["mid"] = (w.start + w.stop) / 2 / 1e6
 L = max(m.mid.max(), w.mid.max())
 
-fig, axs = plt.subplots(2, 1, figsize=(13, 6.0), sharex=True, gridspec_kw={"hspace": 0.18})
+fig, ax0 = plt.subplots(1, 1, figsize=(13, 3.6)); axs = [ax0]
 for ax in axs:
     ax.axvspan(*GAP, color=C["faint"], lw=0, zorder=0)
 
@@ -58,27 +58,11 @@ ax.text(0.995, 0.06, f"chromosome-scale range of rolling median: {broad.min():.2
         f"({100*(broad.min()/med-1):+.0f}% … {100*(broad.max()/med-1):+.0f}%); pericentromeric flanks −5%",
         transform=ax.transAxes, ha="right", va="bottom", fontsize=7.5, color=C["muted"])
 ax.set_ylim(0, 0.5); ax.set_ylabel("recombination\n(cM/Mb)")
-ax.set_title(f"a   recombination map  (median {med:.3f} cM/Mb)", loc="left", fontweight="bold", fontsize=10)
+ax.set_title(f"Chromosome 1 recombination map  (median {med:.3f} cM/Mb)", loc="left", fontweight="bold", fontsize=10)
 ax.legend(loc="upper left", frameon=False, fontsize=7.5, ncol=3); despine(ax)
 
 
-# (b) pi
-ax = axs[1]
-ax.plot(w.mid, w.pi, color=C["accent"], lw=0.5, alpha=0.75, label="π (10 kb windows)")
-ax.plot(w.mid, w.pi.rolling(61, center=True, min_periods=20).median(), color=C["ink"], lw=1.4, label="rolling median (≈0.6 Mb)")
-ax.axhline(w.pi.median(), color=C["muted"], ls=":", lw=0.9)
-fl = w[(w.mid > 43.9) & (w.mid < 45.0)].pi.median(); ctl = w[(w.mid > 40) & (w.mid < 43)].pi.median()
-ax.annotate(f"π halves on the flank\n({fl:.4f} vs {ctl:.4f})", xy=(44.5, fl), xytext=(36, 0.017),
-            fontsize=7.5, ha="center", arrowprops=dict(arrowstyle="-", color=C["muted"], lw=0.8))
-ax.set_ylim(0, w.pi.quantile(0.995) * 1.1); ax.set_ylabel("nucleotide\ndiversity π")
-ax.axvspan(23.98, 31.28, facecolor="none", edgecolor=C["warm"], hatch="////", lw=0, alpha=0.35, zorder=0)
-ax.annotate("elevated-π block (3×; one of 22 genome-wide)\nno karyotype structure, no CNV — see caption",
-            xy=(24.2, ax.get_ylim()[1]*0.80), xytext=(11.5, ax.get_ylim()[1]*0.93), ha="center", va="top", fontsize=7.5,
-            color=C["warm"], arrowprops=dict(arrowstyle="-", color=C["warm"], lw=0.8))
-ax.set_title("b   diversity", loc="left", fontweight="bold", fontsize=10)
-ax.legend(loc="upper right", frameon=False, fontsize=7.5, ncol=2); despine(ax)
-ax.set_xlabel("chromosome 1 position (Mb)")
+axs[0].set_xlabel("chromosome 1 position (Mb)")
 axs[0].set_xlim(0, L)
 fig.savefig(OUT, dpi=200, bbox_inches="tight")
-print("wrote", OUT, f"| male median {med:.3f}, rolling range {broad.min():.3f}-{broad.max():.3f}; "
-      f"flank pi {fl:.4f} vs control {ctl:.4f}")
+print("wrote", OUT, f"| median {med:.3f}, rolling range {broad.min():.3f}-{broad.max():.3f}")

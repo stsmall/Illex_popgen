@@ -281,27 +281,16 @@
 
 \begin{figure}[h]\centering
   \includegraphics[width=\linewidth]{figS22_chr1_recomb_landscape.png}
-  \caption{\textbf{The chromosome-1 recombination landscape, and what the LD-based map does not resolve.}
-    \textbf{(a)}~ReLERNN estimate in 15~kb windows with 95\% bootstrap CIs and a 0.6-Mb rolling median
-    (median 0.209~cM/Mb). The shaded 2.5-Mb block at 45.0--47.5~Mb is 80\% repeat sequence (vs 52\%
-    chromosome-wide), is almost entirely masked, and carries no ReLERNN windows: the centromere. In the
-    accessible pericentromeric flanks the estimate dips only $\sim$5\%, and across the whole 103~Mb the rolling
-    median spans just 0.17--0.23~cM/Mb ($-20\%$ to $+7\%$ of the median) --- the map's chromosome-scale
-    dynamic range is compressed, so centromeric suppression cannot be resolved and the ``nearly uniform''
-    landscape is in part an estimator ceiling. \textbf{(b)}~Nucleotide diversity $\pi$ in 10~kb windows halves on the flank of
-    the masked block --- the pericentromeric signature that the recombination estimate in (a) does not show.
-    The block of tripled $\pi$ at 24--31~Mb (hatched) is one of 22 such $\geq$1-Mb blocks genome-wide. It is
-    not a structural polymorphism: a local PCA shows no karyotype clusters (its Gaussian-mixture ``clusters''
-    track coverage, and heterozygosity is flat across them, unlike the chr2 inversion), there is no excess
-    heterozygosity, no loss to the excess-heterozygosity filter, and the per-individual read-depth ratio to
-    flanking sequence is tight and unimodal (median 0.95, IQR 0.94--0.97; no duplication carriers); its
-    folded allele-frequency spectrum is identical to the flanks. It is gene-poor (coding fraction 0.001), only
-    35\% alignable to \coin{} (vs 87--89\% in flanks) and 1.65-fold more divergent where alignable
-    (3.3\% vs 1.9--2.1\%), and low-coverage \textit{I.\ argentinus} reads call $\sim$3$\times$ more variants
-    in it --- a fast-evolving, largely lineage-specific gene desert (elevated mutation input plus relaxed
-    linked selection), not an inversion or introgression.}
+  \caption{\textbf{The chromosome-1 recombination map, and what the LD-based map does not resolve.} ReLERNN estimate in 15~kb windows with 95\% bootstrap confidence intervals and a 0.6-Mb rolling median (median 0.209~cM/Mb). The shaded 2.5-Mb block at 45.0--47.5~Mb is 80\% repeat sequence (vs 52\% chromosome-wide), is almost entirely masked, and carries no ReLERNN windows: the centromere. In the accessible pericentromeric flanks the estimate dips only $\sim$5\%, although nucleotide diversity halves there (0.0038 vs 0.0084), and across the whole 103~Mb the rolling median spans just 0.17--0.23~cM/Mb ($-20\%$ to $+7\%$ of the median). The map's chromosome-scale dynamic range is therefore compressed, so centromeric suppression cannot be resolved and the nearly uniform landscape is in part an estimator ceiling.}
   \label{sfig:chr1recomb}
 \end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=\linewidth]{figS23_pi_blocks_by_division.png}
+  \caption{\textbf{The 22 elevated-diversity blocks are shared by every sampling division.} \textbf{(a)}~Nucleotide diversity across chr1:19--36~Mb computed separately in each of the ten divisions with more than one individual (ANGSD, 50-kb windows, lines coloured by division latitude); the 24.0--31.3~Mb block (shaded) carries 2.2--2.4 times the flanking diversity in every division. \textbf{(b)}~Between-division Hudson $\Fst$ over the same span (all 45 division pairs, 100-kb windows) is lower inside the block than in the flanks (0.014 vs 0.015); the same holds for the three strongest blocks (chr30:17.3--18.5, chr23:0.1--5.6 and chr38:61.5--68.0~Mb; 0.006--0.007 inside vs 0.014--0.015 outside). \textbf{(c)}~Block-to-flank diversity ratio per division for all 22 blocks: the excess varies by only 1--6\% among divisions, so no block is driven by a subset of the sample. The blocks are gene-poor (a third or less of their chromosome's gene density), largely unalignable to \coin{} (chr1 block 35\% vs 87--89\% of flanking bases) and more divergent where aligned (3.3\% vs 1.9--2.1\%). On chr1 there is no depth anomaly (per-individual block-to-flank read ratio median 0.95, IQR 0.94--0.97), no excess heterozygosity, and no loss to the excess-heterozygosity filter. Across blocks, however, the diversity excess scales with a shift of Tajima's $D$ toward zero (Spearman $\rho=0.75$, $p=5\times10^{-5}$; strongest blocks $D\approx-0.7$ to $-1.1$ against $\approx-2$ genome-wide), which indicates an excess of intermediate-frequency variants in the strongest blocks (Supplementary Table~S9).}
+  \label{sfig:piblocks}
+\end{figure}
+
 
 \clearpage
 \section*{Supplementary tables}
@@ -460,6 +449,8 @@
 \input{inversion_gene_table}
 
 \input{sampling_table}
+
+\input{pi_blocks_table}
 
 \clearpage
 \bibliographystyle{plainnat}
