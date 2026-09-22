@@ -4,8 +4,10 @@ region (Mb),sweep,gene,EnTAP best hit,alpha,DoS
 1:85.5,hard,eif3h,Eukaryotic translation initiation factor 3,0.69,+0.20
 1:85.5,hard,babam1,BRISC and BRCA1-A complex member 1,-,-0.48
 1:85.5,hard,ttc39b,Tetratricopeptide repeat protein 39B,-,-0.27
+2:84.8,hard,NDRG3,Protein NDRG3,-,-0.18
 5:38.0,hard,cept1,Choline/ethanolaminephosphotransferase 1,-,-1.00
 5:38.0,hard,Arsi,Arylsulfatase I,-,-0.25
+6:3.0,hard,Rexo1,RNA exonuclease 1 homolog,-,-0.53
 13:73.2,hard,Rab3,Ras-related protein Rab-3,-,-0.17
 13:73.2,hard,hyi,Putative hydroxypyruvate isomerase,-,-0.64
 13:73.2,hard,Vps28,Vacuolar protein sorting-associated protein 28,-,-

@@ -10,3 +10,5 @@ dXY/pi_I,1.385 0.021
 Coalescent age t_inv,"850 ky ( 1/mu, mu=3x10^-9)"
 Decline,"0.74->0.374 over 50-100 ky, ending 50-100 ka"
 Selection on decline,s10^2-10^3 (s~1.5x10^-4)
+Gene content,"89 gene models, 45 annotated; no GO enrichment (p=0.51)"
+Fixed differences (AA vs BB),"3,513; 19 exonic, in 9 genes"

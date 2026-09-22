@@ -1,6 +1,6 @@
 Functional clusters of the background-selection-robust Tier-1 sweep genes
 functional cluster,terms,fold range,representative term (min FDR)
-Neural development,22,1.6-22.2,generation of neurons (3x10^-5)
+Neural development,21,1.6-22.2,generation of neurons (3x10^-5)
 Cell morphogenesis & differentiation,17,1.5-2.2,cell development (2x10^-5)
 RNA / transcription regulation,14,1.5-2.1,reg.\ RNA metabolic process (9x10^-4)
 Organ / anatomical development,13,1.2-2.5,system development (3x10^-3)
