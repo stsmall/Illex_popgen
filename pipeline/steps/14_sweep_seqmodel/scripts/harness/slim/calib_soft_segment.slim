@@ -1,0 +1,339 @@
+// ============================================================================
+// soft_sweep.slim  --  Conditional SOFT-sweep recipe (sweep from standing
+//                      variation, SINGLE ORIGIN via burn-in drift) for the
+//                      Illex sweep-scan diploSHIC training / calibration harness.
+//
+// SLiM 5.2 (tick/cycle model, haplosome API).  Structural twin of hard_sweep.slim
+// (same demography / rescaling / recapitation contract); the scientific
+// difference is the SOFT-sweep model below.
+//
+// Demography: Illex "moments" exponential-growth model, validated (via msprime
+//   coalescent) to reproduce genome-wide pi ~= 0.0093 and Tajima's D ~= -2.0.
+//     - present size          N0    = 6,808,096
+//     - ancestral size        NREF  =   547,928
+//     - growth epoch length   TGROW =   769,519 generations
+//     - before TGROW ago: constant NREF  (handled later by recapitation)
+//   The forward sim covers the growth epoch (G ticks) PLUS a constant-NREF drift
+//   prefix (see below); the deep constant-NREF ancestry is added afterwards by
+//   pyslim.recapitate().  The drift prefix is at the ancestral size NREFs, so it
+//   is demographically indistinguishable from the recapitated ancestry (constant
+//   NREF coalescent is time-homogeneous) -- the flank SFS is unchanged.
+//
+// Rescaling by factor Q (standard SLiM practice for very large N):
+//   simulate at N/Q with mutation/recombination/selection rates x Q and times /Q,
+//   preserving theta=4Nmu, rho=4Nr, and 2Ns.  Q default 100; forward pop ~68k and
+//   scaled selection s*Q.
+//
+// ---------------------------------------------------------------------------
+// SOFT-SWEEP MODEL: SINGLE-ORIGIN standing variation via burn-in drift
+// ---------------------------------------------------------------------------
+// A SINGLE beneficial mutation (ONE origin) is introduced de novo at the CENTER
+// in the small ancestral pop, drifts NEUTRALLY (restart-on-loss) until it reaches
+// the target standing frequency F0 ("establishment"), is carried NEUTRALLY through
+// the growth epoch, and only TAU_GEN generations before the present is FLIPPED to
+// beneficial (setSelectionCoeff).  Because all carriers descend from ONE origin
+// they are IBD and sit on a LIMITED number of haplotype backgrounds (set by the
+// recombination that occurred during the drift+growth phase) -> elevated haplotype
+// homozygosity at the locus = the soft-sweep signature diploSHIC keys on.  This is
+// the Pennings & Hermisson single-origin standing-variation sweep.  The realized
+// standing frequency AT FLIP is drift-determined and reported (f0_realized); it
+// differs from the F0 target and that is expected.
+//
+// (This REPLACES a failed earlier recipe that placed the beneficial on
+//  round(F0*2N) RANDOM independent backgrounds at onset -- that carries ~all the
+//  population's diversity through the sweep, leaves NO footprint, and is NOT a
+//  soft sweep.)
+//
+// ---------------------------------------------------------------------------
+// SLiM 5.2 mechanics that shape this recipe (empirically verified, SLiM 5.2):
+//   (1) addNewDrawnMutation() must be called in a LATE() event in a WF model;
+//       introducing in early() at tick 1 -> the mutation is lost by tick 2.
+//   (2) setSelectionCoeff() does NOT survive treeSeqOutput/readFromPopulationFile:
+//       on restore a mutation reverts to its mutation-TYPE default coefficient.
+//       => we define m2 with a NEUTRAL type default (0.0) so every restore (drift
+//          restart, growth-loss restart, finalize restart) correctly restores the
+//          allele to NEUTRAL, and the FLIP re-applies selection deterministically
+//          each time the growth epoch is re-run.  No save ever occurs after the
+//          flip, so the beneficial coeff never needs to survive a restore.
+//   (3) restart reseeding uses a large PRIME STRIDE (not getSeed()+1): with the
+//       many drift restarts a +1 walk makes different master seeds converge to the
+//       same effective seed (origSeed + nrestart) -> duplicate replicates.  A prime
+//       stride keeps each master seed's restart sequence disjoint.
+//
+// Neutral mutations are NOT simulated forward (tree-sequence recording only) --
+//   overlaid afterwards with msprime.sim_mutations().  The only forward mutation
+//   is the single standing/beneficial (m2) at CENTER.
+//
+// MODE="partial" reuses ALL of the above machinery (establishment snapshot, growth
+//   re-run, prime seed-stride restart, fail-loud guard); it only (1) times the FLIP
+//   onset analytically to the sweep speed so the standing allele is still MID-RISE at
+//   present, and (2) conditions on present freq in [F_LO,F_HI] instead of fixation
+//   (restarting from establishment on loss / early fixation / out-of-band).
+//
+// Parameters (override with -d "NAME=value"):
+//   Q, N0, NREF, TGROW, MU, R, L, SEL, TAU_GEN, XPOS, F0, FIX_THRESH, B_MAX,
+//   MODE ("completed"/"partial"), F_LO, F_HI, F_TARGET (partial-mode band + onset target),
+//   OUTPATH (final .trees), SAVEPATH (drift-restart snapshot),
+//   SAVEPATH_EST (establishment snapshot).
+// The random seed is supplied with slim -s <seed>.
+// ============================================================================
+
+initialize() {
+    // ---- parameters with defaults (only set if not provided via -d) --------
+    if (!exists("Q"))           defineConstant("Q", 100.0);            // rescale factor
+    if (!exists("N0"))          defineConstant("N0", 6808096.0);       // present size
+    if (!exists("NREF"))        defineConstant("NREF", 547928.0);      // ancestral size
+    if (!exists("TGROW"))       defineConstant("TGROW", 769519.0);     // growth epoch (gens)
+    if (!exists("MU"))          defineConstant("MU", 3e-9);            // per-bp mut rate (unscaled)
+    if (!exists("R"))           defineConstant("R", 2.1e-9);           // per-bp recomb rate (unscaled)
+    if (!exists("L"))           defineConstant("L", 1100000);          // region length (bp)
+    if (!exists("SEL"))         defineConstant("SEL", 0.01);           // selection coeff (unscaled)
+    if (!exists("TAU_GEN"))     defineConstant("TAU_GEN", 20000.0);    // sweep onset (gens before present)
+    if (!exists("XPOS"))        defineConstant("XPOS", asInteger(L/2));// beneficial position (center)
+    if (!exists("F0"))          defineConstant("F0", 0.05);            // TARGET standing frequency at establishment
+    if (!exists("FIX_THRESH"))  defineConstant("FIX_THRESH", 0.95);    // conditioning threshold at present (completed)
+    // ---- PARTIAL-sweep mode -------------------------------------------------
+    // MODE="completed" (default): flip TAU_GEN/Q ticks before present, condition on
+    //   fixation (freq >= FIX_THRESH) at present -- UNCHANGED behavior.
+    // MODE="partial": flip at an ANALYTICALLY-tuned recent onset so the sweep is
+    //   still MID-RISE at present; condition on present freq in [F_LO,F_HI].
+    if (!exists("MODE"))        defineConstant("MODE", "completed");   // {"completed","partial"}
+    if (!exists("F_LO"))        defineConstant("F_LO", 0.20);          // partial: min present derived freq
+    if (!exists("F_HI"))        defineConstant("F_HI", 0.99);          // partial: max present derived freq
+    if (!exists("F_TARGET"))    defineConstant("F_TARGET", 0.60);      // partial: analytic-onset target (mid-band) freq
+    if (!exists("B_MAX"))       defineConstant("B_MAX", 20000);        // per-attempt drift ceiling (ticks)
+    if (!exists("OUTPATH"))     defineConstant("OUTPATH", "soft_sweep.trees");
+    if (!exists("SAVEPATH"))    defineConstant("SAVEPATH", "soft_sweep_restart.trees");        // clean (pre-mutation) drift-restart snapshot
+    if (!exists("SAVEPATH_EST"))defineConstant("SAVEPATH_EST", "soft_sweep_established.trees");// established (freq>=F0, neutral) snapshot
+
+    // ---- rescaled quantities ----------------------------------------------
+    defineConstant("N0s",   asInteger(round(N0/Q)));     // present size, rescaled
+    defineConstant("NREFs", asInteger(round(NREF/Q)));   // ancestral size, rescaled
+    defineConstant("G",     asInteger(round(TGROW/Q)));  // growth-epoch ticks
+    defineConstant("Rs",    R*Q);                        // recomb rate, rescaled
+    defineConstant("MUs",   MU*Q);                       // (provenance; forward mut rate is 0)
+    defineConstant("SELs",  SEL*Q);                      // selection coeff, rescaled (applied AT FLIP)
+    // per-tick exponential growth rate so size(first growth tick)=NREFs, size(last)=N0s
+    defineConstant("GROWTH", log(N0/NREF) / (G - 1));
+    // flip happens round(TAU_GEN/Q) ticks before the present (same recency as the hard sweep)
+    defineConstant("TAU_TICKS", asInteger(round(TAU_GEN/Q)));
+    defineConstant("SEED_STRIDE", 7919);                 // prime restart-reseed stride (see header note 3)
+    defineConstant("DRIFT_END", 1000000000);             // sentinel upper tick for the open-ended drift block
+
+    // ---- genetic architecture ---------------------------------------------
+    initializeTreeSeq();
+    initializeMutationRate(0.0);                          // neutral mutations added later (overlay)
+    initializeMutationType("m2", 0.5, "f", 0.0);          // TYPE DEFAULT NEUTRAL (see header note 2); h=0.5
+    m2.convertToSubstitution = F;                         // keep it trackable after it reaches freq 1
+    initializeGenomicElementType("g1", m2, 1.0);
+    initializeGenomicElement(g1, 0, L - 1);
+    // variable recombination map (ReLERNN landscape) when MAPFILE given, else constant Rs
+    if (exists("MAPFILE")) {
+        lines = readFile(MAPFILE);
+        ends = integer(0); rates = float(0);
+        for (line in lines) {
+            if (size(line) == 0) next;
+            f = strsplit(line, "\t");
+            ends  = c(ends,  asInteger(f[0]));
+            rates = c(rates, asFloat(f[1]) * Q);   // rescale per-bp rate by Q
+        }
+        if (max(ends) != L - 1) stop("[slim] MAPFILE last end " + max(ends) + " != L-1 " + (L-1));
+        initializeRecombinationRate(rates, ends);
+    } else {
+        initializeRecombinationRate(Rs);
+    }
+
+    catn("[slim] Q=" + Q + " N0s=" + N0s + " NREFs=" + NREFs + " G=" + G +
+         " GROWTH=" + GROWTH + " Rs=" + Rs + " SELs=" + SELs +
+         " TAU_TICKS=" + TAU_TICKS + " XPOS=" + XPOS + " F0=" + F0 + " B_MAX=" + B_MAX);
+}
+
+// ---- introduce ONE beneficial (neutral by type default) at the center ------
+function (void) introduceOne(void) {
+    sample(p1.haplosomes, 1).addNewDrawnMutation(m2, XPOS);  // single origin, coeff = type default 0.0 (neutral)
+}
+
+// ---- restart bookkeeping: bump counter, fail loud on absurd restart counts -
+function (void) bumpRestart(void) {
+    defineGlobal("nrestart", nrestart + 1);
+    if (nrestart > 100000)
+        stop("[slim] ERROR: >100000 restarts; sweep cannot establish/fix " +
+             "(check F0 / SEL / TAU_GEN / B_MAX).");
+}
+
+// ---- tick 1 early(): found the population at the ancestral (post-recap) size
+1 early() {
+    sim.addSubpop("p1", NREFs);
+    defineGlobal("nrestart", 0);
+    defineGlobal("established", 0);
+    // drift monitor runs every tick from 2 until establishment (then deregistered)
+    community.rescheduleScriptBlock(s1, 2, DRIFT_END);
+    // PARK the growth/flip/finalize blocks far in the future so their placeholder
+    // ticks do NOT fire during the (variable-length) drift phase -- they reference
+    // t_est, which only exists after establishment.  Establishment reschedules them
+    // to their real ticks (t_est is always << DRIFT_END).
+    community.rescheduleScriptBlock(s2, DRIFT_END, DRIFT_END);
+    community.rescheduleScriptBlock(s3, DRIFT_END, DRIFT_END);
+    community.rescheduleScriptBlock(s4, DRIFT_END, DRIFT_END);
+}
+
+// ---- tick 1 late(): snapshot the clean pop, introduce the single neutral m2 -
+// (LATE per SLiM note 1.  On a drift restart the drift block restores this
+//  snapshot and re-introduces manually, so tick 1 need not re-run.)
+1 late() {
+    sim.treeSeqOutput(SAVEPATH);       // clean, pre-mutation snapshot (drift-restart target)
+    introduceOne();
+    catn("[slim] tick 1: introduced single neutral m2 at XPOS=" + XPOS +
+         " (pop " + p1.individualCount + "); drifting to F0=" + F0);
+}
+
+// ---- s1: DRIFT phase at constant NREFs -- loss / establishment / B_MAX cap --
+s1 900 late() {
+    if (nrestart > 100000)
+        stop("[slim] ERROR: >100000 restarts during drift (check F0 / B_MAX).");
+    mut = sim.mutationsOfType(m2);
+
+    // (a) LOST -> restart drift from the clean snapshot with a fresh trajectory
+    if (mut.size() == 0) {
+        bumpRestart();
+        sim.readFromPopulationFile(SAVEPATH);   // restores clean pop AND tick (-> 1)
+        setSeed(getSeed() + SEED_STRIDE);
+        introduceOne();
+        return;
+    }
+
+    // (b) ESTABLISHED -> freq reached F0: freeze this single-origin background
+    f = sim.mutationFrequencies(p1, mut);
+    if (f >= F0) {
+        sim.treeSeqOutput(SAVEPATH_EST);        // established (neutral, freq>=F0) snapshot
+        defineGlobal("t_est",  community.tick);
+        defineGlobal("t_end",  t_est + G);               // present tick
+        // sweep onset tick (mode-selected):
+        //   completed: TAU_TICKS ticks before present (validated original).
+        //   partial:   tuned to the sweep SPEED so the standing allele (freq ~F0) is
+        //     still MID-RISE at present. Deterministic diploid genic logistic (h=0.5):
+        //       dt = (2/SELs) * ln[ f_T (1-F0) / (F0 (1-f_T)) ]  ticks, f_T=F_TARGET.
+        //     Flip at present - dt; condition on landing in [F_LO,F_HI] (the realized
+        //     standing freq f0_realized scatters around F0, so accept via the wide band).
+        if (MODE == "partial") {
+            dt_rise = (2.0 / SELs) * log((F_TARGET * (1.0 - F0)) / (F0 * (1.0 - F_TARGET)));
+            onset_ticks = asInteger(round(dt_rise));
+            if (onset_ticks < 1)     onset_ticks = 1;
+            if (onset_ticks > G - 1) onset_ticks = G - 1;
+            defineGlobal("t_flip", t_end - onset_ticks);
+        } else {
+            defineGlobal("t_flip", t_est + G - TAU_TICKS);
+        }
+        defineGlobal("established", 1);
+        // schedule the growth epoch (indexed from t_est), the flip+monitor, and finalize
+        community.rescheduleScriptBlock(s2, t_est + 1, t_end);       // exponential growth
+        community.rescheduleScriptBlock(s3, t_est + 1, t_end - 1);   // loss monitor + flip
+        community.rescheduleScriptBlock(s4, t_end, t_end);           // finalize / condition
+        catn("[slim] ESTABLISHED at tick " + t_est + " (f=" + f + ", nrestart=" +
+             nrestart + "); growth " + (t_est+1) + ".." + t_end +
+             ", flip " + t_flip + ", present " + t_end);
+        community.deregisterScriptBlock(self);  // stop the drift block
+        return;
+    }
+
+    // (c) per-attempt ceiling exceeded (rare long wanderer) -> treat as failed
+    if (community.tick - 1 >= B_MAX) {
+        bumpRestart();
+        sim.readFromPopulationFile(SAVEPATH);
+        setSeed(getSeed() + SEED_STRIDE);
+        introduceOne();
+        return;
+    }
+    // else: keep drifting (population stays at NREFs -- no size change this tick)
+}
+
+// ---- s2: GROWTH epoch (ticks t_est+1 .. t_est+G), indexed from t_est --------
+s2 901 early() {
+    newSize = asInteger(round(NREFs * exp(GROWTH * (community.tick - t_est - 1))));
+    p1.setSubpopulationSize(newSize);
+}
+
+// ---- s3: carry through growth (loss monitor) + FLIP to beneficial at onset --
+s3 902 late() {
+    mut = sim.mutationsOfType(m2);
+
+    // lost while still neutral (small early-growth pop) OR after the flip ->
+    // restore the established (neutral) snapshot and re-run the growth+flip.
+    if (mut.size() == 0) {
+        bumpRestart();
+        sim.readFromPopulationFile(SAVEPATH_EST);   // restores pop AND tick (-> t_est); coeff reverts to neutral
+        setSeed(getSeed() + SEED_STRIDE);
+        return;
+    }
+
+    // FLIP: TAU_GEN gens before present the standing allele becomes beneficial
+    if (community.tick == t_flip) {
+        defineGlobal("f0_realized", sim.mutationFrequencies(p1, mut));  // true standing freq swept from
+        mut.setSelectionCoeff(SELs);
+        catn("[slim] FLIP at tick " + t_flip + " (f0_realized=" + f0_realized +
+             ", pop " + p1.individualCount + "); allele now sweeps (SELs=" + SELs + ")");
+    }
+
+    // PARTIAL only: if the allele has already FIXED (neutral drift-up before the
+    //   flip, or post-flip fixation) it can never be partial at the present ->
+    //   re-run the sweep from establishment now (saves the remaining ticks).
+    if (MODE == "partial") {
+        if (sim.mutationFrequencies(p1, mut) >= 1.0) {
+            bumpRestart();
+            sim.readFromPopulationFile(SAVEPATH_EST);
+            setSeed(getSeed() + SEED_STRIDE);
+            return;
+        }
+    }
+}
+
+// ---- s4: finalize at the present --------------------------------------------
+//   COMPLETED: condition on fixation (freq >= FIX_THRESH)  [UNCHANGED].
+//   PARTIAL:   condition on present freq in [F_LO, F_HI]; else re-run from est.
+s4 903 late() {
+    mut = sim.mutationsOfType(m2);
+    freq = (mut.size() > 0) ? sim.mutationFrequencies(p1, mut) else 0.0;
+
+    if (MODE == "partial") {
+        if (freq >= F_LO & freq <= F_HI) {
+            sim.treeSeqOutput(OUTPATH);
+            catn("[slim] SWEEP_RESULT status=PARTIAL mode=partial present_freq=" + freq +
+                 " freq=" + freq +
+                 " f0_realized=" + f0_realized +
+                 " onset_tick=" + t_flip +
+                 " allele_age_ticks=" + (t_flip - t_est) +
+                 " t_est=" + t_est +
+                 " nrestart=" + nrestart +
+                 " final_tick=" + community.tick +
+                 " final_size=" + p1.individualCount);
+            catn("[slim] wrote " + OUTPATH);
+            sim.simulationFinished();
+        } else {
+            // out of band (too low incl. lost, or fixed > F_HI) -> re-run from est
+            bumpRestart();
+            sim.readFromPopulationFile(SAVEPATH_EST);
+            setSeed(getSeed() + SEED_STRIDE);
+            catn("[slim] out-of-band (freq=" + freq + ") at present; re-running sweep from establishment");
+        }
+    } else {
+        // ---- completed: UNCHANGED conditional-fixation behavior ------------
+        if (freq >= FIX_THRESH) {
+            sim.treeSeqOutput(OUTPATH);
+            catn("[slim] SWEEP_RESULT status=FIXED freq=" + freq +
+                 " f0_realized=" + f0_realized +
+                 " allele_age_ticks=" + (t_flip - t_est) +
+                 " t_est=" + t_est +
+                 " nrestart=" + nrestart +
+                 " final_tick=" + community.tick +
+                 " final_size=" + p1.individualCount);
+            catn("[slim] wrote " + OUTPATH);
+            sim.simulationFinished();
+        } else {
+            // below threshold at present -> re-run the sweep from establishment
+            bumpRestart();
+            sim.readFromPopulationFile(SAVEPATH_EST);
+            setSeed(getSeed() + SEED_STRIDE);
+            catn("[slim] below threshold (freq=" + freq + ") at present; re-running sweep from establishment");
+        }
+    }
+}

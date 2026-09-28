@@ -1,0 +1,249 @@
+// ============================================================================
+// hard_sweep.slim  --  Conditional hard-sweep recipe for the Illex sweep-scan
+//                      diploSHIC training / calibration harness.
+//
+// SLiM 5.2 (tick/cycle model, haplosome API).
+//
+// Demography: Illex "moments" exponential-growth model, validated (via msprime
+//   coalescent) to reproduce genome-wide pi ~= 0.0093 and Tajima's D ~= -2.0.
+//     - present size          N0    = 6,808,096
+//     - ancestral size        NREF  =   547,928
+//     - growth epoch length   TGROW =   769,519 generations
+//     - before TGROW ago: constant NREF  (handled later by recapitation)
+//   The forward sim covers ONLY the growth epoch (present <- TGROW ago); the
+//   deep constant-NREF ancestry is added afterwards by pyslim.recapitate().
+//
+// Rescaling by factor Q (standard SLiM practice for very large N):
+//   simulate at N/Q with mutation/recombination/selection rates x Q and times /Q,
+//   preserving theta=4Nmu, rho=4Nr, and 2Ns.  Q is a parameter (default 100);
+//   with Q=100 the forward population is ~68k (in the recommended 1e4-1e5 range)
+//   and the scaled selection coefficient is s*Q = 1.0.
+//   CAVEAT: rescaling does NOT preserve the fixation probability of a single de
+//   novo mutation (that is why we CONDITION on fixation and restart on loss),
+//   and it slightly widens/deepens the sweep valley because ln(2Ns) shrinks.
+//
+// Neutral mutations are NOT simulated forward (tree-sequence recording only) --
+//   they are overlaid afterwards with msprime.sim_mutations().  The only forward
+//   mutation is the single beneficial (m2) introduced de novo at the CENTER.
+//
+// Conditioning: a proper conditional hard sweep -- the beneficial is introduced
+//   TAU_GEN generations before present; on LOSS the sim is restored to the saved
+//   pre-introduction state and the mutation is re-introduced with a new seed.
+//   MODE="completed" (default): the run only completes when the beneficial is
+//     >= FIX_THRESH at the present (fixation) -- the validated original behavior.
+//   MODE="partial": the beneficial must be NOT fixed at the present, with derived
+//     frequency in [F_LO,F_HI] (the partialSHIC partial-sweep classes). Because a
+//     strong rescaled sweep fixes in only ~tens of ticks, the onset (TINTRO) is
+//     tuned ANALYTICALLY to the sweep speed (see the onset block) so the beneficial
+//     is still MID-RISE at the present; the run conditions on landing in-band and
+//     restarts (with the prime seed stride) on loss / early fixation / out-of-band.
+//
+// Parameters (override on the command line with -d "NAME=value"):
+//   Q, N0, NREF, TGROW, MU, R, L, SEL, TAU_GEN, XPOS, FIX_THRESH,
+//   MODE ("completed"/"partial"), F_LO, F_HI, F_TARGET (partial-mode band + onset target),
+//   OUTPATH (final .trees), SAVEPATH (temporary restart state).
+// The random seed is supplied with slim -s <seed>.
+// ============================================================================
+
+initialize() {
+    // ---- parameters with defaults (only set if not provided via -d) --------
+    if (!exists("Q"))          defineConstant("Q", 100.0);            // rescale factor
+    if (!exists("N0"))         defineConstant("N0", 6808096.0);       // present size
+    if (!exists("NREF"))       defineConstant("NREF", 547928.0);      // ancestral size
+    if (!exists("TGROW"))      defineConstant("TGROW", 769519.0);     // growth epoch (gens)
+    if (!exists("MU"))         defineConstant("MU", 3e-9);            // per-bp mut rate (unscaled)
+    if (!exists("R"))          defineConstant("R", 2.1e-9);           // per-bp recomb rate (unscaled)
+    if (!exists("L"))          defineConstant("L", 1100000);          // region length (bp)
+    if (!exists("SEL"))        defineConstant("SEL", 0.01);           // selection coeff (unscaled)
+    if (!exists("TAU_GEN"))    defineConstant("TAU_GEN", 20000.0);    // sweep onset (gens before present)
+                                                                      // NB: sweep duration ~= 60/(SEL*Q) ticks = ~6000/SEL gens (Q-indep);
+                                                                      // TAU_GEN must comfortably exceed that so the beneficial fixes before present.
+    if (!exists("XPOS"))       defineConstant("XPOS", asInteger(L/2));// beneficial position (center)
+    if (!exists("FIX_THRESH")) defineConstant("FIX_THRESH", 0.95);   // conditioning threshold at present (completed)
+    // ---- PARTIAL-sweep mode -------------------------------------------------
+    // MODE="completed" (default): condition on fixation (freq >= FIX_THRESH) at present -- UNCHANGED behavior.
+    // MODE="partial": beneficial is NOT fixed; condition on present freq in [F_LO,F_HI] (partialSHIC classes).
+    if (!exists("MODE"))       defineConstant("MODE", "completed");   // {"completed","partial"}
+    if (!exists("F_LO"))       defineConstant("F_LO", 0.20);          // partial: min present derived freq
+    if (!exists("F_HI"))       defineConstant("F_HI", 0.99);          // partial: max present derived freq
+    if (!exists("F_TARGET"))   defineConstant("F_TARGET", 0.60);      // partial: analytic-onset target (mid-band) freq
+    if (!exists("OUTPATH"))    defineConstant("OUTPATH", "hard_sweep.trees");
+    if (!exists("SAVEPATH"))   defineConstant("SAVEPATH", "hard_sweep_restart.trees");
+
+    // ---- rescaled quantities ----------------------------------------------
+    defineConstant("N0s",   asInteger(round(N0/Q)));     // present size, rescaled
+    defineConstant("NREFs", asInteger(round(NREF/Q)));   // ancestral size, rescaled
+    defineConstant("G",     asInteger(round(TGROW/Q)));  // total forward ticks
+    defineConstant("Rs",    R*Q);                        // recomb rate, rescaled
+    defineConstant("MUs",   MU*Q);                       // (recorded for provenance; forward mut rate is 0)
+    defineConstant("SELs",  SEL*Q);                      // selection coeff, rescaled
+    // per-tick exponential growth rate so size(tick 1)=NREFs and size(tick G)=N0s
+    defineConstant("GROWTH", log(N0/NREF) / (G - 1));
+    defineConstant("SEED_STRIDE", 7919);                 // prime restart-reseed stride (partial mode; see soft recipe note 3)
+    // ---- sweep onset -------------------------------------------------------
+    // COMPLETED: introduce TAU_GEN/Q ticks before present (must comfortably exceed the
+    //   sweep duration ~= 60/(SEL*Q) ticks so the beneficial FIXES by the present).
+    defineConstant("TINTRO_COMPLETED", G - asInteger(round(TAU_GEN/Q)));
+    // PARTIAL: the beneficial must be MID-RISE (not fixed) at the present, so the onset
+    //   must be recent enough -- scaled to the sweep SPEED. Under deterministic diploid
+    //   genic selection (h=0.5) the logistic time to rise f0 -> f_T is
+    //     dt = (2/SELs) * ln[ f_T (1-f0) / (f0 (1-f_T)) ]  ticks.
+    //   f0 = a single de-novo copy (~1/2N at ~present size, since the partial onset is
+    //   recent), f_T = F_TARGET (mid-band). Introduce at present - dt, then CONDITION on
+    //   landing in [F_LO,F_HI] (stochastic trajectories scatter around F_TARGET; the band
+    //   is wide so acceptance is high). Strong s => dt tiny => onset ~ present.
+    fstart  = 1.0 / (2.0 * N0s);
+    dt_rise = (2.0 / SELs) * log((F_TARGET * (1.0 - fstart)) / (fstart * (1.0 - F_TARGET)));
+    tintro_p = G - asInteger(round(dt_rise));
+    if (tintro_p < 2)     tintro_p = 2;        // clamp: extremely strong s (onset ~ present)
+    if (tintro_p > G - 1) tintro_p = G - 1;    // clamp: never at/after the present tick
+    defineConstant("TINTRO_PARTIAL", tintro_p);
+    // tick at which the beneficial is introduced (mode-selected)
+    defineConstant("TINTRO", (MODE == "partial") ? TINTRO_PARTIAL else TINTRO_COMPLETED);
+
+    // ---- genetic architecture ---------------------------------------------
+    initializeTreeSeq();
+    initializeMutationRate(0.0);                          // neutral mutations added later (overlay)
+    initializeMutationType("m2", 0.5, "f", SELs);         // beneficial, codominant (h=0.5)
+    m2.convertToSubstitution = F;                         // keep it trackable after it reaches freq 1
+    initializeGenomicElementType("g1", m2, 1.0);
+    initializeGenomicElement(g1, 0, L - 1);
+    // variable recombination map (ReLERNN landscape) when MAPFILE given, else constant Rs
+    if (exists("MAPFILE")) {
+        lines = readFile(MAPFILE);
+        ends = integer(0); rates = float(0);
+        for (line in lines) {
+            if (size(line) == 0) next;
+            f = strsplit(line, "\t");
+            ends  = c(ends,  asInteger(f[0]));
+            rates = c(rates, asFloat(f[1]) * Q);   // rescale per-bp rate by Q
+        }
+        if (max(ends) != L - 1) stop("[slim] MAPFILE last end " + max(ends) + " != L-1 " + (L-1));
+        initializeRecombinationRate(rates, ends);
+    } else {
+        initializeRecombinationRate(Rs);
+    }
+
+    catn("[slim] MODE=" + MODE + " Q=" + Q + " N0s=" + N0s + " NREFs=" + NREFs + " G=" + G +
+         " GROWTH=" + GROWTH + " Rs=" + Rs + " SELs=" + SELs +
+         " TINTRO=" + TINTRO + " (completed=" + TINTRO_COMPLETED + " partial=" + TINTRO_PARTIAL + ")" +
+         " XPOS=" + XPOS);
+}
+
+// ---- tick 1: found the population at the ancestral (post-recap) size -------
+1 early() {
+    sim.addSubpop("p1", NREFs);
+    defineGlobal("nrestart", 0);
+    // schedule the three sweep-control blocks
+    community.rescheduleScriptBlock(s1, TINTRO, TINTRO);        // introduce + save
+    community.rescheduleScriptBlock(s2, TINTRO + 1, G - 1);     // monitor for loss
+    community.rescheduleScriptBlock(s3, G, G);                  // finalize / condition
+}
+
+// ---- exponential growth of the epoch (every tick from 2 to G) --------------
+2: early() {
+    t = community.tick;
+    newSize = asInteger(round(NREFs * exp(GROWTH * (t - 1))));
+    p1.setSubpopulationSize(newSize);
+}
+
+// ---- s1: introduce the beneficial de novo at the center, save restart state
+s1 900 late() {
+    sim.treeSeqOutput(SAVEPATH);                 // pre-introduction snapshot for restart-on-loss
+    target = sample(p1.haplosomes, 1);
+    target.addNewDrawnMutation(m2, XPOS);
+    catn("[slim] introduced beneficial at tick " + community.tick +
+         " (pop size " + p1.individualCount + ")");
+}
+
+// ---- s2: restart-on-loss (a proper conditional sweep); PARTIAL also aborts a
+//         trajectory that has already FIXED before the present (it can never be
+//         partial) so we do not waste the remaining ticks --------------------
+s2 901 late() {
+    mut = sim.mutationsOfType(m2);
+
+    // (a) LOST -> restore the pre-introduction snapshot and re-introduce.
+    //     convertToSubstitution=F, so a fixed mutation would still be present;
+    //     size()==0 therefore means the beneficial was LOST.
+    if (mut.size() == 0) {
+        defineGlobal("nrestart", nrestart + 1);
+        if (MODE == "partial") {
+            if (nrestart > 100000)
+                stop("[slim] ERROR: >100000 restarts; partial sweep cannot " +
+                     "establish/land in-band (check onset vs SEL / F_LO,F_HI).");
+        } else {
+            if (nrestart > 5000)
+                stop("[slim] ERROR: >5000 restarts; sweep cannot establish/fix " +
+                     "(check TAU_GEN vs sweep duration / SEL).");
+        }
+        sim.readFromPopulationFile(SAVEPATH);    // restores population AND tick (-> TINTRO)
+        setSeed(getSeed() + ((MODE == "partial") ? SEED_STRIDE else 1));  // new trajectory
+        target = sample(p1.haplosomes, 1);
+        target.addNewDrawnMutation(m2, XPOS);
+        return;
+    }
+
+    // (b) PARTIAL only: already FIXED before present (freq==1, cannot return to
+    //     the band) -> restart the trajectory now.
+    if (MODE == "partial") {
+        if (sim.mutationFrequencies(p1, mut) >= 1.0) {
+            defineGlobal("nrestart", nrestart + 1);
+            if (nrestart > 100000)
+                stop("[slim] ERROR: >100000 restarts; partial sweep keeps fixing " +
+                     "before present (onset too early? check SEL).");
+            sim.readFromPopulationFile(SAVEPATH);
+            setSeed(getSeed() + SEED_STRIDE);
+            target = sample(p1.haplosomes, 1);
+            target.addNewDrawnMutation(m2, XPOS);
+        }
+    }
+}
+
+// ---- s3: finalize at the present -------------------------------------------
+//   COMPLETED: condition on fixation (freq >= FIX_THRESH)  [UNCHANGED].
+//   PARTIAL:   condition on present freq in [F_LO, F_HI]; else restart trajectory.
+s3 902 late() {
+    mut = sim.mutationsOfType(m2);
+    freq = (mut.size() > 0) ? sim.mutationFrequencies(p1, mut) else 0.0;
+
+    if (MODE == "partial") {
+        if (freq >= F_LO & freq <= F_HI) {
+            sim.treeSeqOutput(OUTPATH);
+            catn("[slim] SWEEP_RESULT status=PARTIAL mode=partial present_freq=" + freq +
+                 " freq=" + freq + " onset_tick=" + TINTRO +
+                 " nrestart=" + nrestart + " final_tick=" + community.tick +
+                 " final_size=" + p1.individualCount);
+            catn("[slim] wrote " + OUTPATH);
+            sim.simulationFinished();
+        } else {
+            // out of band (too low incl. lost, or fixed > F_HI) -> new trajectory
+            defineGlobal("nrestart", nrestart + 1);
+            if (nrestart > 100000)
+                stop("[slim] ERROR: >100000 restarts; partial sweep cannot land " +
+                     "in-band (check onset vs SEL / F_LO,F_HI).");
+            sim.readFromPopulationFile(SAVEPATH);
+            setSeed(getSeed() + SEED_STRIDE);
+            target = sample(p1.haplosomes, 1);
+            target.addNewDrawnMutation(m2, XPOS);
+            catn("[slim] out-of-band (freq=" + freq + ") at present; restarting");
+        }
+    } else {
+        // ---- completed: UNCHANGED conditional-fixation behavior ------------
+        if (freq >= FIX_THRESH) {
+            sim.treeSeqOutput(OUTPATH);
+            catn("[slim] SWEEP_RESULT status=FIXED freq=" + freq +
+                 " nrestart=" + nrestart + " final_tick=" + community.tick +
+                 " final_size=" + p1.individualCount);
+            catn("[slim] wrote " + OUTPATH);
+            sim.simulationFinished();
+        } else {
+            // below threshold at present (rare with strong selection): restart
+            defineGlobal("nrestart", nrestart + 1);
+            sim.readFromPopulationFile(SAVEPATH);
+            setSeed(getSeed() + 1);
+            target = sample(p1.haplosomes, 1);
+            target.addNewDrawnMutation(m2, XPOS);
+            catn("[slim] below threshold (freq=" + freq + ") at present; restarting");
+        }
+    }
+}

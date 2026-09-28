@@ -1,0 +1,12 @@
+# Maps standardized names -> accepted diploSHIC output headers (version-tolerant).
+# Hard-fail if a standardized name matches zero or >1 header in a file.
+coordinate_columns:
+  chrom: ["chrom"]
+  start: ["classifiedWinStart"]
+  end:   ["classifiedWinEnd"]
+probability_columns:
+  p_neutral:     ["prob(neutral)"]
+  p_linked_soft: ["prob(likedSoft)", "prob(linkedSoft)"]   # note diploSHIC 1.1.0 typo 'likedSoft'
+  p_linked_hard: ["prob(linkedHard)"]
+  p_soft:        ["prob(soft)"]
+  p_hard:        ["prob(hard)"]

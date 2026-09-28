@@ -1,0 +1,154 @@
+# Plan 02 (sim+scan harness) resolved contracts — written by Task 0.
+# Consumed by all later Plan 02 tasks. See config/tool_versions_p02.txt for captured
+# -h/version output, and .superpowers/sdd/PLAN_02_sim_harness/task-0-report.md for the
+# full investigation behind the known_issues below (both discovered while executing
+# Task 0's mandated smoke test — read before writing any code against this file).
+
+schema_version: 1
+written_by: "PLAN_02 Task 0"
+written_date: "2026-07-28"
+
+# ---------------------------------------------------------------------------
+# KNOWN ISSUES — read first. Neither blocks Task 0's own deliverables (discoal
+# rebuild + contracts capture), but both are load-bearing for every later task.
+# ---------------------------------------------------------------------------
+known_issues:
+  - id: demog_flags_not_growth
+    severity: high
+    summary: >
+      demography.py::discoal_demog() returns ["-g", alpha, "-eg", T_scaled, "0.0"],
+      but in THIS discoal fork (both the original discoal_oobfix build and the
+      8ef7bc7 rebuild here) "-g" is the GENE-CONVERSION flag (conversionRate,
+      tractLengthMean) and "-eg" is not a recognized flag at all — only
+      -en/-ed/-ej/-ea exist under the "-e" family, and continuous growth is only
+      reachable via "-D demesFile.yaml". Confirmed from source (identical arg-parse
+      switch in master and 8ef7bc7) and from both binaries' own usage text.
+    consequence: >
+      The old (discoal_oobfix) binary's lenient/unvalidated parser silently
+      absorbs the malformed sequence with no error: "-g" consumes alpha (89.1701)
+      as my_gamma and consumes the literal token "-eg" as gcMean via atoi("-eg")==0;
+      "0.028257" and "0.0" are then silently skipped (no switch case matches, no
+      default handler). Net effect: 13_diploshic's completed training ran under
+      CONSTANT population size N0 (never stepping to NREF), not the intended
+      moments-fit exponential growth, plus a nonsensical my_gamma=89.1701/gcMean=0
+      gene-conversion parameter that is empirically NOT inert (fixed-seed A/B test:
+      omitting -g vs "-g 89.1701 0" gives different segsites/output; see report).
+      The new, hardened 8ef7bc7 parser correctly REJECTS the same argv with exit 1
+      ("Invalid integer argument for -g: '-eg'") instead of silently mis-parsing it
+      — so this exact invocation cannot even be replayed against the rebuilt binary.
+    action_needed: >
+      Human/orchestrator decision required before Task 1+ writes simulation code
+      that calls D.discoal_demog(): (a) accept that training was effectively
+      constant-size and have Plan 02 simulate constant-size for train/sim
+      consistency (drop -g/-eg from any discoal invocation — this is what the
+      smoke test below does), or (b) fix demography.py to emit a valid growth
+      spec (e.g. a demes YAML consumed via "-D") and retrain 13_diploshic first.
+      Task 0 did NOT choose for you; harness.yaml below only records the resolved
+      PATH to demography.py, not a flag string, so this decision is not baked in.
+    verified_by: >
+      task-0-report.md concern #1 (full source greps, usage-text diffs, and the
+      fixed-seed cmp_A/cmp_B/cmp_C discoal runs are transcribed there).
+
+  - id: msprime_tskit_not_installed_in_diploshic_env
+    severity: medium
+    summary: >
+      `python -c "import msprime,tskit"` FAILS under
+      /home/ssmall/miniforge3/envs/diploshic_env/bin/python (the env this harness
+      otherwise uses throughout). diploshic_env's own site-packages contain only
+      diploSHIC 1.1.0 + numpy 1.26.4 — msprime/tskit are not installed in-env.
+      The bare `python -c ...` command instead silently picks up msprime 1.4.0 /
+      tskit 1.0.1 leaking in from user site-packages
+      (~/.local/lib/python3.10/site-packages, which sys.path search BEFORE the
+      env's own site-packages for this interpreter). That tskit 1.0.1 build
+      requires numpy>=2 (see its dist-info), but diploshic_env's active numpy is
+      1.26.4, so import raises: "RuntimeError: module was compiled against NumPy
+      C-API version 0x12 (NumPy 1.20) but the running NumPy has C-API version
+      0x11" -> ImportError.
+    consequence: >
+      Global constraints call for msprime for the discoal->msprime selection
+      convention (s_msprime = 2*s_discoal) and samples=350/ploidy=2 sampling.
+      That code path is currently non-functional in diploshic_env, in either
+      direction (using the leaked user-site version errors; `python -s` to
+      exclude user-site just makes msprime disappear with ModuleNotFoundError
+      instead, since it was never actually installed in the env).
+    action_needed: >
+      Human decision: install a numpy-1.26-compatible msprime/tskit properly
+      INTO diploshic_env (risk: env is also the validated 13_diploshic
+      TensorFlow/training env — do not casually bump numpy to >=2 to satisfy
+      tskit 1.0.1, that risks breaking TF/diploSHIC compat instead), or point
+      Plan 02's msprime-dependent code at a different, dedicated env. Not fixed
+      as part of Task 0 (pip-installing into a shared validated env is outside
+      this task's charter without explicit sign-off).
+    verified_by: "task-0-report.md concern #2"
+
+# ---------------------------------------------------------------------------
+# Paths
+# ---------------------------------------------------------------------------
+paths:
+  discoal_bin: /home/ssmall/programs/discoal_oobfix_bigmut/discoal
+  discoal_bin_training_orig: /home/ssmall/programs/discoal_oobfix/discoal   # DO NOT MODIFY — 44kb-window-validated training binary
+  discoal_source_commit: 8ef7bc72e2cbb848ecc5f9ab209d6d243b793f88            # branch fix/sweep-popn-oob; NOT an ancestor of origin/master
+  discoal_build_dir: /tmp/claude-1003/discoal_build                         # scratch checkout used to build discoal_bin; not persistent
+
+  diploshic_model_json: /sietch_colab/data_share/illex/popgen_data/analysis/steps/13_diploshic/model.json
+  diploshic_model_weights: /sietch_colab/data_share/illex/popgen_data/analysis/steps/13_diploshic/model.weights.h5
+  mask_fa: /sietch_colab/data_share/illex/popgen_data/analysis/steps/13_diploshic/mask.fa
+  mask_fa_fai: /sietch_colab/data_share/illex/popgen_data/analysis/steps/13_diploshic/mask.fa.fai
+  ascertainment_json: /sietch_colab/data_share/illex/popgen_data/analysis/steps/13_diploshic/ascertainment.json
+  demography_module: /sietch_colab/data_share/illex/popgen_data/analysis/steps/13_diploshic/demography.py
+  simulate_module: /sietch_colab/data_share/illex/popgen_data/analysis/steps/13_diploshic/simulate.py   # for rho_draw() shape reuse (NHAP/WINLEN/NSUB/theta())
+  fvec_one_sh: /sietch_colab/data_share/illex/popgen_data/analysis/steps/13_diploshic/fvec_one.sh        # verbatim fvecVcf invocation contract
+
+  relernn_male_auto_bscorrected_map: /sietch_colab/data_share/illex/popgen_data/analysis/steps/11_relernn/run_male_auto/proj/male.kept.PREDICT.BSCORRECTED.txt
+  # columns: chrom(b'N' repr) start end nSites recombRate(per-bp) CI95LO CI95HI
+
+  python_bin: /home/ssmall/miniforge3/envs/diploshic_env/bin/python           # python3.10.20; diploSHIC 1.1.0, numpy 1.26.4 in-env
+  diploshic_env: /home/ssmall/miniforge3/envs/diploshic_env
+  diploshic_invoke: "mamba run -p /home/ssmall/miniforge3/envs/diploshic_env diploSHIC"   # matches 13_diploshic/env.sh $DSHIC
+
+# ---------------------------------------------------------------------------
+# Constants — must match 13_diploshic training regime exactly (global-constraints.md)
+# ---------------------------------------------------------------------------
+constants:
+  NHAP: 700              # haplotypes (350 diploids); discoal sampleSize arg. msprime: samples=350, ploidy=2 — never samples=700.
+  MU: 3.0e-9              # per-bp mutation rate
+  WIN: 44000              # diploSHIC training scan window (bp) — 13_diploshic WINLEN
+  NSUB: 11                # sub-windows per scan window (--numSubWins)
+  locus_len_default: 1000000   # Plan 02 new capability: full 1 Mb loci (13_diploshic never simulated beyond WIN=44000)
+  MAXMUTS: 800000          # bumped from 400000 (as found at 8ef7bc7) / 40000 (master's discoal.h) for Mb-scale loci
+  MAXSITES: 100000000      # unchanged, per task instructions
+
+  # moments exponential-growth demography (13_diploshic/demography.py) — present-referenced
+  N0: 6808096.0            # present-day Ne
+  NREF: 547928.0           # ancestral Ne
+  T_YEARS: 769519.0
+  GEN: 1.0
+  THETA_PER_BP: 2.7232384e-2   # = 4*N0*MU
+
+  # sweep priors (13_diploshic/simulate.py) — reuse verbatim for Plan 02 sweeps
+  sweep_alpha_2Ns: "2*N0 * 10**U(-4,-2)"     # alpha = 2Ns, discoal -a
+  sweep_tau_4N0_units: "U(0, 0.05)"           # fixation time ago, discoal -ws
+  soft_sweep_start_freq: "10**U(-3,-1)"       # discoal -f, applied to ~50% of sweep sims
+  discoal_to_msprime_selection: "s_msprime = 2 * s_discoal"   # verified from msprime docstring
+
+  # fvecVcf / predict invocation (must mirror 13_diploshic/fvec_one.sh verbatim; NO --totalPhysLen)
+  fvecvcf_unmaskedFracCutoff: 0.25
+  fvecvcf_unmaskedGenoFracCutoff: 0.75   # default, not passed explicitly in fvec_one.sh
+  predict_numSubWins: 11
+
+# ---------------------------------------------------------------------------
+# Smoke test evidence (BLOCKING exit criterion for Task 0)
+# ---------------------------------------------------------------------------
+smoke_test:
+  command: "/home/ssmall/programs/discoal_oobfix_bigmut/discoal 700 1 1000000 -t 81600 -r 400"
+  note: >
+    Ran WITHOUT the -g/-eg tokens from discoal_demog() — see known_issues[demog_flags_not_growth].
+    theta=81600 matches 4*N0*MU*1e6 for the 1 Mb locus per the task brief's own formula, so this
+    still validates MAXMUTS=800000 against the realistic Watterson-expected segsites count
+    regardless of the demography-flag question.
+  exit_code: 0
+  segsites: 578593          # brief's own estimate: ~5.8e5. Matches closely.
+  replicate_check_5x: [579680, 617350, 572894, 575439, 579156]   # `discoal 700 5 1000000 -t 81600 -r 400`, all exit 0
+  old_binary_same_theta: "exit 134, discoalFunctions.c:2274: makeGametesMS: Assertion `size < MAXMUTS' failed"
+  literal_task_command_result: >-
+    exit 1, stderr "Error: Invalid integer argument for -g: '-eg'" (see known_issues)

@@ -1,0 +1,63 @@
+// neutral_segment.slim -- contiguous neutral segment under the Illex moments-growth demography
+// for the HMM calibration harness (PLAN_02). Same rescaled growth epoch as hard_sweep.slim, NO sweep.
+// Variable recombination map from the ReLERNN landscape when MAPFILE is defined (else constant Rs).
+// Neutral mutations are NOT simulated forward (tree-seq only); the driver recapitates + overlays.
+initialize() {
+    if (!exists("Q"))       defineConstant("Q", 100.0);
+    if (!exists("N0"))      defineConstant("N0", 6808096.0);
+    if (!exists("NREF"))    defineConstant("NREF", 547928.0);
+    if (!exists("TGROW"))   defineConstant("TGROW", 769519.0);
+    if (!exists("MU"))      defineConstant("MU", 3e-9);
+    if (!exists("R"))       defineConstant("R", 2.1e-9);
+    if (!exists("L"))       defineConstant("L", 10000000);
+    if (!exists("MAPFILE")) defineConstant("MAPFILE", "");
+    if (!exists("OUTPATH")) defineConstant("OUTPATH", "neutral_segment.trees");
+
+    defineConstant("N0s",   asInteger(round(N0/Q)));
+    defineConstant("NREFs", asInteger(round(NREF/Q)));
+    defineConstant("G",     asInteger(round(TGROW/Q)));
+    defineConstant("Rs",    R*Q);
+    defineConstant("GROWTH", log(N0/NREF) / (G - 1));
+
+    initializeTreeSeq();
+    initializeMutationRate(0.0);
+    initializeMutationType("m1", 0.5, "f", 0.0);   // placeholder (unused; no forward muts)
+    initializeGenomicElementType("g1", m1, 1.0);
+    initializeGenomicElement(g1, 0, L - 1);
+
+    if (MAPFILE != "") {
+        lines = readFile(MAPFILE);
+        ends = integer(0); rates = float(0);
+        for (line in lines) {
+            if (size(line) == 0) next;
+            f = strsplit(line, "\t");
+            ends  = c(ends,  asInteger(f[0]));
+            rates = c(rates, asFloat(f[1]) * Q);    // rescale per-bp rate by Q
+        }
+        if (max(ends) != L - 1)
+            stop("[slim] MAPFILE last end " + max(ends) + " != L-1 " + (L-1));
+        initializeRecombinationRate(rates, ends);
+        catn("[slim] variable map: " + size(ends) + " intervals, mean Rs=" +
+             (sum(rates * (ends - c(-1, ends[0:(size(ends)-2)]))) / L));
+    } else {
+        initializeRecombinationRate(Rs);
+    }
+    catn("[slim] NEUTRAL Q=" + Q + " N0s=" + N0s + " NREFs=" + NREFs + " G=" + G + " L=" + L);
+}
+
+1 early() {
+    sim.addSubpop("p1", NREFs);
+    community.rescheduleScriptBlock(s99, G, G);   // write the tree seq at the present tick
+}
+
+2: early() {
+    t = community.tick;
+    p1.setSubpopulationSize(asInteger(round(NREFs * exp(GROWTH * (t - 1)))));
+}
+
+// finalize at the present (tick G)
+s99 900 late() {
+    sim.treeSeqOutput(OUTPATH);
+    catn("[slim] NEUTRAL wrote " + OUTPATH + " at tick " + community.tick + " size " + p1.individualCount);
+    sim.simulationFinished();
+}
