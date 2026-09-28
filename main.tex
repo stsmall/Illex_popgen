@@ -490,7 +490,7 @@ The Tier-2 concordant regions carry a biologically coherent set of cephalopod-or
 squarely within these themes (\cref{tab:sweep}, Supplementary Table~S6). They include the neural/EMT transcription factor
 \textit{ZEB2}, the synaptic-vesicle GTPase \textit{Rab3}, the apelin receptor \textit{Aplnr}
 (cardiovascular/vasculature signalling), the DNA-damage-response gene \textit{MACROD2}, the phospholipid
-synthase \textit{cept1}, and, ceramide phosphoethanolamine synthase. A per-region background-selection test isolates
+synthase \textit{cept1}, and the ceramide phosphoethanolamine synthase \textit{Cpes}. A per-region background-selection test isolates
 11 of these as high-confidence candidates in which diversity is reduced beyond the background-selection expectation,
 and fine-scale localisation confirms all 11 as recent sweeps by the sign of Tajima's $D$ at the diversity valley,
 reassigning two apparent gene-desert signals to transposable-element regions (flagged lower confidence) and one 
@@ -660,8 +660,7 @@ degeneracy annotated by degenotate \citep{degenotate}.
 % =====================================================================
 \section*{Data and code availability}
 The manuscript, all figures and tables, their generating scripts, and editable table exports are in the
-manuscript repository (\url{https://github.com/stsmall/Illex_popgen}), and a section-by-section index of every
-figure and table source file is provided there as \texttt{FIGURES\_AND\_TABLES\_INDEX.md}. The coalescent
+manuscript repository (\url{https://github.com/stsmall/Illex_popgen}), and a section-by-section index of every figure and table source file is provided there as \texttt{FIGURES\_AND\_TABLES\_INDEX.md}. The annotation used is \texttt{Illex\_F24} version 3, whose additions to version 2 (the loci recovered in the inversion and the chromosome-16 functional note) are in \texttt{data/annotation/} of the same repository. The coalescent
 simulations for the inversion analysis (\cref{sec:inv}) were generated with \texttt{msinv} v0.3.5, a general
 ARG-based inversion-coalescent simulator (\url{https://github.com/stsmall/msinv}, MIT, commit \texttt{abd0d63}), and this study's 
 complete \illex{}-specific inversion analysis (fitting code, simulation configuration, tabulated outputs, 
@@ -819,7 +818,7 @@ and the inversion figures) is contained within that repository under \texttt{ill
     chr32:9.3~Mb  & \textit{MACROD2} (DNA-damage response)                & soft \\
     \multicolumn{3}{l}{\itshape Membrane \& lipid}\\
     chr5:38.0~Mb  & \textit{cept1} (phospholipid synthesis)               & hard \\
-    chr1:85.5~Mb  & ceramide phosphoethanolamine synthase\,$^{\dagger}$   & hard \\
+    chr1:85.5~Mb  & \textit{Cpes} (ceramide phosphoethanolamine synthase)\,$^{\dagger}$   & hard \\
     \multicolumn{3}{l}{\itshape Metabolism}\\
     chr25:65.0~Mb & \textit{GALT}\,$^{\dagger}$                           & soft \\
     \multicolumn{3}{l}{\itshape ECM \& adhesion}\\
@@ -835,7 +834,7 @@ and the inversion figures) is contained within that repository under \texttt{ill
     \bottomrule
   \end{tabular}
   \\[2pt]
-  {\footnotesize $^{\dagger}$ target reassigned by fine-scale localisation (annotation-recovered gene).
+  {\footnotesize $^{\dagger}$ target reassigned by fine-scale localisation to a neighbouring annotated gene.
    $^{\ddagger}$ TE-dense region, where deep $\pi$ and negative $D$ may be a TE-insertion sweep or a repeat artifact.}
 \end{table}
 

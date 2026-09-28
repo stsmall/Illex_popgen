@@ -85,9 +85,7 @@ and outputs tree sequences. Simulations used the fitted growth demography, $\mu=
 $r=1.977\times10^{-9}$ per site per generation, and were fitted jointly to $\pi_I/\pi_S$, $\dxy/\pi_I$ and the
 per-arrangement singleton spectrum. A 37-kb simulated inversion was rescaled to the 19-Mb body after verifying
 length invariance of the fitted statistics over a 25-fold range. msinv was validated against SLiM, msprime and
-discoal. Genes in the body were re-annotated with DIAMOND \texttt{blastx} against seven cephalopod proteomes,
-with transposable elements from Earl~Grey \citep{baril2024earlgrey} and transcripts from StringTie2
-\citep{kovaka2019stringtie}. Fixed differences were sites with an allele-frequency difference of at least 0.9
+discoal. Unannotated, non-repeat sequence in the body was searched with DIAMOND \texttt{blastx} against seven cephalopod proteomes, with transposable elements from Earl~Grey \citep{baril2024earlgrey} and transcripts from StringTie2 \citep{kovaka2019stringtie} as supporting evidence. This recovered 14 likely protein-coding loci that the annotation lacks. They are provided as \texttt{protein\_match} features in version 3 of the annotation and are not counted among the 89 gene models of the inversion. Fixed differences were sites with an allele-frequency difference of at least 0.9
 between AA and BB homozygotes. Gene-ontology enrichment of the inversion genes used Fisher's exact test against
 the annotated-gene background in all three ontologies, compared with 500 random gene sets of equal size, and gene
 density was compared with all autosomal windows of the same length (0.5-Mb steps). The attainment bound used the
