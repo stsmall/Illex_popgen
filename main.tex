@@ -427,8 +427,7 @@ Read-depth analyses resolve them into three categories. In six, depth is raised 
 (1.2--2.2 times the flanks across the population sample, and up to 2.7 and 2.4 times in long reads 
 from the individual used for the assembly and a second individual \citep{small2026}), and a single diploid genome carries 
 five to six times the flanking density of heterozygous sites at skewed allele fractions. We interpret this as a duplicated 
-sequence collapsed into one copy in the assembly. In eight, depth is reduced to 0.6--0.9 times the flanks in every individual,
-indicating haplotypes too divergent from the reference for many short reads to map. Long reads, which span the divergent sequence, show a much smaller deficit. The remaining eight have normal depth and mapping and are gene-poor regions of genuinely 
+sequence collapsed into one copy in the assembly. In eight, short-read depth is reduced to 0.6--0.9 times the flanks in every individual. A third of their accessible sequence is not uniquely mappable by 150-bp reads, against 4\% genome-wide, so these blocks are largely duplicated within the assembly itself and short reads there map to several places and are lost at the mapping-quality filters. Long reads, which map uniquely through the duplicated sequence, show a much smaller deficit, and divergent haplotypes may add to the loss. The remaining eight have normal depth and mapping and are gene-poor regions of genuinely 
 elevated diversity. Since our summary statistics cannot separate any of these from the footprints of selection, 
 all 22 blocks were excluded from the sweep scan and the gene-set analyses.
 
@@ -611,7 +610,7 @@ Reads were trimmed with fastp \citep{chen2018fastp}, mapped with BWA-MEM2 \citep
 deduplicated with Picard, and genotypes were called jointly across individuals with GATK HaplotypeCaller in gVCF
 mode \citep{poplin2018gatk}, all within grenepipe \citep{czech2022grenepipe}. The joint callset retains invariant
 sites. Variants were filtered on site quality, mapping quality, strand bias, missingness, and excess
-heterozygosity at intermediate frequency, and sites in GC-corrected high-depth windows or in annotated repeats were excluded, leaving 1.43~Gb of accessible sequence. For the sweep scan and gene-set analyses this accessibility mask was extended by the 22 anomalous-diversity blocks described in the Results (Supplementary Table~S9). Genotypes are unphased.
+heterozygosity at intermediate frequency, and sites in GC-corrected high-depth windows or in annotated repeats were excluded, leaving 1.43~Gb of accessible sequence, of which 96\% is uniquely mappable by 150-bp reads according to GenMap \citep{pockrandt2020genmap}. For the sweep scan and gene-set analyses this accessibility mask was extended by the 22 anomalous-diversity blocks described in the Results (Supplementary Table~S9). Genotypes are unphased.
 
 \paragraph{Diversity, site-frequency spectra, and demography.}
 Mean sequencing depth is about 9-fold, so diversity statistics were estimated from genotype likelihoods rather

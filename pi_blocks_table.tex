@@ -1,32 +1,32 @@
 \begin{table}[h]\centering\footnotesize
-\caption{\textbf{Anomalous-diversity blocks, masked from the sweep scan and gene-set analyses.} Blocks of $\geq$1~Mb whose rolling nucleotide diversity exceeds twice the chromosome median. $\pi$ fold is the block mean over the chromosome median. Division ratio is the range of block-to-flank diversity across the ten sampling divisions (ANGSD). Depth is block-to-flank read depth, as the median over all 633 individuals (Illumina, mapping quality $\geq$0) and for the assembly individual (PacBio HiFi, mapping quality $\geq$20). Class: collapsed duplication (population depth $\geq$1.15), under-mapped divergent haplotypes (depth $\leq$0.90), or elevated diversity with normal depth. In long-read genotypes of two individuals, collapsed blocks carry five to six times the flanking density of heterozygous sites at skewed allele fractions (median minor-allele fraction 0.29--0.33 vs 0.38--0.42 in flanks), and elevated-diversity blocks carry about twice the flanking density at normal fractions (chr1, 0.41 vs 0.40--0.43). The under-mapped chr21:0.0--9.4 block also shows skewed fractions (0.25 and 0.28 vs 0.42 and 0.44), with heterozygous-site density halved in the assembly individual, whose second haplotype largely fails to map, and tripled in the second individual, so under-mapped blocks likely carry mismapped paralogous sequence alongside divergent haplotypes.}\label{stab:piblocks}
+\caption{\textbf{Anomalous-diversity blocks, masked from the sweep scan and gene-set analyses.} Blocks of $\geq$1~Mb whose rolling nucleotide diversity exceeds twice the chromosome median. $\pi$ fold is the block mean over the chromosome median. Division ratio is the range of block-to-flank diversity across the ten sampling divisions (ANGSD). Depth is block-to-flank read depth, as the median over all 633 individuals (Illumina, mapping quality $\geq$0) and for the assembly individual (PacBio HiFi, mapping quality $\geq$20). Non-unique is the percentage of the block's accessible sequence that 150-bp reads cannot map uniquely (GenMap, up to two mismatches), against 3.8\% genome-wide. Class is collapsed duplication (population depth $\geq$1.15), under-mapped (depth $\leq$0.90), or elevated diversity with normal depth. In long-read genotypes of two individuals, collapsed blocks carry five to six times the flanking density of heterozygous sites at skewed allele fractions (median minor-allele fraction 0.29--0.33 vs 0.38--0.42 in flanks), and elevated-diversity blocks carry about twice the flanking density at normal fractions (chr1, 0.41 vs 0.40--0.43). The under-mapped chr21:0.0--9.4 block also shows skewed fractions (0.25 and 0.28 vs 0.42 and 0.44), with heterozygous-site density halved in the assembly individual, whose second haplotype largely fails to map, and tripled in the second individual, consistent with under-mapped blocks being largely duplicated within the assembly (33\% of their accessible sequence non-unique).}\label{stab:piblocks}
 \resizebox{\linewidth}{!}{%
-\begin{tabular}{lrrrrrrl}
+\begin{tabular}{lrrrrrrrl}
 \toprule
-Block & Mb & $\pi$ fold & $D$ block / chrom & Genes/Mb & Division ratio & Depth pop. / HiFi & Class \\
+Block & Mb & $\pi$ fold & $D$ block / chrom & Genes/Mb & Division ratio & Depth pop. / HiFi & Non-unique (\%) & Class \\
 \midrule
-chr1:24.0--31.3 & 7.3 & 2.8 & $-1.77$ / $-2.21$ & 1.8 & 2.20--2.37 & 0.97 / 1.05 & elevated diversity \\
-chr6:12.0--18.9 & 6.9 & 2.3 & $-1.58$ / $-2.17$ & 1.7 & 1.26--1.34 & 0.62 / 0.92 & under-mapped \\
-chr6:19.3--23.2 & 3.9 & 2.4 & $-1.56$ / $-2.17$ & 1.8 & 1.27--1.32 & 0.66 / 0.84 & under-mapped \\
-chr8:29.7--35.5 & 5.8 & 2.3 & $-1.97$ / $-2.22$ & 1.7 & 1.97--2.12 & 0.98 / 1.10 & elevated diversity \\
-chr9:27.2--29.9 & 2.7 & 3.6 & $-1.12$ / $-2.12$ & 2.2 & 3.01--3.19 & 1.19 / 1.18 & collapsed duplication \\
-chr10:66.7--69.4 & 2.7 & 2.1 & $-2.06$ / $-2.26$ & 0.4 & 1.46--1.53 & 0.95 / 1.01 & elevated diversity \\
-chr11:44.1--45.5 & 1.4 & 2.1 & $-1.83$ / $-2.15$ & 2.1 & 1.48--1.53 & 0.97 / 1.04 & elevated diversity \\
-chr13:33.5--39.0 & 5.5 & 2.7 & $-1.79$ / $-2.19$ & 3.1 & 2.50--2.79 & 0.93 / 1.05 & elevated diversity \\
-chr21:0.0--9.4 & 9.4 & 2.6 & $-1.39$ / $-1.94$ & 1.7 & 2.22--2.49 & 0.68 / 0.61 & under-mapped \\
-chr21:74.4--79.4 & 5.0 & 2.5 & $-1.42$ / $-1.94$ & 2.0 & 2.09--2.30 & 0.66 / 0.61 & under-mapped \\
-chr23:0.1--5.6 & 5.5 & 4.3 & $-0.96$ / $-2.04$ & 2.2 & 3.94--4.43 & 1.78 / 1.91 & collapsed duplication \\
-chr23:62.4--65.3 & 2.9 & 2.3 & $-1.68$ / $-2.04$ & 2.8 & 1.28--1.33 & 0.88 / 1.11 & under-mapped \\
-chr23:65.7--67.7 & 2.0 & 2.3 & $-1.73$ / $-2.04$ & 1.5 & 1.23--1.27 & 1.07 / 1.12 & elevated diversity \\
-chr25:61.4--63.8 & 2.4 & 2.8 & $-1.57$ / $-2.17$ & 2.9 & 2.68--2.86 & 1.16 / 1.16 & collapsed duplication \\
-chr29:34.4--40.7 & 6.3 & 2.6 & $-1.41$ / $-1.97$ & 2.1 & 2.44--2.79 & 0.86 / 0.98 & under-mapped \\
-chr30:17.3--18.5 & 1.2 & 6.1 & $-0.69$ / $-2.17$ & 2.5 & 5.77--6.17 & 2.19 / 2.66 & collapsed duplication \\
-chr34:29.9--44.7 & 14.8 & 2.6 & $-1.45$ / $-1.95$ & 1.8 & 2.20--2.43 & 0.81 / 0.93 & under-mapped \\
-chr35:59.7--65.1 & 5.4 & 3.4 & $-1.47$ / $-2.13$ & 1.9 & 3.21--3.52 & 1.53 / 1.84 & collapsed duplication \\
-chr38:19.0--31.8 & 12.8 & 2.8 & $-1.41$ / $-1.97$ & 2.2 & 2.70--3.08 & 0.87 / 1.17 & under-mapped \\
-chr38:61.5--68.0 & 6.5 & 4.1 & $-1.08$ / $-1.97$ & 2.6 & 4.11--5.08 & 1.44 / 1.21 & collapsed duplication \\
-chr43:45.7--61.6 & 15.9 & 2.4 & $-1.52$ / $-1.84$ & 2.2 & 1.83--2.02 & 0.93 / 0.94 & elevated diversity \\
-chr44:8.8--11.7 & 2.9 & 2.7 & $-1.27$ / $-1.85$ & 1.4 & 2.35--2.59 & 0.96 / 0.88 & elevated diversity \\
+chr1:24.0--31.3 & 7.3 & 2.8 & $-1.77$ / $-2.21$ & 1.8 & 2.20--2.37 & 0.97 / 1.05 & 7 & elevated diversity \\
+chr6:12.0--18.9 & 6.9 & 2.3 & $-1.58$ / $-2.17$ & 1.7 & 1.26--1.34 & 0.62 / 0.92 & 45 & under-mapped \\
+chr6:19.3--23.2 & 3.9 & 2.4 & $-1.56$ / $-2.17$ & 1.8 & 1.27--1.32 & 0.66 / 0.84 & 41 & under-mapped \\
+chr8:29.7--35.5 & 5.8 & 2.3 & $-1.97$ / $-2.22$ & 1.7 & 1.97--2.12 & 0.98 / 1.10 & 7 & elevated diversity \\
+chr9:27.2--29.9 & 2.7 & 3.6 & $-1.12$ / $-2.12$ & 2.2 & 3.01--3.19 & 1.19 / 1.18 & 9 & collapsed duplication \\
+chr10:66.7--69.4 & 2.7 & 2.1 & $-2.06$ / $-2.26$ & 0.4 & 1.46--1.53 & 0.95 / 1.01 & 2 & elevated diversity \\
+chr11:44.1--45.5 & 1.4 & 2.1 & $-1.83$ / $-2.15$ & 2.1 & 1.48--1.53 & 0.97 / 1.04 & 3 & elevated diversity \\
+chr13:33.5--39.0 & 5.5 & 2.7 & $-1.79$ / $-2.19$ & 3.1 & 2.50--2.79 & 0.93 / 1.05 & 4 & elevated diversity \\
+chr21:0.0--9.4 & 9.4 & 2.6 & $-1.39$ / $-1.94$ & 1.7 & 2.22--2.49 & 0.68 / 0.61 & 36 & under-mapped \\
+chr21:74.4--79.4 & 5.0 & 2.5 & $-1.42$ / $-1.94$ & 2.0 & 2.09--2.30 & 0.66 / 0.61 & 39 & under-mapped \\
+chr23:0.1--5.6 & 5.5 & 4.3 & $-0.96$ / $-2.04$ & 2.2 & 3.94--4.43 & 1.78 / 1.91 & 12 & collapsed duplication \\
+chr23:62.4--65.3 & 2.9 & 2.3 & $-1.68$ / $-2.04$ & 2.8 & 1.28--1.33 & 0.88 / 1.11 & 8 & under-mapped \\
+chr23:65.7--67.7 & 2.0 & 2.3 & $-1.73$ / $-2.04$ & 1.5 & 1.23--1.27 & 1.07 / 1.12 & 10 & elevated diversity \\
+chr25:61.4--63.8 & 2.4 & 2.8 & $-1.57$ / $-2.17$ & 2.9 & 2.68--2.86 & 1.16 / 1.16 & 25 & collapsed duplication \\
+chr29:34.4--40.7 & 6.3 & 2.6 & $-1.41$ / $-1.97$ & 2.1 & 2.44--2.79 & 0.86 / 0.98 & 30 & under-mapped \\
+chr30:17.3--18.5 & 1.2 & 6.1 & $-0.69$ / $-2.17$ & 2.5 & 5.77--6.17 & 2.19 / 2.66 & 2 & collapsed duplication \\
+chr34:29.9--44.7 & 14.8 & 2.6 & $-1.45$ / $-1.95$ & 1.8 & 2.20--2.43 & 0.81 / 0.93 & 33 & under-mapped \\
+chr35:59.7--65.1 & 5.4 & 3.4 & $-1.47$ / $-2.13$ & 1.9 & 3.21--3.52 & 1.53 / 1.84 & 4 & collapsed duplication \\
+chr38:19.0--31.8 & 12.8 & 2.8 & $-1.41$ / $-1.97$ & 2.2 & 2.70--3.08 & 0.87 / 1.17 & 30 & under-mapped \\
+chr38:61.5--68.0 & 6.5 & 4.1 & $-1.08$ / $-1.97$ & 2.6 & 4.11--5.08 & 1.44 / 1.21 & 17 & collapsed duplication \\
+chr43:45.7--61.6 & 15.9 & 2.4 & $-1.52$ / $-1.84$ & 2.2 & 1.83--2.02 & 0.93 / 0.94 & 31 & elevated diversity \\
+chr44:8.8--11.7 & 2.9 & 2.7 & $-1.27$ / $-1.85$ & 1.4 & 2.35--2.59 & 0.96 / 0.88 & 5 & elevated diversity \\
 \bottomrule
 \end{tabular}}
 \end{table}
