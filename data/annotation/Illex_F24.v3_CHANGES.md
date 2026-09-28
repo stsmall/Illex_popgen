@@ -9,4 +9,4 @@
 2. **Note attribute on `LOC_0000SQ312948` and `LOC_0000SQ312965`** (chr16:35.3 Mb): blastx of the transcript against nr matches a
    cephalopod-specific uncharacterised protein family (Euprymna XP_079992720.1, 40% identity, E=2e-53).
 
-`Illex_F24.v3_additions.gff3` contains only the added and modified records.
+`Illex_F24.v3_additions.gff3` contains only the added and modified records, and `Illex_F24.gene_lnc_pseudo.func.fix.sq3.FINAL.v3.gff3.gz` is the full annotation.
