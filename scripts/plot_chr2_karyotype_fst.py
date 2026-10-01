@@ -2,7 +2,7 @@
 WHOLE of chromosome 2, aggregated into windows (ratio-of-averages Hudson estimator).
 Unlike the population F_ST scan (which asks about geography), this asks how differentiated
 the two arrangements are along the chromosome: collinear chr2 sits at ~0 (the karyotypes
-are one panmictic population outside the inversion), while the inverted body (60.54-79.50 Mb)
+are one panmictic population outside the inversion), while the inversion (60.54-79.50 Mb)
 is strongly differentiated -- the F_ST~0.37 'structure' is between karyotypes and confined
 to the inversion. AA n=254, BB n=95 arrangement homozygotes."""
 import os
@@ -38,7 +38,7 @@ ax.axvspan(INV_S / 1e6, INV_E / 1e6, color=C["shade"], lw=0, zorder=0)
 ax.scatter(w.loc[~w.inv, "mid"] / 1e6, w.loc[~w.inv, "fst"], s=5, color=C["muted"],
            linewidths=0, alpha=0.7, zorder=2, rasterized=True, label=f"collinear (median {coll_med:.3f})")
 ax.scatter(w.loc[w.inv, "mid"] / 1e6, w.loc[w.inv, "fst"], s=7, color=C["warm"],
-           linewidths=0, alpha=0.85, zorder=3, label=f"inverted body (median {inv_med:.2f})")
+           linewidths=0, alpha=0.85, zorder=3, label=f"inversion (median {inv_med:.2f})")
 ax.axhline(coll_med, color=C["ink"], ls=":", lw=0.9, zorder=1)
 ax.set_xlabel("chromosome 2 position (Mb)")
 ax.set_ylabel(r"$F_{ST}$ between arrangements  (AA vs BB)")
