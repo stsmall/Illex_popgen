@@ -102,8 +102,8 @@ inverted individual (Supplementary Table~S3).
 \paragraph{The inversion is non-neutral.}
 The primary evidence is per-arrangement diversity (\cref{tab:inv},
 \cref{fig:inv}c). Inside an inversion the two arrangements behave as partially
-isolated demes \citep{navarro2000,guerrero2012}, so at neutral equilibrium the
-diversity of each should scale with its frequency. The rare derived arrangement is
+isolated demes \citep{navarro2000,guerrero2012}, and without gene flux between them the
+neutral diversity of each scales with its frequency \citep{navarro2000,peischl2013}. The rare derived arrangement is
 instead more diverse than its frequency can sustain, with
 $\pi_I/\pi_S=1.356\pm0.048$ against an equilibrium expectation of $p/(1-p)=0.60$
 for a polymorphism held at 0.374, a 2.3-fold excess that is the signature of an
@@ -127,7 +127,7 @@ neither carried up nor brought down by drift.
 \paragraph{Age and trajectory of the inversion.}
 Estimating an inversion's age requires a coalescent in which the two
 arrangements exchange ancestry only across the barrier, which standard simulators do not provide. We therefore fit the inversion's age and frequency trajectory
-with msinv \citep{msinv}, an ancestral-recombination-graph simulator that
+with msinv \citep{msinv}, a sequentially Markov coalescent simulator with recombination that
 enforces the cross-karyotype recombination barrier, tracks ancestral material,
 and outputs tree sequences (\cref{sec:methods}). The data constrain the shape of
 the frequency trajectory $p(t)$ rather than any site-level mechanism, so we
@@ -412,8 +412,7 @@ were computed on the called genotypes with pg\_gpu \citep{pggpu}. These are the 
 Karyotypes were assigned by local PCA \citep{li2019lostruct} and a Gaussian-mixture model on the first principal
 component. The arrangements were polarised from an AnchorWave \citep{song2022anchorwave} whole-genome alignment
 to \coin{}, using only sites at which the outgroup does not simply match the reference, with est-sfs
-\citep{keightley2018estsfs} as a check. The age and frequency trajectory were fitted with msinv \citep{msinv},
-an ancestral-recombination-graph simulator that enforces the recombination barrier between arrangements
+\citep{keightley2018estsfs} as a check. The age and frequency trajectory were fitted with msinv \citep{msinv}, a sequentially Markov coalescent simulator that enforces the recombination barrier between arrangements
 (Supplementary Methods). Gene content, fixed differences between arrangements, gene-ontology enrichment against a
 permutation null, the drift bounds, and the mutational-load test are described in the Supplementary Methods.
 
