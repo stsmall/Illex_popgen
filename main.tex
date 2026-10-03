@@ -48,7 +48,7 @@
 % =====================================================================
 \begin{abstract}
 \noindent
-Marine species with high dispersal capabilities often exhibit minimal geographic population structure while maintaining significant adaptive genomic variation. In this study, we employ a chromosome-level reference genome and whole-genome data from 633 northern shortfin squid, \illex{}, collected across the Northwest Atlantic, to elucidate genomic variation previously inaccessible with a divergent reference assembly. Our findings confirm nearly complete range-wide panmixia, yet reveal a singular major axis of genomic structure: a $\sim$19~Mb inversion on chromosome~2. This derived arrangement segregates at a frequency of 0.374, is present throughout the species' range without a geographic cline, and achieves $\Fst=0.37$ between alternative homozygotes despite a geographic $\Fst\approx0$. Its evolutionary trajectory is inconsistent with neutral drift. The rarer derived arrangement retains 2.3 times more diversity than expected given its current frequency, and barrier-aware coalescent modeling dates the polymorphism to approximately 850~ka, indicating a prolonged period near frequency $p\approx0.74$ followed by a decline over the last $\sim$50--100~ky. The inversion is gene-poor and lacks functional enrichment, yet contains thousands of near-fixed differences concentrated within the non-recombining block, suggesting selection on the arrangement as a long-lived supergene rather than on a single locally adaptive locus. Outside the inversion, demographic analyses indicate strong expansion (genome-wide Tajima's $D\approx-2$) to a current effective population size of approximately seven million. A stratified scan, corroborated across methods, for recent positive selection identified 627 candidate sweep windows, including 24 high-confidence regions independently supported by multiple methods. Genes associated with these sweeps show significant enrichment for neurodevelopment and photoreception, with additional candidates involving lineage-specific genes and Z-linked RNA-regulatory and hormone-signaling loci. Collectively, these findings reveal two contrasting modes of adaptation in an otherwise panmictic marine species: a long-lived chromosomal polymorphism maintained by balancing selection and recent directional selection on sensory and neural functions. More broadly, they illustrate how a conspecific reference genome can uncover structural and adaptive variation that remains largely undetectable through geographic differentiation alone.
+Marine species with high dispersal capabilities often exhibit minimal geographic population structure while maintaining significant adaptive genomic variation. In this study, we employ a chromosome-level reference genome and whole-genome data from 633 northern shortfin squid, \illex{}, collected across the Northwest Atlantic, to elucidate genomic variation previously inaccessible with a divergent reference assembly. Our findings confirm nearly complete range-wide panmixia, yet reveal a singular major axis of genomic structure: a $\sim$19~Mb inversion on chromosome~2. This derived arrangement segregates at a frequency of 0.374, is present throughout the species' range without a geographic cline, and achieves $\Fst=0.37$ between alternative homozygotes despite a geographic $\Fst\approx0$. Its evolutionary trajectory is inconsistent with neutral drift. The rarer derived arrangement retains 2.3 times more diversity than expected given its current frequency, and barrier-aware coalescent modeling dates the polymorphism to approximately 800--850~ka, indicating a prolonged period near frequency $p\approx0.70$--0.74 followed by a rapid decline to its present frequency that ended at least $\sim$100~ka ago. The inversion is gene-poor and lacks functional enrichment, yet contains thousands of near-fixed differences concentrated within the non-recombining block, suggesting selection on the arrangement as a long-lived supergene rather than on a single locally adaptive locus. Outside the inversion, demographic analyses indicate strong expansion (genome-wide Tajima's $D\approx-2$) to a current effective population size of approximately seven million. A stratified scan, corroborated across methods, for recent positive selection identified 627 candidate sweep windows, including 24 high-confidence regions independently supported by multiple methods. Genes associated with these sweeps show significant enrichment for neurodevelopment and photoreception, with additional candidates involving lineage-specific genes and Z-linked RNA-regulatory and hormone-signaling loci. Collectively, these findings reveal two contrasting modes of adaptation in an otherwise panmictic marine species: a long-lived chromosomal polymorphism maintained by balancing selection and recent directional selection on sensory and neural functions. More broadly, they illustrate how a conspecific reference genome can uncover structural and adaptive variation that remains largely undetectable through geographic differentiation alone.
 \end{abstract}
 
 % =====================================================================
@@ -83,11 +83,11 @@ Local PCA \citep{li2019lostruct} and a Gaussian-mixture karyotype assignment
 rather than geographic, with $\Fst(\mathrm{AA,BB})=0.37$ inside the inversion
 against a geographic $\Fst\approx0$. Between-karyotype $\Fst$ computed along the
 whole chromosome is $\approx0$ (median 0.006) across collinear sequence and jumps
-to a median of 0.34 (maximum 0.53) inside the inverted body (Supplementary
+to a median of 0.34 (maximum 0.53) inside the inversion (Supplementary
 Fig.~S20), so the karyotypes are one panmictic population everywhere except
 within the barrier. The three karyotypes co-occur throughout the range with no
 latitudinal cline in arrangement frequency (0.29--0.46 across divisions, \cref{fig:map}, Supplementary Fig.~S6 and Table~S2). Two independent lines pin
-the breakpoints to chr2:60.54--79.50~Mb (a $\sim$18.96~Mb differentiated body),
+the breakpoints to chr2:60.54--79.50~Mb (a $\sim$18.96~Mb inversion),
 namely a step-change in arrangement differentiation and a strand flip in a
 whole-chromosome alignment to \coin{} (Supplementary Fig.~S11), and an extended block of linkage disequilibrium coincides with the same interval (Supplementary
 Fig.~S4).
@@ -104,20 +104,20 @@ inverted individual (Supplementary Table~S3).
 \paragraph{The inversion is non-neutral.}
 The primary evidence is per-arrangement diversity (\cref{tab:inv},
 \cref{fig:inv}c). Inside an inversion the two arrangements behave as partially
-isolated demes \citep{navarro2000,guerrero2012}, so at neutral equilibrium the
-diversity of each should scale with its frequency. The rare derived arrangement is
+isolated demes \citep{navarro2000,guerrero2012}, and without gene flux between them the
+neutral diversity of each scales with its frequency \citep{navarro2000,peischl2013}. The rare derived arrangement is
 instead more diverse than its frequency can sustain, with
 $\pi_I/\pi_S=1.356\pm0.048$ against an equilibrium expectation of $p/(1-p)=0.60$
 for a polymorphism held at 0.374, a 2.3-fold excess that is the signature of an
 old polymorphism that was once common, not of a recent rise. Two diffusion
 arguments that use neither the mutation rate nor the accessibility mask exclude
 neutrality (\cref{sec:methods}). The first concerns attainment. A neutral allele
-must first reach the inferred peak frequency of $\sim$0.74 before it can decline,
+must first reach the inferred peak frequency of 0.70--0.74 before it can decline,
 and the expected time for drift to carry a new mutation to that frequency is
-$2.1\,\Ne$ generations, which is $\sim$1.15 million generations even at the
-smallest $\Ne$ on the trajectory (the ancestral $5.5\times10^{5}$), 1.36 times
-the entire inferred lifetime of the inversion, and up to 17 times at the present $\Ne$. The probability that a new neutral inversion ever reaches 0.74 is of order
-$10^{-6}$. The second concerns the decline. Over the fitted 100~ky fall, at the
+1.9--2.1~$\Ne$ generations, which is at least 1.06 million generations even at the
+smallest $\Ne$ on the trajectory (the ancestral $5.5\times10^{5}$), 1.25 to 1.44 times
+the entire inferred lifetime of the inversion, and up to 18 times at the present $\Ne$. The probability that a new neutral inversion ever reaches 0.70 is of order
+$10^{-6}$. The second concerns the decline. Over a 100-ky fall, the middle of the fitted range, at the
 $\Ne$ prevailing then ($2.8$--$3.8\times10^{6}$), the standard deviation of allele
 frequency under pure drift is 0.055, so the observed fall of 0.366 is 6.7 standard deviations of drift. Even a fall four times slower would remain 2.5
 standard deviations away, and a coalescent profile of the fall duration excludes
@@ -129,24 +129,23 @@ neither carried up nor brought down by drift.
 \paragraph{Age and trajectory of the inversion.}
 Estimating an inversion's age requires a coalescent in which the two
 arrangements exchange ancestry only across the barrier, which standard simulators do not provide. We therefore fit the inversion's age and frequency trajectory
-with msinv \citep{msinv}, an ancestral-recombination-graph simulator that
+with msinv \citep{msinv}, a sequentially Markov coalescent simulator with recombination that
 enforces the cross-karyotype recombination barrier, tracks ancestral material,
 and outputs tree sequences (\cref{sec:methods}). The data constrain the shape of
 the frequency trajectory $p(t)$ rather than any site-level mechanism, so we
 condition on a deterministic trajectory under within-arrangement neutrality and
-fit jointly to $\pi_I/\pi_S$, $\dxy/\pi_I$, and the per-arrangement singleton
-spectrum (\cref{fig:demog}b, Supplementary Figs.~S5 and S14). The coalescent age is
-$\sim$850~ky. It is the robustly determined quantity because it is carried by
+fit it by grid search to $\pi_I/\pi_S$, $\dxy/\pi_I$, and the per-arrangement singleton
+fraction of the site-frequency spectrum (\cref{fig:demog}b, Supplementary Fig.~S14, Supplementary Methods). The coalescent age is
+$\sim$800--850~ky. It is the robustly determined quantity because it is carried by
 $\dxy$ between arrangements, which is symmetric to the polarization. The
-reconstructed history is that the inversion arose $\sim$850~ka, coincident with
-the onset of the population expansion (\cref{sec:demog}), was maintained near $p\approx0.74$ for most of its history, and then fell sharply to 0.374 over
-$\sim$50--100~ky, ending $\gtrsim$50--100~ka, under selection of order
-$\Ne s\sim10^{2}$--$10^{3}$ ($s\approx1.5\times10^{-4}$). Simulated inversions of
-37~kb rescaled to the 19-Mb body reproduce these statistics with
-length-invariance verified over a 25-fold range, and the fitted model reproduces
-the observed joint two-dimensional site-frequency spectrum between
-arrangements, with near-fixed differences and off-diagonal density in the
-inverted body and a collapse to the diagonal in collinear controls
+reconstructed history is that the inversion arose $\sim$800--850~ka, coincident with
+the onset of the population expansion (\cref{sec:demog}), was maintained at $p\approx0.70$--0.74 for most of its history, and then fell sharply to 0.374 over
+50--200~ky, in a fall that ended at least $\sim$100~ka ago, under selection of order
+$\Ne s\sim10^{2}$--$10^{3}$ ($s\approx0.7$--$3\times10^{-4}$). The fits used a 29.7-kb simulated inversion, and the
+fitted statistics change by less than 5\% when extrapolated from that length to the 19-Mb inversion (Supplementary Methods).
+The observed joint two-dimensional site-frequency spectrum between
+arrangements shows the same barrier directly, with near-fixed differences and off-diagonal density in the
+inversion and a collapse to the diagonal in collinear controls
 (Supplementary Fig.~S5). Every absolute age scales with the assumed
 mutation rate $\mu=3\times10^{-9}$. 
 
@@ -200,7 +199,7 @@ cytochrome~P450 (\textit{CYP4X1}) and an acidic-repeat protein (four each) and i
 the ciliary gene \textit{RPGRIP1L}, and a cysteine-rich venom-like protein.
 Among coding sites inside the inversion, the most differentiated between arrangements are depleted 
 rather than enriched for nonsynonymous (zero-fold degenerate) positions. Of the top 1\% of 
-coding sites by between-arrangement $\Fst$, 45\% are zero-fold, against 82\% of all coding sites in the body 
+coding sites by between-arrangement $\Fst$, 45\% are zero-fold, against 82\% of all coding sites in the inversion 
 (odds ratio 0.18, $p=2\times10^{-34}$), and per-transcript divergence between arrangements is unremarkable 
 relative to collinear controls (5 of 95 transcripts exceed the control 95th percentile, as expected by chance, Supplementary Methods). 
 Purifying selection therefore still removes deleterious differences between the arrangements, and any recessive 
@@ -368,15 +367,15 @@ We therefore tested the coalescent class directly rather than assuming that the 
 
 This distinction has direct consequences for the evolutionary inferences in this study. First, it supports the use of a Kingman-based demographic history for estimating the age and frequency trajectory of the chromosome-2 inversion. Second, it provides a demographic null for the sweep scan in which the genome-wide excess of rare variants is attributed primarily to population growth rather than being treated as evidence of pervasive positive selection. The strong expansion also helps explain why raw sweep classifiers trained under simpler neutral models performed poorly: the baseline genome is already strongly displaced toward rare variants, leaving recent selection to be identified as a local departure from an unusually non-equilibrium genomic background. Establishing the coalescent and demographic context is therefore a prerequisite for interpreting both forms of selection described here.
 
-The timing of the expansion also places the chromosome-2 inversion in a particularly informative historical context. The inferred origin of the inversion, approximately 850{,}000 years ago, overlaps the estimated onset of population expansion at approximately 770{,}000 years ago. The derived arrangement therefore appears to have arisen near the beginning of the demographic episode that generated much of the standing variation observed today. Yet its subsequent history differs sharply from the genome-wide demographic trajectory. While effective population size increased by roughly an order of magnitude, the inversion remained near a frequency of $p\approx0.74$ for much of its history before declining to its present frequency of 0.374. Population growth alone therefore cannot explain the inversion trajectory: the arrangement remained at high frequency across a profound change in population size and declined only much later. This temporal separation reinforces the inference that the inversion's history reflects selection acting on the arrangement rather than a passive response to the demographic expansion.
+The timing of the expansion also places the chromosome-2 inversion in a particularly informative historical context. The inferred origin of the inversion, approximately 800{,}000--850{,}000 years ago, overlaps the estimated onset of population expansion at approximately 770{,}000 years ago. The derived arrangement therefore appears to have arisen near the beginning of the demographic episode that generated much of the standing variation observed today. Yet its subsequent history differs sharply from the genome-wide demographic trajectory. While effective population size increased by roughly an order of magnitude, the inversion remained near a frequency of $p\approx0.70$--0.74 for much of its history before declining to its present frequency of 0.374. Population growth alone therefore cannot explain the inversion trajectory: the arrangement remained at high frequency across a profound change in population size and declined only much later. This temporal separation reinforces the inference that the inversion's history reflects selection acting on the arrangement rather than a passive response to the demographic expansion.
 
 % =====================================================================
 \section{Limitations}
 Several uncertainties limit the resolution, rather than the overall interpretation, of our results. Most importantly, the callset is unphased, preventing the use of haplotype-homozygosity statistics and reducing our ability to distinguish hard from soft sweeps. The simulation-trained classifier also remains imperfectly calibrated to the empirical genome because real genomic windows contain substantially more fine-scale diversity heterogeneity than the simulated null. Our empirical stratification, spatial filtering, cross-method corroboration, and background-selection screen reduce sensitivity to this mismatch but do not provide an absolute false-positive rate. We therefore place greater confidence in the recurrent functional enrichment and in candidates supported by multiple lines of evidence than in the classification of individual loci or their assignment to a particular sweep mode.
 
-The inversion analysis has different limitations. Its absolute age depends on the assumed mutation rate, and the fitted frequency history assumes a deterministic trajectory with neutrality within arrangements. The data therefore constrain when the arrangements diverged and how their relative frequencies changed, but not the selective mechanism responsible for their long-term maintenance. In particular, the present analyses cannot distinguish among associative overdominance, frequency-dependent selection, or temporally varying selection, nor can they identify a phenotype associated with the alternative arrangements. Comparative sampling of the inversion in closely related \textit{Illex} species and direct phenotypic comparison among karyotypes would provide important tests of these alternatives.
+The inversion analysis has different limitations. Its absolute age depends on the assumed mutation rate, and the fitted frequency history assumes a deterministic trajectory with neutrality within arrangements. The data therefore constrain when the arrangements diverged and how their relative frequencies changed, but not the selective mechanism responsible for their long-term maintenance. The drift bounds also assume a panmictic history. Structured neutral histories cannot be excluded in principle, and the most obvious alternative is an allopatric origin followed by secondary contact. That history does not remove the need for selection, because the new inversion would still have to reach high frequency by drift within its isolate. In an isolate of effective size $N_B$, a new neutral inversion takes about $2N_B$ generations to reach the inferred peak frequency and about $4N_B$ generations to fix, and the isolation cannot have lasted much longer than the $\sim$800--850-ky coalescent age of the arrangements. In an isolate as large as the ancestral population ($\sim5\times10^{5}$), drift is too slow to carry the inversion to high frequency in that time, so selection within the isolate would be required. Drift is fast enough only if the isolate was small ($N_B\lesssim2\times10^{5}$), but a small isolate holds little diversity, so BB would have emerged less diverse than AA, whereas it is 1.36 times more diverse. In particular, the present analyses cannot distinguish among associative overdominance, frequency-dependent selection, or temporally varying selection, nor can they identify a phenotype associated with the alternative arrangements. Comparative sampling of the inversion in closely related \textit{Illex} species and direct phenotypic comparison among karyotypes would provide important tests of these alternatives.
 
-Finally, functional annotation remain imperfectly resolved. Functional interpretation relies heavily on homology to relatively distant cephalopod models, leaving many lineage-specific genes poorly characterized. The neural and photoreceptive signals should therefore be interpreted primarily as gene-set-level enrichments, while individual candidate genes remain hypotheses for functional validation.
+Finally, functional annotation remains imperfectly resolved. Functional interpretation relies heavily on homology to relatively distant cephalopod models, leaving many lineage-specific genes poorly characterized. The neural and photoreceptive signals should therefore be interpreted primarily as gene-set-level enrichments, while individual candidate genes remain hypotheses for functional validation.
 
 \section{Conclusions}
 
@@ -415,8 +414,7 @@ were computed on the called genotypes with pg\_gpu \citep{pggpu}. These are the 
 Karyotypes were assigned by local PCA \citep{li2019lostruct} and a Gaussian-mixture model on the first principal
 component. The arrangements were polarised from an AnchorWave \citep{song2022anchorwave} whole-genome alignment
 to \coin{}, using only sites at which the outgroup does not simply match the reference, with est-sfs
-\citep{keightley2018estsfs} as a check. The age and frequency trajectory were fitted with msinv \citep{msinv},
-an ancestral-recombination-graph simulator that enforces the recombination barrier between arrangements
+\citep{keightley2018estsfs} as a check. The age and frequency trajectory were fitted with msinv \citep{msinv}, a sequentially Markov coalescent simulator that enforces the recombination barrier between arrangements
 (Supplementary Methods). Gene content, fixed differences between arrangements, gene-ontology enrichment against a
 permutation null, the drift bounds, and the mutational-load test are described in the Supplementary Methods.
 
@@ -472,7 +470,7 @@ The manuscript, along with all figures and tables, their generating scripts, and
 
 \begin{figure}[p]\centering
   \includegraphics[width=\linewidth]{fig4_demography.png}
-  \caption{\textbf{Demographic history and inversion frequency history.} \textbf{(a)} The effective population size over time is depicted using Stairway~Plot~2 (median $\pm$95\% CI), alongside the moments 2-epoch growth model with its Godambe (GIM) 95\% parameter-CI envelope (expansion $12.4\times\pm9\%$, $T\approx770$~ky~$\pm16\%$). GONE2 is utilized for recent historical data, and a single momentsLD LD-$\Ne$ point is presented (rate-corrected, with only the contemporary point shown due to the non-identifiability of its time-varying fit). \textbf{(b)} The inversion trajectory is fitted using the barrier-aware coalescent simulator msinv. The derived (BB) arrangement emerged approximately 850~ka, coinciding with the onset of expansion in (a), maintained near $p\approx0.74$, and subsequently declined to 0.374. The neutral-drift envelope is provided for comparison. $\Delta\chi^{2}$ profiles, which identify the end and duration of the decline, are available in Supplementary Fig.~S14, indicating that the decline was recent and rapid, excluding neutral drift-out.}
+  \caption{\textbf{Demographic history and inversion frequency history.} \textbf{(a)} The effective population size over time is depicted using Stairway~Plot~2 (median $\pm$95\% CI), alongside the moments 2-epoch growth model with its Godambe (GIM) 95\% parameter-CI envelope (expansion $12.4\times\pm9\%$, $T\approx770$~ky~$\pm16\%$). GONE2 is utilized for recent historical data, and a single momentsLD LD-$\Ne$ point is presented (rate-corrected, with only the contemporary point shown due to the non-identifiability of its time-varying fit). \textbf{(b)} The inversion trajectory is fitted using the barrier-aware coalescent simulator msinv. The derived (BB) arrangement emerged approximately 800--850~ka, coinciding with the onset of expansion in (a), maintained near $p\approx0.70$--0.74, and subsequently declined to 0.374. The neutral-drift envelope is provided for comparison. $\Delta\chi^{2}$ profiles, which identify the end and duration of the decline, are available in Supplementary Fig.~S14, indicating that the decline was recent and rapid, excluding neutral drift-out.}
   \label{fig:demog}
 \end{figure}
 
@@ -522,16 +520,16 @@ The manuscript, along with all figures and tables, their generating scripts, and
     \toprule
     Quantity & Value \\
     \midrule
-    Location (differentiated body) & chr2:60.54--79.50~Mb ($\sim$18.96~Mb) \\
+    Location                       & chr2:60.54--79.50~Mb ($\sim$18.96~Mb) \\
     Karyotypes (AA/AB/BB)          & 254 / 284 / 95 (95.3\% confident) \\
     Inverted (BB) frequency $p$    & 0.374 \\
-    Historical peak frequency      & $\sim$0.74 \\
+    Historical peak frequency      & 0.70--0.74 \\
     Karyotype $\Fst$(AA,BB)        & 0.365 (geographic $\Fst\approx0$) \\
     $\pi_I/\pi_S$ (I$=$BB)         & $1.356 \pm 0.048$ \\
     $\dxy/\pi_I$                   & $1.385 \pm 0.021$ \\
-    Coalescent age $t_\mathrm{inv}$ & $\sim$850~ky ($\propto 1/\mu$, $\mu=3\times10^{-9}$) \\
-    Decline                        & $0.74\to0.374$ over $\sim$50--100~ky, ending $\gtrsim$50--100~ka \\
-    Selection on decline           & $\Ne s\sim10^{2}$--$10^{3}$ ($s\approx1.5\times10^{-4}$) \\
+    Coalescent age $t_\mathrm{inv}$ & $\sim$800--850~ky ($\propto 1/\mu$, $\mu=3\times10^{-9}$) \\
+    Decline                        & $0.70$--$0.74\to0.374$ over 50--200~ky, ending $\gtrsim$100~ka \\
+    Selection on decline           & $\Ne s\sim10^{2}$--$10^{3}$ ($s\approx0.7$--$3\times10^{-4}$) \\
     Gene content                   & 89 gene models, 45 annotated; no GO enrichment ($p=0.51$) \\
     Fixed differences (AA vs BB)   & 3{,}513; 19 exonic, in 9 genes \\
     \bottomrule
