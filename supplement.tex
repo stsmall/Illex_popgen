@@ -71,7 +71,7 @@ the moments model was checked by forward simulation, which reproduced the observ
 \paragraph{Genotype-based statistics.}
 Statistics that need individual genotypes were computed with pg\_gpu \citep{pggpu} from the filtered VCF.
 Windowed $\pi$, $\dxy$ and Hudson $\Fst$ between arrangements used biallelic SNPs in 100-kb windows, with the AA
-($n=254$) and BB ($n=95$) homozygotes as the two populations and missing genotypes included pairwise. The between-division $\Fst$ matrix (Hudson), the linkage-disequilibrium triangles (genotype $r^2$ among common SNPs), and the principal-component analyses were computed the same way. The per-SNP geographic $\Fst$ scans (Supplementary Figs.~S2, S19) used plink2 \citep{chang2015plink2} on biallelic SNPs, of which a random 2\% per chromosome was retained (\texttt{--thin 0.02}, seed 20240915) without any minor-allele-frequency filter. Weir--Cockerham $\Fst$ was computed for each of the 45 division pairs at sites genotyped in at least 40 individuals in that pair, clipped to the range 0 to 1, and averaged over pairs, keeping sites informative in at least 20 of the 45 pairs. The simulated neutral null was filtered and summarised in the same way.
+($n=254$) and BB ($n=95$) homozygotes as the two populations and missing genotypes included pairwise. The between-division $\Fst$ matrix (Hudson), the linkage-disequilibrium triangles (genotype $r^2$ among common SNPs), and the principal-component analyses were computed the same way. The per-SNP geographic $\Fst$ scans (Supplementary Figs.~S2, S19) used plink2 \citep{chang2015plink2} on every biallelic SNP with a minor-allele frequency above 0.05 in the pooled 632 individuals from the ten divisions with more than one sample (division 3N, with a single individual, was excluded), giving 20{,}276{,}930 SNPs. Per-division allele counts were converted to Hudson $\Fst$ for each of the 45 division pairs \citep{bhatia2013}, at sites genotyped in at least 40 individuals in that pair and with at least two alleles in each division. The per-SNP value is the ratio of averages over informative pairs (the sum of the numerators over the sum of the denominators), without clipping, keeping sites informative in at least 20 of the 45 pairs. The null was built by shuffling division labels among the 632 individuals 20 times (division sizes kept) and recomputing $\Fst$ at the same SNPs in the same way. Thresholds are quantiles of the pooled null over the autosomes outside the chromosome-2 inversion ($3.996\times10^{8}$ values), and the expected count above each threshold is the number of SNPs times the null tail rate.
 
 \paragraph{The inversion.}
 Karyotypes were called from the first principal component of a local PCA across chromosome~2 with a
@@ -164,18 +164,18 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \begin{figure}[h]\centering
   \includegraphics[width=\linewidth]{figS2_fst_expanded.png}
   \caption{\textbf{No geographic differentiation beyond genetic drift and no local adaptation signal.} Per-SNP
-    Weir--Cockerham $\Fst$ across all 45 NAFO-division pairs (well-genotyped sites, $\geq$40 observed
-    haplotypes per pair, per-SNP mean over $\geq$20 informative pairs). \textbf{(a)}~The empirical distribution
-    (blue) lies entirely within a coalescent neutral null (grey), which is a single panmictic population
-    simulated under the fitted growth demography ($N_0=6.8\times10^{6}$, $N_\mathrm{ANC}=5.5\times10^{5}$,
-    $\mu=3\times10^{-9}$) at the empirical per-division sample sizes with the matched 44\% missingness, split
-    at random into ten ``divisions''. Empirical max $\Fst=0.143$ vs neutral max $0.322$. Only 57 SNPs exceed
-    the neutral 99.9th percentile ($0.105$) against $\approx$131 expected by chance, fewer than the false-positive rate. Drift, finite sampling and missingness fully explain the observed differentiation.
-    \textbf{(b)}~On chromosome~2, the inverted region (green) is geographically indistinguishable from the
-    collinear remainder (median $\Fst\approx0.005$), so the inversion is non-clinal and its $\Fst\approx0.37$ is between karyotypes, not geography. \textbf{(c)}~No SNP survives the neutral threshold, so a scan for
-    local adaptation that the diversity-based sweep tests could miss returns no candidates. (The autosomal
-    panel samples a fixed 400~kb window per chromosome. The distribution and threshold conclusion is robust, but a
-    genome-wide genic-outlier scan would require per-chromosome $\Fst$ on the full callsets.)}
+    Hudson $\Fst$ across all 45 NAFO-division pairs for every biallelic SNP with minor-allele frequency above 0.05
+    ($\geq$40 genotyped individuals per pair, ratio of averages over $\geq$20 informative pairs). \textbf{(a)}~On the autosomes
+    outside the inversion (19{,}984{,}027 SNPs), the empirical distribution (blue) matches the permutation null (grey),
+    built by shuffling division labels among individuals 20 times, which keeps genotype calling, missingness, the
+    allele-frequency spectrum and linkage. Empirical maximum $\Fst=0.371$ against a null maximum of $0.583$.
+    \textbf{(b)}~On chromosome~2, the inverted region (green) is no more geographically differentiated than the collinear
+    remainder, so the inversion is non-clinal and its $\Fst\approx0.37$ is between karyotypes, not geography.
+    Its upper tail is lighter than the null (66 SNPs above the null 99.9th percentile against 134 expected).
+    \textbf{(c)}~SNPs above the null 99.9th, 99.99th and 99.999th percentiles (22{,}562, 2{,}319 and 249) are within the
+    permutation range ($19{,}979\pm2{,}154$, $1{,}998\pm352$ and $200\pm54$, permutation $p=0.19$, $0.24$ and $0.29$),
+    and no SNP exceeds the null maximum, so a scan for local adaptation that the diversity-based sweep tests could miss
+    returns no candidates.}
   \label{sfig:fstsnp}
 \end{figure}
 
@@ -331,15 +331,14 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 
 \begin{figure}[h]\centering
   \includegraphics[width=\linewidth]{figS19_fst_genomewide.png}
-  \caption{\textbf{Genome-wide per-SNP $\Fst$ finds no differentiation outlier.} The window scan of
-    \cref{sfig:fstsnp} extended to the full per-chromosome callsets (551{,}344 autosomal SNPs, 2\%
-    thinning, covering 12{,}007 genes). \textbf{(a)}~The empirical per-SNP $\Fst$ distribution across the 45
-    division pairs lies entirely within, and is slightly narrower than, the coalescent neutral null.
-    \textbf{(b)}~Genome-wide, no SNP exceeds the neutral maximum ($0.322$). A single intergenic SNP on
-    chromosome~21 exceeds the lenient 99.9th percentile ($0.105$), against $\approx$556 expected by chance, i.e.\ $\sim$555$\times$ fewer outliers than the false-positive rate. Zero genic outliers, hence no
-    functional enrichment. Extreme panmixia is confirmed at genome scale, and no local-adaptation signal is
-    present that the diversity-based sweep scans could have missed. (chrZ, blue in (b), is confounded by
-    division sex ratios and shown for completeness.)}
+  \caption{\textbf{Genome-wide per-SNP $\Fst$ finds no differentiation outlier.} Per-SNP Hudson $\Fst$ of
+    \cref{sfig:fstsnp} along the genome (20{,}276{,}930 SNPs with minor-allele frequency above 0.05, every SNP shown).
+    \textbf{(a)}~No SNP exceeds the permutation-null maximum ($0.583$, dashed). The 2{,}327 SNPs above the null
+    99.99th percentile ($0.075$, dotted) on the autosomes match the number expected by chance and are spread across
+    all chromosomes. The chromosome-2 inversion is green. chrZ (blue) exceeds the null tail (187 SNPs above the
+    99.99th percentile against 16 expected) because division sex ratios differ and females are hemizygous, and it is
+    shown for completeness. \textbf{(b)}~Upper-tail quantiles of the observed against the permutation null. The
+    autosomes outside the inversion follow the identity line, and the inversion lies below it.}
   \label{sfig:fstgw}
 \end{figure}
 
