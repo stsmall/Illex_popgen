@@ -117,6 +117,48 @@ separately. The map pools all karyotypes and reads linkage disequilibrium within
 does not resolve the barrier between chromosome-2 arrangements, which is shown instead by long-range linkage
 disequilibrium (Supplementary Figs.~S4, S24).
 
+\paragraph{Z recombination and sex-biased mutation.}
+Linkage disequilibrium on the Z and on the autosomes was compared in the 330 ZZ males, the only individuals that
+carry two Z copies. Two-locus statistics ($D^2$ and $\pi_2$, unbiased for unphased genotypes
+\citep{ragsdale2020unphased}) were computed with pg\_gpu \citep{pggpu} on accessible biallelic SNPs in 2-Mb windows,
+86 on the autosomes (at 10 and 40~Mb of each autosome, excluding the chromosome-2 inversion and the
+anomalous-diversity blocks) and nine spaced every 4~Mb along the Z, with SNP pairs binned by distance from 0 to
+5~kb. The decay of $\sigma_D^2=D^2/\pi_2$ with distance was fitted to the expectation of \citet{ohta1971} plus a
+constant sample-size term, giving the population-scaled rate $\rho=4N_e r$ per base for each chromosome class. The
+ratio $\rho_Z/\rho_A$ was also estimated without a model, as the distance rescaling that best superimposes the two
+decay curves. Confidence intervals come from 200 bootstrap resamples of windows. Because the Z recombines only in
+males and spends two thirds of its time in them, $\rho_Z/\rho_A=(N_{e,Z}/N_{e,A})\,(4/3)\,r_m/(r_m+r_f)$, where
+$r_m$ and $r_f$ are the male and female per-generation rates and the male rate is taken to be the same on the Z
+and the autosomes. With $N_{e,Z}/N_{e,A}=3/4$, equal recombination in the two sexes predicts $\rho_Z/\rho_A=0.5$
+and achiasmate female meiosis predicts 1 \citep{coffing2026}.
+
+Sex-biased mutation was estimated from synonymous divergence between \illex{} and \textit{Sthenoteuthis
+oualaniensis} [needs reference], a member of the same family. The \illex{} annotation was transferred to the
+\textit{S.~oualaniensis} assembly with LiftOn \citep{chao2024lifton}, one transcript per gene was aligned codon by
+codon with MACSE 2.07 \citep{ranwez2018macse}, which allows frameshifts in the transferred sequence, and codons
+with gaps, frameshifts, ambiguous bases or stop codons were removed. Synonymous and nonsynonymous divergence
+($d_S$, $d_N$) were computed per gene by the method of \citet{nei1986} with a Jukes--Cantor correction. Genes in
+the chromosome-2 inversion or the anomalous-diversity blocks were excluded, leaving 8{,}649 autosomal and 109
+Z-linked genes with $d_S>0$. The male-to-female mutation ratio $\alpha=\mu_m/\mu_f$ was obtained from the ratio
+$R$ of mean Z to mean autosomal $d_S$ as $\alpha=(3R-2)/(4-3R)$ \citep{miyata1987}, as in \citet{coffing2025} and
+\citet{coffing2026}. To separate mutation from selective constraint and base composition, $R$ was recomputed with
+autosomal genes matched to the Z genes by deciles of $d_N/d_S$ and of third-position GC content (GC3), and with
+genes restricted to those above the autosomal median $d_N/d_S$. Confidence intervals come from 2{,}000 bootstrap
+resamples of genes within strata.
+
+Linkage disequilibrium decays at the same rate on the Z as on the autosomes, $\rho_Z/\rho_A=1.04$ (95\% CI
+0.88--1.28) from the decay fit and 1.08 (0.78--1.67) from curve rescaling, with $\rho_A=0.026$ per base
+(Supplementary Table~S10). Synonymous divergence is lower on the Z ($d_S=0.298$ vs 0.358, Mann--Whitney $p=0.009$),
+giving $R=0.83$ and $\alpha=0.33$ (95\% CI 0.10--0.70), a female mutation rate about three times the male rate.
+Z-linked genes are slightly more constrained (median $d_N/d_S$ 0.082 vs 0.113, $p=0.048$) and lower in GC3 (0.36
+vs 0.42, $p<10^{-16}$). Matching on $d_N/d_S$ leaves $\alpha$ unchanged (0.36), and matching on GC3 raises it to
+0.43, or 0.49 when combined with $d_N/d_S$, so the female bias holds under each control, with the upper
+confidence limit reaching 1 only under joint matching. Because $R$ estimates $\mu_Z/\mu_A$, the ratio of male Z
+to autosomal diversity ($\pi_Z/\pi_A=0.00563/0.0093=0.61$) implies $N_{e,Z}/N_{e,A}=0.68$--0.76 across these
+estimates, close to the 3/4 expected under an equal breeding sex ratio. Combined with the
+linkage-disequilibrium ratio, this gives $r_m/(r_m+r_f)\approx1.02$--1.14, consistent with achiasmate female
+meiosis \citep{coffing2026} and inconsistent with equal recombination in the two sexes, which predicts 0.5.
+
 \paragraph{Selective-sweep scan.}
 diploS/HIC used 1.1-Mb feature windows of eleven 100-kb sub-windows and twelve diploid statistics per
 sub-window. It was trained on hard and soft sweeps simulated in SLiM~5.2 and recapitated with msprime, and on
@@ -550,6 +592,35 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \input{sampling_table}
 
 \input{pi_blocks_table}
+
+
+\begin{table}[h]\centering
+  \caption{\textbf{Z recombination and sex-biased mutation.} Top, the ratio of population-scaled recombination
+    rates on the Z and the autosomes in the 330 ZZ males from the decay of $\sigma_D^2$ with distance (86
+    autosomal and nine Z windows of 2~Mb, 95\% CI from 200 bootstrap resamples of windows). Bottom, the ratio $R$
+    of Z to autosomal synonymous divergence between \illex{} and \textit{S.~oualaniensis} and the male-to-female
+    mutation ratio $\alpha=(3R-2)/(4-3R)$ \citep{miyata1987}, for all genes and with autosomal genes matched to
+    the Z genes by $d_N/d_S$, by third-position GC content (GC3) or by both, or restricted to genes above the
+    autosomal median $d_N/d_S$ (95\% CI from 2{,}000 bootstrap resamples of genes within strata).}
+  \label{stab:zsex}
+  \small
+  \begin{tabular}{lrrr}
+    \toprule
+    Linkage disequilibrium & & $\rho_Z/\rho_A$ & 95\% CI \\
+    \midrule
+    Ohta--Kimura decay fit & & 1.04 & 0.88--1.28 \\
+    Curve rescaling & & 1.08 & 0.78--1.67 \\
+    \midrule
+    Synonymous divergence & Z / autosomal genes & $R$ (95\% CI) & $\alpha$ (95\% CI) \\
+    \midrule
+    All genes & 109 / 8{,}649 & 0.83 (0.72--0.94) & 0.33 (0.10--0.70) \\
+    Matched on $d_N/d_S$ & 109 / 8{,}649 & 0.84 (0.73--0.96) & 0.36 (0.11--0.79) \\
+    Above median $d_N/d_S$ & 44 / 4{,}324 & 0.79 (0.66--0.93) & 0.24 ($-$0.01--0.65) \\
+    Matched on GC3 & 109 / 8{,}649 & 0.87 (0.76--0.98) & 0.43 (0.17--0.89) \\
+    Matched on $d_N/d_S$ and GC3 & 109 / 6{,}042 & 0.89 (0.78--1.01) & 0.49 (0.20--1.06) \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 
 \end{document}
