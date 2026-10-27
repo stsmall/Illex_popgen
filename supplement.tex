@@ -82,7 +82,7 @@ in the AnchorWave alignment to \coin{}. Arrangement polarity was inferred only f
 the reference is itself inverted. The age and frequency trajectory were fitted with msinv as described in the next paragraphs. Unannotated, non-repeat sequence in the inversion was searched with DIAMOND \texttt{blastx} against seven cephalopod proteomes, with transposable elements from Earl~Grey \citep{baril2024earlgrey} and transcripts from StringTie2 \citep{kovaka2019stringtie} as supporting evidence. This recovered 14 likely protein-coding loci that the annotation lacks. They are provided as \texttt{protein\_match} features in version 3 of the annotation and are not counted among the 89 gene models of the inversion. Fixed differences were sites with an allele-frequency difference of at least 0.9
 between AA and BB homozygotes. Gene-ontology enrichment of the inversion genes used Fisher's exact test against
 the annotated-gene background in all three ontologies, compared with 500 random gene sets of equal size, and gene
-density was compared with all autosomal windows of the same length (0.5-Mb steps). The attainment bound used the
+density was compared with all autosomal windows of the same length (0.5-Mb steps). The two drift bounds are not separate estimates. They are analytic diffusion calculations that take the peak frequency (0.70--0.74) and the duration of the fall from the msinv grid-search fit and $\Ne$ from the fitted demography, and ask whether drift alone could produce that trajectory. The attainment bound used the
 expected time for a new neutral mutation to reach frequency $x$, conditional on reaching it ($1.936\,\Ne$ at $x=0.70$ and $2.107\,\Ne$ at $x=0.74$), and the decline bound used the drift standard deviation $\sqrt{p(1-p)\,t/(2\Ne)}$ with $\Ne$ from the
 fitted demography over the decline. The load test compared the zero-fold fraction among the most differentiated
 coding sites (genotype-likelihood $\Fst$, 40 individuals per karyotype) with all coding sites in the inversion by
@@ -133,7 +133,7 @@ and the autosomes. With $N_{e,Z}/N_{e,A}=3/4$, equal recombination in the two se
 and achiasmate female meiosis predicts 1 \citep{coffing2026}.
 
 Sex-biased mutation was estimated from synonymous divergence between \illex{} and \textit{Sthenoteuthis
-oualaniensis} [needs reference], a member of the same family. The \illex{} annotation was transferred to the
+oualaniensis} \citep{li2022flyingsquid}, a member of the same family whose chromosome~46 is syntenic with the \illex{} Z \citep{small2026}. The \illex{} annotation was transferred to the
 \textit{S.~oualaniensis} assembly with LiftOn \citep{chao2024lifton}, one transcript per gene was aligned codon by
 codon with MACSE 2.07 \citep{ranwez2018macse}, which allows frameshifts in the transferred sequence, and codons
 with gaps, frameshifts, ambiguous bases or stop codons were removed. Synonymous and nonsynonymous divergence
@@ -141,7 +141,7 @@ with gaps, frameshifts, ambiguous bases or stop codons were removed. Synonymous 
 the chromosome-2 inversion or the anomalous-diversity blocks were excluded, leaving 8{,}649 autosomal and 109
 Z-linked genes with $d_S>0$. The male-to-female mutation ratio $\alpha=\mu_m/\mu_f$ was obtained from the ratio
 $R$ of mean Z to mean autosomal $d_S$ as $\alpha=(3R-2)/(4-3R)$ \citep{miyata1987}, as in \citet{coffing2025} and
-\citet{coffing2026}. To separate mutation from selective constraint and base composition, $R$ was recomputed with
+\citet{coffing2026}. Z-linked genes carry more gene-body CpG methylation than autosomal genes in \illex{}, most strongly in females \citep{small2026}. If this extends to the germline, methylation-associated mutation raises the Z rate and biases $\alpha$ upward, so the female bias is if anything underestimated. To separate mutation from selective constraint and base composition, $R$ was recomputed with
 autosomal genes matched to the Z genes by deciles of $d_N/d_S$ and of third-position GC content (GC3), and with
 genes restricted to those above the autosomal median $d_N/d_S$. Confidence intervals come from 2{,}000 bootstrap
 resamples of genes within strata.
