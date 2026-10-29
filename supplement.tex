@@ -321,12 +321,21 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
   \label{sfig:markov}
 \end{figure}
 
-\begin{figure}[h]\centering
-  \includegraphics[width=.85\linewidth]{figS14_inversion_profiles.png}
-  \caption{\textbf{Profile-likelihood bounds on the chromosome-2 inversion's decline}
-    (main-text Fig.~4). $\Delta\chi^2$ from the best fit while profiling (a)~$t_\mathrm{decline}$, when
-    the fall ended, and (b)~$t_\mathrm{fall}$, how long it took. The shaded band is $\Delta\chi^2<2$
-    (not excluded). The fall ended at least $\sim$100~ka ago (ends from 100 to 250~ka, the oldest end in the grid, are equally supported) and took $\sim$50--200~ky.}
+\begin{figure}[p]\centering
+  \includegraphics[width=\linewidth]{figS14_inversion_grid.png}
+  \caption{\textbf{Grid-search fit of the chromosome-2 inversion trajectory} (main-text Fig.~4).
+    (a)~Each grid cell is a deterministic frequency trajectory of the inverted arrangement, set by the barrier
+    age $t_\mathrm{inv}$, the plateau frequency $p_\mathrm{hist}$, the end of the fall $t_\mathrm{decline}$ and its
+    duration $t_\mathrm{fall}$. The best fit is shown in blue, and each grey curve changes one parameter from it,
+    labelled with the $\Delta\chi^2$ of that cell. (b)~Each cell was simulated 48 times with msinv and scored by a
+    weighted $\chi^2$ of $\pi_I/\pi_S$, $\dxy/\pi_I$ and the singleton ratio against their empirical values.
+    (c, d)~$\Delta\chi^2$ over barrier age and plateau, and over the duration and end of the fall, with the other
+    two parameters re-optimised in each cell. (e)~Profile of each parameter with the other three re-optimised. The
+    shaded band lies below the 95\% cutoff calibrated by a parametric bootstrap (dashed line), and the dotted line
+    marks $\Delta\chi^2=2$. Filled points form the calibrated 95\% set, a barrier age of 800--850~ky, a plateau of
+    0.70--0.74, and a fall of 50--200~ky that ended 100--250~ka. (f)~Contribution of each statistic to $\chi^2$ for
+    the best fit and for the best cell at each excluded neighbouring value. Divergence between arrangements bounds
+    the age, and the singleton ratio excludes a recent end to the fall.}
   \label{sfig:profiles}
 \end{figure}
 

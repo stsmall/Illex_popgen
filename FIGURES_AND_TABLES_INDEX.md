@@ -33,7 +33,7 @@ editable table exports (CSV + `illex_tables.xlsx`) in `tables_export/`.
 | S11 | `figS11_breakpoints.png` | (upstream) | Inversion breakpoints |
 | S12 | `figS12_recomb_boxplots.png` | (upstream) | Per-chromosome recombination-rate distribution |
 | S13 | `figS13_markov.png` | `fig_markov.py` | Recombination-aware Markov decoder for Tier-1 calls |
-| S14 | `figS14_inversion_profiles.png` | `plot_inversion_profiles.py` | Profile-likelihood bounds on the inversion decline |
+| S14 | `figS14_inversion_grid.png` | `plot_inversion_grid.py` (run from an msinv checkout at 35412bf) | Grid-search fit of the inversion trajectory, profiles with bootstrap-calibrated cutoffs |
 | S15 | `figS15_gsea.png` | `plot_gsea.py` | GO enrichment of the sweep genes (Tier-1 vs BGS-robust) |
 | S16 | `figS16_go_network.png` | `plot_go_network.py` | GO enrichment map (BGS-robust sweep genes) |
 | S17 | `figS17_recomb_selection.png` | `plot_recomb_selection.py` | Recombination, gene proximity and selection efficacy |
