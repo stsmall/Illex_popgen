@@ -399,7 +399,7 @@ Karyotypes were assigned by local PCA \citep{li2019lostruct} and a Gaussian-mixt
 component. The arrangements were polarised from an AnchorWave \citep{song2022anchorwave} whole-genome alignment
 to \coin{}, using only sites at which the outgroup does not simply match the reference, with est-sfs
 \citep{keightley2018estsfs} as a check. The age and frequency trajectory were fitted with msinv \citep{msinv}, a sequentially Markov coalescent simulator that enforces the recombination barrier between arrangements
-(Supplementary Methods). Gene content, fixed differences between arrangements, gene-ontology enrichment against a
+(Supplementary Methods). The fit was a grid search, not approximate Bayesian computation. Each cell of a grid over the barrier age, the peak frequency, and the timing and duration of the fall was simulated 48 times and scored by a $\chi^{2}$ distance between the simulated means of $\pi_I/\pi_S$, $\dxy/\pi_I$ and the singleton ratio and their empirical values, and each parameter was bounded by a $\Delta\chi^{2}$ profile rather than a posterior distribution. Gene content, fixed differences between arrangements, gene-ontology enrichment against a
 permutation null, the drift bounds, and the mutational-load test are described in the Supplementary Methods.
 
 \paragraph{Recombination.}
