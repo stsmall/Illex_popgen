@@ -6,11 +6,11 @@
     Citations are pointers to confirm at final formatting.}
   \label{tab:software}
   \small
-  \begin{tabular}{lll}
+  \begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}Xl@{}}
     \toprule
     Tool (version) & Used for & Reference \\
     \midrule
-    msinv 0.3.5              & chr2 inversion age/decline (inversion)   & \citep{msinv}; \citep{kelleher2016} \\
+    msinv 0.3.5              & chr2 inversion age/decline (inversion)   & \citep{msinv,kelleher2016} \\
     grenepipe                & read processing and variant calling           & \citep{czech2022grenepipe} \\
     fastp                    & read trimming                                 & \citep{chen2018fastp} \\
     BWA-MEM2                 & read mapping                                  & \citep{vasimuddin2019bwamem2} \\
@@ -48,5 +48,5 @@
     StringTie 3.0.0          & transcript assembly                           & \citep{kovaka2019stringtie} \\
     SQANTI3                  & Iso-Seq QC                                    & \citep{pardo2024sqanti3} \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
