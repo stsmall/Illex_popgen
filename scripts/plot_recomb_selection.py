@@ -5,7 +5,9 @@ diversity-recombination relationship (unlike Drosophila/humans; ReLERNN also inf
 from diversity, so the two are not independent).
 
 Data (per ~50 kb window): steps/14_sweep_seqmodel/results/bgs_diagnostic_windows.tsv
-      (pi, tajD, cds_frac, recomb [M/bp]) + .../win_cds_dist.tsv (dist to nearest CDS, bp).
+      (pi, tajD, cds_frac) + .../win_cds_dist.tsv (dist to nearest CDS, bp). Recombination per window is the
+      mean of the male ReLERNN map (bootstrap-corrected, 200 replicates; run_male_uf_achknet BSCORRECTED200) over
+      the map windows whose midpoints fall in it. Windows without map windows (masked) are dropped.
 """
 import os
 os.environ.setdefault("MPLCONFIGDIR", "/dev/shm/mplcache")
@@ -21,12 +23,23 @@ OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/supp_figur
 
 d = pd.read_csv(f"{R}/bgs_diagnostic_windows.tsv", sep="\t")
 d["chrom"] = d["chrom"].astype(str)
-d["cMMb"] = d["recomb"].astype(float) * 1e8
+RMAP = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/11_relernn/run_male_uf_achknet/proj/male_fh.kept.PREDICT.BSCORRECTED200.txt"
+rm = pd.read_csv(RMAP, sep="\t")
+rm["chrom"] = rm["chrom"].astype(str).str.replace(r"^b'|'$", "", regex=True)
+rm["mid"] = (rm["start"] + rm["end"]) // 2
+d["cMMb"] = np.nan
+for c, g in rm.groupby("chrom"):
+    g = g.sort_values("mid"); cs = np.r_[0, np.cumsum(g["recombRate"].to_numpy() * 1e8)]
+    w = d.index[d["chrom"] == c]
+    lo = np.searchsorted(g["mid"].to_numpy(), d.loc[w, "start"].to_numpy())
+    hi = np.searchsorted(g["mid"].to_numpy(), d.loc[w, "stop"].to_numpy())
+    n = hi - lo
+    d.loc[w, "cMMb"] = np.where(n > 0, (cs[hi] - cs[lo]) / np.maximum(n, 1), np.nan)
 dist = pd.read_csv(f"{R}/win_cds_dist.tsv", sep="\t", header=None, names=["row", "dist_cds"])
 dist = dist.groupby("row")["dist_cds"].min()
 d = d.reset_index(drop=True)
 d["dist_cds"] = dist.reindex(np.arange(1, len(d) + 1)).to_numpy()
-d = d[np.isfinite(d["cMMb"]) & np.isfinite(d["pi"])].copy()
+d = d[np.isfinite(d["pi"])].copy()
 dd = d[np.isfinite(d["dist_cds"])]
 ldist = np.log10(dd["dist_cds"].to_numpy() + 1)
 r = d["cMMb"].to_numpy()
@@ -48,12 +61,13 @@ fig, axs = plt.subplots(1, 3, figsize=(15.0, 4.6), gridspec_kw={"wspace": 0.36})
 
 # (a) recomb vs distance from exon -- the CONTROL. Drawn on the full recombination-rate
 #     axis so the near-flatness is visible: the whole gradient is
-#     0.206 -> 0.217 cM/Mb (~6%), Spearman rho ~ +0.05, and it is unchanged when pi is held
-#     fixed (partial rho +0.06) -- i.e. NOT a diversity/Ne leak; recombination is agnostic
+#     0.233 -> 0.236 cM/Mb (~2%), Spearman rho ~ +0.02, and it is unchanged when pi is held
+#     fixed (partial rho -0.01) -- i.e. NOT a diversity/Ne leak; recombination is agnostic
 #     to gene content, so it cannot be what organises the diversity gradients in (b)/(c).
-mids, m, se = binmean(ldist, dd["cMMb"].to_numpy())
-rho_rd = stats.spearmanr(ldist, dd["cMMb"], nan_policy="omit").correlation
-near = dd.loc[dd["dist_cds"] < 1e3, "cMMb"].mean(); far = dd.loc[dd["dist_cds"] > 1e5, "cMMb"].mean()
+dr = dd[np.isfinite(dd["cMMb"])]; lr = np.log10(dr["dist_cds"].to_numpy() + 1)
+mids, m, se = binmean(lr, dr["cMMb"].to_numpy())
+rho_rd = stats.spearmanr(lr, dr["cMMb"]).correlation
+near = dr.loc[dr["dist_cds"] < 1e3, "cMMb"].mean(); far = dr.loc[dr["dist_cds"] > 1e5, "cMMb"].mean()
 axs[0].fill_between(mids, m - se, m + se, color=GREEN, alpha=0.2, lw=0)
 axs[0].plot(mids, m, color=GREEN, lw=2, marker="o", ms=3)
 axs[0].set_ylim(0, max(0.32, r[np.isfinite(r)].mean() * 1.5))
@@ -62,7 +76,7 @@ axs[0].set_ylabel("recombination rate (cM/Mb)")
 axs[0].set_title(f"a   recombination flat vs gene proximity ($\\rho={rho_rd:+.2f}$)",
                     loc="left", fontweight="bold", fontsize=10)
 axs[0].text(0.04, 0.96,
-               f"{near:.3f} → {far:.3f} cM/Mb near→far ({100*(far/near-1):.0f}% range);\n"
+               f"{near:.3f} → {far:.3f} cM/Mb near→far ({100*(far/near-1):.0f}% difference);\n"
                "unchanged when $\\pi$ is held fixed — recombination\nis agnostic to gene content (the control)",
                transform=axs[0].transAxes, fontsize=7.6, color=GREY, va="top", ha="left")
 despine(axs[0])
@@ -96,5 +110,10 @@ despine(axs[2])
 
 fig.savefig(OUT, dpi=220, bbox_inches="tight")
 print("wrote", OUT)
+rk = lambda v: pd.Series(v).rank().to_numpy()
+X = np.c_[np.ones(len(dr)), rk(dr["pi"])]
+res = lambda v: v - X @ np.linalg.lstsq(X, v, rcond=None)[0]
+prho = np.corrcoef(res(rk(lr)), res(rk(dr["cMMb"])))[0, 1]
+print(f"partial rho recomb~dist | pi = {prho:+.3f}")
 print(f"rho: recomb~dist={rho_rd:+.3f} (near {near:.4f} far {far:.4f})  pi~dist={rho_pd:+.3f}  "
       f"pi~cds={rho_cds:+.3f}  n={len(d)}")

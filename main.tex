@@ -209,14 +209,14 @@ whole genome.
 
 \subsection{Recombination, background selection, and protein adaptation}
 Three further features of the genome were resolved to accurately identify selective sweeps. Recombination 
-was estimated with ReLERNN \citep{adrion2020relernn}, a deep-learning method that infers the rate from linkage disequilibrium. The estimated rate is $\sim$0.20~cM/Mb on the 
-autosomes (median 0.200, Supplementary Fig.~S12). The map is flat with respect to gene content, 
-and the rate varies by only $\sim$6\% between windows adjacent to exons and windows $>$100~kb from any exon, unchanged 
-when $\pi$ is held fixed (Supplementary Fig.~S17a). For example, on chromosome~1 the rolling median spans just 0.17--0.23~cM/Mb, 
-the pericentromeric flanks where $\pi$ halves show no more than a 5\% dip, and the centromere itself 
-(a 2.5-Mb block that is 80\% repeat and almost entirely masked) carries no windows (Supplementary Fig.~S22). 
-This pattern is similar genome-wide. Across all 45 scanned autosomes the chromosome-scale rolling median 
-varies by only 10--41\% of each chromosome's median, and no chromosome shows a peak more than 25\% above it. 
+was estimated with ReLERNN \citep{adrion2020relernn}, a deep-learning method that infers the rate from linkage disequilibrium. The estimated rate is $\sim$0.24~cM/Mb on the 
+autosomes (median 0.241, Supplementary Fig.~S12). The map is flat with respect to gene content, 
+and the rate differs by only $\sim$2\% between windows adjacent to exons and windows $>$100~kb from any exon, unchanged 
+when $\pi$ is held fixed (Supplementary Fig.~S17a). For example, on chromosome~1 the 2-Mb rolling median spans just 0.22--0.27~cM/Mb, 
+the pericentromeric flanks where $\pi$ halves show no more than a 7\% dip, and the centromere itself 
+(a 2.5-Mb block that is 80\% repeat) carries no windows over its central 1.1~Mb (Supplementary Fig.~S22). 
+This pattern is similar genome-wide. Across the 44 autosomes in the map the chromosome-scale rolling median 
+varies by 13--67\% of each chromosome's median, and no chromosome shows a peak more than 17\% above it. 
 Background selection is moderate and gene-density-driven. Nucleotide diversity falls with local coding density
 ($r=-0.31$, a 20--30\% reduction in gene-dense windows) and rises 43\% between exon-adjacent and exon-distant
 windows (Supplementary Fig.~S17) \citep{charlesworth1993,mcvicker2009,charlesworth2021}. A model-based 
@@ -406,8 +406,9 @@ permutation null, the drift bounds, and the mutational-load test are described i
 \paragraph{Recombination.}
 A recombination map was estimated with ReLERNN \citep{adrion2020relernn}, which trains a recurrent neural network
 on coalescent simulations matched to the fitted demography and the accessibility mask and then predicts the rate
-from linkage disequilibrium in windows of about 19~kb. The map was built from the 329 confidently sexed males
-that had calls on every chromosome, one of 330 being removed, and a bootstrap correction was applied.
+from linkage disequilibrium in windows of 3--6~kb. The map was built from the 329 confidently sexed males
+that had calls on every chromosome, one of 330 being removed, and a bootstrap correction with 200 replicates was
+applied. The Z was estimated with a separate network.
 
 \paragraph{Selective sweeps.}
 We classified 100-kb windows with diploS/HIC \citep{kern2018diploshic}, trained on SLiM forward simulations
@@ -540,7 +541,7 @@ The manuscript, along with all figures and tables, their generating scripts, and
     Genome-wide $\pi$            & 0.0093 \\
     Genome-wide Tajima's $D$     & $\approx-2$ (nearly all windows) \\
     Mutation rate $\mu$          & $3\times10^{-9}$ / bp / generation \\
-    Recombination (autosomal)    & $\sim$0.21--0.24~cM/Mb (sex-averaged) \\
+    Recombination (autosomal)    & $\sim$0.24~cM/Mb (sex-averaged) \\
     \bottomrule
   \end{tabular}
 \end{table}

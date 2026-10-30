@@ -31,7 +31,7 @@ editable table exports (CSV + `illex_tables.xlsx`) in `tables_export/`.
 | S9 | `figS9_diversity_boxplots.png` | `plot_diversity.py` | Per-chromosome diversity & Tajima's D |
 | S10 | `figS10_mkado.png` | `plot_supp_mkado.py` | Per-gene McDonald–Kreitman neutrality index (volcano) |
 | S11 | `figS11_breakpoints.png` | (upstream) | Inversion breakpoints |
-| S12 | `figS12_recomb_boxplots.png` | scripts/plot_recomb_boxplots.py | Per-chromosome male recombination rate, raw and bootstrap-corrected, with r_Z/r_A |
+| S12 | `figS12_recomb_boxplots.png` | scripts/plot_recomb_boxplots.py | Per-chromosome male recombination rate (200-rep bootstrap-corrected), with r_Z/r_A |
 | S13 | `figS13_markov.png` | `fig_markov.py` | Recombination-aware Markov decoder for Tier-1 calls |
 | S14 | `figS14_inversion_grid.png` | `plot_inversion_grid.py` (run from an msinv checkout at 35412bf) | Grid-search fit of the inversion trajectory, profiles with bootstrap-calibrated cutoffs |
 | S15 | `figS15_gsea.png` | `plot_gsea.py` | GO enrichment of the sweep genes (Tier-1 vs BGS-robust) |
@@ -41,7 +41,7 @@ editable table exports (CSV + `illex_tables.xlsx`) in `tables_export/`.
 | S19 | `figS19_fst_genomewide.png` | (upstream) | Genome-wide per-SNP FST finds no outlier |
 | S20 | `figS20_chr2_karyotype_fst.png` | `plot_chr2_karyotype_fst.py` | Between-karyotype (AA vs BB) FST along chr2 |
 | S21 | `figS21_inversion_go_qq.png` | `plot_inversion_go_qq.py` (+ `inversion_go_permutation_null.py`) | Inversion-gene GO enrichment is null (permutation QQ) |
-| S22 | `figS22_chr1_recomb_landscape.png` | `plot_chr1_recomb_landscape.py` | chr1 ReLERNN landscape + CIs; masked centromere; compressed dynamic range |
+| S22 | `figS22_chr1_recomb_landscape.png` | `plot_chr1_recomb_landscape.py` | chr1 male ReLERNN landscape (200-rep corrected) + CIs; masked block and centromere gap; compressed dynamic range |
 
 ## Tables
 

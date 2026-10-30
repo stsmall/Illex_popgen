@@ -108,14 +108,17 @@ The trajectory was fitted by grid search. Coarse exploratory grids spanned $t_\m
 The fits used a 29.7-kb simulated inversion, and the fitted values were applied to the 19-Mb inversion. At the best-fitting trajectory, the three fitted statistics are nearly constant over a 25-fold range of simulated lengths (3.0 to 74~kb of inversion, 120 replicates per length). Extrapolating the 95\% confidence limits of their slopes from the fitted length to 19~Mb bounds the change at 4.6\% for $\pi_I/\pi_S$, 1.7\% for $\dxy/\pi_I$ and 2.8\% for the singleton ratio. With an inversion, under constant population size and without gene flux, the mean pairwise coalescence times within each arrangement, between arrangements, and in the collinear flanks match their exact expectations for inverted-arrangement frequencies of 0.2 to 0.74 and barrier ages of $0.25N$ to $4N$ generations (24 comparisons, 200 replicates each, all within 2.7 standard errors). The current version of msinv (commit \texttt{e53f0c6}) also agrees with forward simulations in SLiM \citep{haller2019slim} that share each replicate's realised frequency trajectory, in four scenarios covering a short and a long barrier, low recombination, and an arrangement held near 0.74 by overdominance (200 replicates each). Across these scenarios the mean coalescence times agree within 4\%, the medians of both fitted ratios agree within 4\%, and $|d|<0.2$ for every statistic. At the best-fitting trajectory the fitted statistics from this version and from v0.3.5 differ by at most 0.3\%. The fits use only the means of the fitted statistics, which at the fitted length vary by about 2\% among replicates. Statistics that depend on the correlation of genealogies along the sequence are not used.
 
 \paragraph{Recombination map.}
-ReLERNN \citep{adrion2020relernn} was run in unphased mode. Training data were 12{,}000 coalescent simulations
-(with 1{,}000 each for validation and testing) under the Stairway~Plot~2 demography with $\mu=3\times10^{-9}$,
-masked by the inaccessible regions with a window-level masking threshold of 0.9. The network was trained for
-50 epochs and predictions were corrected with 20 bootstrap replicates in each of 20 rate slices. Individuals with
-no genotype calls on a chromosome cannot enter the unphased model, so one of the 330 confidently sexed males was
-removed and 329 were used. Chromosomes~2 and~42 were predicted with the same network, and the Z was estimated
-separately. The map pools all karyotypes and reads linkage disequilibrium within windows of about 19~kb, so it
-does not resolve the barrier between chromosome-2 arrangements, which is shown instead by long-range linkage
+ReLERNN \citep{adrion2020relernn} was run in unphased mode on biallelic SNPs with at most 50\% missing genotypes.
+Individuals with no genotype calls on a chromosome cannot enter the unphased model, so one of the 330 confidently
+sexed males was removed and 329 were used. The autosomal network was trained on chromosomes 1, 13 and 45 with
+12{,}000 coalescent simulations (with 1{,}000 each for validation and testing) under the Stairway~Plot~2
+demography with $\mu=3\times10^{-9}$, an upper bound of 4 on the ratio of $\rho$ to $\theta$, and 6-kb windows,
+masked by the inaccessible regions and the 22 $\pi$-elevated blocks with a window-level masking threshold of 0.9.
+It was trained for 50 epochs and applied to every autosome except chromosome~2, in windows of 3--6~kb. The Z
+network was trained in the same way in 30-kb windows, with the Z accessibility mask and the effective sizes of the
+demography multiplied by 0.60, the Z-to-autosome diversity ratio. Predictions were corrected with 200
+parametric-bootstrap replicates in each of 20 rate slices. The map pools all karyotypes and reads linkage
+disequilibrium within windows of a few kilobases, so it does not resolve the barrier between chromosome-2 arrangements, which is shown instead by long-range linkage
 disequilibrium (Supplementary Figs.~S4, S24).
 
 \paragraph{Z recombination and sex-biased mutation.}
@@ -237,7 +240,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 
 \begin{figure}[h]\centering
   \includegraphics[width=.6\linewidth]{figS4_ld_triangle.png}
-  \caption{\textbf{Linkage disequilibrium across the chromosome-2 inversion.} Mean genotype $r^2$ between SNPs, binned along chr2:55--85~Mb, pooling all 633 individuals. Dashed lines and shading mark the breakpoints (60.54 and 79.50~Mb). A block of elevated linkage disequilibrium spans exactly the inversion and stops at both breakpoints, while the flanking collinear sequence shows only background values. Mean $r^2$ between SNPs more than 1~Mb apart is 3.5 times higher inside the inversion than in its flanks (0.0056 vs 0.0016, Supplementary Fig.~S24). This long-range association arises because the few near-fixed differences between arrangements are all correlated with karyotype, and it is the direct signature of suppressed recombination between arrangements. Recombination within arrangements is not suppressed at the scale of the $\sim$19-kb windows used by the recombination map, which is why the inversion is shown here rather than in Supplementary Fig.~S12.}
+  \caption{\textbf{Linkage disequilibrium across the chromosome-2 inversion.} Mean genotype $r^2$ between SNPs, binned along chr2:55--85~Mb, pooling all 633 individuals. Dashed lines and shading mark the breakpoints (60.54 and 79.50~Mb). A block of elevated linkage disequilibrium spans exactly the inversion and stops at both breakpoints, while the flanking collinear sequence shows only background values. Mean $r^2$ between SNPs more than 1~Mb apart is 3.5 times higher inside the inversion than in its flanks (0.0056 vs 0.0016, Supplementary Fig.~S24). This long-range association arises because the few near-fixed differences between arrangements are all correlated with karyotype, and it is the direct signature of suppressed recombination between arrangements. Recombination within arrangements is not suppressed at the scale of the 3--6-kb windows used by the recombination map, which is why the inversion is shown here rather than in Supplementary Fig.~S12.}
   \label{sfig:ld}
 \end{figure}
 
@@ -305,7 +308,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 
 \begin{figure}[h]\centering
   \includegraphics[width=.9\linewidth]{figS12_recomb_boxplots.png}
-  \caption{\textbf{Per-chromosome male recombination-rate distribution} (ReLERNN). \textbf{(a)}~Raw predictions. \textbf{(b)}~Predictions corrected with 200 parametric-bootstrap replicates in each of 20 rate slices. The autosomes were predicted in 6-kb windows by one network, trained on chromosomes 1, 13 and 45 and applied to every autosome except chromosome~2. The Z was predicted in 30-kb windows by a separate network trained with the Z effective size set to 0.60 of the autosomal value (the Z-to-autosome diversity ratio), which places its rate on the autosomal scale. Dashed lines mark the median of all autosomal windows. Per-chromosome autosomal medians span 0.357--0.393~cM/Mb raw and 0.229--0.259~cM/Mb corrected. The Z median is 0.376 vs 0.369~cM/Mb raw and 0.290 vs 0.241~cM/Mb corrected, so $r_Z/r_A$ is 1.02 raw and 1.20 corrected. Because the Z recombines only in ZZ males, equal recombination in the two sexes predicts $r_Z/r_A=2/3$ and achiasmate female meiosis predicts 4/3. Chromosome~2 is not shown, because a window-scale map estimated from all karyotypes together cannot resolve a barrier that acts only between arrangements. That barrier is shown directly by the linkage-disequilibrium block spanning the inversion (Supplementary Fig.~S4).}
+  \caption{\textbf{Per-chromosome male recombination-rate distribution} (ReLERNN). Rates are corrected with 200 parametric-bootstrap replicates in each of 20 rate slices. The autosomes were predicted in 3--6-kb windows by one network, trained on chromosomes 1, 13 and 45 and applied to every autosome except chromosome~2. The Z was predicted in 30-kb windows by a separate network trained with the Z effective size set to 0.60 of the autosomal value (the Z-to-autosome diversity ratio), which places its rate on the autosomal scale. The dashed line marks the median of all autosomal windows (0.241~cM/Mb), and per-chromosome medians span 0.229--0.259~cM/Mb. The Z median is 0.290~cM/Mb, so $r_Z/r_A=1.20$. Because the Z recombines only in ZZ males, equal recombination in the two sexes predicts $r_Z/r_A=0.67$ and achiasmate female meiosis predicts 1.33. Chromosome~2 is not shown, because a window-scale map estimated from all karyotypes together cannot resolve a barrier that acts only between arrangements. That barrier is shown directly by the linkage-disequilibrium block spanning the inversion (Supplementary Fig.~S4).}
   \label{sfig:recombbox}
 \end{figure}
 
@@ -367,13 +370,13 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
   \includegraphics[width=\linewidth]{figS17_recomb_selection.png}
   \caption{\textbf{Recombination, gene proximity and the efficacy of selection.} Per-window statistics
     ($\sim$50~kb windows, autosomes). \textbf{(a)}~As a control, recombination rate is essentially flat across
-    distance from the nearest exon (0.206$\to$0.217~cM/Mb near$\to$far, a $\sim$6\% range, Spearman
-    $\rho=+0.05$, unchanged when $\pi$ is held fixed, partial $\rho=+0.06$), so recombination is agnostic to gene content, as it should be. \textbf{(b)}~Nucleotide diversity $\pi$, by contrast, rises steeply with
+    distance from the nearest exon (0.233$\to$0.236~cM/Mb near$\to$far, a $\sim$2\% difference, Spearman
+    $\rho=+0.02$, unchanged when $\pi$ is held fixed, partial $\rho=-0.01$), so recombination is agnostic to gene content, as it should be. \textbf{(b)}~Nucleotide diversity $\pi$, by contrast, rises steeply with
     distance from coding sequence ($\rho=+0.29$, +43\% near$\to$far), the footprint of linked selection.
     \textbf{(c)}~$\pi$ falls with local coding density ($\rho=-0.27$), as background selection reduces diversity where genes are dense, i.e.\ a locally reduced effective size, and it is
     gene-density-driven. Linked selection in \illex{} is thus structured by gene density and gene
     proximity rather than by the recombination-rate axis, which is nearly uniform genome-wide
-    (0.2--0.24~cM/Mb, Supplementary Fig.~S22).}
+    (per-chromosome medians 0.23--0.26~cM/Mb, Supplementary Figs.~S12, S22).}
   \label{sfig:recombsel}
 \end{figure}
 
@@ -426,7 +429,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 
 \begin{figure}[h]\centering
   \includegraphics[width=\linewidth]{figS22_chr1_recomb_landscape.png}
-  \caption{\textbf{The chromosome-1 recombination map, and what the LD-based map does not resolve.} ReLERNN estimate in 15~kb windows with 95\% bootstrap confidence intervals and a 0.6-Mb rolling median (median 0.209~cM/Mb). The shaded 2.5-Mb block at 45.0--47.5~Mb is 80\% repeat sequence (vs 52\% chromosome-wide), is almost entirely masked, and carries no ReLERNN windows, and it is the centromere. In the accessible pericentromeric flanks the estimate dips only $\sim$5\%, although nucleotide diversity halves there (0.0038 vs 0.0084), and across the whole 103~Mb the rolling median spans just 0.17--0.23~cM/Mb ($-20\%$ to $+7\%$ of the median). The map's chromosome-scale dynamic range is therefore compressed, so centromeric suppression cannot be resolved and the nearly uniform landscape is in part an estimator ceiling.}
+  \caption{\textbf{The chromosome-1 recombination map, and what the LD-based map does not resolve.} Male ReLERNN estimate in 3--6-kb windows, corrected with 200 bootstrap replicates, with 95\% bootstrap intervals and a 0.6-Mb rolling median (median 0.244~cM/Mb). Two stretches carry no windows. The $\pi$-elevated block at 24.0--31.3~Mb was masked. The 1.1-Mb gap at 45.25--46.39~Mb lies inside the 2.5-Mb block at 45.0--47.5~Mb, which is 80\% repeat sequence (vs 52\% chromosome-wide) and is the centromere. In the accessible pericentromeric flanks the estimate dips only $\sim$7\%, although nucleotide diversity halves there (0.0038 vs 0.0084), and across the whole 103~Mb the 2-Mb rolling median spans just 0.22--0.27~cM/Mb ($-10\%$ to $+10\%$ of the median). The map's chromosome-scale dynamic range is therefore compressed, so centromeric suppression cannot be resolved and the nearly uniform landscape is in part an estimator ceiling.}
   \label{sfig:chr1recomb}
 \end{figure}
 
