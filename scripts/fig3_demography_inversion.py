@@ -176,8 +176,8 @@ def drift_sd(p0, t_lo, t_hi, n=20000):
 
 
 # --- fitted point + empirical targets (figures_inversion.py, verbatim) -----
-FIT = dict(t_inv=850_000.0, p_hist=0.74, t_decline=175_000.0,
-           t_fall=100_000.0, p_now=0.374)
+FIT = dict(t_inv=825_000.0, p_hist=0.72, t_decline=250_000.0,
+           t_fall=50_000.0, p_now=0.374)     # best cell, covariance distance with trajectory variance
 TARGETS = {"pi_i_over_pi_s": (1.3556, 0.0481),
            "dxy_over_pi_i":  (1.3848, 0.0214),
            "f1_ratio":       (0.8125, 0.0076)}
@@ -288,13 +288,13 @@ ax_bi.scatter([0], [FIT["p_now"]], s=32, color=COL_BB, zorder=4,
 
 ax_bi.set_xlim(-14, FIT["t_inv"] / 1e3 * 1.06)   # present (0 ka) at LEFT, to match panel a
 ax_bi.set_ylim(0, 0.96)
-ax_bi.set_yticks([0, 0.2, 0.374, 0.6, 0.74, 0.9])
-ax_bi.set_yticklabels(["0", "0.2", "0.374", "0.6", "0.74", "0.9"])
+ax_bi.set_yticks([0, 0.2, 0.374, 0.6, FIT["p_hist"], 0.9])
+ax_bi.set_yticklabels(["0", "0.2", "0.374", "0.6", f"{FIT['p_hist']:.2f}", "0.9"])
 ax_bi.set_xlabel("Time before present (ka)")
 ax_bi.set_ylabel("Frequency of inverted\n(BB) arrangement", linespacing=1.3)
 despine(ax_bi)
 
-ax_bi.annotate("arose ~850 ka", xy=(FIT["t_inv"] / 1e3, FIT["p_hist"]),
+ax_bi.annotate(f"barrier formed ~{FIT['t_inv'] / 1e3:.0f} ka", xy=(FIT["t_inv"] / 1e3, FIT["p_hist"]),
               xytext=(FIT["t_inv"] / 1e3 - 25, 0.90), fontsize=9,
               color=C["ink"], ha="right", va="center",
               arrowprops=dict(arrowstyle="-", lw=0.7, color=C["muted"],
