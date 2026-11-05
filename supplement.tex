@@ -83,7 +83,7 @@ read from minimap2 2.29 (\texttt{-x asm5}) alignments of chromosome~2 of the two
 and to the primary assembly, and the orientation of each haplotype relative to \coin{} from alignments to the
 homologous \coin{} chromosome (OZ346549.1, \texttt{-x asm20}). Alignment blocks of at least 1~Mb were ordered along
 each \illex{} haplotype, and polarity was read from which arrangement keeps the order and adjacency of \coin{}
-sequence across the rearranged segment (Supplementary Table~S3). The age and frequency trajectory were fitted with msinv as described in the next paragraphs. Unannotated, non-repeat sequence in the inversion was searched with DIAMOND \texttt{blastx} against seven cephalopod proteomes, with transposable elements from Earl~Grey \citep{baril2024earlgrey} and transcripts from StringTie2 \citep{kovaka2019stringtie} as supporting evidence. This recovered 14 likely protein-coding loci that the annotation lacks. They are provided as \texttt{protein\_match} features in version 3 of the annotation and are not counted among the 89 gene models of the inversion. Fixed differences were sites with an allele-frequency difference of at least 0.9
+sequence across the rearranged segment (Supplementary Table~S3). Allele sharing with \coin{} was also scored at the 13{,}998 sites in the inversion where allele frequency differs by at least 0.7 between AA and BB homozygotes. At 9{,}680 of them \coin{} matches the reference base, and because the reference assembly carries BB these sites score BB as ancestral by construction, so they were set aside. At the 4{,}175 sites where \coin{} carries the non-reference allele, AA carries the \coin{} allele at 63.0\% (2{,}631) and BB at 37.0\% (1{,}544). This points the other way from the block order. We give the block order more weight because it is a property of the rearrangement itself, whereas the alleles that distinguish the arrangements mostly arose after the arrangements separated and so record the history of each arrangement since then rather than which arrangement is older. The age and frequency trajectory were fitted with msinv as described in the next paragraphs. Unannotated, non-repeat sequence in the inversion was searched with DIAMOND \texttt{blastx} against seven cephalopod proteomes, with transposable elements from Earl~Grey \citep{baril2024earlgrey} and transcripts from StringTie2 \citep{kovaka2019stringtie} as supporting evidence. This recovered 14 likely protein-coding loci that the annotation lacks. They are provided as \texttt{protein\_match} features in version 3 of the annotation and are not counted among the 89 gene models of the inversion. Fixed differences were sites with an allele-frequency difference of at least 0.9
 between AA and BB homozygotes. Gene-ontology enrichment of the inversion genes used Fisher's exact test against
 the annotated-gene background in all three ontologies, compared with 500 random gene sets of equal size, and gene
 density was compared with all autosomal windows of the same length (0.5-Mb steps). The two drift calculations are not separate estimates. They are analytic diffusion calculations that take the plateau frequency (0.22--0.38) and the duration of the rise from the msinv grid-search fit and $\Ne$ from the fitted demography, and ask whether drift alone could produce that trajectory. The attainment calculation used the
@@ -489,8 +489,8 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 
 % ---- S3: coindetii outgroup usage (alignment / polarization / MK) ----
 \begin{table}[h]\centering
-  \caption{\textbf{Use of the two outgroups.} \coin{} served two roles, the structural comparison of
-    the chromosome-2 arrangements and the divergence term of the genome-wide McDonald--Kreitman (MK) test, the latter resting on a whole-genome \coin$\leftrightarrow$\illex{} AnchorWave alignment.
+  \caption{\textbf{Use of the two outgroups.} \coin{} served three roles, the structural comparison of
+    the chromosome-2 arrangements, a count of allele sharing at sites that differ between them, and the divergence term of the genome-wide McDonald--Kreitman (MK) test, the latter resting on a whole-genome \coin$\leftrightarrow$\illex{} AnchorWave alignment.
     \textit{I.\ argentinus} was aligned identically (CDS) and used as a secondary MK outgroup. It yields
     $\sim$9$\times$ fewer fixed coding differences than \coin{} yet has genome-wide $\pi$ indistinguishable
     from \illex{}, marking it as a recently-diverged congener of near-identical diversity.}
@@ -511,6 +511,12 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
     \quad & \coin{} 37.95--74.95~Mb, aligned to BB & one inverted run \\
     \quad & \dots\ aligned to AA & two runs, split at 60.5~Mb \\
     \quad & \coin{} adjacency at 56.9~Mb & kept in BB, broken in AA \\
+    \midrule
+    \multicolumn{3}{l}{Allele sharing with \coin{} (inversion, AA/BB frequency difference $\ge0.7$)} \\
+    \quad & differentiated sites & 13{,}998 \\
+    \quad & \dots\ \coin{} matches the reference base (set aside) & 9{,}680 \ (69.2\%) \\
+    \quad & \dots\ \coin{} carries the non-reference allele & 4{,}175 \\
+    \quad & \dots\ AA / BB carries the \coin{} allele & 63.0\% / 37.0\% \\
     \midrule
     \multicolumn{3}{l}{McDonald--Kreitman test (mkado, \coin{} divergence)} \\
     \quad & genes tested & 20{,}999 \\
