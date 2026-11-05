@@ -4,6 +4,10 @@
 (b) the scoring recipe, (c, d) Delta D over the grid, (e) the four profiles with the parametric-bootstrap
 cutoffs, (f) the sequential per-statistic contributions to D that exclude each neighbouring grid value.
 
+The fit was run with the BB arrangement as the trajectory class (p_BB, a plateau then a fall to 0.374). The model is
+symmetric in the arrangement labels, so everything is plotted for the derived AA arrangement, p_AA = 1 - p_BB
+(a plateau then a rise to 0.626), with I = AA and S = BB in the statistic labels.
+
 D is the covariance-aware distance (m - x)' S^-1 (m - x), with S the measurement covariance plus the trajectory
 variance from the 825-ky best cell. Reads the grid (results/illex/refit_decline_pboot{TAGS}_reps.jsonl.gz) and
 the recovery output (results/illex/param_recovery_{TAGS}_traj825.json) from the msinv repository
@@ -27,9 +31,9 @@ from illex.balancing import decline_curve
 from illex.scripts.param_bootstrap import load_cells, stats, profiles, TARGETS, SE, PARS
 
 OUT = Path(__file__).resolve().parent.parent / "supp_figures" / "figS14_inversion_grid.png"
-STAT_LAB_F = [r"$\pi_I/\pi_S$", r"$d_{xy}/\pi_I$ given $\pi_I/\pi_S$", "singleton ratio given both"]
+STAT_LAB_F = [r"$\pi_S/\pi_I$", r"$d_{xy}/\pi_S$ given $\pi_S/\pi_I$", "singleton ratio given both"]
 STAT_COL = ["#E69F00", "#56B4E9", "#009E73"]          # Okabe-Ito, validated
-P_NOW = 0.374
+P_NOW = 0.374          # p_BB today; the plot shows p_AA = 1 - p_BB = 0.626
 
 TAGS = sys.argv[1] if len(sys.argv) > 1 else "ABCDEFGHIJK"
 cells = load_cells(TAGS)
@@ -60,7 +64,7 @@ def cell(ti, ph, td, tf):
 
 def fmt(k):
     t, p, d, f = keys[k]
-    return f"{t / 1e3:.0f} ky, {p:.2f}, {d / 1e3:.0f} ka, {f / 1e3:.0f} ky"
+    return f"{t / 1e3:.0f} ky, {1 - p:.2f}, {d / 1e3:.0f} ka, {f / 1e3:.0f} ky"
 
 fig = plt.figure(figsize=(13, 16))
 gs = fig.add_gridspec(4, 4, height_ratios=[1.05, 1, 0.9, 1.0], hspace=0.6, wspace=0.42)
@@ -68,38 +72,38 @@ gs = fig.add_gridspec(4, 4, height_ratios=[1.05, 1, 0.9, 1.0], hspace=0.6, wspac
 # ---------------- (a) what the four parameters mean ----------------
 ax = fig.add_subplot(gs[0, :3])
 # the best trajectory at an excluded value of one parameter (the other three re-optimised)
-alts = [(cell(None, 0.82, None, None), "plateau 0.82", (560, 0.835, "center")),
-        (cell(None, 0.56, None, None), "plateau 0.56", (560, 0.545, "center")),
-        (cell(None, None, 0.0, None), "fall ends today", (8, 0.645, "left")),
-        (cell(None, None, None, 600e3), "600-ky fall", (430, 0.45, "right")),
-        (cell(700e3, None, None, None), "barrier 700 ky", (705, 0.765, "right"))]
+alts = [(cell(None, 0.82, None, None), "plateau 0.18", (560, 0.165, "center")),
+        (cell(None, 0.56, None, None), "plateau 0.44", (560, 0.455, "center")),
+        (cell(None, None, 0.0, None), "rise ends today", (8, 0.355, "left")),
+        (cell(None, None, None, 600e3), "600-ky rise", (430, 0.55, "right")),
+        (cell(700e3, None, None, None), "barrier 700 ky", (705, 0.235, "right"))]
 for k, lab, (lx, ly, ha) in alts:
     ti, ph, td, tf = keys[k]
     t, p, _ = decline_curve(ti, td, tf, ph, P_NOW)
-    ax.plot(np.asarray(t) / 1e3, p, color=C["muted"], lw=1.0, ls="--")
+    ax.plot(np.asarray(t) / 1e3, 1 - np.asarray(p), color=C["muted"], lw=1.0, ls="--")
     ax.text(lx, ly, f"{lab}, " + r"$\Delta D$" + f" {dchi[k]:.0f}", fontsize=7.5, color=C["muted"],
             va="center", ha=ha)
 t, p, _ = decline_curve(best[0], best[2], best[3], best[1], P_NOW)
 t = np.asarray(t) / 1e3
-ax.plot(t, p, color=C["accent"], lw=2.4, label="best fit")
+ax.plot(t, 1 - np.asarray(p), color=C["accent"], lw=2.4, label="best fit")
 ti, ph, td, tf = best[0] / 1e3, best[1], best[2] / 1e3, best[3] / 1e3
-y0 = 0.305
+y0 = 0.665
 ax.annotate("", (ti, y0), (0, y0), arrowprops=dict(arrowstyle="<->", color=C["ink"], lw=0.9))
 ax.text(ti / 2, y0 + 0.008, r"$t_\mathrm{inv}$ = age of the recombination barrier" f" ({ti:.0f} ky)", ha="center",
         va="bottom", fontsize=8.5)
-ax.annotate("", (td, 0.76), (td + tf, 0.76), arrowprops=dict(arrowstyle="<->", color=C["warm"], lw=0.9))
-ax.text(td + tf / 2, 0.765, r"$t_\mathrm{fall}$" f" ({tf:.0f} ky)", ha="center", va="bottom", fontsize=8.5,
+ax.annotate("", (td, 0.24), (td + tf, 0.24), arrowprops=dict(arrowstyle="<->", color=C["warm"], lw=0.9))
+ax.text(td + tf / 2, 0.235, r"$t_\mathrm{rise}$" f" ({tf:.0f} ky)", ha="center", va="top", fontsize=8.5,
         color=C["warm"])
-ax.annotate("", (0, 0.47), (td, 0.47), arrowprops=dict(arrowstyle="<->", color=C["warm"], lw=0.9))
-ax.text(td / 2, 0.48, r"$t_\mathrm{decline}$" f" ({td:.0f} ka)", ha="center", va="bottom", fontsize=8.5,
+ax.annotate("", (0, 0.53), (td, 0.53), arrowprops=dict(arrowstyle="<->", color=C["warm"], lw=0.9))
+ax.text(td / 2, 0.52, r"$t_\mathrm{end}$" f" ({td:.0f} ka)", ha="center", va="top", fontsize=8.5,
         color=C["warm"])
-ax.text(560, ph - 0.015, r"$p_\mathrm{hist}$" f" = plateau ({ph:.2f}), best fit", ha="center", va="top", fontsize=8.5,
+ax.text(560, 1 - ph + 0.06, r"$p_\mathrm{hist}$" f" = plateau ({1 - ph:.2f}), best fit", ha="center", va="bottom", fontsize=8.5,
         color=C["accent"])
-ax.axhline(P_NOW, color=C["faint"], lw=1, zorder=0)
-ax.text(995, P_NOW + 0.008, "today 0.374", fontsize=7.5, color=C["muted"], ha="right")
-ax.set_xlim(0, 1000); ax.set_ylim(0.28, 0.88)
+ax.axhline(1 - P_NOW, color=C["faint"], lw=1, zorder=0)
+ax.text(995, 1 - P_NOW + 0.008, "today 0.626", fontsize=7.5, color=C["muted"], ha="right")
+ax.set_xlim(0, 1000); ax.set_ylim(0.12, 0.72)
 ax.set_xlabel("time before present (ky)  ←  present          past  →")
-ax.set_ylabel("inverted-arrangement frequency")
+ax.set_ylabel("derived (AA) arrangement frequency")
 ax.set_title("a  Each grid cell is a frequency trajectory (grey, best trajectory at an excluded value)")
 for s in ("top", "right"):
     ax.spines[s].set_visible(False)
@@ -141,23 +145,26 @@ def heat(ax, i, j, title):
 
 ax = fig.add_subplot(gs[1, :2])
 xs, ys, im = heat(ax, 0, 1, "")
-ax.set_xticks(range(len(xs)), [f"{x / 1e3:.0f}" for x in xs]); ax.set_yticks(range(len(ys)), [f"{y:.2f}" for y in ys])
-ax.set_xlabel(r"$t_\mathrm{inv}$ (ky)"); ax.set_ylabel(r"$p_\mathrm{hist}$")
-ax.set_title(r"c  $\Delta D$, age × plateau" "\n" "(fall timing re-optimised)")
+ax.set_xticks(range(len(xs)), [f"{x / 1e3:.0f}" for x in xs]); ax.set_yticks(range(len(ys)), [f"{1 - y:.2f}" for y in ys])
+ax.set_xlabel(r"$t_\mathrm{inv}$ (ky)"); ax.set_ylabel(r"$p_\mathrm{hist}$ (AA)")
+ax.invert_yaxis()                            # AA plateau increases upward
+ax.set_title(r"c  $\Delta D$, age × plateau" "\n" "(rise timing re-optimised)")
 ax = fig.add_subplot(gs[1, 2:])
 xs, ys, im = heat(ax, 3, 2, "")
 ax.set_xticks(range(len(xs)), [f"{x / 1e3:.0f}" for x in xs]); ax.set_yticks(range(len(ys)), [f"{y / 1e3:.0f}" for y in ys])
-ax.set_xlabel(r"$t_\mathrm{fall}$ (ky)"); ax.set_ylabel(r"$t_\mathrm{decline}$ (ka)")
-ax.set_title(r"d  $\Delta D$, fall duration × end of fall" "\n" "(age and plateau re-optimised)")
+ax.set_xlabel(r"$t_\mathrm{rise}$ (ky)"); ax.set_ylabel(r"$t_\mathrm{end}$ (ka)")
+ax.set_title(r"d  $\Delta D$, rise duration × end of rise" "\n" "(age and plateau re-optimised)")
 cb = fig.colorbar(im, ax=fig.axes[-2:], fraction=0.025, pad=0.02)
 cb.set_label(r"$\Delta D$ from the best fit (darker is better; – not simulated)")
 
 # ---------------- (e) profiles with calibrated cutoffs ----------------
-lab = {"t_inv": (r"$t_\mathrm{inv}$ (ky)", 1e3), "p_hist": (r"$p_\mathrm{hist}$", 1),
-       "t_decline": (r"$t_\mathrm{decline}$ (ka)", 1e3), "t_fall": (r"$t_\mathrm{fall}$ (ky)", 1e3)}
+lab = {"t_inv": (r"$t_\mathrm{inv}$ (ky)", 1e3), "p_hist": (r"$p_\mathrm{hist}$ (AA)", 1),
+       "t_decline": (r"$t_\mathrm{end}$ (ka)", 1e3), "t_fall": (r"$t_\mathrm{rise}$ (ky)", 1e3)}
 for j, p in enumerate(PARS):
     ax = fig.add_subplot(gs[2, j])
     v = np.array(sorted(prof[p])); d = np.array([prof[p][x] for x in v])
+    if p == "p_hist":                       # plot the AA plateau, 1 - p_BB
+        v = 1 - v
     c95 = boot[p]["c95"]
     ok = d <= c95
     ax.axhspan(0, c95, color=C["faint"], alpha=0.6, lw=0)
@@ -174,7 +181,7 @@ for j, p in enumerate(PARS):
     for s in ("top", "right"):
         ax.spines[s].set_visible(False)
     if j == 1:
-        ax.legend(loc="lower left", fontsize=7)
+        ax.legend(loc="upper center", fontsize=7)
     if j == 0:
         ax.set_ylabel(r"profile $\Delta D$ (+0.1, log)")
         ax.set_title(r"e  Profiles, shaded below the bootstrap-calibrated cutoff (dashed), dotted line at $\Delta D=2$",
@@ -187,11 +194,11 @@ rows = [(f"best fit ({fmt(cell(*best))})", cell(*best)),
         ("barrier 775 ky", cell(775e3, None, None, None)),
         ("barrier 875 ky", cell(875e3, None, None, None)),
         ("barrier 700 ky", cell(700e3, None, None, None)),
-        ("plateau 0.60", cell(None, 0.60, None, None)),
-        ("plateau 0.82", cell(None, 0.82, None, None)),
-        ("fall took 400 ky", cell(None, None, None, 400e3)),
-        ("fall ended 50 ka", cell(None, None, 50e3, None)),
-        ("fall ends today", cell(None, None, 0.0, None))]
+        ("plateau 0.40", cell(None, 0.60, None, None)),
+        ("plateau 0.18", cell(None, 0.82, None, None)),
+        ("rise took 400 ky", cell(None, None, None, 400e3)),
+        ("rise ended 50 ka", cell(None, None, 50e3, None)),
+        ("rise ends today", cell(None, None, 0.0, None))]
 y = np.arange(len(rows))[::-1]
 for yi, (name, k) in zip(y, rows):
     left = 0.0

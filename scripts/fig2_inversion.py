@@ -11,9 +11,9 @@ Panels
   b  F_ST across the whole of chr2 (AA vs BB), inversion shaded -- shows the
      inversion (60.54-79.50 Mb) is the only differentiated region.
      Data: msinv results/illex/karyotype_fst_scan.tsv (chrom '2' rows)
-  c  per-arrangement diversity (d_xy, pi_BB inverted, pi_AA ancestral) across
+  c  per-arrangement diversity (d_xy, pi_BB ancestral, pi_AA derived) across
      the inversion plus 20 Mb of collinear sequence on each side (40-100 Mb) --
-     shows the inverted arrangement is the MORE diverse one and that the three
+     shows the derived AA arrangement is the LESS diverse one and that the three
      curves collapse together outside the breakpoints.
      Data: steps/03_karyotype/inversion_content/flank_div/chr2_40_100_karyo_windows_snps.csv
      (compute_flank_div.py: pg_gpu windowed pi/dxy, 100 kb, AA n=254 / BB n=95)
@@ -125,8 +125,8 @@ def main():
     ax.axhline(COLINEAR_DXY, ls="--", lw=1.0, color=C["warm"], alpha=0.65, zorder=1,
                label=r"collinear $d_{xy}$ (matched controls, 10–30 Mb)")
     ax.plot(mid, dxy * 1e3, lw=1.1, color=C["warm"], label=r"$d_{xy}$ (AA, BB)")
-    ax.plot(mid, pBB * 1e3, lw=1.1, color=KARYO["BB"], label=r"$\pi_{BB}$ (inverted)")
-    ax.plot(mid, pAA * 1e3, lw=1.1, color=KARYO["AA"], label=r"$\pi_{AA}$ (ancestral)")
+    ax.plot(mid, pBB * 1e3, lw=1.1, color=KARYO["BB"], label=r"$\pi_{BB}$ (ancestral)")
+    ax.plot(mid, pAA * 1e3, lw=1.1, color=KARYO["AA"], label=r"$\pi_{AA}$ (derived)")
     ax.set_xlim(40, 100)
     ax.set_xticks([40, 50, 60, 70, 80, 90, 100])
     ymax = float(np.nanpercentile(dxy * 1e3, 99.8)) * 1.05

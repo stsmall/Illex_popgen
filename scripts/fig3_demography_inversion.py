@@ -18,8 +18,9 @@ Panel a: population size history (composite) -- Ne over time, overlaying (each w
         flat 1e-8/bp assumption to the empirical ~2.1e-9/bp map (Ne ~ 1/rate);
         the time-varying fit is non-identifiable (params pinned at bounds).
 
-Panel b: chr2 inversion (BB arrangement) frequency history -- the fitted
-    decline trajectory (b-i) plus the two delta-chi-square profiles that
+Panel b: chr2 inversion frequency history, plotted for the derived AA arrangement
+    (p_AA = 1 - p_BB; the fit is symmetric in the arrangement labels) -- the fitted
+    rise trajectory (b-i) plus the two delta-chi-square profiles that
     bound it (b-ii: t_decline, "when the fall ended"; b-iii: t_fall, "how
     long the fall took"). Re-plotted from the msinv project's
     figures_inversion.py (manu_fig_fitted_history / figure2), which lives in
@@ -276,30 +277,30 @@ t0 = FIT["t_decline"] + FIT["t_fall"]
 tb = np.linspace(0.0, t0, 400)
 sd = np.array([drift_sd(FIT["p_hist"], t, t0) for t in tb])
 for k in (2, 1):
-    ax_bi.fill_between(tb / 1e3, np.clip(FIT["p_hist"] - k * sd, 0, 1),
-                       np.clip(FIT["p_hist"] + k * sd, 0, 1),
+    ax_bi.fill_between(tb / 1e3, np.clip(1 - FIT["p_hist"] - k * sd, 0, 1),
+                       np.clip(1 - FIT["p_hist"] + k * sd, 0, 1),
                        color=C["muted"], alpha=0.14, lw=0, zorder=1)
-ax_bi.plot(tb / 1e3, np.full_like(tb, FIT["p_hist"]), lw=0.8, ls=":",
+ax_bi.plot(tb / 1e3, np.full_like(tb, 1 - FIT["p_hist"]), lw=0.8, ls=":",
           color=C["muted"], zorder=1)
-ax_bi.axhline(FIT["p_now"], lw=0.8, ls="--", color=C["ink"], zorder=2)
-ax_bi.plot(times, freqs, lw=2.0, color=COL_BB, zorder=3, solid_capstyle="round")
-ax_bi.scatter([0], [FIT["p_now"]], s=32, color=COL_BB, zorder=4,
+ax_bi.axhline(1 - FIT["p_now"], lw=0.8, ls="--", color=C["ink"], zorder=2)
+ax_bi.plot(times, 1 - np.asarray(freqs), lw=2.0, color=COL_BB, zorder=3, solid_capstyle="round")
+ax_bi.scatter([0], [1 - FIT["p_now"]], s=32, color=COL_BB, zorder=4,
              edgecolor="white", linewidth=0.9)
 
 ax_bi.set_xlim(-14, FIT["t_inv"] / 1e3 * 1.06)   # present (0 ka) at LEFT, to match panel a
 ax_bi.set_ylim(0, 0.96)
-ax_bi.set_yticks([0, 0.2, 0.374, 0.6, FIT["p_hist"], 0.9])
-ax_bi.set_yticklabels(["0", "0.2", "0.374", "0.6", f"{FIT['p_hist']:.2f}", "0.9"])
+ax_bi.set_yticks([0, 1 - FIT["p_hist"], 0.45, 0.626, 0.8])
+ax_bi.set_yticklabels(["0", f"{1 - FIT['p_hist']:.2f}", "0.45", "0.626", "0.8"])
 ax_bi.set_xlabel("Time before present (ka)")
-ax_bi.set_ylabel("Frequency of inverted\n(BB) arrangement", linespacing=1.3)
+ax_bi.set_ylabel("Frequency of derived\n(AA) arrangement", linespacing=1.3)
 despine(ax_bi)
 
-ax_bi.annotate(f"barrier formed ~{FIT['t_inv'] / 1e3:.0f} ka", xy=(FIT["t_inv"] / 1e3, FIT["p_hist"]),
-              xytext=(FIT["t_inv"] / 1e3 - 25, 0.90), fontsize=9,
+ax_bi.annotate(f"barrier formed ~{FIT['t_inv'] / 1e3:.0f} ka", xy=(FIT["t_inv"] / 1e3, 1 - FIT["p_hist"]),
+              xytext=(FIT["t_inv"] / 1e3 - 25, 0.47), fontsize=9,
               color=C["ink"], ha="right", va="center",
               arrowprops=dict(arrowstyle="-", lw=0.7, color=C["muted"],
                               shrinkA=1, shrinkB=3))
-ax_bi.text(8, FIT["p_now"] + 0.035, "$p = 0.374$ today", fontsize=9,
+ax_bi.text(8, 1 - FIT["p_now"] + 0.035, "$p = 0.626$ today", fontsize=9,
           color=C["ink"], ha="left", va="bottom")
 ax_bi.text(-0.085, 1.06, "b", transform=ax_bi.transAxes, **LETTER_KW)
 ax_bi.set_title("Inversion frequency history", loc="left", pad=8,
