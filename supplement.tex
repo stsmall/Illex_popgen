@@ -83,7 +83,7 @@ read from minimap2 2.29 (\texttt{-x asm5}) alignments of chromosome~2 of the two
 and to the primary assembly, and the orientation of each haplotype relative to \coin{} from alignments to the
 homologous \coin{} chromosome (OZ346549.1, \texttt{-x asm20}). Alignment blocks of at least 1~Mb were ordered along
 each \illex{} haplotype, and polarity was read from which arrangement keeps the order and adjacency of \coin{}
-sequence across the rearranged segment (Supplementary Table~S3). Allele sharing with \coin{} was also scored at the 13{,}998 sites in the inversion where allele frequency differs by at least 0.7 between 2a/2a and 2+/2+ homozygotes, with the \coin{} base read from the AnchorWave alignment of \coin{} to the primary assembly, which carries 2+ in the inversion. Where the \coin{} base was callable (13{,}582 sites), the majority allele of 2a matches it at 25.0\% of sites, so 2+ carries the \coin{} allele at most diagnostic sites. The 2a matches are consistent with variation that was segregating in the ancestral population and was captured by the inversion when it formed, possibly in more than one capture event, which would give the soft start discussed in the main text. With a single outgroup whose own chromosome~2 is rearranged in this region, the arrangement of the common ancestor cannot be determined. It may have been an intermediate rearranged form rather than 2+, and the polarity used here is the most parsimonious reading of \coin{}. Restricted to the 4{,}175 sites where \coin{} differs from the reference base, 2a carries the \coin{} allele at 63.0\% (2{,}631) and 2+ at 37.0\% (1{,}544), but this subset is selected for sites at which the reference, a 2+ haplotype, carries a non-\coin{} allele, so it is biased toward 2a matches. The age and frequency trajectory were fitted with msinv as described in the next paragraphs. Unannotated, non-repeat sequence in the inversion was searched with DIAMOND \texttt{blastx} against seven cephalopod proteomes, with transposable elements from Earl~Grey \citep{baril2024earlgrey} and transcripts from StringTie2 \citep{kovaka2019stringtie} as supporting evidence. This recovered 14 likely protein-coding loci that the annotation lacks. They are provided as \texttt{protein\_match} features in version 3 of the annotation and are not counted among the 89 gene models of the inversion. Fixed differences were sites with an allele-frequency difference of at least 0.9
+sequence across the rearranged segment (Supplementary Table~S3). The same comparison was made with the chromosome-level assembly of \textit{Sthenoteuthis oualaniensis} \citep{li2022flyingsquid}, a member of the same family. Its chromosome-2 homolog, HiC\_scaffold\_1, is the scaffold that receives 265 of the 319 \illex{} chromosome-2 genes transferred with LiftOn \citep{chao2024lifton}, and chromosome~2 of each haplotype assembly was aligned to it with minimap2 (\texttt{-x asm20}). Because the two genera differ by many small rearrangements along the chromosome, polarity was read at each breakpoint from which flanking segments are joined, using alignments of at least 5~kb with mapping quality of at least 5 together with the order of the transferred genes. Allele sharing with \coin{} was also scored at the 13{,}998 sites in the inversion where allele frequency differs by at least 0.7 between 2a/2a and 2+/2+ homozygotes, with the \coin{} base read from the AnchorWave alignment of \coin{} to the primary assembly, which carries 2+ in the inversion. Where the \coin{} base was callable (13{,}582 sites), the majority allele of 2a matches it at 25.0\% of sites, so 2+ carries the \coin{} allele at most diagnostic sites. The 2a matches are consistent with variation that was segregating in the ancestral population and was captured by the inversion when it formed, possibly in more than one capture event, which would give the soft start discussed in the main text. Chromosome~2 of both outgroups is rearranged in this region, so the arrangement of the common ancestor away from the breakpoints cannot be determined. It may have been an intermediate rearranged form, and the polarity used here is the reading on which \coin{} and \textit{S.~oualaniensis} agree at both breakpoints. Restricted to the 4{,}175 sites where \coin{} differs from the reference base, 2a carries the \coin{} allele at 63.0\% (2{,}631) and 2+ at 37.0\% (1{,}544), but this subset is selected for sites at which the reference, a 2+ haplotype, carries a non-\coin{} allele, so it is biased toward 2a matches. The age and frequency trajectory were fitted with msinv as described in the next paragraphs. Unannotated, non-repeat sequence in the inversion was searched with DIAMOND \texttt{blastx} against seven cephalopod proteomes, with transposable elements from Earl~Grey \citep{baril2024earlgrey} and transcripts from StringTie2 \citep{kovaka2019stringtie} as supporting evidence. This recovered 14 likely protein-coding loci that the annotation lacks. They are provided as \texttt{protein\_match} features in version 3 of the annotation and are not counted among the 89 gene models of the inversion. Fixed differences were sites with an allele-frequency difference of at least 0.9
 between 2a/2a and 2+/2+ homozygotes. Gene-ontology enrichment of the inversion genes used Fisher's exact test against
 the annotated-gene background in all three ontologies, compared with 500 random gene sets of equal size, and gene
 density was compared with all autosomal windows of the same length (0.5-Mb steps). The two drift calculations are not separate estimates. They are analytic diffusion calculations that take the plateau frequency (0.22--0.38) and the duration of the rise from the msinv grid-search fit and $\Ne$ from the fitted demography, and ask whether drift alone could produce that trajectory. The attainment calculation used the
@@ -141,8 +141,7 @@ $r_m$ and $r_f$ are the male and female per-generation rates and the male rate i
 and the autosomes. With $N_{e,Z}/N_{e,A}=3/4$, equal recombination in the two sexes predicts $\rho_Z/\rho_A=0.5$
 and achiasmate female meiosis predicts 1 \citep{coffing2026}.
 
-Sex-biased mutation was estimated from synonymous divergence between \illex{} and \textit{Sthenoteuthis
-oualaniensis} \citep{li2022flyingsquid}, a member of the same family whose chromosome~46 is syntenic with the \illex{} Z \citep{small2026}. The \illex{} annotation was transferred to the
+Sex-biased mutation was estimated from synonymous divergence between \illex{} and \textit{S.~oualaniensis}, whose chromosome~46 is syntenic with the \illex{} Z \citep{small2026}. The \illex{} annotation was transferred to the
 \textit{S.~oualaniensis} assembly with LiftOn \citep{chao2024lifton}, one transcript per gene was aligned codon by
 codon with MACSE 2.07 \citep{ranwez2018macse}, which allows frameshifts in the transferred sequence, and codons
 with gaps, frameshifts, ambiguous bases or stop codons were removed. Synonymous and nonsynonymous divergence
@@ -489,11 +488,11 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 
 % ---- S3: coindetii outgroup usage (alignment / polarization / MK) ----
 \begin{table}[h]\centering
-  \caption{\textbf{Use of the two outgroups.} \coin{} served three roles, the structural comparison of
+  \caption{\textbf{Use of the outgroups.} \coin{} served three roles, the structural comparison of
     the chromosome-2 arrangements, a count of allele sharing at sites that differ between them, and the divergence term of the genome-wide McDonald--Kreitman (MK) test, the latter resting on a whole-genome \coin$\leftrightarrow$\illex{} AnchorWave alignment.
     \textit{I.\ argentinus} was aligned identically (CDS) and used as a secondary MK outgroup. It yields
     $\sim$9$\times$ fewer fixed coding differences than \coin{} yet has genome-wide $\pi$ indistinguishable
-    from \illex{}, marking it as a recently-diverged congener of near-identical diversity.}
+    from \illex{}, marking it as a recently-diverged congener of near-identical diversity. \textit{S.~oualaniensis} was used only for the structural comparison at the breakpoints, with positions given on the primary assembly and on HiC\_scaffold\_1.}
   \label{stab:coindetii}
   \small
   \begin{tabular}{llr}
@@ -511,6 +510,13 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
     \quad & \coin{} 37.95--74.95~Mb, aligned to 2+ & one inverted run \\
     \quad & \dots\ aligned to 2a & two runs, split at 60.5~Mb \\
     \quad & \coin{} adjacency at 56.9~Mb & kept in 2+, broken in 2a \\
+    \midrule
+    \multicolumn{3}{l}{Chromosome-2 breakpoints in \textit{S.~oualaniensis} (HiC\_scaffold\_1, minimap2)} \\
+    \quad & \illex{} chr2 genes transferred to HiC\_scaffold\_1 & 265 of 319 \\
+    \quad & left breakpoint, genes at 60.49 and 60.55~Mb & adjacent (51.52, 51.57~Mb) \\
+    \quad & right breakpoint, 78.2--83.6~Mb & one inverted run \\
+    \quad & 2+ adjacencies (hap2), both breakpoints & present \\
+    \quad & 2a adjacencies (hap1), both breakpoints & absent \\
     \midrule
     \multicolumn{3}{l}{Allele sharing with \coin{} (inversion, frequency difference between 2a and 2+ $\ge0.7$)} \\
     \quad & differentiated sites (\coin{} base callable) & 13{,}998 \ (13{,}582) \\
