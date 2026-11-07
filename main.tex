@@ -72,14 +72,14 @@ In this study, we employed a chromosome-level annotated reference genome for \il
 \subsection{Sample, sex, and the absence of geographic structure}
 We conducted an analysis of 633 \illex{} individuals from eleven NAFO management divisions, covering approximately 37--50$^\circ$N (\cref{fig:map}, \cref{tab:summary}). Details of each collection event, including source and depth, are provided in Supplementary Table~S8. The read coverage on the Z chromosome categorizes the sample into 342 ZZ males and 291 ZO females, aligning with a ZZ/ZO system \citep{coffing2025,small2026} (\cref{fig:overview}). Autosomal analyses incorporate both sexes, while the Z chromosome, where males are diploid and females are haploid, is examined separately (\cref{sec:sweep}).
 
-Consistent with range-wide panmixia reported by \citet{baker2025}, population structure is observed in a specific genomic region, although it is not geographically linked. A windowed principal-component analysis along chromosome~2 identifies the three-cluster structure within the inversion (among-cluster variance $\eta^{2}=0.748$ within the inversion compared to $\eta^{2}=0.003$ in the collinear sequence, Supplementary Fig.~S3), and two genome-wide tests confirm its uniqueness. First, the chromosome-2 karyotype does not account for variation on any other chromosome (in a per-chromosome PCA colored by karyotype, $\eta^{2}=0.76$ on chr2 versus $\leq0.01$ on all 45 others). Second, independent of the chromosome-2 labels, a Gaussian-mixture screen of each chromosome's leading principal component supports more than one cluster only on chromosome~2 (three clusters, $\Delta\mathrm{BIC}=199$, cluster separation $8.6\sigma$) and on the Z chromosome (two clusters, reflecting the expected ZZ/ZO hemizygosity split), while every other autosome forms a single cloud of points (\cref{fig:overview}). The residual dispersion on minor PCA axes does not correlate with division, latitude, or coverage (Supplementary Fig.~S1), and a KING-robust relatedness screen \citep{manichaikul2010} identifies no duplicate, parent-offspring, or full-sib pairs, with only a single second-degree pair among the 633 individuals (maximum kinship 0.16), indicating effective unrelatedness. Given that a per-SNP differentiation scan is the most sensitive test for local adaptation in such a panmictic population, we compared per-SNP Hudson $\Fst$ among divisions \citep{bhatia2013} to a permutation null, in which division labels were shuffled among individuals 20 times. This null keeps the genotype calls, missingness, allele-frequency spectrum and linkage of the data and removes only geography. Across the complete per-chromosome callsets of the 632 individuals from the ten divisions with more than one sample, we evaluated every biallelic SNP with a minor-allele frequency above 0.05 (20{,}117{,}984 SNPs on the 45 autosomes, Supplementary Methods), and the empirical differentiation remains entirely within the null expectation. No SNP surpasses the permutation maximum, and the number of SNPs above each upper null percentile lies within the range of the permutations (2{,}319 above the 99.99th percentile against $1{,}998\pm352$, permutation $p=0.24$), including within the chromosome-2 inversion (8 against 13 expected), so the upper tail holds no more candidates than chance (Supplementary Figs.~S2, S19). Nucleotide diversity and Tajima's $D$ are consistent across latitude, and pairwise $\Fst$ among divisions is approximately 0 throughout (\cref{fig:diversity}). Consequently, there is no geographic local adaptation anywhere in the genome, and the inversion itself is geographically non-clinal (\cref{fig:map}, Supplementary Fig.~S6 and Table~S2). Furthermore, arrangement frequency does not correlate with capture depth, which ranges from 3 to 613~m across collection events (Supplementary Table~S8). Among 539 individuals with recorded depth, the correlation between depth and the number of BB chromosomes carried is $\rho=-0.08$ ($p=0.08$), and within the six divisions sampled at multiple depths, it is $\rho=+0.04$ (within-division permutation $p=0.49$). A weak negative slope across collection events ($p=0.04$) is entirely attributable to the two shallow, jig-caught Newfoundland (3 K) samples and disappears when they are excluded ($p=0.23$), indicating that it cannot be disentangled from gear and location effects.
+Consistent with range-wide panmixia reported by \citet{baker2025}, population structure is observed in a specific genomic region, although it is not geographically linked. A windowed principal-component analysis along chromosome~2 identifies the three-cluster structure within the inversion (among-cluster variance $\eta^{2}=0.748$ within the inversion compared to $\eta^{2}=0.003$ in the collinear sequence, Supplementary Fig.~S3), and two genome-wide tests confirm its uniqueness. First, the chromosome-2 karyotype does not account for variation on any other chromosome (in a per-chromosome PCA colored by karyotype, $\eta^{2}=0.76$ on chr2 versus $\leq0.01$ on all 45 others). Second, independent of the chromosome-2 labels, a Gaussian-mixture screen of each chromosome's leading principal component supports more than one cluster only on chromosome~2 (three clusters, $\Delta\mathrm{BIC}=199$, cluster separation $8.6\sigma$) and on the Z chromosome (two clusters, reflecting the expected ZZ/ZO hemizygosity split), while every other autosome forms a single cloud of points (\cref{fig:overview}). The residual dispersion on minor PCA axes does not correlate with division, latitude, or coverage (Supplementary Fig.~S1), and a KING-robust relatedness screen \citep{manichaikul2010} identifies no duplicate, parent-offspring, or full-sib pairs, with only a single second-degree pair among the 633 individuals (maximum kinship 0.16), indicating effective unrelatedness. Given that a per-SNP differentiation scan is the most sensitive test for local adaptation in such a panmictic population, we compared per-SNP Hudson $\Fst$ among divisions \citep{bhatia2013} to a permutation null, in which division labels were shuffled among individuals 20 times. This null keeps the genotype calls, missingness, allele-frequency spectrum and linkage of the data and removes only geography. Across the complete per-chromosome callsets of the 632 individuals from the ten divisions with more than one sample, we evaluated every biallelic SNP with a minor-allele frequency above 0.05 (20{,}117{,}984 SNPs on the 45 autosomes, Supplementary Methods), and the empirical differentiation remains entirely within the null expectation. No SNP surpasses the permutation maximum, and the number of SNPs above each upper null percentile lies within the range of the permutations (2{,}319 above the 99.99th percentile against $1{,}998\pm352$, permutation $p=0.24$), including within the chromosome-2 inversion (8 against 13 expected), so the upper tail holds no more candidates than chance (Supplementary Figs.~S2, S19). Nucleotide diversity and Tajima's $D$ are consistent across latitude, and pairwise $\Fst$ among divisions is approximately 0 throughout (\cref{fig:diversity}). Consequently, there is no geographic local adaptation anywhere in the genome, and the inversion itself is geographically non-clinal (\cref{fig:map}, Supplementary Fig.~S6 and Table~S2). Furthermore, arrangement frequency does not correlate with capture depth, which ranges from 3 to 613~m across collection events (Supplementary Table~S8). Among 539 individuals with recorded depth, the correlation between depth and the number of 2+ chromosomes carried is $\rho=-0.08$ ($p=0.08$), and within the six divisions sampled at multiple depths, it is $\rho=+0.04$ (within-division permutation $p=0.49$). A weak negative slope across collection events ($p=0.04$) is entirely attributable to the two shallow, jig-caught Newfoundland (3 K) samples and disappears when they are excluded ($p=0.23$), indicating that it cannot be disentangled from gear and location effects.
 
 \subsection{A large, selected inversion on chromosome~2}\label{sec:inv}
 
 \paragraph{Identity, breakpoints, and karyotypes.}
 Local PCA \citep{li2019lostruct} and a Gaussian-mixture karyotype assignment
-(95.3\% confident) resolve three genotype clusters on chromosome~2 (254 AA, 284 AB, and 95 BB individuals, \cref{fig:inv}a) whose differentiation is karyotypic
-rather than geographic, with $\Fst(\mathrm{AA,BB})=0.37$ inside the inversion
+(95.3\% confident) resolve three genotype clusters on chromosome~2, the karyotypes of two arrangements that we call 2a and 2+ (2a/2a $n=254$, 2a/2+ $n=284$ and 2+/2+ $n=95$, \cref{fig:inv}a), whose differentiation is karyotypic
+rather than geographic, with $\Fst=0.37$ between 2a/2a and 2+/2+ inside the inversion
 against a geographic $\Fst\approx0$. Between-karyotype $\Fst$ computed along the
 whole chromosome is $\approx0$ (median 0.006) across collinear sequence and jumps
 to a median of 0.34 (maximum 0.53) inside the inversion (Supplementary
@@ -91,18 +91,18 @@ namely a step-change in arrangement differentiation and a strand flip in a
 whole-chromosome alignment to \coin{} (Supplementary Fig.~S11), and an extended block of linkage disequilibrium coincides with the same interval (Supplementary
 Fig.~S4).
 
-\paragraph{The reference individual carries both arrangements.} We treat AA, at a present frequency of
-0.626, as the derived arrangement and BB, at 0.374, as the ancestral arrangement. The reference allele cannot
+\paragraph{The reference individual carries both arrangements.} We treat 2a, at a present frequency of
+0.626, as the derived arrangement and 2+, at 0.374, as the ancestral arrangement. The reference allele cannot
 polarize the arrangements, because the individual from which the reference was assembled is heterozygous for the
 inversion. Its two haplotype assemblies differ by an inversion at the breakpoints inferred from the population data
-(60.54 and 79.53~Mb), the haplotype inverted relative to the primary assembly carrying AA and the other, like the
-primary assembly, carrying BB (Supplementary Table~S3). Whole-chromosome alignment of both haplotypes to \coin{} shows that chromosome~2 is extensively rearranged
+(60.54 and 79.53~Mb), the haplotype inverted relative to the primary assembly carrying 2a and the other, like the
+primary assembly, carrying 2+ (Supplementary Table~S3). Whole-chromosome alignment of both haplotypes to \coin{} shows that chromosome~2 is extensively rearranged
 between the species, with large blocks translocated and inverted along its length, and the inversion region is
-part of this complex structure. A 37-Mb segment of the \coin{} chromosome aligns to BB as one contiguous run,
-inverted as a whole between chr2:44.4 and 79.5~Mb, so BB keeps the \coin{} order within the segment. In AA the
+part of this complex structure. A 37-Mb segment of the \coin{} chromosome aligns to 2+ as one contiguous run,
+inverted as a whole between chr2:44.4 and 79.5~Mb, so 2+ keeps the \coin{} order within the segment. In 2a the
 right part of the run, the segregating inversion, is inverted a second time, which breaks the \coin{} adjacency
-at the left breakpoint. BB therefore differs from \coin{} across this segment by one inversion and AA by two,
-which places AA as derived. The segregating inversion shares its right breakpoint with the older inverted block,
+at the left breakpoint. Arrangement 2+ therefore differs from \coin{} across this segment by one inversion and 2a by two,
+which places 2a as derived. The segregating inversion shares its right breakpoint with the older inverted block,
 so this region has rearranged repeatedly. Because the coalescent model fitted below is symmetric in the
 arrangement labels, the polarity changes the interpretation of the frequency history but not the fitted age or
 frequencies.
@@ -183,7 +183,7 @@ returns no enriched terms at FDR$<$0.05, and a permutation null on a random gene
 while the largest nominal per-term enrichments ($\sim$40-fold) rest on as few as two genes (Supplementary Fig.~S21).
 The inversion thus appears as a functionally unremarkable slice of the genome,
 and likely not a selected gene set but instead a supergene maintained for the arrangement as a whole. What the arrangements do 
-accumulate is divergence as a unit, with 3{,}513 near-fixed differences between AA and BB
+accumulate is divergence as a unit, with 3{,}513 near-fixed differences between 2a and 2+
 (per-arrangement $|\Delta\mathrm{AF}|\geq0.9$) are spread across the inversion (Supplementary Fig.~S5). These are
 overwhelmingly non-coding since coding sequence is only $\sim$0.2\% of the region, but the exonic fixed
 differences are $\sim$2.3-fold over-represented and clustered. All 19 fall in just nine genes, led by a 
@@ -323,7 +323,7 @@ shows only purifying selection, so it is a linked passenger rather than the targ
 \section{Discussion}
 
 \paragraph{The inversion is a datable supergene whose derived arrangement rose under selection.}
-Chromosomal inversions are often maintained by local adaptation in the presence of gene flow, producing geographic clines in arrangement frequency \citep{kirkpatrick2006,lowry2010,faria2019}. That explanation does not fit \illex{}. The chromosome-2 inversion is distributed throughout the species' range, its frequency is non-clinal, and geographic differentiation is effectively absent. Instead, the inversion appears to represent a long-lived polymorphism under selection at the level of the arrangement. The derived arrangement (AA) retains substantially less diversity than expected from its current frequency, indicating that it was at lower frequency in the past. A mutation-rate-independent drift argument, together with a barrier-aware coalescent model, supports an age of approximately 800{,}000--850{,}000 years and a history in which the derived arrangement remained near a frequency of 0.22--0.38 for much of its lifetime before rising to 0.63 in a rapid rise that ended at least 100{,}000 years ago, and it has held at that intermediate frequency since.
+Chromosomal inversions are often maintained by local adaptation in the presence of gene flow, producing geographic clines in arrangement frequency \citep{kirkpatrick2006,lowry2010,faria2019}. That explanation does not fit \illex{}. The chromosome-2 inversion is distributed throughout the species' range, its frequency is non-clinal, and geographic differentiation is effectively absent. Instead, the inversion appears to represent a long-lived polymorphism under selection at the level of the arrangement. The derived arrangement (2a) retains substantially less diversity than expected from its current frequency, indicating that it was at lower frequency in the past. A mutation-rate-independent drift argument, together with a barrier-aware coalescent model, supports an age of approximately 800{,}000--850{,}000 years and a history in which the derived arrangement remained near a frequency of 0.22--0.38 for much of its lifetime before rising to 0.63 in a rapid rise that ended at least 100{,}000 years ago, and it has held at that intermediate frequency since.
 
 This history differs from that of classic \textit{Drosophila} inversions, whose frequencies often vary across geographic or seasonal gradients \citep{corbettdetig2012,kapun2019}, and from the human 17q21 inversion, whose increase is more recent \citep{stefansson2005}, although the \illex{} history also ends in a selected rise. Why that rise stopped at an intermediate frequency is the open question. One possible analogue is the mimicry supergene of \textit{Heliconius numata}, in which an inverted arrangement carries recessive deleterious variation that contributes to associative overdominance and limits its frequency \citep{jay2021}. Associative overdominance is therefore one plausible mechanism in \illex{}, particularly because large non-recombining regions can accumulate recessive load \citep{zhao2016,gilbert2020,berdan2021}. The inversion contains clustered coding divergence, including 19 fixed exonic differences across nine genes, providing potential substrate for such a load, although the differentiated coding sites are not enriched for nonsynonymous changes. Other mechanisms remain possible. A prolonged plateau followed by a rise could also arise under a changing selective optimum \citep{matuszewski2015}, and temporally fluctuating selection can maintain polymorphism over long periods in natural populations \citep{wittmann2017,rudman2022}. For a shelf-spawning squid whose paralarvae are transported by the Gulf Stream, repeated environmental change across glacial cycles provides a plausible ecological context.
 
@@ -458,7 +458,7 @@ The manuscript, along with all figures and tables, their generating scripts, and
 % ------------------------------ FIGURES ------------------------------
 \begin{figure}[p]\centering
 \includegraphics[width=.72\linewidth]{fig1_map.png}
-\caption{\textbf{Sampling and chromosome-2 arrangement frequency.} \illex{} was sampled across eleven NAFO divisions (approximately 37--50$^\circ$N). The pie charts, positioned at the mean sampling coordinates of each division, illustrate the AA/AB/BB karyotype composition, with sizes proportional to $N$. The frequency of the derived (AA) arrangement is non-clinal (ranging from 0.54 to 0.71 across latitudes), which aligns with a geographic $\Fst\approx0$, indicating that the inversion is not locally adaptive.}
+\caption{\textbf{Sampling and chromosome-2 arrangement frequency.} \illex{} was sampled across eleven NAFO divisions (approximately 37--50$^\circ$N). The pie charts, positioned at the mean sampling coordinates of each division, illustrate the karyotype composition (2a/2a, 2a/2+ and 2+/2+), with sizes proportional to $N$. The frequency of the derived (2a) arrangement is non-clinal (ranging from 0.54 to 0.71 across latitudes), which aligns with a geographic $\Fst\approx0$, indicating that the inversion is not locally adaptive.}
 \label{fig:map}
 \end{figure}
 
@@ -470,13 +470,13 @@ The manuscript, along with all figures and tables, their generating scripts, and
 
 \begin{figure}[p]\centering
 \includegraphics[width=\linewidth]{fig3_inversion.png}
-\caption{\textbf{Chromosome-2 inversion analysis.} \textbf{(a)} PCA of chr2 distinguishes three karyotype clusters (AA/AB/BB). \textbf{(b)} $\Fst$ values between arrangements along chr2 indicate that the inversion (60.54--79.50~Mb, shaded) is the sole differentiated region (median $\Fst=0.37$ compared to 0.01 in collinear regions, with a comprehensive view in Supplementary Fig.~S20). \textbf{(c)} Diversity per arrangement across the inversion (shaded) and 20~Mb of collinear sequence on either side shows that within the breakpoints, the derived AA arrangement is less diverse than the ancestral BB ($\pi_I/\pi_S=0.74$), despite its higher frequency, and $\dxy$ surpasses both, indicating an ancient polymorphism whose derived arrangement was rarer in the past. Outside the breakpoints, the three curves converge at the collinear $d_{xy}$ (dashed), as expected where arrangements recombine freely.}
+\caption{\textbf{Chromosome-2 inversion analysis.} \textbf{(a)} PCA of chr2 distinguishes three karyotype clusters (2a/2a, 2a/2+, 2+/2+). \textbf{(b)} $\Fst$ values between arrangements along chr2 indicate that the inversion (60.54--79.50~Mb, shaded) is the sole differentiated region (median $\Fst=0.37$ compared to 0.01 in collinear regions, with a comprehensive view in Supplementary Fig.~S20). \textbf{(c)} Diversity per arrangement across the inversion (shaded) and 20~Mb of collinear sequence on either side shows that within the breakpoints, the derived 2a arrangement is less diverse than the ancestral 2+ ($\pi_I/\pi_S=0.74$), despite its higher frequency, and $\dxy$ surpasses both, indicating an ancient polymorphism whose derived arrangement was rarer in the past. Outside the breakpoints, the three curves converge at the collinear $d_{xy}$ (dashed), as expected where arrangements recombine freely.}
 \label{fig:inv}
 \end{figure}
 
 \begin{figure}[p]\centering
   \includegraphics[width=\linewidth]{fig4_demography.png}
-  \caption{\textbf{Demographic history and inversion frequency history.} \textbf{(a)} The effective population size over time is depicted using Stairway~Plot~2 (median $\pm$95\% CI), alongside the moments 2-epoch growth model with its Godambe (GIM) 95\% parameter-CI envelope (expansion $12.4\times\pm9\%$, $T\approx770$~ky~$\pm16\%$). GONE2 is utilized for recent historical data, and a single momentsLD LD-$\Ne$ point is presented (rate-corrected, with only the contemporary point shown due to the non-identifiability of its time-varying fit). \textbf{(b)} The inversion trajectory is fitted using the barrier-aware coalescent simulator msinv. The recombination barrier formed approximately 800--850~ka, coinciding with the onset of expansion in (a), and the derived (AA) arrangement was held near $p\approx0.22$--0.38 (best fit 0.28 shown) and subsequently rose to 0.626. The neutral-drift envelope is provided for comparison. $\Delta D$ profiles, which identify the end and duration of the rise, are available in Supplementary Fig.~S14, indicating that the rise was recent and rapid, excluding neutral drift.}
+  \caption{\textbf{Demographic history and inversion frequency history.} \textbf{(a)} The effective population size over time is depicted using Stairway~Plot~2 (median $\pm$95\% CI), alongside the moments 2-epoch growth model with its Godambe (GIM) 95\% parameter-CI envelope (expansion $12.4\times\pm9\%$, $T\approx770$~ky~$\pm16\%$). GONE2 is utilized for recent historical data, and a single momentsLD LD-$\Ne$ point is presented (rate-corrected, with only the contemporary point shown due to the non-identifiability of its time-varying fit). \textbf{(b)} The inversion trajectory is fitted using the barrier-aware coalescent simulator msinv. The recombination barrier formed approximately 800--850~ka, coinciding with the onset of expansion in (a), and the derived (2a) arrangement was held near $p\approx0.22$--0.38 (best fit 0.28 shown) and subsequently rose to 0.626. The neutral-drift envelope is provided for comparison. $\Delta D$ profiles, which identify the end and duration of the rise, are available in Supplementary Fig.~S14, indicating that the rise was recent and rapid, excluding neutral drift.}
   \label{fig:demog}
 \end{figure}
 
@@ -512,32 +512,32 @@ The manuscript, along with all figures and tables, their generating scripts, and
     Geographic structure         & $\Fst\approx0$ (none outside chr2) \\
     Genome-wide $\pi$            & 0.0093 \\
     Genome-wide Tajima's $D$     & $-2.07$ ($-2.09$ in 50~kb windows) \\
-    chr2 karyotypes (AA/AB/BB)   & 254 / 284 / 95 \\
-    Derived (AA) frequency       & 0.626 (0.54--0.71 across divisions, non-clinal) \\
-    Karyotype $\Fst$(AA,BB)      & 0.365 \\
+    chr2 karyotypes (2a/2a, 2a/2+, 2+/2+)   & 254 / 284 / 95 \\
+    Derived (2a) frequency       & 0.626 (0.54--0.71 across divisions, non-clinal) \\
+    Karyotype $\Fst$ (2a/2a vs 2+/2+)      & 0.365 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
 \begin{table}[t]\centering
-  \caption{\textbf{The chromosome-2 inversion} (I~$=$~AA derived and S~$=$~BB ancestral).}
+  \caption{\textbf{The chromosome-2 inversion} (I~$=$~2a derived and S~$=$~2+ ancestral).}
   \label{tab:inv}
   \begin{tabular}{ll}
     \toprule
     Quantity & Value \\
     \midrule
     Location                       & chr2:60.54--79.50~Mb ($\sim$18.96~Mb) \\
-    Karyotypes (AA/AB/BB)          & 254 / 284 / 95 (95.3\% confident) \\
-    Derived (AA) frequency $p$     & 0.626 \\
+    Karyotypes (2a/2a, 2a/2+, 2+/2+) & 254 / 284 / 95 (95.3\% confident) \\
+    Derived (2a) frequency $p$     & 0.626 \\
     Historical plateau frequency   & 0.22--0.38 \\
-    Karyotype $\Fst$(AA,BB)        & 0.365 (geographic $\Fst\approx0$) \\
-    $\pi_I/\pi_S$ (I$=$AA)         & $0.737 \pm 0.026$ \\
+    Karyotype $\Fst$ (2a/2a vs 2+/2+)        & 0.365 (geographic $\Fst\approx0$) \\
+    $\pi_I/\pi_S$ (I$=$2a)         & $0.737 \pm 0.026$ \\
     $\dxy/\pi_S$                   & $1.385 \pm 0.021$ \\
     Coalescent age $t_\mathrm{inv}$ & $\sim$800--850~ky ($\propto 1/\mu$, $\mu=3\times10^{-9}$) \\
     Rise                           & $0.22$--$0.38\to0.626$ over 50--200~ky, ending 100--250~ka \\
     Selection on rise              & $\Ne s\sim10^{2}$--$10^{3}$ ($s\approx1.2$--$5\times10^{-4}$) \\
     Gene content                   & 89 gene models, 45 annotated; no GO enrichment ($p=0.51$) \\
-    Fixed differences (AA vs BB)   & 3{,}513; 19 exonic, in 9 genes \\
+    Fixed differences (2a vs 2+)   & 3{,}513; 19 exonic, in 9 genes \\
     \bottomrule
   \end{tabular}
 \end{table}

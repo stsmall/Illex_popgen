@@ -292,7 +292,7 @@ ax_bi.set_ylim(0, 0.96)
 ax_bi.set_yticks([0, 1 - FIT["p_hist"], 0.45, 0.626, 0.8])
 ax_bi.set_yticklabels(["0", f"{1 - FIT['p_hist']:.2f}", "0.45", "0.626", "0.8"])
 ax_bi.set_xlabel("Time before present (ka)")
-ax_bi.set_ylabel("Frequency of derived\n(AA) arrangement", linespacing=1.3)
+ax_bi.set_ylabel("Frequency of derived\n(2a) arrangement", linespacing=1.3)
 despine(ax_bi)
 
 ax_bi.annotate(f"barrier formed ~{FIT['t_inv'] / 1e3:.0f} ka", xy=(FIT["t_inv"] / 1e3, 1 - FIT["p_hist"]),

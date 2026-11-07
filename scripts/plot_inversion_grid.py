@@ -103,7 +103,7 @@ ax.axhline(1 - P_NOW, color=C["faint"], lw=1, zorder=0)
 ax.text(995, 1 - P_NOW + 0.008, "today 0.626", fontsize=7.5, color=C["muted"], ha="right")
 ax.set_xlim(0, 1000); ax.set_ylim(0.12, 0.72)
 ax.set_xlabel("time before present (ky)  ←  present          past  →")
-ax.set_ylabel("derived (AA) arrangement frequency")
+ax.set_ylabel("derived (2a) arrangement frequency")
 ax.set_title("a  Each grid cell is a frequency trajectory (grey, best trajectory at an excluded value)")
 for s in ("top", "right"):
     ax.spines[s].set_visible(False)
@@ -146,7 +146,7 @@ def heat(ax, i, j, title):
 ax = fig.add_subplot(gs[1, :2])
 xs, ys, im = heat(ax, 0, 1, "")
 ax.set_xticks(range(len(xs)), [f"{x / 1e3:.0f}" for x in xs]); ax.set_yticks(range(len(ys)), [f"{1 - y:.2f}" for y in ys])
-ax.set_xlabel(r"$t_\mathrm{inv}$ (ky)"); ax.set_ylabel(r"$p_\mathrm{hist}$ (AA)")
+ax.set_xlabel(r"$t_\mathrm{inv}$ (ky)"); ax.set_ylabel(r"$p_\mathrm{hist}$ (2a)")
 ax.invert_yaxis()                            # AA plateau increases upward
 ax.set_title(r"c  $\Delta D$, age × plateau" "\n" "(rise timing re-optimised)")
 ax = fig.add_subplot(gs[1, 2:])
@@ -158,7 +158,7 @@ cb = fig.colorbar(im, ax=fig.axes[-2:], fraction=0.025, pad=0.02)
 cb.set_label(r"$\Delta D$ from the best fit (darker is better; – not simulated)")
 
 # ---------------- (e) profiles with calibrated cutoffs ----------------
-lab = {"t_inv": (r"$t_\mathrm{inv}$ (ky)", 1e3), "p_hist": (r"$p_\mathrm{hist}$ (AA)", 1),
+lab = {"t_inv": (r"$t_\mathrm{inv}$ (ky)", 1e3), "p_hist": (r"$p_\mathrm{hist}$ (2a)", 1),
        "t_decline": (r"$t_\mathrm{end}$ (ka)", 1e3), "t_fall": (r"$t_\mathrm{rise}$ (ky)", 1e3)}
 for j, p in enumerate(PARS):
     ax = fig.add_subplot(gs[2, j])

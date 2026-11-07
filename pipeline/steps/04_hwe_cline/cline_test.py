@@ -43,14 +43,14 @@ print(f"\nVERDICT: {verdict}", flush=True)
 fig,ax=plt.subplots(1,2,figsize=(14,5))
 bottom=np.zeros(len(tab)); col={"AA":"tab:blue","AB":"tab:orange","BB":"tab:green"}
 for kk in ["AA","AB","BB"]:
-    fr=tab[kk]/tab["N"]; ax[0].bar(range(len(tab)),fr,bottom=bottom,label=kk,color=col[kk]); bottom+=fr
+    fr=tab[kk]/tab["N"]; ax[0].bar(range(len(tab)),fr,bottom=bottom,label={"AA":"2a/2a","AB":"2a/2+","BB":"2+/2+"}[kk],color=col[kk]); bottom+=fr
 ax[0].set_xticks(range(len(tab))); ax[0].set_xticklabels([f"{d}\n{la:.0f}N" for d,la in zip(tab.index,tab["mean_lat"])],fontsize=8)
 ax[0].set(ylabel="karyotype frequency",title=f"Karyotype freq by NAFO division (chi2 p={p_chi:.2g})"); ax[0].legend()
 ax[1].scatter(tab["mean_lat"],tab["p_B"],s=[n/3 for n in tab["N"]])
 for d,row in tab.iterrows(): ax[1].annotate(d,(row["mean_lat"],row["p_B"]),fontsize=7)
 xs=np.array([tab["mean_lat"].min(),tab["mean_lat"].max()])
-ax[1].plot(xs,lr.intercept/1+lr.slope*xs*0+tab["p_B"].mean()+0*xs,":",color="grey")  # flat ref
-ax[1].set(xlabel="mean latitude (N)",ylabel="B-arrangement freq",title=f"p_B vs latitude (r={r_div:.2f}, p={p_div:.2g})")
+ax[1].plot(xs,np.full(2,tab["p_B"].mean()),":",color="grey")  # flat ref at the mean
+ax[1].set(xlabel="mean latitude (N)",ylabel="2+ arrangement frequency",title=f"2+ frequency vs latitude (r={r_div:.2f}, p={p_div:.2g})")
 fig.suptitle("chr2 inversion: non-clinal test (baker 633)")
 fig.tight_layout(); fig.savefig(f"{D}/cline_test.png",dpi=140,bbox_inches="tight")
 tab.to_csv(f"{D}/karyo_by_division.tsv",sep="\t")

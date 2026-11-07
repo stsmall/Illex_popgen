@@ -41,7 +41,7 @@ ax.scatter(w.loc[w.inv, "mid"] / 1e6, w.loc[w.inv, "fst"], s=7, color=C["warm"],
            linewidths=0, alpha=0.85, zorder=3, label=f"inversion (median {inv_med:.2f})")
 ax.axhline(coll_med, color=C["ink"], ls=":", lw=0.9, zorder=1)
 ax.set_xlabel("chromosome 2 position (Mb)")
-ax.set_ylabel(r"$F_{ST}$ between arrangements  (AA vs BB)")
+ax.set_ylabel(r"$F_{ST}$ between arrangements  (2a vs 2+)")
 ax.set_ylim(-0.02, min(1.0, w.fst.max() * 1.08))
 ax.set_xlim(0, w.mid.max() / 1e6)
 ax.set_title("Between-karyotype differentiation is confined to the chromosome-2 inversion",

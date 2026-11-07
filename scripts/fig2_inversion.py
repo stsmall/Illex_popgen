@@ -36,6 +36,7 @@ import pandas as pd
 from sklearn.mixture import GaussianMixture
 
 KARYO_COORDS = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/chr2_karyo_coords.tsv"
+DISP = {"AA": "2a/2a", "AB": "2a/2+", "BB": "2+/2+"}   # display names (2a derived, 2+ ancestral/reference)
 RESULTS = "/sietch_colab/ssmall/projects/msinv_dir/inversion_sims/files/results/illex"
 FST_SCAN = f"{RESULTS}/karyotype_fst_scan.tsv"
 DIV_WINDOWS = ("/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/inversion_content/"
@@ -95,7 +96,7 @@ def main():
     ax = fig.add_subplot(gs[0, 0])
     for k in ("AA", "AB", "BB"):
         d = karyo[karyo["karyotype"] == k]
-        ax.scatter(d["PC1"], d["PC2"], s=10, color=KARYO[k], label=k,
+        ax.scatter(d["PC1"], d["PC2"], s=10, color=KARYO[k], label=DISP[k],
                    alpha=0.85, linewidths=0)
     ax.set_xlabel("PC1")
     ax.set_ylabel("PC2")
@@ -114,7 +115,7 @@ def main():
     ax.set_ylim(0, 0.65)
     ax.set_yticks([0, 0.2, 0.4, 0.6])
     ax.set_xlabel("chr2 position (Mb)")
-    ax.set_ylabel(r"$F_{ST}$  (AA vs BB)")
+    ax.set_ylabel(r"$F_{ST}$  (2a vs 2+)")
     ax.set_title("b", loc="left", fontweight="bold")
     despine(ax)
 
@@ -124,9 +125,9 @@ def main():
     COLINEAR_DXY = 1.270   # median d_xy(AA,BB) in matched colinear control windows (x1e-3)
     ax.axhline(COLINEAR_DXY, ls="--", lw=1.0, color=C["warm"], alpha=0.65, zorder=1,
                label=r"collinear $d_{xy}$ (matched controls, 10–30 Mb)")
-    ax.plot(mid, dxy * 1e3, lw=1.1, color=C["warm"], label=r"$d_{xy}$ (AA, BB)")
-    ax.plot(mid, pBB * 1e3, lw=1.1, color=KARYO["BB"], label=r"$\pi_{BB}$ (ancestral)")
-    ax.plot(mid, pAA * 1e3, lw=1.1, color=KARYO["AA"], label=r"$\pi_{AA}$ (derived)")
+    ax.plot(mid, dxy * 1e3, lw=1.1, color=C["warm"], label=r"$d_{xy}$ (2a, 2+)")
+    ax.plot(mid, pBB * 1e3, lw=1.1, color=KARYO["BB"], label=r"$\pi_{2+}$ (ancestral)")
+    ax.plot(mid, pAA * 1e3, lw=1.1, color=KARYO["AA"], label=r"$\pi_{2a}$ (derived)")
     ax.set_xlim(40, 100)
     ax.set_xticks([40, 50, 60, 70, 80, 90, 100])
     ymax = float(np.nanpercentile(dxy * 1e3, 99.8)) * 1.05

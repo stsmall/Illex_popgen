@@ -54,9 +54,9 @@ for _, row in DIV.iterrows():
 
 # legend
 from matplotlib.patches import Patch
-leg = [Patch(fc=KARYO["AA"], ec="white", label="AA (derived)"),
-       Patch(fc=KARYO["AB"], ec="white", label="AB"),
-       Patch(fc=KARYO["BB"], ec="white", label="BB (ancestral)")]
+leg = [Patch(fc=KARYO["AA"], ec="white", label="2a/2a"),
+       Patch(fc=KARYO["AB"], ec="white", label="2a/2+"),
+       Patch(fc=KARYO["BB"], ec="white", label="2+/2+")]
 ax.legend(handles=leg, loc="lower right", fontsize=8, frameon=True,
           framealpha=0.9, edgecolor="none", title="chr2 karyotype")
 ax.set_title("Sampling and chr2 arrangement frequency", loc="left")
