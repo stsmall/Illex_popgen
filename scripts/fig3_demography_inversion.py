@@ -20,8 +20,8 @@ Panel a: population size history (composite) -- Ne over time, overlaying (each w
 
 Panel b: chr2 inversion frequency history of the derived 2a arrangement under the balancing model (B) with
     gene flux, the model favoured by the ABC-SMC. Pointwise posterior-predictive quantiles (50% and 95%) and median
-    of 400 trajectories re-simulated from posterior particles on the inversion's neutral baseline, with 12 example
-    paths. Data: data/inversion_abc/traj_quantiles_f1.csv, written by illex/abc/smc_results/plot_base2.py in the
+    of 400 trajectories re-simulated from posterior particles on the inversion's neutral baseline. Individual
+    trajectories are not drawn (they are in Supplementary Fig. S14, scripts/figS14c_abc_trajectory.py). Data: data/inversion_abc/traj_quantiles_f1.csv, written by illex/abc/smc_results/plot_base2.py in the
     msinv repository (branch illex/trajectory-abc).
 """
 import json
@@ -151,8 +151,6 @@ ax_bi = fig.add_subplot(gs[1, :])
 tk = tq["t_gen"] / 1e3
 ax_bi.fill_between(tk, tq["q025"], tq["q975"], color=COL_BB, alpha=0.16, lw=0, zorder=1, label="95%")
 ax_bi.fill_between(tk, tq["q25"], tq["q75"], color=COL_BB, alpha=0.32, lw=0, zorder=2, label="50%")
-for c in [c for c in tq.columns if c.startswith("path")]:
-    ax_bi.plot(tk, tq[c], lw=0.45, color=C["ink"], alpha=0.35, zorder=3)
 ax_bi.plot(tk, tq["q50"], lw=2.0, color=COL_BB, zorder=4, solid_capstyle="round", label="median")
 ax_bi.axhline(P_NOW, lw=0.8, ls="--", color=C["ink"], zorder=2)
 ax_bi.set_xlim(-14, 1000)   # present (0 ka) at LEFT, to match panel a
