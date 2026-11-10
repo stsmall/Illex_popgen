@@ -18,28 +18,12 @@ Panel a: population size history (composite) -- Ne over time, overlaying (each w
         flat 1e-8/bp assumption to the empirical ~2.1e-9/bp map (Ne ~ 1/rate);
         the time-varying fit is non-identifiable (params pinned at bounds).
 
-Panel b: chr2 inversion frequency history, plotted for the derived AA arrangement
-    (p_AA = 1 - p_BB; the fit is symmetric in the arrangement labels) -- the fitted
-    rise trajectory (b-i) plus the two delta-chi-square profiles that
-    bound it (b-ii: t_decline, "when the fall ended"; b-iii: t_fall, "how
-    long the fall took"). Re-plotted from the msinv project's
-    figures_inversion.py (manu_fig_fitted_history / figure2), which lives in
-    a separate repo+venv (msinv_dir/inversion_sims/files, needs the compiled
-    `msinv` extension). That script's own plotting/annotation logic and the
-    FIT point are reproduced verbatim below; the only thing NOT imported
-    from there is `illex.balancing.decline_curve` itself, which is vendored
-    as pure numpy/scipy (verified byte-for-byte identical against the real
-    msinv .venv -- see analysis note in this repo's session log) so this
-    panel runs under the shared bioinfo-buddy interpreter alongside panel a.
-    Data:
-      - FIT point + TARGETS: figures_inversion.py (hardcoded constants)
-      - refit_declinetdecline.csv, refit_declinetfall2.csv:
-        msinv_dir/inversion_sims/files/results/illex/ (profile scan output)
-
-    .venv/bin/python -m illex.scripts.figures_inversion  (source repo,
-    for reference / regenerating the standalone fig_fitted_history.png)
+Panel b: chr2 inversion frequency history of the derived 2a arrangement under the balancing model (B) with
+    gene flux, the model favoured by the ABC-SMC. Pointwise posterior-predictive quantiles (50% and 95%) and median
+    of 400 trajectories re-simulated from posterior particles on the inversion's neutral baseline, with 12 example
+    paths. Data: data/inversion_abc/traj_quantiles_f1.csv, written by illex/abc/smc_results/plot_base2.py in the
+    msinv repository (branch illex/trajectory-abc).
 """
-import csv
 import json
 import sys
 from pathlib import Path
@@ -52,7 +36,6 @@ import matplotlib.ticker as mticker
 from matplotlib.gridspec import GridSpec
 import numpy as np
 import pandas as pd
-from scipy import optimize
 
 # =====================================================================
 # Panel a data -- identical sources/logic to fig3a_demography_composite.py
@@ -92,118 +75,11 @@ _ne5 = float(g2.loc[g2["Generation"] == 5, "Ne_diploids"].iloc[0])
 g2.loc[g2["Generation"] < 5, "Ne_diploids"] = _ne5
 
 # =====================================================================
-# Panel b data -- vendored from msinv_dir/inversion_sims/files/illex/
-#   balancing.py (decline_curve, _time_to_reach) and theory.py (N_growth).
-#   Pure numpy/scipy; no `msinv` C-extension needed. Verified identical to
-#   the real illex.balancing.decline_curve output under the msinv .venv
-#   (400/400 points, times/freqs/s_fall all match to full float precision).
+# Panel b data -- ABC-SMC posterior trajectories (model B, gene flux)
 # =====================================================================
-RESULTS_ILLEX = Path("/sietch_colab/ssmall/projects/msinv_dir/inversion_sims/files/"
-                     "results/illex")
-
-# --- theory.py: moments growth-model Ne(t), used only for the drift envelope
-N_ANC_INV = 547_928.0
-N0_INV = 6_808_096.0
-T_GROW_INV = 769_519.0
-ALPHA_INV = np.log(N0_INV / N_ANC_INV) / T_GROW_INV
-
-
-def N_growth(t):
-    t = np.asarray(t, dtype=float)
-    return np.where(t <= T_GROW_INV, N0_INV * np.exp(-ALPHA_INV * np.minimum(t, T_GROW_INV)),
-                    N_ANC_INV)
-
-
-ARRIVAL_TOL = 1e-4
-
-
-def _time_to_reach(p, p_start, s_het, p_star):
-    """Closed-form forward time from p_start to p (balancing.py, verbatim)."""
-    p = np.asarray(p, dtype=float)
-    c = s_het / p_star
-    a = 1.0 / p_star
-    b = 1.0 / (1.0 - p_star)
-    d = 1.0 / (p_star * (1.0 - p_star))
-
-    def F(x):
-        return (a * np.log(x) + b * np.log(1.0 - x)
-                - d * np.log(np.abs(p_star - x)))
-
-    return (F(p) - F(p_start)) / c
-
-
-def decline_curve(t_inv, t_decline, t_fall, p_hist, p_now,
-                  n_fall=300, n_hist=100, tol=ARRIVAL_TOL):
-    """(times, freqs, s_fall) backward on [0, t_inv] (balancing.py, verbatim)."""
-    if not 0.0 < p_now < p_hist < 1.0:
-        raise ValueError("need 0 < p_now < p_hist < 1")
-    if t_decline + t_fall > t_inv:
-        raise ValueError("t_decline + t_fall exceeds t_inv")
-
-    def _fall_time(s):
-        p_end = p_now * (1.0 + tol)
-        return float(_time_to_reach(p_end, p_hist, s, p_now)) - t_fall
-
-    s_fall = float(optimize.brentq(_fall_time, 1e-9, 10.0, rtol=1e-12))
-    p_grid = np.geomspace(p_hist, p_now * (1.0 + tol), n_fall)
-    t_fwd = _time_to_reach(p_grid, p_hist, s_fall, p_now)
-    t_back = t_decline + (t_fall - t_fwd)
-
-    times = [0.0]
-    freqs = [p_now]
-    order = np.argsort(t_back)
-    times.extend(t_back[order].tolist())
-    freqs.extend(p_grid[order].tolist())
-    hist = t_inv - t_decline - t_fall
-    if hist > 0:
-        for f in np.linspace(0.0, 1.0, n_hist)[1:]:
-            times.append(t_decline + t_fall + f * hist)
-            freqs.append(p_hist)
-
-    times = np.asarray(times, dtype=float)
-    freqs = np.asarray(freqs, dtype=float)
-    srt = np.argsort(times, kind="stable")
-    times, freqs = times[srt], freqs[srt]
-    keep = np.concatenate([[True], np.diff(times) > 1e-9])
-    times, freqs = times[keep], freqs[keep]
-    return np.clip(times, 0.0, t_inv).tolist(), freqs.tolist(), s_fall
-
-
-def drift_sd(p0, t_lo, t_hi, n=20000):
-    """SD of a neutral frequency change over [t_lo, t_hi] (figures_inversion.py)."""
-    t = np.linspace(t_lo, t_hi, n)
-    return float(np.sqrt(p0 * (1.0 - p0)
-                         * np.trapezoid(1.0 / (2.0 * N_growth(t)), t)))
-
-
-# --- fitted point + empirical targets (figures_inversion.py, verbatim) -----
-FIT = dict(t_inv=825_000.0, p_hist=0.72, t_decline=250_000.0,
-           t_fall=50_000.0, p_now=0.374)     # best cell, covariance distance with trajectory variance
-TARGETS = {"pi_i_over_pi_s": (1.3556, 0.0481),
-           "dxy_over_pi_i":  (1.3848, 0.0214),
-           "f1_ratio":       (0.8125, 0.0076)}
-
-
-def chi2(row):
-    return sum(((float(row[k]) - t) / se) ** 2
-               for k, (t, se) in TARGETS.items())
-
-
-def profile(tag, key):
-    """(values, delta-chi2) profiling `key` (figures_inversion.py, verbatim)."""
-    rows = list(csv.DictReader(open(RESULTS_ILLEX / f"refit_decline{tag}.csv")))
-    best = {}
-    for r in rows:
-        v, c = float(r[key]), chi2(r)
-        if v not in best or c < best[v][0]:
-            best[v] = (c, r)
-    gmin = min(c for c, _ in best.values())
-    vals = sorted(best)
-    return np.array(vals), np.array([best[v][0] - gmin for v in vals])
-
-
-times, freqs, _s_fall = decline_curve(**FIT)
-times, freqs = np.asarray(times) / 1e3, np.asarray(freqs)
+TRAJ = Path(__file__).resolve().parents[1] / "data" / "inversion_abc" / "traj_quantiles_f1.csv"
+tq = pd.read_csv(TRAJ)
+P_NOW = 0.626
 
 # one consistent accent for the inversion-frequency data, distinct from the
 # three colours already spoken for in panel a (blue/vermillion/green)
@@ -270,38 +146,24 @@ ax_a.text(-0.085, 1.04, "a", transform=ax_a.transAxes, **LETTER_KW)
 ax_a.set_title("Population size history", loc="left", pad=8,
                fontsize=11, fontweight="normal", color=C["muted"])
 
-# ---- b-i: fitted inversion-frequency trajectory ---------------------------
+# ---- b: posterior trajectory of the derived arrangement -------------------
 ax_bi = fig.add_subplot(gs[1, :])
-
-t0 = FIT["t_decline"] + FIT["t_fall"]
-tb = np.linspace(0.0, t0, 400)
-sd = np.array([drift_sd(FIT["p_hist"], t, t0) for t in tb])
-for k in (2, 1):
-    ax_bi.fill_between(tb / 1e3, np.clip(1 - FIT["p_hist"] - k * sd, 0, 1),
-                       np.clip(1 - FIT["p_hist"] + k * sd, 0, 1),
-                       color=C["muted"], alpha=0.14, lw=0, zorder=1)
-ax_bi.plot(tb / 1e3, np.full_like(tb, 1 - FIT["p_hist"]), lw=0.8, ls=":",
-          color=C["muted"], zorder=1)
-ax_bi.axhline(1 - FIT["p_now"], lw=0.8, ls="--", color=C["ink"], zorder=2)
-ax_bi.plot(times, 1 - np.asarray(freqs), lw=2.0, color=COL_BB, zorder=3, solid_capstyle="round")
-ax_bi.scatter([0], [1 - FIT["p_now"]], s=32, color=COL_BB, zorder=4,
-             edgecolor="white", linewidth=0.9)
-
-ax_bi.set_xlim(-14, FIT["t_inv"] / 1e3 * 1.06)   # present (0 ka) at LEFT, to match panel a
-ax_bi.set_ylim(0, 0.96)
-ax_bi.set_yticks([0, 1 - FIT["p_hist"], 0.45, 0.626, 0.8])
-ax_bi.set_yticklabels(["0", f"{1 - FIT['p_hist']:.2f}", "0.45", "0.626", "0.8"])
+tk = tq["t_gen"] / 1e3
+ax_bi.fill_between(tk, tq["q025"], tq["q975"], color=COL_BB, alpha=0.16, lw=0, zorder=1, label="95%")
+ax_bi.fill_between(tk, tq["q25"], tq["q75"], color=COL_BB, alpha=0.32, lw=0, zorder=2, label="50%")
+for c in [c for c in tq.columns if c.startswith("path")]:
+    ax_bi.plot(tk, tq[c], lw=0.45, color=C["ink"], alpha=0.35, zorder=3)
+ax_bi.plot(tk, tq["q50"], lw=2.0, color=COL_BB, zorder=4, solid_capstyle="round", label="median")
+ax_bi.axhline(P_NOW, lw=0.8, ls="--", color=C["ink"], zorder=2)
+ax_bi.set_xlim(-14, 1000)   # present (0 ka) at LEFT, to match panel a
+ax_bi.set_ylim(0, 0.8)
+ax_bi.set_yticks([0, 0.2, 0.4, 0.626])
+ax_bi.set_yticklabels(["0", "0.2", "0.4", "0.626"])
 ax_bi.set_xlabel("Time before present (ka)")
 ax_bi.set_ylabel("Frequency of derived\n(2a) arrangement", linespacing=1.3)
 despine(ax_bi)
-
-ax_bi.annotate(f"barrier formed ~{FIT['t_inv'] / 1e3:.0f} ka", xy=(FIT["t_inv"] / 1e3, 1 - FIT["p_hist"]),
-              xytext=(FIT["t_inv"] / 1e3 - 25, 0.47), fontsize=9,
-              color=C["ink"], ha="right", va="center",
-              arrowprops=dict(arrowstyle="-", lw=0.7, color=C["muted"],
-                              shrinkA=1, shrinkB=3))
-ax_bi.text(8, 1 - FIT["p_now"] + 0.035, "$p = 0.626$ today", fontsize=9,
-          color=C["ink"], ha="left", va="bottom")
+ax_bi.legend(loc="center right", fontsize=8.0, title="posterior", title_fontsize=8.0)
+ax_bi.text(8, P_NOW + 0.035, "$p = 0.626$ today", fontsize=9, color=C["ink"], ha="left", va="bottom")
 ax_bi.text(-0.085, 1.06, "b", transform=ax_bi.transAxes, **LETTER_KW)
 ax_bi.set_title("Inversion frequency history", loc="left", pad=8,
                 fontsize=11, fontweight="normal", color=C["muted"])
