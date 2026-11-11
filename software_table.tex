@@ -1,16 +1,15 @@
 % Software & versions — transcribed from the verified §10 table.
-% Included by main.tex via \input{software_table}.
+% Included by supplement.tex via \input{software_table}.
 \begin{table}[t]\centering
   \caption{\textbf{Software and versions.} Versions were read off the analysis machine
-    (conda metadata, \texttt{pip list}, \texttt{-{}-version}, or recorded \texttt{versions.txt}).
-    Citations are pointers to confirm at final formatting.}
+    (conda metadata, \texttt{pip list}, \texttt{-{}-version}, or recorded \texttt{versions.txt}).}
   \label{tab:software}
   \small
   \begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}Xl@{}}
     \toprule
     Tool (version) & Used for & Reference \\
     \midrule
-    msinv 0.3.5              & chr2 inversion age/decline (inversion)   & \citep{msinv,kelleher2016} \\
+    msinv 0.4.1              & chr2 inversion simulation (ABC-SMC, NPE) & \citep{msinv,kelleher2018} \\
     grenepipe                & read processing and variant calling           & \citep{czech2022grenepipe} \\
     fastp                    & read trimming                                 & \citep{chen2018fastp} \\
     BWA-MEM2                 & read mapping                                  & \citep{vasimuddin2019bwamem2} \\

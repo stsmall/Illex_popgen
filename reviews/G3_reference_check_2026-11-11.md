@@ -8,29 +8,31 @@ was reachable, the entry says so. Tick the box in the action list when an item i
 
 ## Action list
 
-- [ ] `msinv`: bib, Data availability and Table S1 cite v0.3.5 / commit 35412bf. Update to the 0.4.1 release and commit that produced the ABC-SMC and NPE results.
-- [ ] `matuszewski2015` (main 12:505–506) DOES NOT SUPPORT "a moving optimum can hold an allele at an intermediate frequency". Replace the citation or the claim.
-- [ ] `baker2025` (main 17:744–746, 2:74–75): Baker retained 616 after QC then filtered to 540, never states 633 and never attributes missingness to the reference. Its SV caveat is general. Rephrase both.
-- [ ] `adrion2020relernn` (main 8:348–349, 18:799): ReLERNN does not use LD summaries. Say "from patterns of linkage in genotype data".
-- [ ] `kelleher2018` (main 18:804–805) is the tree-sequence-recording paper, not msprime. Cite `kelleher2016` or `baumdicker2022` for msprime.
-- [ ] `albertin2015` (main 11:462): Octopus genome. Drop it for the Euprymna protein family (keep `albertin2022`).
-- [ ] `mathger2010`, `ramirez2015` (main 3:103–106): cuttlefish and octopus under "In squids". Change to "In cephalopods".
-- [ ] `stefansson2005` (main 12:494): does not state a recent increase of 17q21 H2. Rephrase ("under ongoing positive selection").
-- [ ] `navarro2000`, `peischl2013` (main 6:219–220): Peischl is a simulation-algorithm paper. Cite an analytic source for diversity scaling with arrangement frequency (e.g. Navarro et al. 2000 equations, or Guerrero et al. 2012).
-- [ ] `waples1998`, `hauser2008`, `gagnaire2015` (main 2:39–41): none says marine datasets were limited to mtDNA or few loci, and Hauser & Carvalho stress extensive marine structure. Rephrase or recite.
+Status 2026-11-11 (manuscript commit after `72fc198`): ticked items are fixed. Open: `small2026` accession or preprint (the "recently made available" wording is removed), the "(needs reference)" placeholder, the msprime 1.4.1 vs 1.4.2 conflict and the SQANTI3, LiftOn and Pfam-A versions (not verifiable on the analysis machine), and the CANNOT CHECK items. The StringTie item needs no change, because the text never says StringTie2 (only the cited paper's title does).
+
+- [x] `msinv`: bib, Data availability and Table S1 cite v0.3.5 / commit 35412bf. Update to the 0.4.1 release and commit that produced the ABC-SMC and NPE results.
+- [x] `matuszewski2015` (main 12:505–506) DOES NOT SUPPORT "a moving optimum can hold an allele at an intermediate frequency". Replace the citation or the claim.
+- [x] `baker2025` (main 17:744–746, 2:74–75): Baker retained 616 after QC then filtered to 540, never states 633 and never attributes missingness to the reference. Its SV caveat is general. Rephrase both.
+- [x] `adrion2020relernn` (main 8:348–349, 18:799): ReLERNN does not use LD summaries. Say "from patterns of linkage in genotype data".
+- [x] `kelleher2018` (main 18:804–805) is the tree-sequence-recording paper, not msprime. Cite `kelleher2016` or `baumdicker2022` for msprime.
+- [x] `albertin2015` (main 11:462): Octopus genome. Drop it for the Euprymna protein family (keep `albertin2022`).
+- [x] `mathger2010`, `ramirez2015` (main 3:103–106): cuttlefish and octopus under "In squids". Change to "In cephalopods".
+- [x] `stefansson2005` (main 12:494): does not state a recent increase of 17q21 H2. Rephrase ("under ongoing positive selection").
+- [x] `navarro2000`, `peischl2013` (main 6:219–220): Peischl is a simulation-algorithm paper. Cite an analytic source for diversity scaling with arrangement frequency (e.g. Navarro et al. 2000 equations, or Guerrero et al. 2012).
+- [x] `waples1998`, `hauser2008`, `gagnaire2015` (main 2:39–41): none says marine datasets were limited to mtDNA or few loci, and Hauser & Carvalho stress extensive marine structure. Rephrase or recite.
 - [ ] `small2026` is "in preparation" yet cited for a genome "recently made available", the 4.14 Gb assembly, k-mer heterozygosity, long reads and Z lncRNAs. Add an assembly accession or preprint DOI.
 - [ ] Main 2:38–39 "(needs reference)" placeholder.
-- [ ] `degenotate` URL 404: use https://github.com/harvardinformatics/degenotate.
-- [ ] `poplin2018gatk`: bioRxiv first posted 2017.
-- [ ] `chao2024lifton`: add Genome Research 35(2):311–325 (issue 2025).
-- [ ] `talts2018`: add DOI 10.48550/arXiv.1804.06788. `lemos2023`: add PMLR 202:19256–19273.
-- [ ] `korunes2019` (supp p. 3): paper reports 188–390 bp tracts, not 300 bp. Say "300 bp, within the 188–390 bp estimated by Korunes and Noor".
-- [ ] `miyata1987` (supp p. 7, Table S12 caption): X/Y/autosome derivation. Say "following Miyata et al. (1987)" for the Z version.
-- [ ] `kelleher2016` cited for msinv in Table S1: use `kelleher2018` (tskit) for tree-sequence output, which is already on the tskit row.
+- [x] `degenotate` URL 404: use https://github.com/harvardinformatics/degenotate.
+- [x] `poplin2018gatk`: bioRxiv first posted 2017.
+- [x] `chao2024lifton`: add Genome Research 35(2):311–325 (issue 2025).
+- [x] `talts2018`: add DOI 10.48550/arXiv.1804.06788. `lemos2023`: add PMLR 202:19256–19273.
+- [x] `korunes2019` (supp p. 3): paper reports 188–390 bp tracts, not 300 bp. Say "300 bp, within the 188–390 bp estimated by Korunes and Noor".
+- [x] `miyata1987` (supp p. 7, Table S12 caption): X/Y/autosome derivation. Say "following Miyata et al. (1987)" for the Z version.
+- [x] `kelleher2016` cited for msinv in Table S1: use `kelleher2018` (tskit) for tree-sequence output, which is already on the tskit row.
 - [ ] Version conflicts: msprime 1.4.1 (supp p. 4) vs 1.4.2 (Table S1). StringTie2 (supp p. 3) vs StringTie 3.0.0 (Table S1). Add versions for SQANTI3, LiftOn and the Pfam-A release.
-- [ ] Table S1 caption draft text "Citations are pointers to confirm at final formatting". The comment in software_table.tex says it is included by main.tex but supplement.tex inputs it.
-- [ ] `baumdicker2022`: author "Kretzschumar" copies a publisher typo (Kretzschmar).
-- [ ] Uncited bib entries: `keightley2018estsfs`, `schrider2017`. Remove or cite.
+- [x] Table S1 caption draft text "Citations are pointers to confirm at final formatting". The comment in software_table.tex says it is included by main.tex but supplement.tex inputs it.
+- [x] `baumdicker2022`: author "Kretzschumar" copies a publisher typo (Kretzschmar).
+- [x] Uncited bib entries: `keightley2018estsfs`, `schrider2017`. Remove or cite.
 - [ ] CANNOT CHECK, confirm by hand: `arkhipkin2015`, `odor1998`, `schweinsberg2003`, `small2026`, `nei1986` (abstract only), `ohta1971`.
 
 ---
