@@ -72,7 +72,7 @@ the moments model was checked by forward simulation, which reproduced the observ
 \paragraph{Genotype-based statistics.}
 Statistics that need individual genotypes were computed with pg\_gpu \citep{pggpu} from the filtered VCF.
 Windowed $\pi$, $\dxy$ and Hudson $\Fst$ between arrangements used biallelic SNPs in 100-kb windows, with the 2a/2a
-($n=254$) and 2+/2+ ($n=95$) homozygotes as the two populations and missing genotypes included pairwise. The between-division $\Fst$ matrix (Hudson), the linkage-disequilibrium triangles (genotype $r^2$ among common SNPs), and the principal-component analyses were computed the same way. The per-SNP geographic $\Fst$ scans (Supplementary Figs.~S2, S19) used plink2 \citep{chang2015plink2} on every biallelic SNP with a minor-allele frequency above 0.05 in the pooled 632 individuals from the ten divisions with more than one sample (division 3N, with a single individual, was excluded), giving 20{,}276{,}930 SNPs. Per-division allele counts were converted to Hudson $\Fst$ for each of the 45 division pairs \citep{bhatia2013}, at sites genotyped in at least 40 individuals in that pair and with at least two alleles in each division. The per-SNP value is the ratio of averages over informative pairs (the sum of the numerators over the sum of the denominators), without clipping, keeping sites informative in at least 20 of the 45 pairs. The null was built by shuffling division labels among the 632 individuals 20 times (division sizes kept) and recomputing $\Fst$ at the same SNPs in the same way. Thresholds are quantiles of the pooled null over the autosomes outside the chromosome-2 inversion ($3.996\times10^{8}$ values), and the expected count above each threshold is the number of SNPs times the null tail rate.
+($n=254$) and 2+/2+ ($n=95$) homozygotes as the two populations and missing genotypes included pairwise. The between-division $\Fst$ matrix (Hudson), the linkage-disequilibrium triangles (genotype $r^2$ among common SNPs), and the principal-component analyses were computed the same way. The per-SNP geographic $\Fst$ scans (Supplementary Figs.~S2, S19) used plink2 \citep{chang2015plink2} to filter and count alleles at every biallelic SNP with a minor-allele frequency above 0.05 in the pooled 632 individuals from the ten divisions with more than one sample (division 3N, with a single individual, was excluded). Per-division allele counts were converted to Hudson $\Fst$ for each of the 45 division pairs \citep{bhatia2013}, at sites genotyped in at least 40 individuals in that pair and with at least two alleles in each division. The per-SNP value is the ratio of averages over informative pairs (the sum of the numerators over the sum of the denominators), without clipping, keeping sites informative in at least 20 of the 45 pairs. Of the 23{,}892{,}020 SNPs passing the frequency filter, 20{,}276{,}930 met this criterion, 20{,}117{,}984 of them on the 45 autosomes (133{,}957 in the chromosome-2 inversion) and 158{,}946 on the Z chromosome. The null was built by shuffling division labels among the 632 individuals 20 times (division sizes kept) and recomputing $\Fst$ at the same SNPs in the same way. Thresholds are quantiles of the pooled null over the autosomes outside the chromosome-2 inversion ($3.996\times10^{8}$ values), and the expected count above each threshold is the number of SNPs times the null tail rate.
 
 \paragraph{The inversion.}
 Karyotypes were called from the first principal component of a local PCA across chromosome~2 with a
@@ -177,7 +177,13 @@ the linked classes, because real neutral windows carry three to eight times more
 diversity among sub-windows than the simulations. We therefore used it as an outlier detector. The sweep score
 $p_\mathrm{hard}+p_\mathrm{soft}$ was ranked within strata of callable fraction (quintiles) and coding density
 (zero or not), and windows in the top 1\% of their stratum were outliers. RAiSD and SweepFinder2 statistics were
-ranked the same way, and a region was concordant when a diploS/HIC outlier was supported by either. Tier-1 calls
+ranked the same way, and a region was concordant when a diploS/HIC outlier was supported by either. The
+false-discovery rate of the concordant set was estimated by shifting the joint RAiSD and SweepFinder2 outlier track
+circularly within each chromosome by an independent uniform offset of whole 100-kb windows, 10{,}000 times, and
+counting the diploS/HIC outlier regions that became concordant by chance (227 outlier regions, 446 footprint
+outlier windows among 22{,}278 callable windows). The mean of this null, 4.8 regions (95\% range 1--9), against the
+24 observed gives a false-discovery rate of 0.20 (no shift reached 24). Tier-1 calls are stratified outliers by
+construction and have no comparable estimate. Tier-1 calls
 came from a hidden Markov model with neutral, linked and sweep-centre states, whose emissions are the
 prior-corrected class posteriors and whose dwell lengths follow the $\sim$400-kb sweep footprint scaled by the
 recombination map. Calibrating this decoder by simulation proved infeasible, because at this population size the
@@ -323,7 +329,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
     lengths from the $\sim$400~kb sweep footprint scaled by the ReLERNN map, design-based rather than simulation-calibrated). \textbf{(a)}~The decoder at a representative concordant sweep (chromosome~35, \textit{ZEB2}), showing the sweep posterior $p_\mathrm{hard}+p_\mathrm{soft}$ per window and the Viterbi state track
     (neutral / linked / centre). It localises the centre inside the linked envelope and overrides spatially
     isolated high-posterior windows (e.g.\ near 38.35~Mb). \textbf{(b)}~Markov correction reduces the raw
-    hard/soft calls from 1{,}651 to 677 spatially coherent calls ($-59\%$). \textbf{(c)}~88\% of windows at
+    hard/soft windows from 1{,}651 to 677 spatially coherent windows ($-59\%$), which merge into 623 localized calls. \textbf{(c)}~88\% of windows at
     the Tier-2 cross-method-concordant loci are decoded as sweep centres versus 2.9\% genome-wide (odds
     ratio 242, $p<10^{-30}$, 21 of 24 concordant regions recovered).}
   \label{sfig:markov}
@@ -398,7 +404,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \begin{figure}[h]\centering
   \includegraphics[width=\linewidth]{figS19_fst_genomewide.png}
   \caption{\textbf{Genome-wide per-SNP $\Fst$ finds no differentiation outlier.} Per-SNP Hudson $\Fst$ of
-    \cref{sfig:fstsnp} along the genome (20{,}276{,}930 SNPs with minor-allele frequency above 0.05, every SNP shown).
+    \cref{sfig:fstsnp} along the genome (20{,}276{,}930 SNPs with minor-allele frequency above 0.05 that are informative in at least 20 division pairs, 20{,}117{,}984 on the autosomes and 158{,}946 on the Z, every SNP shown).
     \textbf{(a)}~No SNP exceeds the permutation-null maximum ($0.583$, dashed). The 2{,}327 SNPs above the null
     99.99th percentile ($0.075$, dotted) on the autosomes match the number expected by chance and are spread across
     all chromosomes. The chromosome-2 inversion is green. chrZ (blue) exceeds the null tail (187 SNPs above the
@@ -415,7 +421,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
     whole of chromosome~2, aggregated in 100~kb windows (ratio-of-averages Hudson estimator). Unlike the
     population-$\Fst$ scan (which asks about geography), this asks how differentiated the two arrangements are
     along the chromosome. The collinear remainder (grey) sits at $\Fst\approx0$ (median 0.006), so outside the inversion the karyotypes are one panmictic population, while the inversion (60.54--79.50~Mb,
-    shaded) is strongly differentiated (median 0.34, max 0.53). The $\Fst\approx0.37$ ``structure'' on
+    shaded) is strongly differentiated (median 0.34, max 0.53). The whole-inversion $\Fst$ of 0.37 that defines the ``structure'' on
     chromosome~2 is thus between karyotypes and confined to the inversion, not geographic.}
   \label{sfig:karyofst}
 \end{figure}

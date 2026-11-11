@@ -34,7 +34,7 @@ scripts behind every result. These rules apply to anyone, human or AI, editing t
 - The callset is GATK HaplotypeCaller joint genotyping (gVCF, all sites retained) run through grenepipe.
 - Diversity statistics come from ANGSD run directly on the BAMs (`-GL 1`, the SAMtools model), not from the VCF.
 - Windowed per-arrangement statistics, Hudson FST, LD, and PCA use pg_gpu on called genotypes. Per-SNP geographic FST
-  uses plink2 (Weir--Cockerham).
+  uses the Hudson estimator (Bhatia et al. 2013) on plink2 per-division allele counts (hudson_maf05_agg.py).
 - The accessibility mask is the sequence outside Earl Grey repeats (1.43 Gb). For the sweep scan and gene-set analyses
   it is extended by the 22 anomalous-diversity blocks (Supplementary Table S9).
 - The demography was fitted before the 22 blocks were masked. Do not refit it.
