@@ -2,13 +2,13 @@
 
 Balancing model (B) with gene flux. Left: frequency of the derived 2a arrangement against
 generations since the onset of selection (t_sel), for 200 trajectories re-simulated from
-posterior particles, with pointwise 50% and 95% bands and median of 400. Aligning on the
+NPE posterior draws, with pointwise 50% and 95% bands and median of 400. Aligning on the
 onset removes the spread in timing that smears the pointwise bands of main-text Fig. 4b.
 Right: posterior draws of the barrier age t_inv and the onset t_sel behind those
 trajectories (dashed lines are medians).
 
-Data (written by illex/abc/smc_results/plot_base2.py in the msinv repository, branch
-illex/trajectory-abc): data/inversion_abc/traj_aligned_f1.csv, traj_params_f1.csv.
+Data (written by illex/abc/npe/plot_npe.py in the msinv repository, branch
+illex/trajectory-abc): data/inversion_abc/traj_aligned_npe_f1.csv, traj_params_npe_f1.csv.
 Output: supp_figures/figS14c_abc_trajectory.png
 """
 import sys
@@ -26,8 +26,8 @@ apply()
 COL = OKABE[7]     # same accent as Fig. 4b
 P_NOW = 0.626
 
-al = pd.read_csv(ROOT / "data" / "inversion_abc" / "traj_aligned_f1.csv")
-pr = pd.read_csv(ROOT / "data" / "inversion_abc" / "traj_params_f1.csv")
+al = pd.read_csv(ROOT / "data" / "inversion_abc" / "traj_aligned_npe_f1.csv")
+pr = pd.read_csv(ROOT / "data" / "inversion_abc" / "traj_params_npe_f1.csv")
 
 fig = plt.figure(figsize=(7.8, 3.0))
 gs = fig.add_gridspec(1, 2, width_ratios=[1.6, 1], wspace=0.3)

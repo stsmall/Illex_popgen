@@ -19,10 +19,11 @@ Panel a: population size history (composite) -- Ne over time, overlaying (each w
         the time-varying fit is non-identifiable (params pinned at bounds).
 
 Panel b: chr2 inversion frequency history of the derived 2a arrangement under the balancing model (B) with
-    gene flux, the model favoured by the ABC-SMC. Pointwise posterior-predictive quantiles (50% and 95%) and median
-    of 400 trajectories re-simulated from posterior particles on the inversion's neutral baseline. Individual
-    trajectories are not drawn (they are in Supplementary Fig. S14, scripts/figS14c_abc_trajectory.py). Data: data/inversion_abc/traj_quantiles_f1.csv, written by illex/abc/smc_results/plot_base2.py in the
-    msinv repository (branch illex/trajectory-abc).
+    gene flux, the model favoured by the ABC-SMC model choice, with parameters from neural posterior estimation
+    (NPE). Pointwise quantiles (50% and 95%) and median of 400 trajectories re-simulated from NPE posterior draws
+    on the inversion's neutral baseline. Individual trajectories are not drawn (they are in Supplementary Fig. S14,
+    scripts/figS14c_abc_trajectory.py). Data: data/inversion_abc/traj_quantiles_npe_f1.csv, written by
+    illex/abc/npe/plot_npe.py in the msinv repository (branch illex/trajectory-abc).
 """
 import json
 import sys
@@ -75,9 +76,9 @@ _ne5 = float(g2.loc[g2["Generation"] == 5, "Ne_diploids"].iloc[0])
 g2.loc[g2["Generation"] < 5, "Ne_diploids"] = _ne5
 
 # =====================================================================
-# Panel b data -- ABC-SMC posterior trajectories (model B, gene flux)
+# Panel b data -- NPE posterior trajectories (model B, gene flux)
 # =====================================================================
-TRAJ = Path(__file__).resolve().parents[1] / "data" / "inversion_abc" / "traj_quantiles_f1.csv"
+TRAJ = Path(__file__).resolve().parents[1] / "data" / "inversion_abc" / "traj_quantiles_npe_f1.csv"
 tq = pd.read_csv(TRAJ)
 P_NOW = 0.626
 
