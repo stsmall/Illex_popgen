@@ -456,15 +456,15 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 
 \clearpage
 \begin{figure}[p]\centering
-  \includegraphics[width=.85\linewidth]{figS25_abc_ppc.png}
-  \caption{\textbf{Posterior predictive checks of the inversion trajectory models.} For the balancing model (B),
-    1{,}000 NPE posterior draws were simulated again, and for each directional model alive in the final ABC-SMC
-    generation, 1{,}000 posterior particles. Each point is the quantile of the
-    observed statistic among the replicates, and the shaded margins lie outside the central 95\%. Tajima's $D$
-    (\texttt{tajd}) and the edge-to-centre divergence ratio (\texttt{edge\_centre}) were withheld from the fit. The
-    legend gives the joint predictive $p$ and the number of NPE draws or distinct particles of each model. I is 2a and S is 2+.
-    \texttt{jsfs\_ab} is the joint-spectrum cell with 2a in count bin a and 2+ in bin b (bins 0, 1--4, 5--15, 16--19
-    and 20 of 20). Linkage-disequilibrium bins 1--6 are log-spaced from 100~bp to 20~kb.}
+  \includegraphics[width=.76\linewidth]{figS25_abc_ppc.png}
+  \caption{\textbf{Posterior predictive checks of the balancing model.} For each gene-flux setting, 1{,}000 NPE
+    posterior draws were simulated again. Each point is the quantile of the observed statistic among the replicates.
+    The shading marks the central 50--90\%, the 90--95\% and the outer 5\% of the predictive distribution, the points
+    are coloured by the two-sided predictive $p$ (below 0.05, 0.05--0.10, above 0.10), and statistics with $p$ below
+    0.10 are labelled. The panel titles give the joint predictive $p$. Tajima's $D$ and the edge-to-centre divergence
+    ratio were withheld from the fit. The site-frequency-spectrum bins are the proportions of segregating sites with
+    1 to 5 and 6 or more minor-allele copies of 20, and the joint-spectrum cells give the count bins of 2a and 2+ (0,
+    1--4, 5--15, 16--19 and 20 of 20).}
   \label{sfig:abcppc}
 \end{figure}
 
