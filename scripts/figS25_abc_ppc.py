@@ -1,10 +1,10 @@
 """Supp Fig S25 -- posterior predictive checks of the balancing model (NPE draws).
 
 For each statistic, the quantile of the observed value among 1,000 replicates simulated from NPE posterior draws of
-the balancing model, with gene flux (left) and without it (right). Background bands mark the central 50, 90 and 95%
+the balancing model with gene flux, the favoured model. Background bands mark the central 50, 90 and 95%
 of the predictive distribution. Points are coloured by how far into the tails the observed value falls, and every
 statistic with a two-sided predictive p below 0.10 is labelled with its p. Statistics withheld from the fit are
-marked. Panel titles give the joint predictive p.
+marked. The title gives the joint predictive p.
 
 Data (written by illex/abc/smc_results/ppc/ppc_analyze.py on the output of illex/abc/npe/ppc_npe.py in the msinv
 repository, branch illex/trajectory-abc): data/inversion_abc/npe_ppc_per_stat.csv, npe_ppc_joint.csv.
@@ -63,8 +63,9 @@ def colour(p):
             return col
 
 
-fig, axs = plt.subplots(1, 2, figsize=(8.6, 11.2), sharey=True)
-for ax, flux in zip(axs, (1, 0)):
+FLUX = 1
+fig, ax = plt.subplots(figsize=(5.4, 11.2))
+for flux in (FLUX,):
     d = per[per.flux == flux].set_index("stat")
     jp = float(joint.loc[joint.flux == flux, "joint_ppp"].iloc[0])
     # predictive bands: central 50% (white), 50-90 (light), 90-95 (mid), outer 5% (dark)
@@ -88,17 +89,16 @@ for ax, flux in zip(axs, (1, 0)):
     ax.set_xticks([0, 0.025, 0.25, 0.5, 0.75, 0.975, 1])
     ax.set_xticklabels(["0", "", "0.25", "0.5", "0.75", "", "1"])
     ax.set_xlabel("Quantile of observed value\namong predictive replicates")
-    ax.set_title(("With gene flux (favoured)" if flux else "Without gene flux") + f"\njoint predictive p = {jp:.2f}",
-                 fontsize=10)
+    ax.set_title(f"Balancing model with gene flux\njoint predictive p = {jp:.2f}", fontsize=10)
     despine(ax, keep=("bottom",))
     ax.tick_params(axis="y", length=0)
-axs[0].set_yticks([r[0] for r in rows])
-axs[0].set_yticklabels([r[2] for r in rows], fontsize=8)
-axs[0].set_ylim(ymax - 0.2, -0.6)
+ax.set_yticks([r[0] for r in rows])
+ax.set_yticklabels([r[2] for r in rows], fontsize=8)
+ax.set_ylim(ymax - 0.2, -0.6)
 handles = [plt.Line2D([], [], marker="o", ls="", color=col, markersize=6, label=lab) for _, col, lab in TAIL[::-1]]
 handles += [plt.Rectangle((0, 0), 1, 1, color=c, label=l) for c, l in
             (("#f2f2f2", "central 50–90%"), ("#dedede", "90–95%"), ("#bdbdbd", "outer 5%"))]
-fig.legend(handles=handles, loc="lower center", ncol=6, fontsize=7.5, bbox_to_anchor=(0.55, -0.005),
+fig.legend(handles=handles, loc="lower center", ncol=3, fontsize=7.5, bbox_to_anchor=(0.6, -0.01),
            handletextpad=0.4, columnspacing=1.0)
-fig.subplots_adjust(left=0.2, right=0.98, top=0.95, bottom=0.075, wspace=0.08)
+fig.subplots_adjust(left=0.32, right=0.97, top=0.95, bottom=0.09)
 save(fig, str(ROOT / "supp_figures" / "figS25_abc_ppc.png"))

@@ -110,7 +110,7 @@ Model choice and parameter inference were joint, in pyABC 0.13.1 \citep{klinger2
 Parameters of the balancing model were estimated by neural posterior estimation \citep{cranmer2020,min2026} in sbi 0.27 \citep{tejero2020,boelts2025}. The training simulations were new draws from the prior of the balancing model with a founding frequency, with and without gene flux, kept when the present frequency of 2a fell within 0.02 of 0.626, as in the ABC-SMC, with the same simulator, baseline and 39 statistics (59{,}743 simulations with gene flux and 59{,}531 without, each from about 5.5 million prior draws). Starts from a single copy, which carry 2\% of the ABC-SMC posterior mass, were not included. The parameters were transformed to the scale on which their priors are uniform ($t_\mathrm{inv}$, $t_\mathrm{sel}/t_\mathrm{inv}$, $\log_{10}p_0$, $\log_{10}s$, $p^{*}$ and the log gene-flux rate), and the statistics were standardised. The posterior is an equal mixture of five neural spline flows \citep{durkan2019} with five transforms and 64 hidden units, each trained from a different seed with 10\% of the training set held for validation and stopped after 30 epochs without improvement. Calibration was tested on 2{,}000 held-out simulations by simulation-based calibration \citep{talts2018} and by the TARP coverage test \citep{lemos2023}. With gene flux the rank distributions are uniform (Kolmogorov--Smirnov $p$ 0.12--0.93), and the central 50, 90 and 95\% intervals contain the true value in 49--51, 88--91 and 94--96\% of simulations. The observed statistics lie inside the training distribution, at the 0.39 quantile of the robust Mahalanobis distance and between the 20th and 90th percentile for each statistic. Without gene flux the coverage is also nominal, but the ranks of $t_\mathrm{inv}$ and $s$ deviate slightly from uniform ($p<0.01$), and about half of the training simulations have no variants shared at low frequency by the two arrangements, which the data have. Twenty thousand posterior draws were taken at the observed statistics. The trajectories in main-text Fig.~4b and Supplementary Fig.~S14 were simulated from 400 posterior draws with gene flux, each re-simulated until its path passed the present-frequency filter (382 within 50 attempts).
 
 \paragraph{Posterior predictive checks.}
-The balancing model was checked from 1{,}000 NPE posterior draws for each gene-flux setting, and each directional model alive in the final ABC-SMC generation from 1{,}000 particles drawn by posterior weight. Each was simulated again with the same simulator, with the frequency path retried until it passed the present-frequency filter. Each statistic was scored by the quantile of the observed value among the replicates and a two-sided predictive $p$-value, and the joint fit by the rank of the observed distance from the predictive median, in the distance of the fit, among the replicates' distances (Supplementary Fig.~S25). Under balancing selection with gene flux the joint predictive $p$ is 0.26 (0.08 without gene flux). The withheld statistics are reproduced (two-sided $p$ 0.95 and 0.68 for Tajima's $D$ in 2a and 2+, 0.86 for the edge-to-centre ratio). With gene flux, only linkage disequilibrium at 8--20~kb in 2+ falls below $p=0.05$ ($p=0.01$), and linkage disequilibrium at 100--1{,}400~bp in 2a, the cell of variants rare in 2a and fixed in 2+ and the cell of variants at low frequency in both are at the edge of their ranges ($p=0.08$--0.13). Without gene flux, linkage disequilibrium at 8--20~kb in 2+ also fails ($p=0.016$), and the cells of variants rare in 2a and at high frequency or fixed in 2+ are at the edge of their ranges (observed 0.018 and 0.012, predicted 0.002 and 0.0001, $p=0.08$ and 0.07). The cell of variants at low frequency in both arrangements is reproduced in both settings (observed 0.073, predicted 0.039 with gene flux and 0.041 without, $p=0.10$ and 0.26). The directional models surviving in the final generation rest on 4--12 distinct particles. Their joint predictive $p$ values are 0.06--0.30, and all fail that cell ($p\le0.012$). In the collinear flanks the same cell matches the neutral baseline (observed 0.233, accepted draws 0.210--0.269), so the two-dimensional spectrum and the baseline reproduce it where there is no barrier.
+The balancing model was checked from 1{,}000 NPE posterior draws for each gene-flux setting, and each directional model alive in the final ABC-SMC generation from 1{,}000 particles drawn by posterior weight. Each was simulated again with the same simulator, with the frequency path retried until it passed the present-frequency filter. Each statistic was scored by the quantile of the observed value among the replicates and a two-sided predictive $p$-value, and the joint fit by the rank of the observed distance from the predictive median, in the distance of the fit, among the replicates' distances (Supplementary Fig.~S25 for the balancing model with gene flux). Under balancing selection with gene flux the joint predictive $p$ is 0.26 (0.08 without gene flux). The withheld statistics are reproduced (two-sided $p$ 0.95 and 0.68 for Tajima's $D$ in 2a and 2+, 0.86 for the edge-to-centre ratio). With gene flux, only linkage disequilibrium at 8--20~kb in 2+ falls below $p=0.05$ ($p=0.01$), and linkage disequilibrium at 100--1{,}400~bp in 2a, the cell of variants rare in 2a and fixed in 2+ and the cell of variants at low frequency in both are at the edge of their ranges ($p=0.08$--0.13). Without gene flux, linkage disequilibrium at 8--20~kb in 2+ also fails ($p=0.016$), and the cells of variants rare in 2a and at high frequency or fixed in 2+ are at the edge of their ranges (observed 0.018 and 0.012, predicted 0.002 and 0.0001, $p=0.08$ and 0.07). The cell of variants at low frequency in both arrangements is reproduced in both settings (observed 0.073, predicted 0.039 with gene flux and 0.041 without, $p=0.10$ and 0.26). The directional models surviving in the final generation rest on 4--12 distinct particles. Their joint predictive $p$ values are 0.06--0.30, and all fail that cell ($p\le0.012$). In the collinear flanks the same cell matches the neutral baseline (observed 0.233, accepted draws 0.210--0.269), so the two-dimensional spectrum and the baseline reproduce it where there is no barrier.
 
 \paragraph{Recombination map.}
 ReLERNN \citep{adrion2020relernn} was run in unphased mode on biallelic SNPs with at most 50\% missing genotypes.
@@ -330,23 +330,20 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \end{figure}
 
 \begin{figure}[p]\centering
-  \includegraphics[width=.42\linewidth]{figS14a_abc_model_probs.png}\\[4pt]
-  \includegraphics[width=.47\linewidth]{figS14b_npe_posterior.png}\\[4pt]
-  \includegraphics[width=.62\linewidth]{figS14c_abc_trajectory.png}
-  \caption{\textbf{Model choice and posteriors for the chromosome-2 inversion trajectory} (main-text Fig.~4b).
-    Top, posterior probabilities of neutral drift (N), directional selection still under way (D1) or stopped (D2),
-    and balancing selection (B) over the 15 ABC-SMC generations, without (flux 0) and with (flux 1) gene flux
-    between arrangements. Middle, joint posterior of the balancing model with gene flux from neural posterior
-    estimation, with each axis spanning its prior. The diagonal gives the marginals with medians dashed, and below it
-    the contours enclose 80, 95 and 99\% of the posterior, with the Spearman correlation in each panel (bold where
-    $|\rho|\ge0.3$). The barrier age $t_\mathrm{inv}$ and the onset of selection $t_\mathrm{sel}$ are in thousands of
-    generations. All draws are soft starts, which carry 98\% of the ABC-SMC posterior mass. The selection coefficient
-    has only a lower bound and follows the prior above about $10^{-4}$. The gene-flux rate is the per-site conversion
-    probability per generation in heterokaryotypes. Bottom left, frequency of 2a in 200 trajectories re-simulated
-    from posterior draws, aligned on the onset of selection, with the pointwise median, 50\% and 95\% ranges of 382.
-    The median trajectory reaches 0.55 about 5{,}400 generations after onset, and the slowest fifth, mostly those
-    with $s<10^{-4}$, take more than 50{,}000 generations. Bottom right, the posterior draws of $t_\mathrm{inv}$ and
-    $t_\mathrm{sel}$ behind these trajectories, with medians dashed.}
+  \includegraphics[width=.6\linewidth]{figS14b_npe_posterior.png}\\[4pt]
+  \includegraphics[width=.72\linewidth]{figS14c_abc_trajectory.png}
+  \caption{\textbf{Posterior of the balancing model with gene flux for the chromosome-2 inversion} (main-text
+    Fig.~4b). Top, joint posterior from neural posterior estimation, with each axis spanning its prior. The diagonal
+    gives the marginals with medians dashed, and below it the contours enclose 80, 95 and 99\% of the posterior, with
+    the Spearman correlation in each panel (bold where $|\rho|\ge0.3$). The barrier age $t_\mathrm{inv}$ and the
+    onset of selection $t_\mathrm{sel}$ are in thousands of generations. All draws are soft starts, which carry 98\%
+    of the ABC-SMC posterior mass. The selection coefficient has only a lower bound and follows the prior above about
+    $10^{-4}$. The gene-flux rate is the per-site conversion probability per generation in heterokaryotypes. Bottom
+    left, frequency of 2a in 200 trajectories re-simulated from posterior draws, aligned on the onset of selection,
+    with the pointwise median, 50\% and 95\% ranges of 382. The median trajectory reaches 0.55 about 5{,}400
+    generations after onset, and the slowest fifth, mostly those with $s<10^{-4}$, take more than 50{,}000
+    generations. Bottom right, the posterior draws of $t_\mathrm{inv}$ and $t_\mathrm{sel}$ behind these
+    trajectories, with medians dashed.}
   \label{sfig:profiles}
 \end{figure}
 
@@ -456,15 +453,16 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 
 \clearpage
 \begin{figure}[p]\centering
-  \includegraphics[width=.76\linewidth]{figS25_abc_ppc.png}
-  \caption{\textbf{Posterior predictive checks of the balancing model.} For each gene-flux setting, 1{,}000 NPE
-    posterior draws were simulated again. Each point is the quantile of the observed statistic among the replicates.
-    The shading marks the central 50--90\%, the 90--95\% and the outer 5\% of the predictive distribution, the points
-    are coloured by the two-sided predictive $p$ (below 0.05, 0.05--0.10, above 0.10), and statistics with $p$ below
-    0.10 are labelled. The panel titles give the joint predictive $p$. Tajima's $D$ and the edge-to-centre divergence
-    ratio were withheld from the fit. The site-frequency-spectrum bins are the proportions of segregating sites with
-    1 to 5 and 6 or more minor-allele copies of 20, and the joint-spectrum cells give the count bins of 2a and 2+ (0,
-    1--4, 5--15, 16--19 and 20 of 20).}
+  \includegraphics[width=.44\linewidth]{figS25_abc_ppc.png}
+  \caption{\textbf{Posterior predictive check of the balancing model with gene flux.} 1{,}000 NPE posterior draws
+    were simulated again, and each point is the quantile of the observed statistic among the replicates. The shading
+    marks the central 50--90\%, the 90--95\% and the outer 5\% of the predictive distribution, the points are
+    coloured by the two-sided predictive $p$ (below 0.05, 0.05--0.10, above 0.10), and statistics with $p$ below 0.10
+    are labelled. The title gives the joint predictive $p$. Tajima's $D$ and the edge-to-centre divergence ratio were
+    withheld from the fit. The site-frequency-spectrum bins are the proportions of segregating sites with 1 to 5 and
+    6 or more minor-allele copies of 20, and the joint-spectrum cells give the count bins of 2a and 2+ (0, 1--4,
+    5--15, 16--19 and 20 of 20). The checks of the model without gene flux and of the directional models are
+    summarised in the Supplementary Methods.}
   \label{sfig:abcppc}
 \end{figure}
 
