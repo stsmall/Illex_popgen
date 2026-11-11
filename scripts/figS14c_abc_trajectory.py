@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 
 apply()
 COL = OKABE[7]     # same accent as Fig. 4b
-P_NOW = 0.626
+P_NOW = 0.618  # 2a frequency over 621 karyotyped individuals (242/284/95)
 
 al = pd.read_csv(ROOT / "data" / "inversion_abc" / "traj_aligned_npe_f1.csv")
 pr = pd.read_csv(ROOT / "data" / "inversion_abc" / "traj_params_npe_f1.csv")
@@ -44,8 +44,8 @@ ax.axhline(P_NOW, lw=0.8, ls="--", color=C["ink"])
 ax.axvline(0, lw=0.8, ls=":", color=C["muted"])
 ax.set_xlim(-10, 40)
 ax.set_ylim(0, 0.8)
-ax.set_yticks([0, 0.2, 0.4, 0.626])
-ax.set_yticklabels(["0", "0.2", "0.4", "0.626"])
+ax.set_yticks([0, 0.2, 0.4, P_NOW])
+ax.set_yticklabels(["0", "0.2", "0.4", f"{P_NOW:.3f}"])
 ax.set_xlabel("Thousand generations since onset of selection")
 ax.set_ylabel("Frequency of derived\n(2a) arrangement")
 ax.legend(loc="center right", fontsize=8)

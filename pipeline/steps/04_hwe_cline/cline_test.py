@@ -1,13 +1,20 @@
 #!/usr/bin/env python
 # chr2 inversion cline test (Priority 1.3): karyotype frequencies by NAFO division +
 # latitude regression. Prediction (panmixia): NO cline -> homogeneous freqs, slope~0.
+import os
 import pandas as pd, numpy as np
 from scipy.stats import chi2_contingency, linregress, pearsonr
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 
 BASE="/sietch_colab/data_share/illex/popgen_data"
 D=f"{BASE}/analysis/steps/04_hwe_cline"
+# manuscript repo root (this file is pipeline/steps/04_hwe_cline/cline_test.py)
+ROOT=os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","..",".."))
+# 12 BAMs with essentially no data (data/qc/empty_bams_12.tsv) are excluded; they were
+# labelled AA (2a/2a) by default because they carry only missing genotypes.
+EMPTY=set(pd.read_csv(f"{ROOT}/data/qc/empty_bams_12.tsv",sep="\t",comment="#")["sample"])
 k=pd.read_csv(f"{BASE}/analysis/steps/03_karyotype/karyotypes.baker.tsv",sep="\t")
+k=k[~k["sample"].isin(EMPTY)]
 m=pd.read_csv(f"{BASE}/pggpu_illex/popstats/metadata.tsv",sep="\t")[["sample","population","latitude"]]
 df=k.merge(m,on="sample").rename(columns={"population":"division"})
 df["Bdose"]=df["karyotype"].map({"AA":0,"AB":1,"BB":2})   # B-arrangement allele count
@@ -51,7 +58,8 @@ for d,row in tab.iterrows(): ax[1].annotate(d,(row["mean_lat"],row["p_B"]),fonts
 xs=np.array([tab["mean_lat"].min(),tab["mean_lat"].max()])
 ax[1].plot(xs,np.full(2,tab["p_B"].mean()),":",color="grey")  # flat ref at the mean
 ax[1].set(xlabel="mean latitude (N)",ylabel="2+ arrangement frequency",title=f"2+ frequency vs latitude (r={r_div:.2f}, p={p_div:.2g})")
-fig.suptitle("chr2 inversion: non-clinal test (baker 633)")
-fig.tight_layout(); fig.savefig(f"{D}/cline_test.png",dpi=140,bbox_inches="tight")
-tab.to_csv(f"{D}/karyo_by_division.tsv",sep="\t")
-print("wrote cline_test.png + karyo_by_division.tsv", flush=True)
+fig.suptitle(f"chr2 inversion: non-clinal test (n={len(df)})")
+fig.tight_layout(); fig.savefig(f"{ROOT}/supp_figures/figS6_cline.png",dpi=140,bbox_inches="tight")
+# n=621 table written beside (not over) the original 633-sample karyo_by_division.tsv
+tab.to_csv(f"{D}/karyo_by_division.n621.tsv",sep="\t")
+print(f"wrote {ROOT}/supp_figures/figS6_cline.png + {D}/karyo_by_division.n621.tsv", flush=True)

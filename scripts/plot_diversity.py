@@ -17,8 +17,9 @@ Data:
                     this low-coverage unphased data (reproduces genome-wide pi~0.0093,
                     D~-2). steps/08_demography/per_population/tables/perpop_*.tsv
   FST matrix      : ROUTE B (pg_gpu Hudson FST on baker SNP callset), aggregated over
-                    autosomes (chr2 inversion + chr42 sex + chrZ excluded). FST is a
-                    variance ratio -> robust to the ascertainment bias. tables/fst_matrix.tsv
+                    autosomes (chr2 inversion + chrZ excluded, chr42 autosome included). FST is a
+                    variance ratio -> robust to the ascertainment bias.
+                    tables/fst_matrix_withchr42.tsv (build_fst_matrix.py)
 """
 import sys
 sys.path.insert(0, "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/scripts")
@@ -44,7 +45,7 @@ import os as _os
 _wf = f"{BASE}/perpop_windows_expanded.tsv" if _os.path.exists(f"{BASE}/perpop_windows_expanded.tsv") else f"{BASE}/perpop_windows.tsv"
 win  = pd.read_csv(_wf, sep="\t")
 print(f"windows source: {_os.path.basename(_wf)}")
-fst  = pd.read_csv(f"{BASE}/fst_matrix.tsv", sep="\t", index_col=0)
+fst  = pd.read_csv(f"{BASE}/fst_matrix_withchr42.tsv", sep="\t", index_col=0)
 win["chrom"] = win["chrom"].astype(str)
 
 # latitude order (south -> north)

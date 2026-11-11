@@ -6,11 +6,15 @@
 Panels
   a  chr2 karyotype PCA ("three stripes") -- PC1 vs PC2 coloured by karyotype,
      recovered as the true AA/AB/BB assignment via a 3-component Gaussian
-     mixture on PC1 (ordered by component mean: low->AA, mid->AB, high->BB).
-     Data: steps/03_karyotype/chr2_karyo_coords.tsv
+     mixture on PC1 (ordered by component mean: low->AA, mid->AB, high->BB),
+     fitted on all 653 PCA rows and then restricted to the 621 analysed individuals.
+     Data: steps/03_karyotype/chr2_karyo_coords.tsv (+ sample IDs from karyotypes.tsv)
   b  F_ST across the whole of chr2 (AA vs BB), inversion shaded -- shows the
      inversion (60.54-79.50 Mb) is the only differentiated region.
-     Data: msinv results/illex/karyotype_fst_scan.tsv (chrom '2' rows)
+     Data: steps/03_karyotype/inversion_content/chr2_karyo_fst_windows.tsv, the same 100-kb
+     Hudson ratio-of-averages windows (all arrangement homozygotes) and the same filter
+     (>=10 SNPs, denominator > 0, F_ST clipped at 0) as Supplementary Fig. S20
+     (plot_chr2_karyotype_fst.py), so the two figures show identical data.
   c  per-arrangement diversity (d_xy, pi_BB ancestral, pi_AA derived) across
      the inversion plus 20 Mb of collinear sequence on each side (40-100 Mb) --
      shows the derived AA arrangement is the LESS diverse one and that the three
@@ -18,7 +22,7 @@ Panels
      Data: steps/03_karyotype/inversion_content/flank_div/chr2_40_100_karyo_windows_snps.csv
      (compute_flank_div.py: pg_gpu windowed pi/dxy, 100 kb, AA n=254 / BB n=95)
 
-Panels b/c reproduce the data + logic of ``_fst_chr2``/``_diversity`` and the
+Panel c reproduces the data + logic of ``_fst_chr2``/``_diversity`` and the
 manu_fig_inv_fst / manu_fig_inv_diversity functions in
 ``/sietch_colab/ssmall/projects/msinv_dir/inversion_sims/files/illex/scripts/figures_inversion.py``,
 re-plotted natively in the shared manuscript style rather than reusing the PNGs.
@@ -30,18 +34,25 @@ apply()
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
 
-import csv
+import os
 import numpy as np
 import pandas as pd
 from sklearn.mixture import GaussianMixture
 
 KARYO_COORDS = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/chr2_karyo_coords.tsv"
+# chr2_karyo_coords.tsv carries no sample IDs. Its rows are in the same order as karyotypes.tsv
+# (identical PC1/PC2), which supplies them. Panel a shows the 621 analysed Baker et al. 2025
+# individuals: the 20 non-Baker rows (population A/B/C) and the 12 BAMs with essentially no data
+# (data/qc/empty_bams_12.tsv, which sit at the PCA origin) are dropped.
+KARYO_IDS = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/karyotypes.tsv"
+BAKER_633 = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/00_callset/baker_633.txt"
+EMPTY_BAMS = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "qc", "empty_bams_12.tsv")
 DISP = {"AA": "2a/2a", "AB": "2a/2+", "BB": "2+/2+"}   # display names (2a derived, 2+ ancestral/reference)
-RESULTS = "/sietch_colab/ssmall/projects/msinv_dir/inversion_sims/files/results/illex"
-FST_SCAN = f"{RESULTS}/karyotype_fst_scan.tsv"
+FST_WINDOWS = ("/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/inversion_content/"
+               "chr2_karyo_fst_windows.tsv")   # same table as Supplementary Fig. S20
 DIV_WINDOWS = ("/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/inversion_content/"
                "flank_div/chr2_40_100_karyo_windows_snps.csv")   # chr2:40-100 Mb, biallelic SNPs, same pg_gpu recipe as msinv
-OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/figures/fig3_inversion.png"
+OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "figures", "fig3_inversion.png")
 
 BP_L, BP_R = 60_540_000, 79_500_000     # pinned inversion breakpoints (Mb)
 CHR2_LEN = 119_466_599
@@ -52,12 +63,23 @@ CHR2_LEN = 119_466_599
 # --------------------------------------------------------------------------
 def _karyotype_pca():
     d = pd.read_csv(KARYO_COORDS, sep="\t")
+    ids = pd.read_csv(KARYO_IDS, sep="\t")
+    assert len(ids) == len(d) and np.allclose(ids["PC1"], d["PC1"]) and np.allclose(ids["PC2"], d["PC2"])
+    d["sample"] = ids["sample"].values
+    # GMM fitted on all 653 rows of the PCA, as the karyotype calls were made (on this set it
+    # reproduces karyotypes.tsv exactly). Refitting on the 621 alone does not, so the subset
+    # is taken after labelling.
     x = d["PC1"].values.reshape(-1, 1)
     gmm = GaussianMixture(n_components=3, random_state=0, n_init=5).fit(x)
     labels = gmm.predict(x)
     order = np.argsort(gmm.means_.ravel())          # low -> high PC1 mean
     name_of = {order[0]: "AA", order[1]: "AB", order[2]: "BB"}
     d["karyotype"] = [name_of[l] for l in labels]
+    assert (d["karyotype"].values == ids["karyotype"].values).all()
+    baker = set(open(BAKER_633).read().split())
+    empty = set(pd.read_csv(EMPTY_BAMS, sep="\t", comment="#")["sample"])
+    d = d[d["sample"].isin(baker) & ~d["sample"].isin(empty)].reset_index(drop=True)
+    print("panel a: n =", len(d), d["karyotype"].value_counts().reindex(["AA", "AB", "BB"]).to_dict())
     return d
 
 
@@ -65,12 +87,15 @@ def _karyotype_pca():
 # panel b -- FST across chr2 (AA vs BB), 100 kb windows
 # --------------------------------------------------------------------------
 def _fst_chr2():
-    rows = [r for r in csv.DictReader(open(FST_SCAN), delimiter="\t")
-            if r["chrom"] == "2"]
-    w = np.array([float(r["win"]) for r in rows])
-    f = np.array([float(r["fst"]) for r in rows])
-    o = np.argsort(w)
-    return w[o] / 1e6 + 0.05, f[o]                    # window midpoint, Mb
+    # identical recipe to plot_chr2_karyotype_fst.py (Supplementary Fig. S20)
+    w = pd.read_csv(FST_WINDOWS, sep="\t", header=None, names=["win", "num", "den", "n"])
+    w = w[(w.n >= 10) & (w.den > 0)].sort_values("win")
+    fst = (w.num / w.den).clip(lower=0).to_numpy()
+    mid = (w.win.to_numpy() + 50_000)
+    inv = (mid >= BP_L) & (mid <= BP_R)
+    print(f"panel b: {len(w)} windows | median FST inversion={np.median(fst[inv]):.4f} "
+          f"collinear={np.median(fst[~inv]):.4f} | inversion max={fst[inv].max():.4f}")
+    return mid / 1e6, fst                              # window midpoint, Mb
 
 
 # --------------------------------------------------------------------------

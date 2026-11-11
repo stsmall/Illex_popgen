@@ -4,7 +4,7 @@ Shows sampling geography AND the non-cline (pie composition ~constant across
 latitude). Pies sit at the mean sampling latitude/longitude of each division
 (Baker et al. 2025 sample metadata). Karyotype pies (AA/AB/BB) sized by sqrt(N).
 """
-import sys
+import os, sys
 sys.path.insert(0, "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/scripts")
 from figstyle import apply, KARYO, C, despine
 apply()
@@ -14,10 +14,15 @@ from matplotlib.patches import Wedge
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 
-DIV = pd.read_csv("/sietch_colab/data_share/illex/popgen_data/analysis/steps/04_hwe_cline/karyo_by_division.tsv", sep="\t")
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# 12 BAMs with essentially no data (data/qc/empty_bams_12.tsv) are excluded (n=621).
+# karyo_by_division.n621.tsv is written by pipeline/steps/04_hwe_cline/cline_test.py with them removed.
+EMPTY = set(pd.read_csv(os.path.join(ROOT, "data", "qc", "empty_bams_12.tsv"), sep="\t", comment="#")["sample"])
+DIV = pd.read_csv("/sietch_colab/data_share/illex/popgen_data/analysis/steps/04_hwe_cline/karyo_by_division.n621.tsv", sep="\t")
 # pie positions = mean sampling coordinates of each division (Baker et al. 2025 metadata), so the
 # map matches the actual collection sites rather than nominal NAFO-division centroids
 META = pd.read_csv("/sietch_colab/data_share/illex/popgen_data/seq_data/baker_2025/docs/Squid_Meta_Sept2024_Simple.txt", sep="\t")
+META = META[~META["ID"].isin(EMPTY)]
 POS = META.groupby("Zone")[["Lat", "Lon"]].mean()
 DIV = DIV[DIV["division"].isin(POS.index)].copy()
 DIV["lon"] = DIV["division"].map(POS["Lon"]); DIV["mean_lat"] = DIV["division"].map(POS["Lat"])
@@ -61,6 +66,9 @@ ax.legend(handles=leg, loc="lower right", fontsize=8, frameon=True,
           framealpha=0.9, edgecolor="none", title="chr2 karyotype")
 ax.set_title("Sampling and chr2 arrangement frequency", loc="left")
 
-out = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/figures/fig1_map.png"
+out = os.path.join(ROOT, "figures", "fig1_map.png")
 fig.savefig(out, dpi=220, bbox_inches="tight")
-print("wrote", out, "| divisions:", ",".join(DIV["division"]))
+print("wrote", out, "| divisions:", ",".join(DIV["division"]), "| n =", int(DIV["N"].sum()))
+for _, row in DIV.iterrows():
+    p2a = (2 * row["AA"] + row["AB"]) / (2 * row["N"])
+    print(f'{row["division"]}\t2a/2a={row["AA"]}\t2a/2+={row["AB"]}\t2+/2+={row["BB"]}\tN={row["N"]}\tp2a={p2a:.3f}')

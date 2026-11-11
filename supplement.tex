@@ -41,7 +41,10 @@
 
 \paragraph{Read processing and variant calling.}
 Raw reads for all 633 individuals were downloaded from ENA project PRJEB101095 and processed with grenepipe
-\citep{czech2022grenepipe}. Reads were trimmed with fastp \citep{chen2018fastp} and mapped to the
+\citep{czech2022grenepipe}. Twelve alignments hold almost no reads (93 to 2{,}009{,}803 autosomal reads in
+\texttt{samtools idxstats}, against a median of 57{,}182{,}056, listed in \texttt{data/qc/empty\_bams\_12.tsv}), eleven
+from division 4X and one from 3K. They were excluded from every count and estimate. Analyses that were run on all 633
+received only missing genotypes or no reads from them, so every result reported here rests on the remaining 621. Reads were trimmed with fastp \citep{chen2018fastp} and mapped to the
 \texttt{Illex\_F24} primary assembly with BWA-MEM2 \citep{vasimuddin2019bwamem2}, and duplicates were removed with
 Picard MarkDuplicates. Each individual was genotyped with GATK HaplotypeCaller in gVCF mode, and the gVCFs were
 jointly genotyped with all sites retained \citep{poplin2018gatk}. Variant records were annotated with snpEff and
@@ -54,7 +57,7 @@ every filter were used. The accessibility mask is the 1.43~Gb of the 3.47-Gb ass
 
 \paragraph{Diversity and demography.}
 All site-frequency spectra and diversity statistics were computed with ANGSD 0.940 \citep{korneliussen2014angsd}
-directly from the deduplicated BAM alignments of the 633 individuals, not from the called genotypes, so that the
+directly from the deduplicated BAM alignments of the 621 individuals with data, not from the called genotypes, so that the
 uncertainty of genotypes at about 9-fold depth is carried through as genotype likelihoods. Each chromosome was
 run separately with the options \texttt{-doSaf 1 -doCounts 1 -GL 1 -minQ 20 -minMapQ 20 -remove\_bads 1
 -only\_proper\_pairs 1 -minInd 1 -setMinDepthInd 1}, restricted with \texttt{-sites} to the accessibility mask and
@@ -63,8 +66,8 @@ genotype-likelihood model, and because the reference is not an ancestral sequenc
 folded spectrum was estimated with \texttt{realSFS -fold 1 -tole 1e-8 -maxIter 200}, per-site thetas with
 \texttt{realSFS saf2theta -fold 1}, and $\pi$, Watterson's $\theta$ and Tajima's $D$ with \texttt{thetaStat
 do\_stat}, per chromosome and in 50-kb windows (10-kb step genome-wide, 50-kb step per division). The genome-wide
-folded spectrum pooled across chromosomes is the input to the demographic models. Per-division statistics used the same options on at most 25 individuals per division (all individuals in 3O, 4S and 4T), and the Z was run in the 330
-confidently sexed males. Per-karyotype spectra and genotype-likelihood $\Fst$ between arrangements used the 2a/2a and
+folded spectrum pooled across chromosomes is the input to the demographic models. Per-division statistics used the same options on at most 25 individuals per division (all individuals in 3O, 4S and 4T), and the Z was run in the 329
+confidently sexed males with data. Per-karyotype spectra and genotype-likelihood $\Fst$ between arrangements used the 2a/2a and
 2+/2+ homozygotes as separate sample sets. Stairway~Plot~2, moments (a two-epoch growth model fitted to the folded
 spectrum, with Godambe confidence intervals), and GONE2 were fitted as described in Supplementary Table~S1, and
 the moments model was checked by forward simulation, which reproduced the observed $\pi$ and Tajima's $D$.
@@ -72,7 +75,7 @@ the moments model was checked by forward simulation, which reproduced the observ
 \paragraph{Genotype-based statistics.}
 Statistics that need individual genotypes were computed with pg\_gpu \citep{pggpu} from the filtered VCF.
 Windowed $\pi$, $\dxy$ and Hudson $\Fst$ between arrangements used biallelic SNPs in 100-kb windows, with the 2a/2a
-($n=254$) and 2+/2+ ($n=95$) homozygotes as the two populations and missing genotypes included pairwise. The between-division $\Fst$ matrix (Hudson), the linkage-disequilibrium triangles (genotype $r^2$ among common SNPs), and the principal-component analyses were computed the same way. The per-SNP geographic $\Fst$ scans (Supplementary Figs.~S2, S19) used plink2 \citep{chang2015plink2} to filter and count alleles at every biallelic SNP with a minor-allele frequency above 0.05 in the pooled 632 individuals from the ten divisions with more than one sample (division 3N, with a single individual, was excluded). Per-division allele counts were converted to Hudson $\Fst$ for each of the 45 division pairs \citep{bhatia2013}, at sites genotyped in at least 40 individuals in that pair and with at least two alleles in each division. The per-SNP value is the ratio of averages over informative pairs (the sum of the numerators over the sum of the denominators), without clipping, keeping sites informative in at least 20 of the 45 pairs. Of the 23{,}892{,}020 SNPs passing the frequency filter, 20{,}276{,}930 met this criterion, 20{,}117{,}984 of them on the 45 autosomes (133{,}957 in the chromosome-2 inversion) and 158{,}946 on the Z chromosome. The null was built by shuffling division labels among the 632 individuals 20 times (division sizes kept) and recomputing $\Fst$ at the same SNPs in the same way. Thresholds are quantiles of the pooled null over the autosomes outside the chromosome-2 inversion ($3.996\times10^{8}$ values), and the expected count above each threshold is the number of SNPs times the null tail rate.
+($n=242$) and 2+/2+ ($n=95$) homozygotes as the two populations and missing genotypes included pairwise. The between-division $\Fst$ matrix (Hudson), the linkage-disequilibrium triangles (genotype $r^2$ among common SNPs), and the principal-component analyses were computed the same way. The per-SNP geographic $\Fst$ scans (Supplementary Figs.~S2, S19) used plink2 \citep{chang2015plink2} to filter and count alleles at every biallelic SNP with a minor-allele frequency above 0.05 in the pooled 620 individuals from the ten divisions with more than one sample (division 3N, with a single individual, was excluded). Per-division allele counts were converted to Hudson $\Fst$ for each of the 45 division pairs \citep{bhatia2013}, at sites genotyped in at least 40 individuals in that pair and with at least two alleles in each division. The per-SNP value is the ratio of averages over informative pairs (the sum of the numerators over the sum of the denominators), without clipping, keeping sites informative in at least 20 of the 45 pairs. Of the 23{,}892{,}020 SNPs passing the frequency filter, 20{,}276{,}930 met this criterion, 20{,}117{,}984 of them on the 45 autosomes (133{,}957 in the chromosome-2 inversion) and 158{,}946 on the Z chromosome. The null was built by shuffling division labels among the individuals 20 times (division sizes kept) and recomputing $\Fst$ at the same SNPs in the same way. Thresholds are quantiles of the pooled null over the autosomes outside the chromosome-2 inversion ($3.996\times10^{8}$ values), and the expected count above each threshold is the number of SNPs times the null tail rate.
 
 \paragraph{The inversion.}
 Karyotypes were called from the first principal component of a local PCA across chromosome~2 with a
@@ -98,10 +101,10 @@ The inversion was simulated with msinv v0.4.1 (\url{https://github.com/stsmall/m
 The demography and recombination rate of the simulations were fitted to collinear chromosome-2 sequence flanking the inversion, chr2:40--55 and 85--115~Mb, by rejection ABC. This sequence lies 5.5--35.5~Mb outside the breakpoints and avoids a stretch of doubled diversity at chr2:24.1--35.9~Mb. The 2a/2a and 2+/2+ individuals were treated as two random sample sets, and the fitted statistics were the folded site-frequency spectrum in six bins, linkage disequilibrium in six distance bins, Tajima's $D$ and $\log_{10}\pi$, each averaged over the two sample sets, together with eight cells of the joint spectrum between them (the four cells for variants near fixation in one set and absent from the other are empty in collinear sequence and were left out). Diversity in this sequence, from the summed within-group ANGSD spectra, is $\pi=0.0062$, against 0.0093 for the autosomes. The model was exponential growth from $N_\mathrm{anc}$ to $N_0$ over $T_\mathrm{grow}$ generations, constant before that, with recombination rate $r$ and $\mu$ fixed at $3\times10^{-9}$. 20{,}000 draws from log-uniform priors ($N_\mathrm{anc}$ $10^{5}$--$3\times10^{6}$, growth fold 1--200, $T_\mathrm{grow}$ $10^{4}$--$3\times10^{6}$, $r$ $10^{-10}$--$10^{-8}$) were each simulated for 200~kb with msprime and the control's genotype error model. The 1\% closest to the data in a MAD-scaled Euclidean distance were accepted with Epanechnikov weights, and the log parameters were adjusted by local-linear regression \citep{beaumont2002}. The posterior medians (95\% intervals) are $N_\mathrm{anc}=507{,}288$ (378{,}143--635{,}672), $N_0=9{,}112{,}696$ (7{,}632{,}032--11{,}683{,}078), $T_\mathrm{grow}=382{,}957$ (314{,}983--472{,}238) and $r=5.51\times10^{-10}$ ($4.61$--$6.49\times10^{-10}$). With $\mu$ fixed, only $r/\mu$ is identified, so $r$ is the effective rate for these statistics. The accepted draws reproduce the spectrum, Tajima's $D$, $\pi$, linkage disequilibrium from 240~bp to 20~kb, and the symmetric cells of the joint spectrum. Linkage disequilibrium at 100--240~bp lies above every accepted draw, and 2+/2+ carries more private rare variants than 2a/2a (0.352 against 0.272 of variable sites), which a single panmictic population does not produce. The inversion model used the posterior medians.
 
 \paragraph{Trajectory models and priors.}
-The frequency of 2a followed a Wright--Fisher diffusion in steps of 10 generations, with the effective size of the neutral baseline. Under neutral drift (N) there is no selection. Under directional selection the frequency changes deterministically by $s\,p(1-p)$ per generation from $t_\mathrm{sel}$ to the present (D1) or only until $t_\mathrm{stop}$, with drift alone after that (D2). Under balancing selection (B) it changes by $s\,p(1-p)(p^{*}-p)/p^{*}$ from $t_\mathrm{sel}$, the form expected under overdominance with equilibrium $p^{*}$. A hard start places a single copy of 2a at $t_\mathrm{inv}$, with selection from $t_\mathrm{inv}$, and its path is weighted by the exact probability that the copy establishes. A soft start places 2a at a founding frequency $p_0$ at $t_\mathrm{inv}$, with neutral drift until $t_\mathrm{sel}$. A path is kept only if 2a is neither lost nor fixed and ends within 0.02 of its present frequency of 0.626. The priors were $t_\mathrm{inv}$ uniform on $10^{5}$--$1.5\times10^{6}$ generations, $p_0$ log-uniform on $10^{-3}$--0.10, $t_\mathrm{sel}=f\,t_\mathrm{inv}$ and $t_\mathrm{stop}=f'\,t_\mathrm{sel}$ with $f$ and $f'$ uniform on 0--1, $s$ log-uniform on $10^{-6}$--$10^{-1}$, $p^{*}$ uniform on 0.3--0.95, the gene-flux rate log-uniform on $10^{-9}$--$10^{-5}$ when gene flux was fitted and $10^{-15}$ otherwise, and equal prior probabilities of a hard and a soft start. The upper bound of 0.10 on $p_0$ is the largest founding frequency we consider biologically reasonable.
+The frequency of 2a followed a Wright--Fisher diffusion in steps of 10 generations, with the effective size of the neutral baseline. Under neutral drift (N) there is no selection. Under directional selection the frequency changes deterministically by $s\,p(1-p)$ per generation from $t_\mathrm{sel}$ to the present (D1) or only until $t_\mathrm{stop}$, with drift alone after that (D2). Under balancing selection (B) it changes by $s\,p(1-p)(p^{*}-p)/p^{*}$ from $t_\mathrm{sel}$, the form expected under overdominance with equilibrium $p^{*}$. A hard start places a single copy of 2a at $t_\mathrm{inv}$, with selection from $t_\mathrm{inv}$, and its path is weighted by the exact probability that the copy establishes. A soft start places 2a at a founding frequency $p_0$ at $t_\mathrm{inv}$, with neutral drift until $t_\mathrm{sel}$. A path is kept only if 2a is neither lost nor fixed and ends within 0.02 of its present frequency of 0.626. This value was computed before the twelve individuals without data were excluded, all of whom had been assigned to 2a/2a by default. The corrected present frequency, 0.618, lies inside the accepted window (0.606--0.646), so the fits condition on a window that contains it. The priors were $t_\mathrm{inv}$ uniform on $10^{5}$--$1.5\times10^{6}$ generations, $p_0$ log-uniform on $10^{-3}$--0.10, $t_\mathrm{sel}=f\,t_\mathrm{inv}$ and $t_\mathrm{stop}=f'\,t_\mathrm{sel}$ with $f$ and $f'$ uniform on 0--1, $s$ log-uniform on $10^{-6}$--$10^{-1}$, $p^{*}$ uniform on 0.3--0.95, the gene-flux rate log-uniform on $10^{-9}$--$10^{-5}$ when gene flux was fitted and $10^{-15}$ otherwise, and equal prior probabilities of a hard and a soft start. The upper bound of 0.10 on $p_0$ is the largest founding frequency we consider biologically reasonable.
 
 \paragraph{Summary statistics.}
-Thirty-nine statistics were fitted. Three are ratios between arrangements, $\pi_I/\pi_S$, $\dxy/\pi_I$ and the ratio of their singleton-class fractions. Twelve are the folded site-frequency spectra of the two arrangements projected to 20 chromosomes, as proportions of segregating sites in bins 1 to 5 and 6 or more. Twelve are the mean genotype $r^{2}$ between SNPs with a minor-allele frequency of at least 0.05 within each arrangement, in six log-spaced distance bins from 100~bp to 20~kb. Twelve are the cells of the folded joint spectrum, with both arrangements projected to 20 chromosomes and binned at 0, 1--4, 5--15, 16--19 and 20 derived copies. Every statistic except the joint spectrum is divided by the same statistic in the control, in the simulations and in the data alike. In the data the ratios come from called genotypes of the 254 2a/2a and 95 2+/2+ individuals (pg\_gpu), the spectra from per-arrangement ANGSD site-frequency spectra, the joint spectrum from a two-dimensional realSFS spectrum of 40 individuals of each homokaryotype, and linkage disequilibrium from 20 random subsamples of 50 individuals of each arrangement. The control is the collinear sequence of the neutral baseline, and its joint spectrum was built with the same 80 individuals, sites and filters as the inversion's. Three further statistics were withheld from the fit and used only to check it, the Tajima's $D$ of each arrangement and the ratio of $\dxy/\pi$ in windows near the breakpoints to that in windows at the centre of the inversion.
+Thirty-nine statistics were fitted. Three are ratios between arrangements, $\pi_I/\pi_S$, $\dxy/\pi_I$ and the ratio of their singleton-class fractions. Twelve are the folded site-frequency spectra of the two arrangements projected to 20 chromosomes, as proportions of segregating sites in bins 1 to 5 and 6 or more. Twelve are the mean genotype $r^{2}$ between SNPs with a minor-allele frequency of at least 0.05 within each arrangement, in six log-spaced distance bins from 100~bp to 20~kb. Twelve are the cells of the folded joint spectrum, with both arrangements projected to 20 chromosomes and binned at 0, 1--4, 5--15, 16--19 and 20 derived copies. Every statistic except the joint spectrum is divided by the same statistic in the control, in the simulations and in the data alike. In the data the ratios come from called genotypes of the 242 2a/2a and 95 2+/2+ individuals (pg\_gpu), the spectra from per-arrangement ANGSD site-frequency spectra, the joint spectrum from a two-dimensional realSFS spectrum of 40 individuals of each homokaryotype, and linkage disequilibrium from 20 random subsamples of 50 individuals of each arrangement. The control is the collinear sequence of the neutral baseline, and its joint spectrum was built with the same 80 individuals, sites and filters as the inversion's. Three further statistics were withheld from the fit and used only to check it, the Tajima's $D$ of each arrangement and the ratio of $\dxy/\pi$ in windows near the breakpoints to that in windows at the centre of the inversion.
 
 \paragraph{ABC-SMC.}
 Model choice and parameter inference were joint, in pyABC 0.13.1 \citep{klinger2018}, over the four models with the start class as a discrete parameter. Each generation held 1{,}000 particles. The distance was a weighted Euclidean distance over the 39 statistics, with weights from the median absolute deviation of each statistic over all particles of the previous generation, refitted in every generation \citep{prangle2017}. The tolerance was the median distance of the previous generation, and the parameters were perturbed with a multivariate normal kernel and the start class with a discrete kernel (probability 0.7 of staying). Each fit, with and without gene flux, ran for the maximum of 15 generations. The posterior probability of a model depends on its prior ranges as well as on the data. Part of the advantage of balancing selection is already present in the first generation, which accepts every valid path, because any $p^{*}$ near 0.626 reaches the present frequency whereas a directional sweep must be caught mid-course (odds of B against D1 and D2 combined 6.3 with gene flux and 5.7 without). The ratio of the final odds (371 and 140) to these isolates the evidence from the sequence statistics, 59-fold and 25-fold.
@@ -114,8 +117,8 @@ The balancing model was checked from 1{,}000 NPE posterior draws for each gene-f
 
 \paragraph{Recombination map.}
 ReLERNN \citep{adrion2020relernn} was run in unphased mode on biallelic SNPs with at most 50\% missing genotypes.
-Individuals with no genotype calls on a chromosome cannot enter the unphased model, so one of the 330 confidently
-sexed males was removed and 329 were used. The autosomal network was trained on chromosomes 1, 13 and 45 with
+Individuals with no genotype calls on a chromosome cannot enter the unphased model, and the 329 confidently sexed males
+with data were used. The autosomal network was trained on chromosomes 1, 13 and 45 with
 12{,}000 coalescent simulations (with 1{,}000 each for validation and testing) under the Stairway~Plot~2
 demography with $\mu=3\times10^{-9}$, an upper bound of 4 on the ratio of $\rho$ to $\theta$, and 6-kb windows,
 masked by the inaccessible regions and the 22 $\pi$-elevated blocks with a window-level masking threshold of 0.9.
@@ -127,7 +130,7 @@ disequilibrium within windows of a few kilobases, so it does not resolve the bar
 disequilibrium (Supplementary Figs.~S4, S24).
 
 \paragraph{Z recombination and sex-biased mutation.}
-Linkage disequilibrium on the Z and on the autosomes was compared in the 330 ZZ males, the only individuals that
+Linkage disequilibrium on the Z and on the autosomes was compared in the 329 ZZ males, the only individuals that
 carry two Z copies. Two-locus statistics ($D^2$ and $\pi_2$, unbiased for unphased genotypes
 \citep{ragsdale2020unphased}) were computed with pg\_gpu \citep{pggpu} on accessible biallelic SNPs in 2-Mb windows,
 86 on the autosomes (at 10 and 40~Mb of each autosome, excluding the chromosome-2 inversion and the
@@ -195,7 +198,7 @@ annotated genes outside the Z and the masked blocks.
 \paragraph{Anomalous-diversity blocks.}
 Blocks were called where the rolling median of 10-kb $\pi$ exceeded twice the chromosome median over at least
 1~Mb. Each was characterised by per-division $\pi$, between-division $\Fst$, local PCA, and genotype linkage
-disequilibrium, and by read depth relative to 5-Mb flanks in all 633 individuals (samtools bedcov at mapping
+disequilibrium, and by read depth relative to 5-Mb flanks in all 621 individuals (samtools bedcov at mapping
 quality 0 and 20). Long-read depth and heterozygous-site allele fractions came from PacBio HiFi reads of the
 assembly individual and a second individual aligned to the assembly, and genotype-likelihood $\pi$ was
 recomputed at mapping quality 60. Blocks with population depth at least 1.15 times their flanks were classed as
@@ -235,7 +238,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
     \textbf{(c)}~SNPs above the null 99.9th, 99.99th and 99.999th percentiles (22{,}562, 2{,}319 and 249) are within the
     permutation range ($19{,}979\pm2{,}154$, $1{,}998\pm352$ and $200\pm54$, permutation $p=0.19$, $0.24$ and $0.29$),
     and no SNP exceeds the null maximum, so a scan for local adaptation that the diversity-based sweep tests could miss
-    returns no candidates. Because the minor-allele-frequency filter is applied to the pooled 632 individuals, a variant
+    returns no candidates. Because the minor-allele-frequency filter is applied to the pooled 620 individuals, a variant
     private to one small division can fall below it (a SNP fixed only in 3O, with 16 individuals, has a pooled frequency
     of 2.5\%), so the scan rules out strongly differentiated SNPs that are common overall, but not private alleles in the
     smallest divisions.}
@@ -250,7 +253,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 
 \begin{figure}[h]\centering
   \includegraphics[width=.6\linewidth]{figS4_ld_triangle.png}
-  \caption{\textbf{Linkage disequilibrium across the chromosome-2 inversion.} Mean genotype $r^2$ between SNPs, binned along chr2:55--85~Mb, pooling all 633 individuals. Dashed lines and shading mark the breakpoints (60.54 and 79.50~Mb). A block of elevated linkage disequilibrium spans exactly the inversion and stops at both breakpoints, while the flanking collinear sequence shows only background values. Mean $r^2$ between SNPs more than 1~Mb apart is 3.5 times higher inside the inversion than in its flanks (0.0056 vs 0.0016, Supplementary Fig.~S24). This long-range association arises because the few near-fixed differences between arrangements are all correlated with karyotype, and it is the direct signature of suppressed recombination between arrangements. Recombination within arrangements is not suppressed at the scale of the 3--6-kb windows used by the recombination map, which is why the inversion is shown here rather than in Supplementary Fig.~S12.}
+  \caption{\textbf{Linkage disequilibrium across the chromosome-2 inversion.} Mean genotype $r^2$ between SNPs, binned along chr2:55--85~Mb, pooling all 621 individuals. Dashed lines and shading mark the breakpoints (60.54 and 79.50~Mb). A block of elevated linkage disequilibrium spans exactly the inversion and stops at both breakpoints, while the flanking collinear sequence shows only background values. Mean $r^2$ between SNPs more than 1~Mb apart is 3.5 times higher inside the inversion than in its flanks (0.0056 vs 0.0016, Supplementary Fig.~S24). This long-range association arises because the few near-fixed differences between arrangements are all correlated with karyotype, and it is the direct signature of suppressed recombination between arrangements. Recombination within arrangements is not suppressed at the scale of the 3--6-kb windows used by the recombination map, which is why the inversion is shown here rather than in Supplementary Fig.~S12.}
   \label{sfig:ld}
 \end{figure}
 
@@ -293,7 +296,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
     $D$ (bottom) across 50~kb windows, one box per chromosome (pooled over the ten NAFO divisions, for all 46 chromosomes, the 45 autosomes plus chrZ). Diversity is uniform and $D$ is strongly negative genome-wide, the signature of
     expansion. Two chromosomes stand apart. Chromosome~2 (the inversion, orange) carries an inflated upper
     tail of $\pi$ and more-negative $D$ from the segregating arrangements, and chrZ (blue, computed
-    in the 330 hemizygous-informative males only, as females are Z-haploid) has reduced diversity
+    in the 329 hemizygous-informative males only, as females are Z-haploid) has reduced diversity
     ($\pi$ median 0.005 vs $\sim$0.008 autosomal, $\approx$0.63$\times$) as expected for a sex chromosome.}
   \label{sfig:divbox}
 \end{figure}
@@ -395,7 +398,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
   \caption{\textbf{Genome-wide diploSHIC-HMM (Tier-1) sweep calls.} Per-100~kb-window empirical-outlier
     sweep score (rank within callability $\times$ coding-density strata) across all 45 autosomes plus the
     Z chromosome (627 calls in total, 440 hard and 187 soft). The Markov-decoded Tier-1 calls are highlighted by
-    class (hard, soft), and the background-selection-robust subset (\S\,BGS screen, 291 of the 623 autosomal calls) is ringed. The four chromosome-Z calls come from the male-only ($n{=}330$) diploSHIC scan and are
+    class (hard, soft), and the background-selection-robust subset (\S\,BGS screen, 291 of the 623 autosomal calls) is ringed. The four chromosome-Z calls come from the male-only ($n{=}329$) diploSHIC scan and are
     diploSHIC-only (RAiSD/SweepFinder2 do not cover the Z). The calls are distributed across the genome with
     no single dominant locus.}
   \label{sfig:t1man}
@@ -417,7 +420,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \begin{figure}[h]\centering
   \includegraphics[width=\linewidth]{figS20_chr2_karyotype_fst.png}
   \caption{\textbf{Between-karyotype differentiation is confined to the chromosome-2 inversion.} Per-window
-    $\Fst$ between the 2a and 2+ arrangements (arrangement homozygotes, 2a/2a $n=254$ and 2+/2+ $n=95$) across the
+    $\Fst$ between the 2a and 2+ arrangements (arrangement homozygotes, 2a/2a $n=242$ and 2+/2+ $n=95$) across the
     whole of chromosome~2, aggregated in 100~kb windows (ratio-of-averages Hudson estimator). Unlike the
     population-$\Fst$ scan (which asks about geography), this asks how differentiated the two arrangements are
     along the chromosome. The collinear remainder (grey) sits at $\Fst\approx0$ (median 0.006), so outside the inversion the karyotypes are one panmictic population, while the inversion (60.54--79.50~Mb,
@@ -491,15 +494,15 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
     6B & 34 & 47 & 16 &  97 & 0.593 & 38.3 \\
     6A & 35 & 45 & 15 &  95 & 0.605 & 39.2 \\
     3N &  0 &  0 &  1 &   1 & 0.000 & 43.1 \\
-    4X & 42 & 41 & 11 &  94 & 0.665 & 43.2 \\
+    4X & 31 & 41 & 11 &  83 & 0.620 & 43.2 \\
     4W & 21 & 17 &  9 &  47 & 0.628 & 43.6 \\
     3O &  7 &  7 &  2 &  16 & 0.656 & 44.0 \\
     4T &  7 & 11 &  5 &  23 & 0.543 & 47.7 \\
     4R & 27 & 25 &  4 &  56 & 0.705 & 48.7 \\
     4S &  8 &  4 &  3 &  15 & 0.667 & 49.9 \\
-    3K & 35 & 47 & 20 & 102 & 0.574 & 50.0 \\
+    3K & 34 & 47 & 20 & 101 & 0.569 & 50.0 \\
     \midrule
-    Total & 254 & 284 & 95 & 633 & 0.626 & --- \\
+    Total & 242 & 284 & 95 & 621 & 0.618 & --- \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -655,7 +658,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 
 \begin{table}[h]\centering
   \caption{\textbf{Z recombination and sex-biased mutation.} Top, the ratio of population-scaled recombination
-    rates on the Z and the autosomes in the 330 ZZ males from the decay of $\sigma_D^2$ with distance (86
+    rates on the Z and the autosomes in the 329 ZZ males from the decay of $\sigma_D^2$ with distance (86
     autosomal and nine Z windows of 2~Mb, 95\% CI from 200 bootstrap resamples of windows). Bottom, the ratio $R$
     of Z to autosomal synonymous divergence between \illex{} and \textit{S.~oualaniensis} and the male-to-female
     mutation ratio $\alpha=(3R-2)/(4-3R)$, following \citet{miyata1987}, for all genes and with autosomal genes matched to

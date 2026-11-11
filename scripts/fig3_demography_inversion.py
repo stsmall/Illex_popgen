@@ -3,8 +3,7 @@
 Panel a: population size history (composite) -- Ne over time, overlaying (each with
     computed, not fabricated, uncertainty where available) Stairway Plot 2
     (median + 95% CI), the moments 2-epoch growth model + its Godambe (GIM)
-    parameter-CI envelope, GONE2 recent Ne + its bootstrap CI band, and the
-    momentsLD single contemporary LD-Ne point (with caveat). Same plotting logic
+    parameter-CI envelope, and GONE2 recent Ne + its bootstrap CI band. Same plotting logic
     and data as fig3a_demography_composite.py (same directory), the standalone
     version of this panel:
       - stairway: steps/08_demography/stairway_out/*.final.summary
@@ -12,11 +11,11 @@ Panel a: population size history (composite) -- Ne over time, overlaying (each w
         N0=6808096, T=769519 generations) + N(t) envelope from
         steps/08_demography/moments_godambe_uncert.json (GIM_uncert on a
         chromosome-block bootstrap of the folded SFS)
-      - GONE2: steps/10_gone2/gone_input.vcf_GONE2_Ne (point; generations 1-4
-        dropped) + steps/10_gone2/bootstrap/gone2_band.tsv (bootstrap 95% band)
-      - momentsLD: single Ohta-Kimura LD-Ne (ld_Ne.txt), rate-corrected from the
-        flat 1e-8/bp assumption to the empirical ~2.1e-9/bp map (Ne ~ 1/rate);
-        the time-varying fit is non-identifiable (params pinned at bounds).
+      - GONE2: steps/10_gone2/gone_input.vcf_GONE2_Ne (all 43 autosomes, -r 1 i.e. an assumed
+        uniform 1 cM/Mb; generations 1-4 held at the generation-5 value) + its bootstrap band if one
+        exists. A rerun at the ReLERNN rate (-r 0.24, steps/10_gone2/r024/) is not shown: GONE2 needs
+        every chromosome to span >20 cM, so at 0.24 cM/Mb only 11 autosomes qualify and that run is
+        unstable in recent generations.
 
 Panel b: chr2 inversion frequency history of the derived 2a arrangement under the balancing model (B) with
     gene flux, the model favoured by the ABC-SMC model choice, with parameters from neural posterior estimation
@@ -53,7 +52,6 @@ GONE2_BAND = ("/sietch_colab/data_share/illex/popgen_data/analysis/steps/10_gone
 COL_STAIRWAY = C["accent"]   # "#0072B2" blue
 COL_MOMENTS = C["warm"]      # "#D55E00" vermillion
 COL_GONE2 = OKABE[3]         # "#009E73" bluish green
-COL_MLD = OKABE[1]           # "#E69F00" orange (momentsLD single point)
 
 N_ANC = 547928
 N0 = 6808096
@@ -80,7 +78,7 @@ g2.loc[g2["Generation"] < 5, "Ne_diploids"] = _ne5
 # =====================================================================
 TRAJ = Path(__file__).resolve().parents[1] / "data" / "inversion_abc" / "traj_quantiles_npe_f1.csv"
 tq = pd.read_csv(TRAJ)
-P_NOW = 0.626
+P_NOW = 0.618  # 2a frequency over 621 karyotyped individuals (242/284/95)
 
 # one consistent accent for the inversion-frequency data, distinct from the
 # three colours already spoken for in panel a (blue/vermillion/green)
@@ -113,23 +111,21 @@ ax_a.plot(t_moments, n_moments, color=COL_MOMENTS, linewidth=1.8, linestyle="--"
           zorder=5, label="moments 2-epoch growth (model, 95% GIM CI)")
 
 # GONE2 recent trajectory (bootstrap CI band drawn only if a real bootstrap exists)
-band = pd.read_csv(GONE2_BAND, sep="\t")
-band = band[band["Generation"] >= 5]
-nrep = int(band["n_rep"].iloc[0])
+nrep = 0
+if GONE2_BAND is not None:
+    band = pd.read_csv(GONE2_BAND, sep="\t")
+    band = band[band["Generation"] >= 5]
+    nrep = int(band["n_rep"].iloc[0])
 if nrep > 0:
     ax_a.fill_between(band["Generation"], band["Ne_2.5"], band["Ne_97.5"],
                       color=COL_GONE2, alpha=0.18, linewidth=0, zorder=3,
                       label="_nolegend_")
-_gone_lab = "GONE2 recent (LD-based)" if nrep == 0 else \
+_gone_lab = "GONE2 recent (LD-based, 1 cM/Mb)" if nrep == 0 else \
             f"GONE2 recent (LD-based; {nrep}-rep bootstrap 95% CI)"
 ax_a.plot(g2["Generation"], g2["Ne_diploids"], color=COL_GONE2, linewidth=1.8,
           zorder=6, label=_gone_lab)
 
-# momentsLD single contemporary LD-Ne point (rate-corrected 1e-8 -> ~2.1e-9/bp)
-_ld_corr = 323741.0 * (1e-8 / 2.1e-9)
-ax_a.scatter([1.3], [_ld_corr], marker="*", s=150, color=COL_MLD, zorder=7,
-             edgecolor="white", linewidth=0.8,
-             label="momentsLD LD-$N_e$ (single point; see note)")
+
 
 ax_a.set_xscale("log")
 ax_a.set_yscale("log")
@@ -156,13 +152,13 @@ ax_bi.plot(tk, tq["q50"], lw=2.0, color=COL_BB, zorder=4, solid_capstyle="round"
 ax_bi.axhline(P_NOW, lw=0.8, ls="--", color=C["ink"], zorder=2)
 ax_bi.set_xlim(-14, 1000)   # present (0 ka) at LEFT, to match panel a
 ax_bi.set_ylim(0, 0.8)
-ax_bi.set_yticks([0, 0.2, 0.4, 0.626])
-ax_bi.set_yticklabels(["0", "0.2", "0.4", "0.626"])
+ax_bi.set_yticks([0, 0.2, 0.4, P_NOW])
+ax_bi.set_yticklabels(["0", "0.2", "0.4", f"{P_NOW:.3f}"])
 ax_bi.set_xlabel("Time before present (ka)")
 ax_bi.set_ylabel("Frequency of derived\n(2a) arrangement", linespacing=1.3)
 despine(ax_bi)
 ax_bi.legend(loc="center right", fontsize=8.0, title="posterior", title_fontsize=8.0)
-ax_bi.text(8, P_NOW + 0.035, "$p = 0.626$ today", fontsize=9, color=C["ink"], ha="left", va="bottom")
+ax_bi.text(8, P_NOW + 0.035, f"$p = {P_NOW:.3f}$ today", fontsize=9, color=C["ink"], ha="left", va="bottom")
 ax_bi.text(-0.085, 1.06, "b", transform=ax_bi.transAxes, **LETTER_KW)
 ax_bi.set_title("Inversion frequency history", loc="left", pad=8,
                 fontsize=11, fontweight="normal", color=C["muted"])

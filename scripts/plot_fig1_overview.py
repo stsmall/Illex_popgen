@@ -14,14 +14,19 @@ import pandas as pd
 
 SC = DATA
 SEXDIR = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/12_sex"
-OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/figures/fig2_overview.png"
+OUT = os.path.join(_HERE, "..", "figures", "fig2_overview.png")
 
 AUTO_PCA_PREFIX = "auto_pca4"   # set by driver once final PCA is ready
 AUTO_N_SNPS = None              # filled below from log if present
 Z_N_SNPS = 6199
 
-# --- load sex assignment (chrZ:autosome coverage ratio -> GMM -> sex) ---
+# 12 BAMs with essentially no data (data/qc/empty_bams_12.tsv) are excluded from every panel (n=621).
+EMPTY = set(pd.read_csv(os.path.join(DATA, "qc", "empty_bams_12.tsv"), sep="\t", comment="#")["sample"])
+
+# --- load sex assignment (chrZ:autosome coverage ratio -> 2-component GMM -> sex; assign_sex.py) ---
+# 'confident' = GMM posterior >= 0.9. Panels b and c both use these calls.
 sexdf = pd.read_csv(f"{SEXDIR}/sex_assignment.tsv", sep="\t")
+sexdf = sexdf[~sexdf["sample"].isin(EMPTY)].reset_index(drop=True)
 sex_map = dict(zip(sexdf["sample"], sexdf["sex"]))
 n_male = (sexdf.sex == "male").sum()
 n_female = (sexdf.sex == "female").sum()
@@ -33,24 +38,29 @@ sexdf["Z_auto_corrected"] = sexdf["Z_ratio"] / sexdf["chr42_ratio"]
 
 # --- panel a: autosomal PCA excluding chr2 ---
 auto = pd.read_csv(f"{SC}/{AUTO_PCA_PREFIX}.eigenvec", sep="\t")
-auto_eig = np.loadtxt(f"{SC}/{AUTO_PCA_PREFIX}.eigenval")
-auto_pve = 100 * auto_eig / auto_eig.sum()
-with open(f"{SC}/auto_nsnps.txt") as fh:
-    auto_nsnps = int(fh.read().strip())
+auto = auto[~auto["IID"].isin(EMPTY)]
+# auto_pca4.eigenval and auto_nsnps.txt are no longer on disk (searched analysis/, illex_manuscript/,
+# home and scratch, 2026-11-11). Panel a is unchanged (same 621-sample eigenvec), so when they are
+# missing the values are taken from the previous render of this panel (figures/fig2_overview.png of
+# 2026-09-16, made from those files): PC1 29.2%, PC2 10.0%, 170,907 SNPs.
+if os.path.exists(f"{SC}/{AUTO_PCA_PREFIX}.eigenval") and os.path.exists(f"{SC}/auto_nsnps.txt"):
+    auto_eig = np.loadtxt(f"{SC}/{AUTO_PCA_PREFIX}.eigenval")
+    auto_pve = 100 * auto_eig / auto_eig.sum()
+    with open(f"{SC}/auto_nsnps.txt") as fh:
+        auto_nsnps = int(fh.read().strip())
+else:
+    print("WARNING: auto_pca4.eigenval / auto_nsnps.txt missing -> panel a labels from the 2026-09-16 render")
+    auto_pve = np.array([29.2, 10.0])
+    auto_nsnps = 170907
 
 # --- panel b: chrZ PCA ---
 z = pd.read_csv(f"{SC}/z_pca.eigenvec", sep="\t")
 z_eig = np.loadtxt(f"{SC}/z_pca.eigenval")
 z_pve = 100 * z_eig / z_eig.sum()
-# coverage-based sex assignment (chrZ:chr1 read ratio; NOT the prior labels), with
-# an unknown band in the valley -- shared by panels b and c.
-_cov = pd.read_csv("/sietch_colab/data_share/illex/popgen_data/analysis/steps/12_sex/chrZ_chr1_cov.tsv", sep="\t")
-LOTHR, HITHR = 0.97, 1.12
-def _covsex(r):
-    if not np.isfinite(r) or r <= 0.3: return "unknown"
-    return "ZO" if r < LOTHR else ("ZZ" if r > HITHR else "unknown")
-cov_sex = {s: _covsex(r) for s, r in zip(_cov["sample"], _cov["Z_over_1"])}
-z["covsex"] = z["IID"].map(cov_sex).fillna("unknown")
+z = z[~z["IID"].isin(EMPTY)]
+# mixture-model sex calls (sex_assignment.tsv) shared by panels b and c
+z = z.merge(sexdf[["sample", "sex", "confident"]], left_on="IID", right_on="sample", how="left")
+assert z["sex"].notna().all()
 
 fig = plt.figure(figsize=(11.5, 4.0))
 gs = fig.add_gridspec(1, 3, wspace=0.42)
@@ -71,43 +81,46 @@ axA.set_ylabel(f"PC2 ({auto_pve[1]:.1f}%)")
 axA.set_title(f"autosomal PCA, chr2 excluded\n(n={len(auto)}, {auto_nsnps:,} SNPs)", fontsize=9, fontweight="normal")
 despine(axA)
 
-# panel b -- coloured by the coverage-based assignment (ZO / ZZ / unknown)
-COVCOL = {"ZO": SEXES["female"], "ZZ": SEXES["male"], "unknown": "#9E9E9E"}
-COVLAB = {"ZO": "ZO female", "ZZ": "ZZ male", "unknown": "unknown"}
-for grp in ["ZZ", "ZO", "unknown"]:
-    m = z["covsex"] == grp
-    if m.sum():
-        axB.scatter(z.loc[m, "PC1"], z.loc[m, "PC2"], s=10, color=COVCOL[grp],
-                    alpha=(0.5 if grp != "unknown" else 0.9),
-                    edgecolors="none", zorder=(3 if grp == "unknown" else 2),
-                    label=f"{COVLAB[grp]} (n={m.sum()})")
+# panel b -- coloured by the mixture-model sex call; filled = confident (posterior >= 0.9),
+# open = not confident
+SEXLAB = {"male": "ZZ male", "female": "ZO female"}
+for sx in ["male", "female"]:
+    ms = z["sex"] == sx
+    mc = ms & z["confident"]; ml = ms & ~z["confident"]
+    axB.scatter(z.loc[mc, "PC1"], z.loc[mc, "PC2"], s=10, color=SEXES[sx], alpha=0.5,
+                edgecolors="none", zorder=2,
+                label=f"{SEXLAB[sx]} (n={ms.sum()}, {mc.sum()} confident)")
+    if ml.sum():
+        axB.scatter(z.loc[ml, "PC1"], z.loc[ml, "PC2"], s=16, facecolors="none",
+                    edgecolors=SEXES[sx], linewidths=0.9, zorder=3,
+                    label=f"{SEXLAB[sx]}, not confident (n={ml.sum()})")
 axB.set_xlabel(f"PC1 ({z_pve[0]:.1f}%)")
 axB.set_ylabel(f"PC2 ({z_pve[1]:.1f}%)")
 axB.set_title(f"chrZ PCA\n(n={len(z)}, {Z_N_SNPS:,} SNPs)", fontsize=9, fontweight="normal")
-axB.legend(loc="best", markerscale=1.6, handletextpad=0.3)
+axB.legend(loc="best", markerscale=1.6, handletextpad=0.3, fontsize=7.0)
 despine(axB)
 
-# panel c: DIRECT chrZ:chr1 read-coverage ratio per sample, assigned BY COVERAGE
-# ALONE (not from any prior label -- avoids circularity). chrZ and chr1 read densities
-# from samtools idxstats. Two clean modes -> ZO (1 Z) / ZZ (2 Z); the valley between
-# them is left UNKNOWN.
-cov = pd.read_csv("/sietch_colab/data_share/illex/popgen_data/analysis/steps/12_sex/chrZ_chr1_cov.tsv", sep="\t")
-r = cov["Z_over_1"].to_numpy(float)
-r = r[np.isfinite(r) & (r > 0.3)]                # drop zero-coverage failed samples
-LOTHR, HITHR = 0.97, 1.12                        # valley edges (data-driven)
-zo, unk, zz = r[r < LOTHR], r[(r >= LOTHR) & (r <= HITHR)], r[r > HITHR]
-bins = np.linspace(0.6, 1.5, 46)
-axC.hist(zo, bins=bins, color=SEXES["female"], alpha=0.85, label=f"ZO, 1 Z  (n={len(zo)})")
-axC.hist(zz, bins=bins, color=SEXES["male"], alpha=0.85, label=f"ZZ, 2 Z  (n={len(zz)})")
-axC.hist(unk, bins=bins, color="#9E9E9E", alpha=0.85, label=f"unknown  (n={len(unk)})")
-for t in (LOTHR, HITHR):
-    axC.axvline(t, ls="--", lw=0.8, color=C["muted"], zorder=0)
-axC.set_xlabel("chrZ : chr1 read-coverage ratio\n(direct, per sample)")
+# panel c: chrZ:autosome read-density ratio per sample (samtools idxstats; sex_from_cov.sh), the
+# quantity the two-component Gaussian mixture of assign_sex.py is fitted to. Bars are coloured by the
+# mixture-model call; hatched = not confident (posterior < 0.9).
+r_all = sexdf["Z_ratio"].to_numpy(float)
+lo = np.floor(np.nanmin(r_all) * 20) / 20; hi = np.ceil(np.nanmax(r_all) * 20) / 20
+bins = np.arange(lo, hi + 1e-9, 0.02)
+for sx, zlab in [("female", "ZO, 1 Z"), ("male", "ZZ, 2 Z")]:
+    ms = sexdf["sex"] == sx
+    rc = sexdf.loc[ms & sexdf["confident"], "Z_ratio"]; rl = sexdf.loc[ms & ~sexdf["confident"], "Z_ratio"]
+    axC.hist(rc, bins=bins, color=SEXES[sx], alpha=0.85,
+             label=f"{zlab}  (n={ms.sum()}, {len(rc)} confident)")
+    if len(rl):
+        axC.hist(rl, bins=bins, facecolor="white", edgecolor=SEXES[sx], hatch="////", lw=0.6,
+                 label=f"{zlab}, not confident  (n={len(rl)})")
+axC.set_xlabel("chrZ : autosome read-coverage ratio\n(per sample)")
 axC.set_ylabel("number of samples")
-axC.set_title("sex from coverage alone", fontsize=9, fontweight="normal")
-axC.legend(fontsize=7.0, loc="upper center", frameon=False)
-mzo, mzz = np.median(zo), np.median(zz)
-axC.text(0.5, 0.52, f"modes {mzo:.2f} / {mzz:.2f}\nratio {mzz/mzo:.2f} ($<$2:1: chrZ\nover-covered $\\sim$1.26$\\times$\nin all samples)",
+axC.set_title("sex from coverage (Gaussian mixture)", fontsize=9, fontweight="normal")
+axC.legend(fontsize=6.6, loc="upper center", frameon=False)
+mzo = sexdf.loc[(sexdf.sex == "female") & sexdf.confident, "Z_ratio"].median()
+mzz = sexdf.loc[(sexdf.sex == "male") & sexdf.confident, "Z_ratio"].median()
+axC.text(0.84, 0.6, f"medians {mzo:.2f} / {mzz:.2f}\nratio {mzz/mzo:.2f} ($<$2:1)",
          transform=axC.transAxes, fontsize=6.6, va="top", ha="center", color=C["muted"])
 despine(axC)
 
@@ -119,5 +132,6 @@ print("wrote", OUT)
 med_m = sexdf.loc[sexdf.sex=="male","Z_auto_corrected"].median()
 med_f = sexdf.loc[sexdf.sex=="female","Z_auto_corrected"].median()
 print(f"panel a: autosomal PCA excl chr2, n_samples={len(auto)}, n_snps={auto_nsnps}")
-print(f"panel b: chrZ PCA, n_samples={len(z)}, n_snps={Z_N_SNPS}; male={(z.sex=='male').sum()} female={(z.sex=='female').sum()}")
+print(f"panel b: chrZ PCA, n_samples={len(z)}, n_snps={Z_N_SNPS}; male={(z.sex=='male').sum()} ({(z.confident & (z.sex=='male')).sum()} confident) female={(z.sex=='female').sum()} ({(z.confident & (z.sex=='female')).sum()} confident)")
+print(f"panel c: n={len(sexdf)}; male={n_male} ({(sexdf.confident & (sexdf.sex=='male')).sum()} confident) female={n_female} ({(sexdf.confident & (sexdf.sex=='female')).sum()} confident); medians confident ZO={mzo:.3f} ZZ={mzz:.3f}")
 print(f"panel c: median chr42-corrected Z:auto ratio -- male={med_m:.3f} female={med_f:.3f} (n male={n_male} female={n_female})")

@@ -1,0 +1,14 @@
+# 12 of the 633 Baker et al. 2025 BAMs with essentially no data (autosomal reads from samtools idxstats, column autosome_reads of analysis/steps/12_sex/sex_assignment.tsv; median sample 57,182,056). Excluded from every count; analyses that ran on 633 received only missing genotypes from them.
+sample	autosome_reads
+SQ233K059	2009803
+SQ234Xn026	187
+SQ234Xn038	199
+SQ234Xn028	119405
+SQ234Xn052	141
+SQ234Xn044	140
+SQ234Xn042	138
+SQ234Xn057	238
+SQ234Xn060	98
+SQ234Xn070	219
+SQ234Xn058	123
+SQ234Xn068	93
