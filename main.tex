@@ -155,14 +155,17 @@ is unrelated to the founding frequency ($\rho=-0.11$). The NPE posterior is cali
 containing the true value in 94--96\% of 2{,}000 held-out simulations for every parameter, and the observed
 statistics lie well inside the simulations it was trained on (Supplementary Methods). Without gene flux the barrier
 is younger (260~ka, 210--330~ka) and the founding frequency similar (0.03). Posterior predictive simulations of the
-favoured model, from its final ABC-SMC particles, reproduce the data (joint posterior predictive $p=0.30$, Supplementary Fig.~S25),
-including three statistics withheld from the fit, the Tajima's $D$ of each arrangement and the ratio of divergence
-near the breakpoints to that at the centre of the inversion. The poorest fits are linkage disequilibrium at 8--20~kb
-in 2+ (two-sided predictive $p=0.02$) and at 100--580~bp in 2a ($p=0.05$). Gene flux is needed to reproduce the
-excess of low-frequency variants shared by both arrangements (0.073 of variable sites, against 0.039 predicted with
-gene flux and 0.008 without it). The same pipeline finds no such excess over the neutral baseline in the collinear
-flanks (Supplementary Fig.~S26). The directional histories, which rest on 4--12 distinct posterior particles, fail
-this statistic with or without gene flux. The model places 2a at its founding frequency when the barrier forms, so
+favoured model from 1{,}000 NPE posterior draws reproduce the data (joint posterior predictive $p=0.26$, Supplementary
+Fig.~S25), including three statistics withheld from the fit, the Tajima's $D$ of each arrangement and the ratio of
+divergence near the breakpoints to that at the centre of the inversion. The poorest fits are linkage disequilibrium
+at 8--20~kb in 2+ (two-sided predictive $p=0.01$) and at 240--580~bp in 2a ($p=0.09$). Without gene flux the joint fit
+is poorer ($p=0.08$), mainly because the model almost never produces variants that are rare in 2a and at high
+frequency in 2+ (two-sided $p=0.07$ and 0.08 for the two such cells). Both settings reproduce the low-frequency
+variants shared by the two arrangements (0.073 of variable sites, against 0.039 predicted with gene flux and 0.041
+without it), the setting without gene flux because its younger barrier retains more shared ancestral variation. In
+the collinear flanks the same class of variants matches the neutral baseline (Supplementary Fig.~S26). The
+directional histories, which rest on 4--12 distinct ABC-SMC particles, fail this statistic with or without gene
+flux. The model places 2a at its founding frequency when the barrier forms, so
 $t_\mathrm{inv}$ dates the recombination barrier together with the founding of the arrangement. The observed joint
 site-frequency spectrum between arrangements shows the same barrier directly, with near-fixed differences and
 off-diagonal density in the inversion and a collapse to the diagonal in collinear controls (Supplementary Fig.~S5).
@@ -183,8 +186,8 @@ for selection on the arrangement as a whole rather than on a focal swept locus, 
 concordance requirement filters these calls. Gene flux between
 arrangements leaves no gradient in mean $\dxy$ from the breakpoints to the centre, though a residual $\sim$40\%
 depletion of near-fixed differences appears in the outermost megabase around the
-breakpoints, and the fitted model needs gene flux to explain the variants shared by the arrangements at low
-frequency. The derived arrangement has held an intermediate frequency for about 370~ky, and model choice favours an
+breakpoints, and the fitted model reproduces the variants shared by the arrangements better with gene flux than
+without it. The derived arrangement has held an intermediate frequency for about 310~ky, and model choice favours an
 equilibrium maintained by balancing selection over a sweep that is still under way or one that stalled. The mechanism of a balanced equilibrium, whether overdominance, associative
 overdominance, frequency dependence, or a moving optimum under fluctuating selection, cannot be resolved from
 these data alone. A shelf-spawning squid whose paralarvae ride the Gulf Stream may well experience temporally
@@ -430,7 +433,7 @@ were computed on the called genotypes with pg\_gpu \citep{pggpu}. These are the 
 Karyotypes were assigned by local PCA \citep{li2019lostruct} and a Gaussian-mixture model on the first principal
 component. The two haplotype assemblies of the reference individual were aligned to each other, to the primary
 assembly, and to \coin{} with minimap2 \citep{li2018minimap2}, and the orientation of the inversion relative to
-\coin{} was confirmed with an AnchorWave \citep{song2022anchorwave} whole-genome alignment. The age and frequency history were inferred by ABC-SMC in pyABC \citep{klinger2018}, with each proposal simulated in msinv \citep{msinv}, a sequentially Markov coalescent simulator that enforces the recombination barrier between arrangements (Supplementary Methods). Each proposal draws a stochastic frequency path for 2a under one of four models (neutral drift, directional selection with or without a later stop, and balancing selection), from a single copy or from a founding frequency, and keeps it only if it ends within 0.02 of the present frequency. It then simulates 40~kb of inversion and a separate 40~kb of collinear control, and computes 39 summary statistics divided, where they have one, by the same statistic in the control, as the data are divided by the collinear flanks. The joint model choice used 1{,}000 particles per generation for 15 generations, with an adaptive distance whose scales were refitted in every generation \citep{prangle2017}. Parameters of the favoured model were estimated by NPE in sbi \citep{tejero2020,boelts2025}, with an ensemble of neural spline flows \citep{durkan2019} trained on about 60{,}000 new simulations from its prior that passed the same present-frequency filter, and calibration was checked on 2{,}000 held-out simulations (Supplementary Methods). The neutral baseline (exponential growth from 507{,}288 to 9{,}112{,}696 over 382{,}957 generations, $r=5.51\times10^{-10}$) was fitted to the collinear flanks of chromosome~2 by rejection ABC with regression adjustment \citep{beaumont2002}. The favoured model was checked by posterior predictive simulation, including three statistics withheld from the fit. Gene content, fixed differences between arrangements, gene-ontology enrichment against a
+\coin{} was confirmed with an AnchorWave \citep{song2022anchorwave} whole-genome alignment. The age and frequency history were inferred by ABC-SMC in pyABC \citep{klinger2018}, with each proposal simulated in msinv \citep{msinv}, a sequentially Markov coalescent simulator that enforces the recombination barrier between arrangements (Supplementary Methods). Each proposal draws a stochastic frequency path for 2a under one of four models (neutral drift, directional selection with or without a later stop, and balancing selection), from a single copy or from a founding frequency, and keeps it only if it ends within 0.02 of the present frequency. It then simulates 40~kb of inversion and a separate 40~kb of collinear control, and computes 39 summary statistics divided, where they have one, by the same statistic in the control, as the data are divided by the collinear flanks. The joint model choice used 1{,}000 particles per generation for 15 generations, with an adaptive distance whose scales were refitted in every generation \citep{prangle2017}. Parameters of the favoured model were estimated by NPE in sbi \citep{tejero2020,boelts2025}, with an ensemble of neural spline flows \citep{durkan2019} trained on about 60{,}000 new simulations from its prior that passed the same present-frequency filter, and calibration was checked on 2{,}000 held-out simulations (Supplementary Methods). The neutral baseline (exponential growth from 507{,}288 to 9{,}112{,}696 over 382{,}957 generations, $r=5.51\times10^{-10}$) was fitted to the collinear flanks of chromosome~2 by rejection ABC with regression adjustment \citep{beaumont2002}. The favoured model was checked by posterior predictive simulation from 1{,}000 NPE draws, including three statistics withheld from the fit. Gene content, fixed differences between arrangements, gene-ontology enrichment against a
 permutation null, and the mutational-load test are described in the Supplementary Methods.
 
 \paragraph{Recombination.}
