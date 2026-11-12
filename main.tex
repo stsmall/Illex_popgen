@@ -342,7 +342,7 @@ There is no overlap between the sweep candidates and the MK-adaptive genes.
 \paragraph{The Z chromosome.}
 Because males are Z-diploid and females Z-haploid, the Z was scanned separately in the 329 confident ZZ
 males, using a model retrained at the matched sample size and accounting for the Z's reduced effective size.
-The male-only screen was validated against the 278 haploid females, whose per-window diversity tracks the males' at $r=0.996$.
+The male-only screen was validated against 278 haploid females (including five later set to not confident), whose per-window diversity tracks the males' at $r=0.996$.
 Of the four Z Tier-1 calls (three hard and one soft, Supplementary Fig.~S18), three credible, gene-localised sweeps survive
 fine-scale triage, all confirmed as conserved cephalopod genes by direct homology. These are \textit{Pasilla}/Nova-1 (a neuronal alternative-splicing regulator with 92\% identity to its \textit{Octopus} ortholog),
 \textit{Smaug}/samd4a (a germline RNA-binding translational repressor), and \textit{Esrrg} (an estrogen-related receptor with an adjacent likely \textit{cis}-regulatory lncRNA, with 97.5\% identity to its \textit{Octopus} ortholog),
@@ -493,7 +493,7 @@ The manuscript, along with all figures and tables, their generating scripts, and
 
 \begin{figure}[p]\centering
 \includegraphics[width=\linewidth]{fig2_overview.png}
-\caption{\textbf{Absence of population structure outside chromosome~2 and sex assignment} (consistent with the range-wide panmixia reported by \citealt{baker2025}). \textbf{(a)} Genome-wide autosomal PCA excluding chromosome~2 reveals a single undifferentiated cluster. \textbf{(b)} PCA of chrZ, coloured by the sex calls of panel c, shows mild separation between males and females. \textbf{(c)} The chrZ:autosome read-coverage ratio per individual separates ZZ males (median 1.23, two Z copies) from ZO females (median 0.84, one Z and no W), with sex assigned by a two-component Gaussian mixture. Open symbols and hatched bars mark calls below the confidence threshold. The sample includes 341 males (329 confident) and 280 females (278 confident).}
+\caption{\textbf{Absence of population structure outside chromosome~2 and sex assignment} (consistent with the range-wide panmixia reported by \citealt{baker2025}). \textbf{(a)} Genome-wide autosomal PCA excluding chromosome~2 reveals a single undifferentiated cluster. \textbf{(b)} PCA of chrZ, coloured by the sex calls of panel c, shows mild separation between males and females. \textbf{(c)} The chrZ:autosome read-coverage ratio per individual separates ZZ males (median 1.23, two Z copies) from ZO females (median 0.83, one Z and no W), with sex assigned by a two-component Gaussian mixture. Open symbols and hatched bars mark calls below the confidence threshold. Five mixture-model female calls with male-like chrZ heterozygosity were set to not confident, and the two of them with coverage above the male range were recalled as male. The sample includes 343 males (329 confident) and 278 females (273 confident).}
 \label{fig:overview}
 \end{figure}
 
@@ -534,7 +534,7 @@ The manuscript, along with all figures and tables, their generating scripts, and
     \midrule
     Species / callset            & \illex{}; \citet{baker2025} whole-genome \\
     Individuals (karyotyped)     & 621 (of 633 sequenced) \\
-    Sex (chrZ coverage)          & 341 ZZ males / 280 ZO females \\
+    Sex (chrZ coverage)          & 343 ZZ males / 278 ZO females \\
     Sampling                     & 11 NAFO divisions, $\sim$37--50$^\circ$N \\
     Geographic structure         & $\Fst\approx0$ (none outside chr2) \\
     Genome-wide $\pi$            & 0.0093 \\

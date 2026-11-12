@@ -27,6 +27,12 @@ EMPTY = set(pd.read_csv(os.path.join(DATA, "qc", "empty_bams_12.tsv"), sep="\t",
 # 'confident' = GMM posterior >= 0.9. Panels b and c both use these calls.
 sexdf = pd.read_csv(f"{SEXDIR}/sex_assignment.tsv", sep="\t")
 sexdf = sexdf[~sexdf["sample"].isin(EMPTY)].reset_index(drop=True)
+# manual overrides (data/qc/sex_overrides.tsv): five calls with male-like chrZ heterozygosity are set to not
+# confident, and the two with chrZ coverage above the male range are recalled as male
+_ov = pd.read_csv(os.path.join(DATA, "qc", "sex_overrides.tsv"), sep="\t", comment="#").set_index("sample")
+_i = sexdf["sample"].isin(_ov.index)
+sexdf.loc[_i, "sex"] = sexdf.loc[_i, "sample"].map(_ov["sex"])
+sexdf.loc[_i, "confident"] = sexdf.loc[_i, "sample"].map(_ov["confident"]).astype(bool)
 sex_map = dict(zip(sexdf["sample"], sexdf["sex"]))
 n_male = (sexdf.sex == "male").sum()
 n_female = (sexdf.sex == "female").sum()

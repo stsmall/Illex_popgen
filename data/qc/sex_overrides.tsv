@@ -1,0 +1,10 @@
+# Manual overrides of the mixture-model sex calls (analysis/steps/12_sex/sex_assignment.tsv), applied in plot_fig1_overview.py.
+# Five samples called confident ZO females carry male-like chrZ heterozygosity (female 95th percentile 0.00135, male median 0.0063;
+# z_hetfrac_sex.tsv). Two also have chrZ:autosome coverage above every confident male (male max 1.34) and are recalled as male.
+# The three others have coverage between the two clusters. All five are set to not confident.
+sample	sex	confident	Z_ratio	Z_het	reason
+SQ23HBB023	male	False	1.456	0.00958	Z coverage above male range and male-like Z heterozygosity
+SQ23HBB124	male	False	1.611	0.00364	Z coverage above male range and male-like Z heterozygosity
+SQ234Xn020	female	False	1.081	0.00857	Z coverage between clusters and male-like Z heterozygosity
+SQ233K026	female	False	1.055	0.00509	Z coverage between clusters and male-like Z heterozygosity
+SQ233K025	female	False	0.947	0.00462	Z coverage between clusters and male-like Z heterozygosity
