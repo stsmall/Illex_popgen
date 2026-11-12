@@ -135,11 +135,13 @@ checked for calibration on held-out simulations. The neutral baseline for these 
 inversion (chr2:40--55 and 85--115~Mb, Supplementary Methods), which is less diverse ($\pi=0.0062$) than the
 autosomes as a whole.
 
-Balancing selection is favoured, with a posterior probability of 0.997 with gene flux and 0.993 without it
-(Supplementary Methods). Neutral drift falls to zero probability by the third SMC generation in both settings. Part
-of the advantage of balancing selection comes from reaching the present frequency without a precisely timed sweep,
-and given the present frequency the sequence data favour it a further 59-fold over the two directional histories
-combined (25-fold without gene flux). A start from a single copy carries 2\% of the ABC-SMC posterior mass. Under
+Model choice among the four histories with gene flux, by ABC with random forests (ABC-RF) \citep{pudlo2016} on a
+reference table of 16{,}899 simulations, favours balancing selection, with a posterior probability of 0.83 against
+0.05--0.07 for each of the others (Supplementary Methods). Most of this support comes from how readily each history
+reaches the present frequency. Paths under balancing selection end within the accepted window about 12 times as
+often as paths under the other histories, because any $p^{*}$ near 0.626 holds 2a there whereas a sweep must be caught
+mid-course. The summary statistics alone separate the four histories only weakly (cross-validated accuracy 0.51,
+Supplementary Fig.~S26). The ABC-SMC also favours balancing selection, with and without gene flux. A start from a single copy carries 2\% of the ABC-SMC posterior mass. Under
 the favoured model with gene flux, the NPE posterior (\cref{tab:inv}, \cref{fig:demog}b) places the formation of the
 recombination barrier about 380~ka (95\% credible interval 250--820~ka). 2a began to rise from a founding frequency
 of about 0.05 (0.004--0.10) about 310~ka (200--620~ka) and has been held near its equilibrium, $p^{*}=0.623$
@@ -444,7 +446,7 @@ were computed on the called genotypes with pg\_gpu \citep{pggpu}. These are the 
 Karyotypes were assigned by local PCA \citep{li2019lostruct} and a Gaussian-mixture model on the first principal
 component. The two haplotype assemblies of the reference individual were aligned to each other, to the primary
 assembly, and to \coin{} with minimap2 \citep{li2018minimap2}, and the orientation of the inversion relative to
-\coin{} was confirmed with an AnchorWave \citep{song2022anchorwave} whole-genome alignment. The age and frequency history were inferred by ABC-SMC in pyABC \citep{klinger2018}, with each proposal simulated in msinv \citep{msinv}, a sequentially Markov coalescent simulator that enforces the recombination barrier between arrangements (Supplementary Methods). Each proposal draws a stochastic frequency path for 2a under one of four models (neutral drift, directional selection with or without a later stop, and balancing selection), from a single copy or from a founding frequency, and keeps it only if it ends within 0.02 of the present frequency. It then simulates 40~kb of inversion and a separate 40~kb of collinear control, and computes 39 summary statistics divided, where they have one, by the same statistic in the control, as the data are divided by the collinear flanks. The joint model choice used 1{,}000 particles per generation for 15 generations, with an adaptive distance whose scales were refitted in every generation \citep{prangle2017}. Parameters of the favoured model were estimated by NPE in sbi \citep{tejero2020,boelts2025}, with an ensemble of neural spline flows \citep{durkan2019} trained on about 60{,}000 new simulations from its prior that passed the same present-frequency filter, and calibration was checked on 2{,}000 held-out simulations (Supplementary Methods). The neutral baseline (exponential growth from 507{,}288 to 9{,}112{,}696 over 382{,}957 generations, $r=5.51\times10^{-10}$) was fitted to the collinear flanks of chromosome~2 by rejection ABC with regression adjustment \citep{beaumont2002}. The favoured model was checked by posterior predictive simulation from 1{,}000 NPE draws, including three statistics withheld from the fit. Gene content, fixed differences between arrangements, gene-ontology enrichment against a
+\coin{} was confirmed with an AnchorWave \citep{song2022anchorwave} whole-genome alignment. The age and frequency history were inferred by ABC-SMC in pyABC \citep{klinger2018}, with each proposal simulated in msinv \citep{msinv}, a sequentially Markov coalescent simulator that enforces the recombination barrier between arrangements (Supplementary Methods). Each proposal draws a stochastic frequency path for 2a under one of four models (neutral drift, directional selection with or without a later stop, and balancing selection), from a single copy or from a founding frequency, and keeps it only if it ends within 0.02 of the present frequency. It then simulates 40~kb of inversion and a separate 40~kb of collinear control, and computes 39 summary statistics divided, where they have one, by the same statistic in the control, as the data are divided by the collinear flanks. The same frequency paths simulated over the full 19-Mb inversion give statistics whose means differ from those of the 40-kb simulations by less than 0.2 standard deviations (Supplementary Methods). The ABC-SMC used 1{,}000 particles per generation for 15 generations, with an adaptive distance whose scales were refitted in every generation \citep{prangle2017}. Model choice used ABC-RF \citep{pudlo2016} on a reference table of 3{,}000--5{,}000 accepted simulations per history with gene flux. Parameters of the favoured model were estimated by NPE in sbi \citep{tejero2020,boelts2025}, with an ensemble of neural spline flows \citep{durkan2019} trained on about 60{,}000 new simulations from its prior that passed the same present-frequency filter, and calibration was checked on 2{,}000 held-out simulations (Supplementary Methods). The neutral baseline (exponential growth from 507{,}288 to 9{,}112{,}696 over 382{,}957 generations, $r=5.51\times10^{-10}$) was fitted to the collinear flanks of chromosome~2 by rejection ABC with regression adjustment \citep{beaumont2002}. The favoured model was checked by posterior predictive simulation from 1{,}000 NPE draws, including three statistics withheld from the fit. Gene content, fixed differences between arrangements, gene-ontology enrichment against a
 permutation null, and the mutational-load test are described in the Supplementary Methods.
 
 \paragraph{Recombination.}
@@ -545,7 +547,7 @@ The manuscript, along with all figures and tables, their generating scripts, and
 \end{table}
 
 \begin{table}[t]\centering
-  \caption{\textbf{The chromosome-2 inversion} (I~$=$~2a derived and S~$=$~2+ ancestral). The model was chosen by ABC-SMC, and its parameters are NPE posterior medians with 95\% credible intervals.}
+  \caption{\textbf{The chromosome-2 inversion} (I~$=$~2a derived and S~$=$~2+ ancestral). The model was chosen by ABC-RF, and its parameters are NPE posterior medians with 95\% credible intervals.}
   \label{tab:inv}
   \begin{tabular}{ll}
     \toprule
@@ -559,7 +561,7 @@ The manuscript, along with all figures and tables, their generating scripts, and
     Karyotype $\Fst$ (2a/2a vs 2+/2+)        & 0.365 (geographic $\Fst\approx0$) \\
     $\pi_I/\pi_S$ (I$=$2a)         & $0.737 \pm 0.026$ \\
     $\dxy/\pi_S$                   & $1.385 \pm 0.021$ \\
-    Favoured model                 & balancing selection with gene flux ($P=0.997$) \\
+    Favoured model                 & balancing selection with gene flux (ABC-RF $P=0.83$) \\
     Barrier age $t_\mathrm{inv}$   & 380~ka (250--820~ka), $\propto 1/\mu$ with $\mu=3\times10^{-9}$ \\
     Onset of selection             & 310~ka (200--620~ka) \\
     Selection coefficient          & $s>1.8\times10^{-5}$ (95\% lower bound only) \\
