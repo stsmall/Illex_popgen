@@ -15,6 +15,8 @@ _ROOT=os.path.dirname(os.path.abspath(__file__))
 while not os.path.isfile(os.path.join(_ROOT,"data","qc","excluded_14.tsv")) and _ROOT!="/": _ROOT=os.path.dirname(_ROOT)
 EMPTY=set(pd.read_csv(os.path.join(_ROOT,"data","qc","excluded_14.tsv"),sep="\t",comment="#")["sample"])
 k=k[~k["sample"].isin(EMPTY)]
+# final calls (data/qc/karyotypes_619.tsv): depth-equalised call replaces 18 full-depth AA calls
+k["karyotype"]=k["sample"].map(pd.read_csv(os.path.join(_ROOT,"data","qc","karyotypes_619.tsv"),sep="\t",comment="#").set_index("sample")["karyotype_final"])
 d=m.merge(k[["sample","karyotype"]],left_on="ID",right_on="sample")
 d=d[~d.Zone.isin(["4X"])&d.Depth.notna()].copy()
 d["depth"]=d.Depth.astype(float); d["b"]=d.karyotype.map({"AA":0,"AB":1,"BB":2}); d=d.dropna(subset=["b"])

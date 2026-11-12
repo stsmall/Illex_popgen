@@ -79,6 +79,10 @@ def _karyotype_pca():
     baker = set(open(BAKER_633).read().split())
     empty = set(pd.read_csv(EMPTY_BAMS, sep="\t", comment="#")["sample"])
     d = d[d["sample"].isin(baker) & ~d["sample"].isin(empty)].reset_index(drop=True)
+    # final calls (data/qc/karyotypes_619.tsv): the depth-equalised call replaces 18 full-depth AA calls
+    fin = pd.read_csv(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "qc", "karyotypes_619.tsv"), sep="\t", comment="#").set_index("sample")["karyotype_final"]
+    d["karyotype"] = d["sample"].map(fin)
+    assert d["karyotype"].notna().all()
     print("panel a: n =", len(d), d["karyotype"].value_counts().reindex(["AA", "AB", "BB"]).to_dict())
     return d
 

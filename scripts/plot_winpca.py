@@ -25,7 +25,8 @@ win = pd.read_csv(A / "steps/02_inv_pca/chr2_winpca_windows.tsv", sep="\t")
 names = subprocess.run([BCF, "query", "-l", str(VCF)], capture_output=True, text=True,
                        check=True).stdout.split()
 assert len(names) == coords.shape[1]
-kar = pd.read_csv(A / "steps/03_karyotype/karyotypes.baker.tsv", sep="\t").set_index("sample")["karyotype"]
+# final calls of the 619 (data/qc/karyotypes_619.tsv); excluded individuals get no label
+kar = pd.read_csv(Path(__file__).resolve().parents[1] / "data/qc/karyotypes_619.tsv", sep="\t", comment="#").set_index("sample")["karyotype_final"]
 lab = np.array([kar.get(n, "") for n in names])
 
 sign = np.sign(np.nanmean(coords[:, lab == "BB"], axis=1))

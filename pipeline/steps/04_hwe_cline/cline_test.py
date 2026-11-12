@@ -15,6 +15,8 @@ ROOT=os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)),"..
 EMPTY=set(pd.read_csv(f"{ROOT}/data/qc/excluded_14.tsv",sep="\t",comment="#")["sample"])
 k=pd.read_csv(f"{BASE}/analysis/steps/03_karyotype/karyotypes.baker.tsv",sep="\t")
 k=k[~k["sample"].isin(EMPTY)]
+# final calls (data/qc/karyotypes_619.tsv): depth-equalised call replaces 18 full-depth AA calls
+k["karyotype"]=k["sample"].map(pd.read_csv(f"{ROOT}/data/qc/karyotypes_619.tsv",sep="\t",comment="#").set_index("sample")["karyotype_final"])
 m=pd.read_csv(f"{BASE}/pggpu_illex/popstats/metadata.tsv",sep="\t")[["sample","population","latitude"]]
 df=k.merge(m,on="sample").rename(columns={"population":"division"})
 df["Bdose"]=df["karyotype"].map({"AA":0,"AB":1,"BB":2})   # B-arrangement allele count
