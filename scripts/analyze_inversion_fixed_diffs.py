@@ -1,18 +1,24 @@
 """Fast, vectorized fixed-difference architecture in the chr2 inversion."""
 import numpy as np, pandas as pd
 A = "/sietch_colab/data_share/illex/popgen_data"
-K = f"{A}/analysis/steps/03_karyotype/polarize"
+# allele frequencies per arrangement homozygote group (karyotype_final: 2a/2a n=223, 2+/2+ n=97), from
+# bcftools +fill-tags AF on variants_filt.vcf.gz, chr2:10-80 Mb (columns chrom, pos, AF)
+K = f"{A}/analysis/steps/03_karyotype/karyofix"
 CDS = f"{A}/mkado_illex/inputs/cds.bed"
 GFF = "/sietch_colab/data_share/illex/andy_links/Illex_F24.gene_lnc_pseudo.func.fix.sq3.FINAL.v2.gff3"
-OUT = f"{A}/analysis/steps/03_karyotype/inversion_content"
+OUT = f"{A}/analysis/steps/03_karyotype/karyofix"
 INV_S, INV_E = 60_540_000, 79_500_000
 LOG = open(f"{OUT}/fixed_diffs_summary.txt", "w")
 def say(*a): print(*a); print(*a, file=LOG); LOG.flush()
 
-aa = pd.read_csv(f"{K}/aa_af.txt", sep="\t", header=None, names=["c","pos","ref","alt","aa"])
-bb = pd.read_csv(f"{K}/bb_af.txt", sep="\t", header=None, names=["c","pos","ref","alt","bb"])
-m = aa[["pos","aa"]].copy(); m["bb"] = bb["bb"].values          # positions aligned (verified)
-m["delta"] = (m.aa - m.bb).abs()
+aa = pd.read_csv(f"{K}/AA223_chr2_10_80_af.txt", sep="\t", header=None, names=["c","pos","aa"])
+bb = pd.read_csv(f"{K}/BB97_chr2_10_80_af.txt", sep="\t", header=None, names=["c","pos","bb"])
+assert (aa.pos.values == bb.pos.values).all()
+a = aa[["pos","aa"]].copy(); a["bb"] = bb["bb"].values
+a["delta"] = (a.aa - a.bb).abs()
+col = a[(a.pos >= 10_000_000) & (a.pos <= 30_000_000)]
+say(f"collinear chr2:10-30Mb SNPs {len(col)}; |dAF|>=0.9: {int((col.delta >= 0.9).sum())}")
+m = a[(a.pos >= 60_000_000) & (a.pos <= 80_000_000)].reset_index(drop=True)
 inv = m[(m.pos >= INV_S) & (m.pos <= INV_E)].reset_index(drop=True)
 say(f"chr2:60-80Mb SNPs {len(m)}; inversion body (60.54-79.50Mb) {len(inv)}")
 

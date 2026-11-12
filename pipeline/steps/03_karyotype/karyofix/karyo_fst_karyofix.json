@@ -1,0 +1,16 @@
+{
+ "n_snps": 14163294,
+ "nan_af": 0,
+ "fst_ratio_of_averages_inv_60.54_79.50": 0.36170717525496515,
+ "fst_ratio_of_averages_body_60.55_79.52": 0.36169651924655716,
+ "fst_ratio_of_averages_chr2_60_80": 0.3542543816457307,
+ "fst_window_median_inversion": 0.35551563198701763,
+ "fst_window_median_collinear": 0.005572005947485093,
+ "n_windows_inversion": 190,
+ "n_windows_collinear": 972,
+ "inversion_snps": 1798298,
+ "near_fixed_dAF_ge_0.8": 11801,
+ "near_fixed_dAF_ge_0.9": 5432,
+ "near_fixed_dAF_ge_0.95": 2297,
+ "near_fixed_dAF_ge_0.99": 255
+}

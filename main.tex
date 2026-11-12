@@ -79,9 +79,9 @@ Consistent with range-wide panmixia reported by \citet{baker2025}, population st
 \paragraph{Identity, breakpoints, and karyotypes.}
 Local PCA \citep{li2019lostruct} and a Gaussian-mixture karyotype assignment
 (97.1\% concordant with a depth-equalised recall) resolve three genotype clusters on chromosome~2, the karyotypes of two arrangements that we call 2a and 2+ (2a/2a $n=223$, 2a/2+ $n=299$ and 2+/2+ $n=97$, \cref{fig:inv}a), whose differentiation is karyotypic
-rather than geographic, with $\Fst=0.37$ between 2a/2a and 2+/2+ over the inversion as a whole (Hudson ratio of averages across chr2:60--80~Mb)
+rather than geographic, with $\Fst=0.35$ between 2a/2a and 2+/2+ over the inversion as a whole (Hudson ratio of averages across chr2:60--80~Mb)
 against a geographic $\Fst\approx0$. In 100-kb windows along the whole chromosome, between-karyotype $\Fst$ is
-$\approx0$ across collinear sequence (median 0.006) and rises to a median of 0.34 (maximum 0.53) inside the inversion
+$\approx0$ across collinear sequence (median 0.006) and rises to a median of 0.36 (maximum 0.56) inside the inversion
 (Supplementary Fig.~S20), so the karyotypes are one panmictic population everywhere except
 within the barrier. The three karyotypes co-occur throughout the range with no
 latitudinal cline in arrangement frequency (derived-arrangement frequency 0.50--0.70 across divisions, \cref{fig:map}, Supplementary Fig.~S6 and Table~S2). Two independent lines pin
@@ -110,7 +110,7 @@ The primary evidence is per-arrangement diversity (\cref{tab:inv},
 isolated demes \citep{navarro2000,guerrero2012}, and without gene flux between them the
 neutral diversity of each scales with its frequency \citep{navarro2000}. The common derived arrangement is
 instead less diverse than its frequency predicts, with
-$\pi_I/\pi_S=0.737\pm0.026$ against an equilibrium expectation of $p/(1-p)=1.51$
+$\pi_I/\pi_S=0.719\pm0.027$ against an equilibrium expectation of $p/(1-p)=1.51$
 for a polymorphism held at 0.602, a 2.1-fold deficit. Diversity within an arrangement approaches this equilibrium
 only over a time of the order of the arrangement's own effective size, so the deficit is the signature of an
 arrangement that became common recently on that time scale. Model choice among neutral drift, directional selection
@@ -132,7 +132,7 @@ the joint spectrum between arrangements, and linkage disequilibrium by distance 
 Methods). Parameters of the favoured model were then estimated by neural posterior estimation (NPE)
 \citep{cranmer2020,min2026}, which learns the joint posterior from simulations drawn from the prior and can be
 checked for calibration on held-out simulations. The neutral baseline for these simulations was fitted to collinear chromosome-2 sequence flanking the
-inversion (chr2:40--55 and 85--115~Mb, Supplementary Methods), which is less diverse ($\pi=0.0062$) than the
+inversion (chr2:40--55 and 85--115~Mb, Supplementary Methods), which is less diverse ($\pi=0.0061$) than the
 autosomes as a whole.
 
 Model choice among the four histories with gene flux, by ABC with random forests (ABC-RF) \citep{pudlo2016} on a
@@ -185,7 +185,7 @@ statistic is broadly elevated and the classifier over-calls across the
 inversion, but the two never colocalize into focal concordance, as expected
 for selection on the arrangement as a whole rather than on a focal swept locus, and the
 concordance requirement filters these calls. Gene flux between
-arrangements leaves no gradient in mean $\dxy$ from the breakpoints to the centre, though a residual $\sim$40\%
+arrangements leaves no gradient in mean $\dxy$ from the breakpoints to the centre, though a residual $\sim$33\%
 depletion of near-fixed differences appears in the outermost megabase around the
 breakpoints, and the fitted model reproduces the variants shared by the arrangements better with gene flux than
 without it. The derived arrangement has held an intermediate frequency for about 310~ky, and model choice favours an
@@ -205,14 +205,14 @@ returns no enriched terms at FDR$<$0.05, and a permutation null on a random gene
 while the largest nominal per-term enrichments ($\sim$40-fold) rest on as few as two genes (Supplementary Fig.~S21).
 The inversion thus appears as a functionally unremarkable slice of the genome,
 and likely not a selected gene set but instead a supergene maintained for the arrangement as a whole. What the arrangements do accumulate is divergence as a unit. In the genotype-likelihood joint spectrum of 40 2a/2a
-and 40 2+/2+ individuals, 2{,}219 sites are near-fixed between the arrangements and shared polymorphism falls to
-21\%, whereas collinear chromosome-2 sequence has no near-fixed sites and 47\% shared polymorphism (Supplementary
-Fig.~S5). In the called genotypes of all arrangement homozygotes, 3{,}513 sites spread across the inversion differ in
+and 40 2+/2+ individuals, 3{,}828 sites are near-fixed between the arrangements and shared polymorphism falls to
+18\%, whereas collinear chromosome-2 sequence has no near-fixed sites and 47\% shared polymorphism (Supplementary
+Fig.~S5). In the called genotypes of all arrangement homozygotes, 5{,}432 sites spread across the inversion differ in
 allele frequency between arrangements by at least 0.9, against none in collinear chr2:10--30~Mb, and these positions
 locate the coding differences described below. These are
 overwhelmingly non-coding since coding sequence is only $\sim$0.2\% of the region, but the exonic fixed
-differences are $\sim$2.3-fold over-represented and clustered. All 19 fall in just nine genes, led by a 
-cytochrome~P450 (\textit{CYP4X1}) and an acidic-repeat protein (four each) and including a phospholipase~A2, 
+differences are $\sim$2.1-fold over-represented and clustered. All 26 fall in just ten genes, led by an 
+acidic-repeat protein (six) and a cytochrome~P450 (\textit{CYP4X1}, five) and including a phospholipase~A2, 
 the ciliary gene \textit{RPGRIP1L}, and a cysteine-rich venom-like protein.
 Among coding sites inside the inversion, the most differentiated between arrangements are depleted 
 rather than enriched for nonsynonymous (zero-fold degenerate) positions. Of the top 1\% of 
@@ -499,7 +499,7 @@ The manuscript, along with all figures and tables, their generating scripts, and
 
 \begin{figure}[p]\centering
 \includegraphics[width=\linewidth]{fig3_inversion.png}
-\caption{\textbf{Chromosome-2 inversion analysis.} \textbf{(a)} PCA of chr2 in the 619 individuals distinguishes three karyotype clusters (2a/2a, 2a/2+, 2+/2+). \textbf{(b)} $\Fst$ values between arrangements along chr2 indicate that the inversion (60.54--79.50~Mb, shaded) is the sole differentiated region (Hudson $\Fst$ between the arrangement homozygotes in 100-kb windows, median 0.34 inside the inversion compared to 0.006 in collinear sequence, the same windows as Supplementary Fig.~S20). \textbf{(c)} Diversity per arrangement in 100-kb windows across the inversion (shaded) and 20~Mb of collinear sequence on either side, computed from called genotypes at biallelic SNPs of all arrangement homozygotes (Hudson estimator, missing genotypes excluded per site) and divided by window length without an accessibility mask. Absolute values are therefore lower bounds, below the genotype-likelihood estimates given in the text. Within the breakpoints the derived 2a arrangement is less diverse than the ancestral 2+ ($\pi_I/\pi_S=0.74$, a ratio unaffected by the denominator), despite its higher frequency, and $\dxy$ surpasses both, indicating an ancient polymorphism whose derived arrangement was rarer in the past. Outside the breakpoints, the three curves converge at the collinear $d_{xy}$ (dashed), as expected where arrangements recombine freely.}
+\caption{\textbf{Chromosome-2 inversion analysis.} \textbf{(a)} PCA of chr2 in the 619 individuals distinguishes three karyotype clusters (2a/2a, 2a/2+, 2+/2+). \textbf{(b)} $\Fst$ values between arrangements along chr2 indicate that the inversion (60.54--79.50~Mb, shaded) is the sole differentiated region (Hudson $\Fst$ between the arrangement homozygotes in 100-kb windows, median 0.36 inside the inversion compared to 0.006 in collinear sequence, the same windows as Supplementary Fig.~S20). \textbf{(c)} Diversity per arrangement in 100-kb windows across the inversion (shaded) and 20~Mb of collinear sequence on either side, computed from called genotypes at biallelic SNPs of all arrangement homozygotes (Hudson estimator, missing genotypes excluded per site) and divided by window length without an accessibility mask. Absolute values are therefore lower bounds, below the genotype-likelihood estimates given in the text. Within the breakpoints the derived 2a arrangement is less diverse than the ancestral 2+ ($\pi_I/\pi_S=0.72$, a ratio unaffected by the denominator), despite its higher frequency, and $\dxy$ surpasses both, indicating an ancient polymorphism whose derived arrangement was rarer in the past. Outside the breakpoints, the three curves converge at the collinear $d_{xy}$ (dashed), as expected where arrangements recombine freely.}
 \label{fig:inv}
 \end{figure}
 
@@ -541,7 +541,7 @@ The manuscript, along with all figures and tables, their generating scripts, and
     Genome-wide Tajima's $D$     & $-2.07$ ($-2.09$ in 50~kb windows) \\
     chr2 karyotypes (2a/2a, 2a/2+, 2+/2+)   & 223 / 299 / 97 \\
     Derived (2a) frequency       & 0.602 (0.50--0.70 across divisions, non-clinal) \\
-    Karyotype $\Fst$ (2a/2a vs 2+/2+)      & 0.365 \\
+    Karyotype $\Fst$ (2a/2a vs 2+/2+)      & 0.354 \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -558,16 +558,16 @@ The manuscript, along with all figures and tables, their generating scripts, and
     Derived (2a) frequency $p$     & 0.602 \\
     Founding frequency $p_0$       & 0.05 (0.004--0.10) \\
     Equilibrium frequency $p^{*}$  & 0.623 (0.593--0.745) \\
-    Karyotype $\Fst$ (2a/2a vs 2+/2+)        & 0.365 (geographic $\Fst\approx0$) \\
-    $\pi_I/\pi_S$ (I$=$2a)         & $0.737 \pm 0.026$ \\
-    $\dxy/\pi_S$                   & $1.385 \pm 0.021$ \\
+    Karyotype $\Fst$ (2a/2a vs 2+/2+)        & 0.354 (geographic $\Fst\approx0$) \\
+    $\pi_I/\pi_S$ (I$=$2a)         & $0.719 \pm 0.027$ \\
+    $\dxy/\pi_S$                   & $1.414 \pm 0.024$ \\
     Favoured model                 & balancing selection with gene flux (ABC-RF $P=0.83$) \\
     Barrier age $t_\mathrm{inv}$   & 380~ka (250--820~ka), $\propto 1/\mu$ with $\mu=3\times10^{-9}$ \\
     Onset of selection             & 310~ka (200--620~ka) \\
     Selection coefficient          & $s>1.8\times10^{-5}$ (95\% lower bound only) \\
     Gene flux                      & $4.6\times10^{-7}$ per site per generation ($4\times10^{-9}$ to $7.3\times10^{-7}$) \\
     Gene content                   & 89 gene models, 45 annotated; no GO enrichment ($p=0.51$) \\
-    Near-fixed differences ($|\Delta\mathrm{AF}|\geq0.9$) & 3{,}513 (19 exonic, in 9 genes) \\
+    Near-fixed differences ($|\Delta\mathrm{AF}|\geq0.9$) & 5{,}432 (26 exonic, in 10 genes) \\
     \bottomrule
   \end{tabular}
 \end{table}

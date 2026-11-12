@@ -3,9 +3,9 @@ collinear flanks), replicating msinv empirical_jackknife.windowed() on the full 
 import os; os.environ.setdefault("CUDA_VISIBLE_DEVICES", "0")
 import pandas as pd
 from pg_gpu import HaplotypeMatrix, windowed_analysis
-VCF = "flank_40_100.snps.vcf.gz"
-POPS = "/sietch_colab/ssmall/projects/msinv_dir/inversion_sims/files/.tmp/illex_chr2/pops.tsv"
-OUT = "chr2_40_100_karyo_windows_snps.csv"
+VCF = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/inversion_content/flank_div/flank_40_100.snps.vcf.gz"
+POPS = os.environ.get("POPS", "/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/karyofix/pops_karyofix.tsv")   # karyotype_final: 2a/2a n=223, 2+/2+ n=97
+OUT = os.environ.get("OUT", "chr2_40_100_karyo_windows_snps_karyofix.csv")
 h = HaplotypeMatrix.from_vcf(VCF, region="2:40000000-100000000")
 h.load_pop_file(POPS)
 print(f"loaded {h.num_variants:,} variants x {h.num_haplotypes:,} haplotypes (AA {len(h.sample_sets['AA'])}, BB {len(h.sample_sets['BB'])}) device={h.device}", flush=True)

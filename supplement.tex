@@ -75,7 +75,7 @@ the moments model was checked by forward simulation, which reproduced the observ
 \paragraph{Genotype-based statistics.}
 Statistics that need individual genotypes were computed with pg\_gpu \citep{pggpu} from the filtered VCF.
 Windowed $\pi$, $\dxy$ and Hudson $\Fst$ between arrangements used biallelic SNPs in 100-kb windows, with the 2a/2a
-($n=242$) and 2+/2+ ($n=95$) homozygotes as the two populations and missing genotypes included pairwise. The between-division $\Fst$ matrix (Hudson), the linkage-disequilibrium triangles (genotype $r^2$ among common SNPs), and the principal-component analyses were computed the same way. The per-SNP geographic $\Fst$ scans (Supplementary Figs.~S2, S19) used plink2 \citep{chang2015plink2} to filter and count alleles at every biallelic SNP with a minor-allele frequency above 0.05 in the pooled 620 individuals from the ten divisions with more than one sample (division 3N, with a single individual, was excluded). Per-division allele counts were converted to Hudson $\Fst$ for each of the 45 division pairs \citep{bhatia2013}, at sites genotyped in at least 40 individuals in that pair and with at least two alleles in each division. The per-SNP value is the ratio of averages over informative pairs (the sum of the numerators over the sum of the denominators), without clipping, keeping sites informative in at least 20 of the 45 pairs. Of the 23{,}892{,}020 SNPs passing the frequency filter, 20{,}276{,}930 met this criterion, 20{,}117{,}984 of them on the 45 autosomes (133{,}957 in the chromosome-2 inversion) and 158{,}946 on the Z chromosome. The null was built by shuffling division labels among the individuals 20 times (division sizes kept) and recomputing $\Fst$ at the same SNPs in the same way. Thresholds are quantiles of the pooled null over the autosomes outside the chromosome-2 inversion ($3.996\times10^{8}$ values), and the expected count above each threshold is the number of SNPs times the null tail rate.
+($n=223$) and 2+/2+ ($n=97$) homozygotes as the two populations and missing genotypes included pairwise. The between-division $\Fst$ matrix (Hudson), the linkage-disequilibrium triangles (genotype $r^2$ among common SNPs), and the principal-component analyses were computed the same way. The per-SNP geographic $\Fst$ scans (Supplementary Figs.~S2, S19) used plink2 \citep{chang2015plink2} to filter and count alleles at every biallelic SNP with a minor-allele frequency above 0.05 in the pooled 620 individuals from the ten divisions with more than one sample (division 3N, with a single individual, was excluded). Per-division allele counts were converted to Hudson $\Fst$ for each of the 45 division pairs \citep{bhatia2013}, at sites genotyped in at least 40 individuals in that pair and with at least two alleles in each division. The per-SNP value is the ratio of averages over informative pairs (the sum of the numerators over the sum of the denominators), without clipping, keeping sites informative in at least 20 of the 45 pairs. Of the 23{,}892{,}020 SNPs passing the frequency filter, 20{,}276{,}930 met this criterion, 20{,}117{,}984 of them on the 45 autosomes (133{,}957 in the chromosome-2 inversion) and 158{,}946 on the Z chromosome. The null was built by shuffling division labels among the individuals 20 times (division sizes kept) and recomputing $\Fst$ at the same SNPs in the same way. Thresholds are quantiles of the pooled null over the autosomes outside the chromosome-2 inversion ($3.996\times10^{8}$ values), and the expected count above each threshold is the number of SNPs times the null tail rate.
 
 \paragraph{The inversion.}
 Karyotypes were called from the first principal component of a local PCA across chromosome~2 with a
@@ -238,7 +238,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
     built by shuffling division labels among individuals 20 times, which keeps genotype calling, missingness, the
     allele-frequency spectrum and linkage. Empirical maximum $\Fst=0.371$ against a null maximum of $0.583$.
     \textbf{(b)}~On chromosome~2, the inverted region (green) is no more geographically differentiated than the collinear
-    remainder, so the inversion is non-clinal and its $\Fst\approx0.37$ is between karyotypes, not geography.
+    remainder, so the inversion is non-clinal and its $\Fst\approx0.35$ is between karyotypes, not geography.
     Its upper tail is lighter than the null (66 SNPs above the null 99.9th percentile against 134 expected).
     \textbf{(c)}~SNPs above the null 99.9th, 99.99th and 99.999th percentiles (22{,}562, 2{,}319 and 249) are within the
     permutation range ($19{,}979\pm2{,}154$, $1{,}998\pm352$ and $200\pm54$, permutation $p=0.19$, $0.24$ and $0.29$),
@@ -266,7 +266,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
   \includegraphics[width=.9\linewidth]{figS5_joint_sfs.png}
   \caption{\textbf{Joint two-dimensional site-frequency spectrum} of non-reference allele frequency in the
     2a (derived) versus 2+ (ancestral) arrangement. Each cell is a count of sites (colour, $\log_{10}$).
-    In the inversion (a) density spreads off the diagonal and into the corners, with variants common in one arrangement and absent in the other, i.e.\ near-fixed differences (2{,}219 sites, 21\% shared polymorphism), the direct signature of the recombination barrier. In the collinear control (b) the
+    In the inversion (a) density spreads off the diagonal and into the corners, with variants common in one arrangement and absent in the other, i.e.\ near-fixed differences (3{,}828 sites, 18\% shared polymorphism), the direct signature of the recombination barrier. In the collinear control (b) the
     density collapses onto the diagonal (0 near-fixed differences, 47\% shared), as expected for freely
     recombining, exchangeable sequence.}
   \label{sfig:jsfs}
@@ -425,11 +425,11 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \begin{figure}[h]\centering
   \includegraphics[width=\linewidth]{figS20_chr2_karyotype_fst.png}
   \caption{\textbf{Between-karyotype differentiation is confined to the chromosome-2 inversion.} Per-window
-    $\Fst$ between the 2a and 2+ arrangements (arrangement homozygotes, 2a/2a $n=242$ and 2+/2+ $n=95$) across the
+    $\Fst$ between the 2a and 2+ arrangements (arrangement homozygotes, 2a/2a $n=223$ and 2+/2+ $n=97$) across the
     whole of chromosome~2, aggregated in 100~kb windows (ratio-of-averages Hudson estimator). Unlike the
     population-$\Fst$ scan (which asks about geography), this asks how differentiated the two arrangements are
     along the chromosome. The collinear remainder (grey) sits at $\Fst\approx0$ (median 0.006), so outside the inversion the karyotypes are one panmictic population, while the inversion (60.54--79.50~Mb,
-    shaded) is strongly differentiated (median 0.34, max 0.53). The whole-inversion $\Fst$ of 0.37 that defines the ``structure'' on
+    shaded) is strongly differentiated (median 0.36, max 0.56). The whole-inversion $\Fst$ of 0.35 that defines the ``structure'' on
     chromosome~2 is thus between karyotypes and confined to the inversion, not geographic.}
   \label{sfig:karyofst}
 \end{figure}

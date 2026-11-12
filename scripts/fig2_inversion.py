@@ -11,7 +11,7 @@ Panels
      Data: steps/03_karyotype/chr2_karyo_coords.tsv (+ sample IDs from karyotypes.tsv)
   b  F_ST across the whole of chr2 (AA vs BB), inversion shaded -- shows the
      inversion (60.54-79.50 Mb) is the only differentiated region.
-     Data: steps/03_karyotype/inversion_content/chr2_karyo_fst_windows.tsv, the same 100-kb
+     Data: steps/03_karyotype/karyofix/chr2_karyo_fst_windows_karyofix.tsv, the same 100-kb
      Hudson ratio-of-averages windows (all arrangement homozygotes) and the same filter
      (>=10 SNPs, denominator > 0, F_ST clipped at 0) as Supplementary Fig. S20
      (plot_chr2_karyotype_fst.py), so the two figures show identical data.
@@ -19,8 +19,8 @@ Panels
      the inversion plus 20 Mb of collinear sequence on each side (40-100 Mb) --
      shows the derived AA arrangement is the LESS diverse one and that the three
      curves collapse together outside the breakpoints.
-     Data: steps/03_karyotype/inversion_content/flank_div/chr2_40_100_karyo_windows_snps.csv
-     (compute_flank_div.py: pg_gpu windowed pi/dxy, 100 kb, AA n=254 / BB n=95)
+     Data: steps/03_karyotype/karyofix/chr2_40_100_karyo_windows_snps_karyofix.csv
+     (compute_flank_div_snps.py: pg_gpu windowed pi/dxy, 100 kb, 2a/2a n=223 / 2+/2+ n=97)
 
 Panel c reproduces the data + logic of ``_fst_chr2``/``_diversity`` and the
 manu_fig_inv_fst / manu_fig_inv_diversity functions in
@@ -48,10 +48,10 @@ KARYO_IDS = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyot
 BAKER_633 = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/00_callset/baker_633.txt"
 EMPTY_BAMS = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "qc", "excluded_14.tsv")
 DISP = {"AA": "2a/2a", "AB": "2a/2+", "BB": "2+/2+"}   # display names (2a derived, 2+ ancestral/reference)
-FST_WINDOWS = ("/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/inversion_content/"
-               "chr2_karyo_fst_windows.tsv")   # same table as Supplementary Fig. S20
-DIV_WINDOWS = ("/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/inversion_content/"
-               "flank_div/chr2_40_100_karyo_windows_snps.csv")   # chr2:40-100 Mb, biallelic SNPs, same pg_gpu recipe as msinv
+FST_WINDOWS = ("/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/karyofix/"
+               "chr2_karyo_fst_windows_karyofix.tsv")   # same table as Supplementary Fig. S20
+DIV_WINDOWS = ("/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/karyofix/"
+               "chr2_40_100_karyo_windows_snps_karyofix.csv")   # chr2:40-100 Mb, biallelic SNPs, same pg_gpu recipe as msinv
 OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "figures", "fig3_inversion.png")
 
 BP_L, BP_R = 60_540_000, 79_500_000     # pinned inversion breakpoints (Mb)

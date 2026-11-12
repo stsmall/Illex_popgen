@@ -4,7 +4,7 @@ Unlike the population F_ST scan (which asks about geography), this asks how diff
 the two arrangements are along the chromosome: collinear chr2 sits at ~0 (the karyotypes
 are one panmictic population outside the inversion), while the inversion (60.54-79.50 Mb)
 is strongly differentiated -- the F_ST~0.37 'structure' is between karyotypes and confined
-to the inversion. AA n=254, BB n=95 arrangement homozygotes."""
+to the inversion. 2a/2a n=223, 2+/2+ n=97 arrangement homozygotes (karyotype_final)."""
 import os
 os.environ.setdefault("MPLCONFIGDIR", "/dev/shm/mplcache")
 import sys
@@ -15,15 +15,15 @@ from figstyle import apply, C, despine
 apply()
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
 
-O = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/inversion_content"
+O = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/karyofix"
 OUT = os.path.join(_ROOT, "supp_figures", "figS20_chr2_karyotype_fst.png")
 INV_S, INV_E = 60_540_000, 79_500_000
-N1, N2 = 2 * 254, 2 * 95          # allele counts (diploid homozygotes)
+N1, N2 = 2 * 223, 2 * 97          # allele counts (diploid homozygotes)
 WIN = 100_000
 
-# Windowed Hudson FST precomputed by a streaming awk pass (ratio-of-averages, N1=508
-# AA + N2=190 BB alleles): columns win_start, sum_num, sum_den, n_snps.
-w = pd.read_csv(f"{O}/chr2_karyo_fst_windows.tsv", sep="\t", header=None,
+# Windowed Hudson FST (ratio of averages, N1=446 2a + N2=194 2+ alleles) from bcftools +fill-tags AF per group,
+# karyo_fst_karyofix.py in msinv_pboot_wt/results/illex/observed_karyofix/code: columns win_start, sum_num, sum_den, n_snps.
+w = pd.read_csv(f"{O}/chr2_karyo_fst_windows_karyofix.tsv", sep="\t", header=None,
                 names=["win", "num", "den", "n"])
 w = w[(w.n >= 10) & (w.den > 0)]
 w["fst"] = (w.num / w.den).clip(lower=0)

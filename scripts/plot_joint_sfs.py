@@ -2,11 +2,13 @@
 
 Input: unfolded realSFS 2D spectra (81 x 81, 40 2a/2a and 40 2+/2+ individuals),
 m[i, j] = sites with i non-reference alleles in 2a and j in 2+, plus the summary
-in sfs2d_karyotype.json (msinv repo, illex/scripts/sfs2d_karyotype.py).
+recipe of sfs2d_karyotype.py (msinv repo, illex/scripts/sfs2d_karyotype.py; near-fixed = within 4
+alleles of a corner in both arrangements). The inversion spectrum uses the corrected 40 2a/2a
+(AA40fix, karyotype_final) and 40 2+/2+; the collinear control keeps the original 40 2a/2a sample,
+whose karyotype calls do not matter outside the inversion.
 Frequencies are of the NON-REFERENCE allele, not the derived allele: the
 reference assembly carries 2+ in the inversion.
 """
-import json
 from pathlib import Path
 
 import matplotlib as mpl
@@ -17,7 +19,17 @@ import numpy as np
 R = Path("/sietch_colab/ssmall/projects/msinv_dir/msinv_pboot_wt/results/illex")
 OUT = Path(__file__).resolve().parent.parent / "supp_figures" / "figS5_joint_sfs.png"
 
-stats = json.load(open(R / "sfs2d_karyotype.json"))
+SPECTRA = {"body": R / "observed_karyofix" / "AA_BB.body.2dSFS",
+           "control": R / "sfs2d" / "AA_BB.control.2dSFS"}
+NEAR = 4
+
+
+def summary(m):
+    N = m.shape[0] - 1
+    return {"variable": m.sum() - m[0, 0] - m[N, N], "shared": m[1:N, 1:N].sum(),
+            "nearfix": m[N - NEAR:, :NEAR + 1].sum() + m[:NEAR + 1, N - NEAR:].sum()}
+
+
 fig, axes = plt.subplots(1, 2, figsize=(9.6, 4.0))
 fig.subplots_adjust(wspace=0.32)
 cmap = mpl.colormaps["magma"].copy()
@@ -25,7 +37,7 @@ cmap.set_bad("#d9d9d9")
 
 for ax, (key, tag, label) in zip(axes, (("body", "a", "inversion  (60.54–79.50 Mb)"),
                                         ("control", "b", "collinear control  (10–30 Mb)"))):
-    m = np.loadtxt(R / "sfs2d" / f"AA_BB.{key}.2dSFS").reshape(81, 81)
+    m = np.loadtxt(SPECTRA[key]).reshape(81, 81)
     v = m.copy()
     v[0, 0] = v[-1, -1] = np.nan                       # monomorphic corners
     lv = np.where(v > 0, np.log10(np.maximum(v, 1.0)), np.nan)
@@ -36,8 +48,9 @@ for ax, (key, tag, label) in zip(axes, (("body", "a", "inversion  (60.54–79.50
     ax.set_xlabel("non-reference allele frequency in 2+  (ancestral)")
     if key == "body":
         ax.set_ylabel("non-reference allele frequency in 2a  (derived)")
-    s = stats[key]
-    nf = s["nearfix_AAalt"] + s["nearfix_BBalt"]
+    s = summary(m)
+    nf = s["nearfix"]
+    print(key, f"shared {100 * s['shared'] / s['variable']:.1f}%  near-fixed {nf:,.0f}")
     ax.set_title(f"{tag}   {label}", loc="left", fontweight="bold")
     ax.text(0.035, 0.965, f"shared polymorphism   {100 * s['shared'] / s['variable']:.1f}%\n"
             f"near-fixed differences   {nf:,.0f}", transform=ax.transAxes, ha="left", va="top",
