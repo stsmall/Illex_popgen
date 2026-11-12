@@ -46,7 +46,7 @@ KARYO_COORDS = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_kar
 # (data/qc/empty_bams_12.tsv, which sit at the PCA origin) are dropped.
 KARYO_IDS = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/karyotypes.tsv"
 BAKER_633 = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/00_callset/baker_633.txt"
-EMPTY_BAMS = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "qc", "empty_bams_12.tsv")
+EMPTY_BAMS = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "qc", "excluded_14.tsv")
 DISP = {"AA": "2a/2a", "AB": "2a/2+", "BB": "2+/2+"}   # display names (2a derived, 2+ ancestral/reference)
 FST_WINDOWS = ("/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/inversion_content/"
                "chr2_karyo_fst_windows.tsv")   # same table as Supplementary Fig. S20

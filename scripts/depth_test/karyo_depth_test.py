@@ -12,8 +12,8 @@ k=pd.read_csv("/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_kary
 # 12 BAMs with essentially no data (data/qc/empty_bams_12.tsv) are excluded: they carry only missing
 # genotypes and were labelled AA (zero 2+ chromosomes) by default.
 _ROOT=os.path.dirname(os.path.abspath(__file__))
-while not os.path.isfile(os.path.join(_ROOT,"data","qc","empty_bams_12.tsv")) and _ROOT!="/": _ROOT=os.path.dirname(_ROOT)
-EMPTY=set(pd.read_csv(os.path.join(_ROOT,"data","qc","empty_bams_12.tsv"),sep="\t",comment="#")["sample"])
+while not os.path.isfile(os.path.join(_ROOT,"data","qc","excluded_14.tsv")) and _ROOT!="/": _ROOT=os.path.dirname(_ROOT)
+EMPTY=set(pd.read_csv(os.path.join(_ROOT,"data","qc","excluded_14.tsv"),sep="\t",comment="#")["sample"])
 k=k[~k["sample"].isin(EMPTY)]
 d=m.merge(k[["sample","karyotype"]],left_on="ID",right_on="sample")
 d=d[~d.Zone.isin(["4X"])&d.Depth.notna()].copy()

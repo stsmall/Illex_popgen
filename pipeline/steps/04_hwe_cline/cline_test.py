@@ -12,7 +12,7 @@ D=f"{BASE}/analysis/steps/04_hwe_cline"
 ROOT=os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","..",".."))
 # 12 BAMs with essentially no data (data/qc/empty_bams_12.tsv) are excluded; they were
 # labelled AA (2a/2a) by default because they carry only missing genotypes.
-EMPTY=set(pd.read_csv(f"{ROOT}/data/qc/empty_bams_12.tsv",sep="\t",comment="#")["sample"])
+EMPTY=set(pd.read_csv(f"{ROOT}/data/qc/excluded_14.tsv",sep="\t",comment="#")["sample"])
 k=pd.read_csv(f"{BASE}/analysis/steps/03_karyotype/karyotypes.baker.tsv",sep="\t")
 k=k[~k["sample"].isin(EMPTY)]
 m=pd.read_csv(f"{BASE}/pggpu_illex/popstats/metadata.tsv",sep="\t")[["sample","population","latitude"]]
@@ -60,6 +60,6 @@ ax[1].plot(xs,np.full(2,tab["p_B"].mean()),":",color="grey")  # flat ref at the 
 ax[1].set(xlabel="mean latitude (N)",ylabel="2+ arrangement frequency",title=f"2+ frequency vs latitude (r={r_div:.2f}, p={p_div:.2g})")
 fig.suptitle(f"chr2 inversion: non-clinal test (n={len(df)})")
 fig.tight_layout(); fig.savefig(f"{ROOT}/supp_figures/figS6_cline.png",dpi=140,bbox_inches="tight")
-# n=621 table written beside (not over) the original 633-sample karyo_by_division.tsv
-tab.to_csv(f"{D}/karyo_by_division.n621.tsv",sep="\t")
-print(f"wrote {ROOT}/supp_figures/figS6_cline.png + {D}/karyo_by_division.n621.tsv", flush=True)
+# n=619 table written beside (not over) the original 633-sample karyo_by_division.tsv
+tab.to_csv(f"{D}/karyo_by_division.n619.tsv",sep="\t")
+print(f"wrote {ROOT}/supp_figures/figS6_cline.png + {D}/karyo_by_division.n619.tsv", flush=True)

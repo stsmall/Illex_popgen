@@ -1,0 +1,16 @@
+# Individuals excluded from every count: the 12 Baker et al. 2025 BAMs with essentially no data (empty_bams_12.tsv) and two individuals with signs of contamination (male-like chrZ heterozygosity under female coverage calls, chrZ coverage above every male, and the extreme positions on autosomal PC2). Analyses run before the exclusion received only missing genotypes from the 12 and include the two.
+sample	reason
+SQ233K059	empty BAM
+SQ234Xn026	empty BAM
+SQ234Xn038	empty BAM
+SQ234Xn028	empty BAM
+SQ234Xn052	empty BAM
+SQ234Xn044	empty BAM
+SQ234Xn042	empty BAM
+SQ234Xn057	empty BAM
+SQ234Xn060	empty BAM
+SQ234Xn070	empty BAM
+SQ234Xn058	empty BAM
+SQ234Xn068	empty BAM
+SQ23HBB023	likely contaminated
+SQ23HBB124	likely contaminated

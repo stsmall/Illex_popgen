@@ -1,5 +1,5 @@
 """Supp: the autosomal-PCA spread does NOT track geography.
-a. autosomal PCA (chr2 excluded; pipeline/steps/05_karyo_pca_arms/build_pca621.sh) coloured by NAFO division.
+a. autosomal PCA (chr2 excluded; pipeline/steps/05_karyo_pca_arms/build_pca.sh) coloured by NAFO division.
 b. same PCA coloured by latitude.
 c. PC1 and PC2 vs latitude, with Pearson r (near zero) -> spread is not geographic.
 """
@@ -18,7 +18,7 @@ SC = DATA
 META = "/sietch_colab/data_share/illex/popgen_data/pggpu_illex/popstats/metadata.tsv"
 OUT = os.path.join(_HERE, "..", "supp_figures", "figS1_pca_geography.png")
 
-ev = pd.read_csv(f"{SC}/auto_pca621.eigenvec", sep="\t")
+ev = pd.read_csv(f"{SC}/auto_pca.eigenvec", sep="\t")
 ev = ev.rename(columns={"IID": "sample"})
 meta = pd.read_csv(META, sep="\t")[["sample", "population", "latitude", "longitude"]]
 d = ev.merge(meta, on="sample", how="inner")

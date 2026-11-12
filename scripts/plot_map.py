@@ -16,9 +16,9 @@ import cartopy.feature as cfeature
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # 12 BAMs with essentially no data (data/qc/empty_bams_12.tsv) are excluded (n=621).
-# karyo_by_division.n621.tsv is written by pipeline/steps/04_hwe_cline/cline_test.py with them removed.
-EMPTY = set(pd.read_csv(os.path.join(ROOT, "data", "qc", "empty_bams_12.tsv"), sep="\t", comment="#")["sample"])
-DIV = pd.read_csv("/sietch_colab/data_share/illex/popgen_data/analysis/steps/04_hwe_cline/karyo_by_division.n621.tsv", sep="\t")
+# karyo_by_division.n619.tsv is written by pipeline/steps/04_hwe_cline/cline_test.py with them removed.
+EMPTY = set(pd.read_csv(os.path.join(ROOT, "data", "qc", "excluded_14.tsv"), sep="\t", comment="#")["sample"])
+DIV = pd.read_csv("/sietch_colab/data_share/illex/popgen_data/analysis/steps/04_hwe_cline/karyo_by_division.n619.tsv", sep="\t")
 # pie positions = mean sampling coordinates of each division (Baker et al. 2025 metadata), so the
 # map matches the actual collection sites rather than nominal NAFO-division centroids
 META = pd.read_csv("/sietch_colab/data_share/illex/popgen_data/seq_data/baker_2025/docs/Squid_Meta_Sept2024_Simple.txt", sep="\t")

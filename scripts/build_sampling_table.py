@@ -8,7 +8,7 @@ A = "/sietch_colab/data_share/illex/popgen_data"
 _HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE)
 m = pd.read_csv(f"{A}/seq_data/baker_2025/docs/Squid_Meta_Sept2024_Simple.txt", sep="\t", dtype=str)
 ids = set(open(f"{A}/analysis/steps/00_callset/baker_633.txt").read().split())
-EMPTY = set(pd.read_csv(f"{_ROOT}/data/qc/empty_bams_12.tsv", sep="\t", comment="#")["sample"])
+EMPTY = set(pd.read_csv(f"{_ROOT}/data/qc/excluded_14.tsv", sep="\t", comment="#")["sample"])
 ids -= EMPTY
 m = m[m.ID.isin(ids)].copy()
 m["date"] = pd.to_datetime(m.Collection_Date, format="%d-%b-%y", errors="coerce")

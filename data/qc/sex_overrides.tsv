@@ -2,6 +2,7 @@
 # Five samples called confident ZO females carry male-like chrZ heterozygosity (female 95th percentile 0.00135, male median 0.0063;
 # z_hetfrac_sex.tsv). Two also have chrZ:autosome coverage above every confident male (male max 1.34) and are recalled as male.
 # The three others have coverage between the two clusters. All five are set to not confident.
+# SQ23HBB023 and SQ23HBB124 were later excluded altogether as likely contaminated (excluded_14.tsv); their rows here no longer apply.
 sample	sex	confident	Z_ratio	Z_het	reason
 SQ23HBB023	male	False	1.456	0.00958	Z coverage above male range and male-like Z heterozygosity
 SQ23HBB124	male	False	1.611	0.00364	Z coverage above male range and male-like Z heterozygosity

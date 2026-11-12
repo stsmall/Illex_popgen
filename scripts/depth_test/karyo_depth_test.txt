@@ -1,12 +1,12 @@
-(1) individuals n=538, depth 3-613 m, 10 divisions: Spearman rho=-0.078, p=0.072, permutation p=0.065
-(2) hauls with n>=5: 11; weighted slope of BB frequency on depth = -0.0285 per 100 m (SE 0.0115), t=-2.47, p=0.035; freq range 0.28-0.45
-    hauls: 3K 3m n=48 p=0.41; 3K 4m n=53 p=0.45; 3O 204m n=14 p=0.32; 4R 113m n=36 p=0.29; 4R 233m n=5 p=0.40; 4R 245m n=9 p=0.28; 4W 84m n=47 p=0.37; 6A 120m n=95 p=0.39; 6B 201m n=48 p=0.41; 6B 74m n=49 p=0.41; 6C 307m n=87 p=0.33
-(3) within-division, 6 divisions with >1 depth (3K, 3O, 4R, 4S, 4T, 6B), n=308: n-weighted mean Spearman rho=+0.044, within-division permutation p=0.458
+(1) individuals n=536, depth 3-613 m, 10 divisions: Spearman rho=-0.082, p=0.057, permutation p=0.056
+(2) hauls with n>=5: 11; weighted slope of BB frequency on depth = -0.0309 per 100 m (SE 0.0116), t=-2.65, p=0.026; freq range 0.28-0.45
+    hauls: 3K 3m n=48 p=0.41; 3K 4m n=53 p=0.45; 3O 204m n=14 p=0.32; 4R 113m n=36 p=0.29; 4R 233m n=5 p=0.40; 4R 245m n=9 p=0.28; 4W 84m n=47 p=0.37; 6A 120m n=94 p=0.40; 6B 201m n=48 p=0.41; 6B 74m n=49 p=0.41; 6C 307m n=86 p=0.33
+(3) within-division, 6 divisions with >1 depth (3K, 3O, 4R, 4S, 4T, 6B), n=308: n-weighted mean Spearman rho=+0.044, within-division permutation p=0.460
 (4) leave-one-division-out, haul-level slope per 100 m:
-    drop 3K: slope -0.0208, p=0.231
-    drop 3O: slope -0.0277, p=0.051
-    drop 4R: slope -0.0289, p=0.013
-    drop 4W: slope -0.0296, p=0.040
-    drop 6A: slope -0.0282, p=0.049
-    drop 6B: slope -0.0309, p=0.038
-    drop 6C: slope -0.0310, p=0.155
+    drop 3K: slope -0.0246, p=0.174
+    drop 3O: slope -0.0302, p=0.039
+    drop 4R: slope -0.0314, p=0.010
+    drop 4W: slope -0.0321, p=0.031
+    drop 6A: slope -0.0304, p=0.036
+    drop 6B: slope -0.0336, p=0.028
+    drop 6C: slope -0.0306, p=0.163

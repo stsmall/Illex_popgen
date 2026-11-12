@@ -16,11 +16,11 @@ SC = DATA
 SEXDIR = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/12_sex"
 OUT = os.path.join(_HERE, "..", "figures", "fig2_overview.png")
 
-# PCAs from pipeline/steps/05_karyo_pca_arms/build_pca621.sh (621 individuals, LD-thinned SNPs, MAF >= 0.05).
-# Variance explained = eigenvalue / trace of the full relationship matrix (in *_pca621_summary.tsv).
+# PCAs from pipeline/steps/05_karyo_pca_arms/build_pca.sh (621 individuals, LD-thinned SNPs, MAF >= 0.05).
+# Variance explained = eigenvalue / trace of the full relationship matrix (in *_pca_summary.tsv).
 
 # 12 BAMs with essentially no data (data/qc/empty_bams_12.tsv) are excluded from every panel (n=621).
-EMPTY = set(pd.read_csv(os.path.join(DATA, "qc", "empty_bams_12.tsv"), sep="\t", comment="#")["sample"])
+EMPTY = set(pd.read_csv(os.path.join(DATA, "qc", "excluded_14.tsv"), sep="\t", comment="#")["sample"])
 
 # --- load sex assignment (chrZ:autosome coverage ratio -> 2-component GMM -> sex; assign_sex.py) ---
 # 'confident' = GMM posterior >= 0.9. Panels b and c both use these calls.
@@ -49,10 +49,10 @@ def load_pca(prefix):
     return ev, np.array([sm.pve_pc1, sm.pve_pc2]), int(sm.n_snps)
 
 
-auto, auto_pve, auto_nsnps = load_pca("auto_pca621")
+auto, auto_pve, auto_nsnps = load_pca("auto_pca")
 
 # --- panel b: chrZ PCA ---
-z, z_pve, z_nsnps = load_pca("z_pca621")
+z, z_pve, z_nsnps = load_pca("z_pca")
 # mixture-model sex calls (sex_assignment.tsv) shared by panels b and c
 z = z.merge(sexdf[["sample", "sex", "confident"]], left_on="IID", right_on="sample", how="left")
 assert z["sex"].notna().all()
