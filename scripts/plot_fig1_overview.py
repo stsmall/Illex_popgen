@@ -16,9 +16,8 @@ SC = DATA
 SEXDIR = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/12_sex"
 OUT = os.path.join(_HERE, "..", "figures", "fig2_overview.png")
 
-AUTO_PCA_PREFIX = "auto_pca4"   # set by driver once final PCA is ready
-AUTO_N_SNPS = None              # filled below from log if present
-Z_N_SNPS = 6199
+# PCAs from pipeline/steps/05_karyo_pca_arms/build_pca621.sh (621 individuals, LD-thinned SNPs, MAF >= 0.05).
+# Variance explained = eigenvalue / trace of the full relationship matrix (in *_pca621_summary.tsv).
 
 # 12 BAMs with essentially no data (data/qc/empty_bams_12.tsv) are excluded from every panel (n=621).
 EMPTY = set(pd.read_csv(os.path.join(DATA, "qc", "empty_bams_12.tsv"), sep="\t", comment="#")["sample"])
@@ -43,32 +42,22 @@ n_female = (sexdf.sex == "female").sum()
 sexdf["Z_auto_corrected"] = sexdf["Z_ratio"] / sexdf["chr42_ratio"]
 
 # --- panel a: autosomal PCA excluding chr2 ---
-auto = pd.read_csv(f"{SC}/{AUTO_PCA_PREFIX}.eigenvec", sep="\t")
-auto = auto[~auto["IID"].isin(EMPTY)]
-# auto_pca4.eigenval and auto_nsnps.txt are no longer on disk (searched analysis/, illex_manuscript/,
-# home and scratch, 2026-11-11). Panel a is unchanged (same 621-sample eigenvec), so when they are
-# missing the values are taken from the previous render of this panel (figures/fig2_overview.png of
-# 2026-09-16, made from those files): PC1 29.2%, PC2 10.0%, 170,907 SNPs.
-if os.path.exists(f"{SC}/{AUTO_PCA_PREFIX}.eigenval") and os.path.exists(f"{SC}/auto_nsnps.txt"):
-    auto_eig = np.loadtxt(f"{SC}/{AUTO_PCA_PREFIX}.eigenval")
-    auto_pve = 100 * auto_eig / auto_eig.sum()
-    with open(f"{SC}/auto_nsnps.txt") as fh:
-        auto_nsnps = int(fh.read().strip())
-else:
-    print("WARNING: auto_pca4.eigenval / auto_nsnps.txt missing -> panel a labels from the 2026-09-16 render")
-    auto_pve = np.array([29.2, 10.0])
-    auto_nsnps = 170907
+def load_pca(prefix):
+    ev = pd.read_csv(f"{SC}/{prefix}.eigenvec", sep="\t")
+    sm = pd.read_csv(f"{SC}/{prefix}_summary.tsv", sep="\t").iloc[0]
+    assert not ev["IID"].isin(EMPTY).any()
+    return ev, np.array([sm.pve_pc1, sm.pve_pc2]), int(sm.n_snps)
+
+
+auto, auto_pve, auto_nsnps = load_pca("auto_pca621")
 
 # --- panel b: chrZ PCA ---
-z = pd.read_csv(f"{SC}/z_pca.eigenvec", sep="\t")
-z_eig = np.loadtxt(f"{SC}/z_pca.eigenval")
-z_pve = 100 * z_eig / z_eig.sum()
-z = z[~z["IID"].isin(EMPTY)]
+z, z_pve, z_nsnps = load_pca("z_pca621")
 # mixture-model sex calls (sex_assignment.tsv) shared by panels b and c
 z = z.merge(sexdf[["sample", "sex", "confident"]], left_on="IID", right_on="sample", how="left")
 assert z["sex"].notna().all()
 
-fig = plt.figure(figsize=(11.5, 4.0))
+fig = plt.figure(figsize=(11.5, 4.6))
 gs = fig.add_gridspec(1, 3, wspace=0.42)
 axA = fig.add_subplot(gs[0, 0])
 axB = fig.add_subplot(gs[0, 1])
@@ -88,10 +77,11 @@ axA.set_title(f"autosomal PCA, chr2 excluded\n(n={len(auto)}, {auto_nsnps:,} SNP
 despine(axA)
 
 # panel b -- coloured by the mixture-model sex call; filled = confident (posterior >= 0.9),
-# open = not confident
+# open = not confident; the five overridden calls (data/qc/sex_overrides.tsv) in grey
 SEXLAB = {"male": "ZZ male", "female": "ZO female"}
+flag = z["sample"].isin(_ov.index)
 for sx in ["male", "female"]:
-    ms = z["sex"] == sx
+    ms = (z["sex"] == sx) & ~flag
     mc = ms & z["confident"]; ml = ms & ~z["confident"]
     axB.scatter(z.loc[mc, "PC1"], z.loc[mc, "PC2"], s=10, color=SEXES[sx], alpha=0.5,
                 edgecolors="none", zorder=2,
@@ -100,10 +90,12 @@ for sx in ["male", "female"]:
         axB.scatter(z.loc[ml, "PC1"], z.loc[ml, "PC2"], s=16, facecolors="none",
                     edgecolors=SEXES[sx], linewidths=0.9, zorder=3,
                     label=f"{SEXLAB[sx]}, not confident (n={ml.sum()})")
+axB.scatter(z.loc[flag, "PC1"], z.loc[flag, "PC2"], s=18, color="#7f7f7f", edgecolors="white", linewidths=0.5,
+            zorder=4, label=f"ambiguous, male-like chrZ heterozygosity (n={flag.sum()})")
 axB.set_xlabel(f"PC1 ({z_pve[0]:.1f}%)")
 axB.set_ylabel(f"PC2 ({z_pve[1]:.1f}%)")
-axB.set_title(f"chrZ PCA\n(n={len(z)}, {Z_N_SNPS:,} SNPs)", fontsize=9, fontweight="normal")
-axB.legend(loc="best", markerscale=1.6, handletextpad=0.3, fontsize=7.0)
+axB.set_title(f"chrZ PCA\n(n={len(z)}, {z_nsnps:,} SNPs)", fontsize=9, fontweight="normal")
+axB.legend(loc="upper center", bbox_to_anchor=(0.5, -0.2), ncol=2, markerscale=1.4, handletextpad=0.3, columnspacing=0.8, fontsize=6.5, frameon=False)
 despine(axB)
 
 # panel c: chrZ:autosome read-density ratio per sample (samtools idxstats; sex_from_cov.sh), the
@@ -138,6 +130,6 @@ print("wrote", OUT)
 med_m = sexdf.loc[sexdf.sex=="male","Z_auto_corrected"].median()
 med_f = sexdf.loc[sexdf.sex=="female","Z_auto_corrected"].median()
 print(f"panel a: autosomal PCA excl chr2, n_samples={len(auto)}, n_snps={auto_nsnps}")
-print(f"panel b: chrZ PCA, n_samples={len(z)}, n_snps={Z_N_SNPS}; male={(z.sex=='male').sum()} ({(z.confident & (z.sex=='male')).sum()} confident) female={(z.sex=='female').sum()} ({(z.confident & (z.sex=='female')).sum()} confident)")
+print(f"panel b: chrZ PCA, n_samples={len(z)}, n_snps={z_nsnps}; male={(z.sex=='male').sum()} ({(z.confident & (z.sex=='male')).sum()} confident) female={(z.sex=='female').sum()} ({(z.confident & (z.sex=='female')).sum()} confident)")
 print(f"panel c: n={len(sexdf)}; male={n_male} ({(sexdf.confident & (sexdf.sex=='male')).sum()} confident) female={n_female} ({(sexdf.confident & (sexdf.sex=='female')).sum()} confident); medians confident ZO={mzo:.3f} ZZ={mzz:.3f}")
 print(f"panel c: median chr42-corrected Z:auto ratio -- male={med_m:.3f} female={med_f:.3f} (n male={n_male} female={n_female})")
