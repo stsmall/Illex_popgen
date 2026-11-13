@@ -4,11 +4,10 @@
     /home/ssmall/miniforge3/envs/bioinfo-buddy/bin/python fig2_inversion.py
 
 Panels
-  a  chr2 karyotype PCA ("three stripes") -- PC1 vs PC2 coloured by karyotype,
-     recovered as the true AA/AB/BB assignment via a 3-component Gaussian
-     mixture on PC1 (ordered by component mean: low->AA, mid->AB, high->BB),
-     fitted on all 653 PCA rows and then restricted to the 621 analysed individuals.
-     Data: steps/03_karyotype/chr2_karyo_coords.tsv (+ sample IDs from karyotypes.tsv)
+  a  chr2 karyotype PCA ("three stripes") -- PC1 vs PC2 of the chr2:60-80 Mb PCA fitted on the
+     619 analysed individuals (pipeline/steps/03_karyotype/refit_pca_619.py), coloured by the
+     final karyotype (data/qc/karyotypes_619.tsv, karyotype_final). PC1 oriented so 2+/2+ is high.
+     Data: steps/03_karyotype/refit_619/full_coords.tsv
   b  F_ST across the whole of chr2 (AA vs BB), inversion shaded -- shows the
      inversion (60.54-79.50 Mb) is the only differentiated region.
      Data: steps/03_karyotype/karyofix/chr2_karyo_fst_windows_karyofix.tsv, the same 100-kb
@@ -37,16 +36,9 @@ from matplotlib.gridspec import GridSpec
 import os
 import numpy as np
 import pandas as pd
-from sklearn.mixture import GaussianMixture
 
-KARYO_COORDS = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/chr2_karyo_coords.tsv"
-# chr2_karyo_coords.tsv carries no sample IDs. Its rows are in the same order as karyotypes.tsv
-# (identical PC1/PC2), which supplies them. Panel a shows the 621 analysed Baker et al. 2025
-# individuals: the 20 non-Baker rows (population A/B/C) and the 12 BAMs with essentially no data
-# (data/qc/empty_bams_12.tsv, which sit at the PCA origin) are dropped.
-KARYO_IDS = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/karyotypes.tsv"
-BAKER_633 = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/00_callset/baker_633.txt"
-EMPTY_BAMS = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "qc", "excluded_14.tsv")
+KARYO_COORDS = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/refit_619/full_coords.tsv"
+KARYO_FINAL = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "qc", "karyotypes_619.tsv")
 DISP = {"AA": "2a/2a", "AB": "2a/2+", "BB": "2+/2+"}   # display names (2a derived, 2+ ancestral/reference)
 FST_WINDOWS = ("/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/karyofix/"
                "chr2_karyo_fst_windows_karyofix.tsv")   # same table as Supplementary Fig. S20
@@ -63,26 +55,11 @@ CHR2_LEN = 119_466_599
 # --------------------------------------------------------------------------
 def _karyotype_pca():
     d = pd.read_csv(KARYO_COORDS, sep="\t")
-    ids = pd.read_csv(KARYO_IDS, sep="\t")
-    assert len(ids) == len(d) and np.allclose(ids["PC1"], d["PC1"]) and np.allclose(ids["PC2"], d["PC2"])
-    d["sample"] = ids["sample"].values
-    # GMM fitted on all 653 rows of the PCA, as the karyotype calls were made (on this set it
-    # reproduces karyotypes.tsv exactly). Refitting on the 621 alone does not, so the subset
-    # is taken after labelling.
-    x = d["PC1"].values.reshape(-1, 1)
-    gmm = GaussianMixture(n_components=3, random_state=0, n_init=5).fit(x)
-    labels = gmm.predict(x)
-    order = np.argsort(gmm.means_.ravel())          # low -> high PC1 mean
-    name_of = {order[0]: "AA", order[1]: "AB", order[2]: "BB"}
-    d["karyotype"] = [name_of[l] for l in labels]
-    assert (d["karyotype"].values == ids["karyotype"].values).all()
-    baker = set(open(BAKER_633).read().split())
-    empty = set(pd.read_csv(EMPTY_BAMS, sep="\t", comment="#")["sample"])
-    d = d[d["sample"].isin(baker) & ~d["sample"].isin(empty)].reset_index(drop=True)
-    # final calls (data/qc/karyotypes_619.tsv): the depth-equalised call replaces 18 full-depth AA calls
-    fin = pd.read_csv(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "qc", "karyotypes_619.tsv"), sep="\t", comment="#").set_index("sample")["karyotype_final"]
+    fin = pd.read_csv(KARYO_FINAL, sep="\t", comment="#").set_index("sample")["karyotype_final"]
+    assert len(d) == len(fin) == 619 and set(d["sample"]) == set(fin.index)
     d["karyotype"] = d["sample"].map(fin)
-    assert d["karyotype"].notna().all()
+    if d.loc[d.karyotype == "BB", "PC1"].mean() < 0:
+        d["PC1"] = -d["PC1"]
     print("panel a: n =", len(d), d["karyotype"].value_counts().reindex(["AA", "AB", "BB"]).to_dict())
     return d
 

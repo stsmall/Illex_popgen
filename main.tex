@@ -78,7 +78,7 @@ Consistent with range-wide panmixia reported by \citet{baker2025}, population st
 
 \paragraph{Identity, breakpoints, and karyotypes.}
 Local PCA \citep{li2019lostruct} and a Gaussian-mixture karyotype assignment
-(97.1\% concordant with a depth-equalised recall) resolve three genotype clusters on chromosome~2, the karyotypes of two arrangements that we call 2a and 2+ (2a/2a $n=223$, 2a/2+ $n=299$ and 2+/2+ $n=97$, \cref{fig:inv}a), whose differentiation is karyotypic
+(99.7\% concordant with a depth-equalised recall) resolve three genotype clusters on chromosome~2, the karyotypes of two arrangements that we call 2a and 2+ (2a/2a $n=223$, 2a/2+ $n=299$ and 2+/2+ $n=97$, \cref{fig:inv}a), whose differentiation is karyotypic
 rather than geographic, with $\Fst=0.35$ between 2a/2a and 2+/2+ over the inversion as a whole (Hudson ratio of averages across chr2:60--80~Mb)
 against a geographic $\Fst\approx0$. In 100-kb windows along the whole chromosome, between-karyotype $\Fst$ is
 $\approx0$ across collinear sequence (median 0.006) and rises to a median of 0.36 (maximum 0.56) inside the inversion
@@ -425,7 +425,7 @@ each collection event (Supplementary Table~S8). That study retained 616 individu
 more than 25\% missing genotypes. We re-processed the raw reads from scratch against the conspecific \texttt{Illex\_F24} primary
 assembly \citep{small2026} (3.47~Gb in 45 numbered chromosomes plus the Z). Twelve of the 633 alignments hold almost no
 reads (fewer than 2.1 million autosomal reads, against a median of 57 million), and these individuals were excluded.
-Two further individuals (SQ23HBB023 and SQ23HBB124) were excluded as likely contaminated, with male-like heterozygosity on the Z under female coverage calls, Z coverage above every male and extreme positions on the autosomal principal components. Counts and frequencies are for the remaining 619. Genome-wide analyses run before this exclusion, the pooled linkage-disequilibrium map of the inversion and the principal-component fits used for karyotyping include the two, and the arrangement statistics and inversion model fits use the 619 (Supplementary Methods).
+Two further individuals (SQ23HBB023 and SQ23HBB124) were excluded as likely contaminated, with male-like heterozygosity on the Z under female coverage calls, Z coverage above every male and extreme positions on the autosomal principal components. Counts and frequencies are for the remaining 619. Genome-wide analyses run before this exclusion, the pooled linkage-disequilibrium map of the inversion and the windowed and per-chromosome principal-component fits used for the among-karyotype variance include the two, and the arrangement statistics and inversion model fits use the 619 (Supplementary Methods).
 Reads were trimmed with fastp \citep{chen2018fastp}, mapped with BWA-MEM2 \citep{vasimuddin2019bwamem2}, and
 deduplicated with Picard, and genotypes were called jointly across individuals with GATK HaplotypeCaller in gVCF
 mode \citep{poplin2018gatk}, all within grenepipe \citep{czech2022grenepipe}. The joint callset retains invariant
@@ -554,7 +554,7 @@ The manuscript, along with all figures and tables, their generating scripts, and
     Quantity & Value \\
     \midrule
     Location                       & chr2:60.54--79.50~Mb ($\sim$18.96~Mb) \\
-    Karyotypes (2a/2a, 2a/2+, 2+/2+) & 223 / 299 / 97 (97.1\% concordant at equal depth) \\
+    Karyotypes (2a/2a, 2a/2+, 2+/2+) & 223 / 299 / 97 (99.7\% concordant at equal depth) \\
     Derived (2a) frequency $p$     & 0.602 \\
     Founding frequency $p_0$       & 0.05 (0.004--0.10) \\
     Equilibrium frequency $p^{*}$  & 0.603 (0.575--0.707) \\
