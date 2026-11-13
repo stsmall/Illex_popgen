@@ -1,0 +1,152 @@
+go_id	term	category	fold	FDR	cluster
+GO:0048468	cell development	biological_process	1.806	2.0972990314165225e-05	Cell morphogenesis \& differentiation
+GO:0030154	cell differentiation	biological_process	1.565	6.480410280123685e-05	Cell morphogenesis \& differentiation
+GO:0048869	cellular developmental process	biological_process	1.543	9.034322012800567e-05	Cell morphogenesis \& differentiation
+GO:0000902	cell morphogenesis	biological_process	2.239	9.034322012800567e-05	Cell morphogenesis \& differentiation
+GO:0045595	regulation of cell differentiation	biological_process	1.872	0.00033491329938126825	Cell morphogenesis \& differentiation
+GO:0032989	cellular anatomical entity morphogenesis	biological_process	2.022	0.0005627384221488783	Cell morphogenesis \& differentiation
+GO:0120039	plasma membrane bounded cell projection morphogenesis	biological_process	2.247	0.0009086832077247936	Cell morphogenesis \& differentiation
+GO:0048858	cell projection morphogenesis	biological_process	2.243	0.0009086832077247936	Cell morphogenesis \& differentiation
+GO:0060284	regulation of cell development	biological_process	2.008	0.0014805555660799934	Cell morphogenesis \& differentiation
+GO:0032990	obsolete cell part morphogenesis	biological_process	2.165	0.0016742801446350338	Cell morphogenesis \& differentiation
+GO:0000904	obsolete cell morphogenesis involved in differentiation	biological_process	2.076	0.003143399580625398	Cell morphogenesis \& differentiation
+GO:0120036	plasma membrane bounded cell projection organization	biological_process	1.697	0.010598608493926239	Cell morphogenesis \& differentiation
+GO:0030030	cell projection organization	biological_process	1.686	0.011523961300410352	Cell morphogenesis \& differentiation
+GO:0048699	generation of neurons	biological_process	1.896	2.8797070967879308e-05	Neural development
+GO:0022008	neurogenesis	biological_process	1.836	5.977153425058437e-05	Neural development
+GO:0007399	nervous system development	biological_process	1.606	0.000561735564244877	Neural development
+GO:0048812	neuron projection morphogenesis	biological_process	2.254	0.0009086832077247936	Neural development
+GO:0048666	neuron development	biological_process	1.967	0.0009086832077247936	Neural development
+GO:0031175	neuron projection development	biological_process	2.11	0.0009086832077247936	Neural development
+GO:0050767	regulation of neurogenesis	biological_process	2.131	0.001082536866934052	Neural development
+GO:0030182	neuron differentiation	biological_process	1.82	0.0021344826825937147	Neural development
+GO:0048667	cell morphogenesis involved in neuron differentiation	biological_process	2.161	0.003143399580625398	Neural development
+GO:0045664	regulation of neuron differentiation	biological_process	2.18	0.0032909286012320245	Neural development
+GO:0050773	regulation of dendrite development	biological_process	3.55	0.003659346650179238	Neural development
+GO:0007611	learning or memory	biological_process	2.513	0.0064853674786172185	Neural development
+GO:0050890	cognition	biological_process	2.421	0.007586315587350025	Neural development
+GO:0051960	regulation of nervous system development	biological_process	1.853	0.008697759194013248	Neural development
+GO:0007417	central nervous system development	biological_process	1.807	0.01432247491314599	Neural development
+GO:0072318	clathrin coat disassembly	biological_process	22.155	0.01432247491314599	Neural development
+GO:0016191	synaptic vesicle uncoating	biological_process	22.155	0.01432247491314599	Neural development
+GO:0050804	modulation of chemical synaptic transmission	biological_process	2.371	0.015338243983135168	Neural development
+GO:0007613	memory	biological_process	2.87	0.015426939554286706	Neural development
+GO:0099177	regulation of trans-synaptic signaling	biological_process	2.35	0.015426939554286706	Neural development
+GO:0072319	vesicle uncoating	biological_process	18.462	0.020484755351284238	Neural development
+GO:0097447	dendritic tree	cellular_component	2.065	0.022957737798570372	Neural development
+GO:0030425	dendrite	cellular_component	2.065	0.022957737798570372	Neural development
+GO:0048167	regulation of synaptic plasticity	biological_process	3.077	0.02527475226474367	Neural development
+GO:0048488	synaptic vesicle endocytosis	biological_process	4.877	0.02527475226474367	Neural development
+GO:0048168	regulation of neuronal synaptic plasticity	biological_process	4.787	0.02730522236447069	Neural development
+GO:0097485	neuron projection guidance	biological_process	2.184	0.02879073941505827	Neural development
+GO:0007409	axonogenesis	biological_process	1.994	0.032690502618353844	Neural development
+GO:0009653	anatomical structure morphogenesis	biological_process	1.532	0.0016742801446350338	Organ / anatomical development
+GO:0050793	regulation of developmental process	biological_process	1.581	0.003124124903657141	Organ / anatomical development
+GO:2000026	regulation of multicellular organismal development	biological_process	1.66	0.003143399580625398	Organ / anatomical development
+GO:0048731	system development	biological_process	1.34	0.007995094822017714	Organ / anatomical development
+GO:0009792	embryo development ending in birth or egg hatching	biological_process	1.846	0.008961125466430514	Organ / anatomical development
+GO:0009888	tissue development	biological_process	1.554	0.008961125466430514	Organ / anatomical development
+GO:0007275	multicellular organism development	biological_process	1.278	0.013982953844900994	Organ / anatomical development
+GO:0009790	embryo development	biological_process	1.611	0.01432247491314599	Organ / anatomical development
+GO:0009887	animal organ morphogenesis	biological_process	1.656	0.01432247491314599	Organ / anatomical development
+GO:0048513	animal organ development	biological_process	1.388	0.01432247491314599	Organ / anatomical development
+GO:0022412	cellular process involved in reproduction in multicellular organism	biological_process	1.773	0.01432247491314599	Organ / anatomical development
+GO:0032502	developmental process	biological_process	1.243	0.015773349571869516	Organ / anatomical development
+GO:0048856	anatomical structure development	biological_process	1.251	0.01603440602498662	Organ / anatomical development
+GO:0055123	digestive system development	biological_process	2.508	0.018201755934748157	Organ / anatomical development
+GO:0048477	oogenesis	biological_process	1.94	0.019304836302767605	Organ / anatomical development
+GO:0007281	germ cell development	biological_process	1.777	0.023633113357883078	Organ / anatomical development
+GO:0001501	skeletal system development	biological_process	2.417	0.023742059295908318	Organ / anatomical development
+GO:0060429	epithelium development	biological_process	1.535	0.02962022520362599	Organ / anatomical development
+GO:0003006	developmental process involved in reproduction	biological_process	1.581	0.032489809113590194	Organ / anatomical development
+GO:0048598	embryonic morphogenesis	biological_process	1.807	0.03285546722463571	Organ / anatomical development
+GO:0048609	multicellular organismal reproductive process	biological_process	1.536	0.03577706430134784	Organ / anatomical development
+GO:0048583	regulation of response to stimulus	biological_process	1.494	0.003124124903657141	Other regulation / metabolism
+GO:0065007	biological regulation	biological_process	1.18	0.003143399580625398	Other regulation / metabolism
+GO:0023051	regulation of signaling	biological_process	1.515	0.003659346650179238	Other regulation / metabolism
+GO:0050794	regulation of cellular process	biological_process	1.216	0.0036811226598944366	Other regulation / metabolism
+GO:0010604	positive regulation of macromolecule metabolic process	biological_process	1.53	0.0036811226598944366	Other regulation / metabolism
+GO:0050789	regulation of biological process	biological_process	1.196	0.0036811226598944366	Other regulation / metabolism
+GO:0051173	obsolete positive regulation of nitrogen compound metabolic process	biological_process	1.548	0.0036811226598944366	Other regulation / metabolism
+GO:0010646	regulation of cell communication	biological_process	1.513	0.0039502769667388625	Other regulation / metabolism
+GO:0048523	negative regulation of cellular process	biological_process	1.387	0.00729020386310833	Other regulation / metabolism
+GO:0031325	obsolete positive regulation of cellular metabolic process	biological_process	1.5	0.008199767502684809	Other regulation / metabolism
+GO:0009893	positive regulation of metabolic process	biological_process	1.477	0.008199767502684809	Other regulation / metabolism
+GO:0007165	signal transduction	biological_process	1.467	0.008977333664336545	Other regulation / metabolism
+GO:0007166	cell surface receptor signaling pathway	biological_process	1.721	0.010598608493926239	Other regulation / metabolism
+GO:0048518	positive regulation of biological process	biological_process	1.312	0.011523961300410352	Other regulation / metabolism
+GO:0065009	regulation of molecular function	biological_process	1.518	0.013318723393277476	Other regulation / metabolism
+GO:0048519	negative regulation of biological process	biological_process	1.327	0.013318723393277476	Other regulation / metabolism
+GO:0002376	immune system process	biological_process	1.627	0.01432247491314599	Other regulation / metabolism
+GO:0040011	locomotion	biological_process	1.666	0.01432247491314599	Other regulation / metabolism
+GO:0048585	negative regulation of response to stimulus	biological_process	1.678	0.015410116169386347	Other regulation / metabolism
+GO:0006928	obsolete movement of cell or subcellular component	biological_process	1.633	0.015410116169386347	Other regulation / metabolism
+GO:0010648	negative regulation of cell communication	biological_process	1.714	0.015426939554286706	Other regulation / metabolism
+GO:0032879	regulation of localization	biological_process	1.499	0.015426939554286706	Other regulation / metabolism
+GO:0009966	regulation of signal transduction	biological_process	1.48	0.015426939554286706	Other regulation / metabolism
+GO:0019904	protein domain specific binding	molecular_function	2.013	0.015426939554286706	Other regulation / metabolism
+GO:0023057	negative regulation of signaling	biological_process	1.71	0.015426939554286706	Other regulation / metabolism
+GO:0070887	cellular response to chemical stimulus	biological_process	1.516	0.01571463990528215	Other regulation / metabolism
+GO:0042221	response to chemical	biological_process	1.374	0.018201755934748157	Other regulation / metabolism
+GO:0014067	obsolete negative regulation of phosphatidylinositol 3-kinase signaling	biological_process	11.361	0.018201755934748157	Other regulation / metabolism
+GO:0048522	positive regulation of cellular process	biological_process	1.316	0.018201755934748157	Other regulation / metabolism
+GO:0031323	obsolete regulation of cellular metabolic process	biological_process	1.297	0.01883598656410926	Other regulation / metabolism
+GO:0051716	cellular response to stimulus	biological_process	1.303	0.021464371879821035	Other regulation / metabolism
+GO:0007154	cell communication	biological_process	1.36	0.021553631920178482	Other regulation / metabolism
+GO:0023052	signaling	biological_process	1.369	0.022542862643727592	Other regulation / metabolism
+GO:0051239	regulation of multicellular organismal process	biological_process	1.409	0.02454872933159007	Other regulation / metabolism
+GO:0050896	response to stimulus	biological_process	1.226	0.02561736973256254	Other regulation / metabolism
+GO:0032501	multicellular organismal process	biological_process	1.211	0.026964968670460603	Other regulation / metabolism
+GO:0071363	cellular response to growth factor stimulus	biological_process	2.252	0.027119920099677525	Other regulation / metabolism
+GO:0071310	obsolete cellular response to organic substance	biological_process	1.543	0.02962022520362599	Other regulation / metabolism
+GO:0051049	regulation of transport	biological_process	1.588	0.029840260881643335	Other regulation / metabolism
+GO:0007167	enzyme-linked receptor protein signaling pathway	biological_process	2.037	0.03134670228084477	Other regulation / metabolism
+GO:0070848	response to growth factor	biological_process	2.191	0.0351322485730998	Other regulation / metabolism
+GO:0009968	negative regulation of signal transduction	biological_process	1.674	0.036672591676958737	Other regulation / metabolism
+GO:0009267	cellular response to starvation	biological_process	2.896	0.0381695068502127	Other regulation / metabolism
+GO:0051172	obsolete negative regulation of nitrogen compound metabolic process	biological_process	1.498	0.04315759581891649	Other regulation / metabolism
+GO:0051171	obsolete regulation of nitrogen compound metabolic process	biological_process	1.283	0.046128876439562275	Other regulation / metabolism
+GO:0080090	regulation of primary metabolic process	biological_process	1.272	0.049896286630284975	Other regulation / metabolism
+GO:0009416	response to light stimulus	biological_process	3.155	9.052295082212252e-05	Photoreception / sensory response
+GO:0009314	response to radiation	biological_process	2.785	0.00014543628920958928	Photoreception / sensory response
+GO:0042330	taxis	biological_process	2.146	0.008961125466430514	Photoreception / sensory response
+GO:0006935	chemotaxis	biological_process	2.148	0.01432247491314599	Photoreception / sensory response
+GO:0009605	response to external stimulus	biological_process	1.522	0.01883598656410926	Photoreception / sensory response
+GO:0009584	detection of visible light	biological_process	5.83	0.02454872933159007	Photoreception / sensory response
+GO:0016056	G protein-coupled opsin signaling pathway	biological_process	13.847	0.041882703999225016	Photoreception / sensory response
+GO:0045935	positive regulation of nucleobase-containing compound metabolic process	biological_process	1.856	0.000898695276122853	RNA / transcription regulation
+GO:0051254	positive regulation of RNA metabolic process	biological_process	1.901	0.0009610269641634526	RNA / transcription regulation
+GO:0051252	regulation of RNA metabolic process	biological_process	1.539	0.003143399580625398	RNA / transcription regulation
+GO:0010628	positive regulation of gene expression	biological_process	1.736	0.0032909286012320245	RNA / transcription regulation
+GO:0019219	regulation of nucleobase-containing compound metabolic process	biological_process	1.47	0.007995094822017714	RNA / transcription regulation
+GO:0000977	RNA polymerase II transcription regulatory region sequence-specific DNA binding	molecular_function	2.389	0.008408984775963064	RNA / transcription regulation
+GO:1903508	obsolete positive regulation of nucleic acid-templated transcription	biological_process	1.775	0.008697759194013248	RNA / transcription regulation
+GO:1902680	positive regulation of RNA biosynthetic process	biological_process	1.773	0.008697759194013248	RNA / transcription regulation
+GO:0000976	transcription cis-regulatory region binding	molecular_function	2.279	0.010598608493926239	RNA / transcription regulation
+GO:0006355	regulation of DNA-templated transcription	biological_process	1.515	0.010598608493926239	RNA / transcription regulation
+GO:1903506	obsolete regulation of nucleic acid-templated transcription	biological_process	1.505	0.011040675875336671	RNA / transcription regulation
+GO:2001141	regulation of RNA biosynthetic process	biological_process	1.504	0.011265931792473125	RNA / transcription regulation
+GO:2000112	obsolete regulation of cellular macromolecule biosynthetic process	biological_process	1.454	0.01182901136377974	RNA / transcription regulation
+GO:0010556	regulation of macromolecule biosynthetic process	biological_process	1.438	0.013318723393277476	RNA / transcription regulation
+GO:0010557	positive regulation of macromolecule biosynthetic process	biological_process	1.656	0.013982953844900994	RNA / transcription regulation
+GO:0045893	positive regulation of DNA-templated transcription	biological_process	1.756	0.013982953844900994	RNA / transcription regulation
+GO:0006357	regulation of transcription by RNA polymerase II	biological_process	1.594	0.014144654153781036	RNA / transcription regulation
+GO:0031328	obsolete positive regulation of cellular biosynthetic process	biological_process	1.627	0.01432247491314599	RNA / transcription regulation
+GO:0031326	obsolete regulation of cellular biosynthetic process	biological_process	1.416	0.014724499959545863	RNA / transcription regulation
+GO:0043565	sequence-specific DNA binding	molecular_function	1.992	0.015410116169386347	RNA / transcription regulation
+GO:0003700	DNA-binding transcription factor activity	molecular_function	1.891	0.015410116169386347	RNA / transcription regulation
+GO:0000978	RNA polymerase II cis-regulatory region sequence-specific DNA binding	molecular_function	2.556	0.015426939554286706	RNA / transcription regulation
+GO:0009891	positive regulation of biosynthetic process	biological_process	1.607	0.015437901336530167	RNA / transcription regulation
+GO:0001067	transcription regulatory region nucleic acid binding	molecular_function	2.056	0.017109499028902235	RNA / transcription regulation
+GO:0006366	transcription by RNA polymerase II	biological_process	2.078	0.018201755934748157	RNA / transcription regulation
+GO:0000981	DNA-binding transcription factor activity, RNA polymerase II-specific	molecular_function	1.94	0.019304836302767605	RNA / transcription regulation
+GO:0000987	cis-regulatory region sequence-specific DNA binding	molecular_function	2.48	0.019304836302767605	RNA / transcription regulation
+GO:1990837	sequence-specific double-stranded DNA binding	molecular_function	2.084	0.021171351332558663	RNA / transcription regulation
+GO:0009889	regulation of biosynthetic process	biological_process	1.387	0.021706629571629225	RNA / transcription regulation
+GO:0045944	positive regulation of transcription by RNA polymerase II	biological_process	1.8	0.022957737798570372	RNA / transcription regulation
+GO:0001228	DNA-binding transcription activator activity, RNA polymerase II-specific	molecular_function	2.689	0.023633113357883078	RNA / transcription regulation
+GO:2000113	obsolete negative regulation of cellular macromolecule biosynthetic process	biological_process	1.721	0.024740555237231152	RNA / transcription regulation
+GO:0140110	transcription regulator activity	molecular_function	1.694	0.02714465126143756	RNA / transcription regulation
+GO:0031327	obsolete negative regulation of cellular biosynthetic process	biological_process	1.65	0.04090917985873654	RNA / transcription regulation
+GO:0010558	negative regulation of macromolecule biosynthetic process	biological_process	1.659	0.042565048925383826	RNA / transcription regulation
+GO:0051253	negative regulation of RNA metabolic process	biological_process	1.698	0.04450459813074457	RNA / transcription regulation

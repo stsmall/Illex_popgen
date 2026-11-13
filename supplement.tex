@@ -608,21 +608,24 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 
 % ---- S5: GO functional clusters (BGS-robust Tier-1) ----
 \begin{table}[h]\centering
-  \caption{\textbf{Functional clusters of the background-selection-robust Tier-1 sweep genes.} The 151 enriched biological-process GO terms (FDR$<$0.05) of the BGS-robust set (\cref{sfig:gsea}), grouped
-    into functional clusters by term semantics. Neural development and cell morphogenesis/differentiation
-    dominate, with RNA-regulatory control and organ development, and a distinct photoreception/sensory
-    cluster.}
+  \caption{\textbf{Functional clusters of the background-selection-robust Tier-1 sweep genes.} The 151 GO terms
+    enriched at FDR$<$0.05 in the BGS-robust set (137 biological process, 12 molecular function and 2 cellular
+    component, \cref{sfig:gsea}), each assigned to one functional cluster by keyword rules on the term name
+    (\texttt{scripts/tableS5\_go\_clusters.py}). Transcriptional regulation and neural development are the
+    largest clusters, followed by organ development and cell morphogenesis/differentiation, with a distinct
+    photoreception/sensory cluster. Fold range and the representative term (lowest FDR) are given per cluster.}
   \label{stab:goclusters}
-  \begin{tabular}{lrll}
+  \small
+  \begin{tabular}{lrlp{62mm}}
     \toprule
     functional cluster & terms & fold range & representative term (min FDR) \\
     \midrule
-    Neural development & 21 & 1.6--22.2 & generation of neurons ($3\times10^{-5}$) \\
-    Cell morphogenesis \& differentiation & 17 & 1.5--2.2 & cell development ($2\times10^{-5}$) \\
-    RNA / transcription regulation & 14 & 1.5--2.1 & reg.\ RNA metabolic process ($9\times10^{-4}$) \\
-    Organ / anatomical development & 13 & 1.2--2.5 & system development ($3\times10^{-3}$) \\
-    Photoreception / sensory response & 7 & 1.2--5.8 & response to light stimulus ($1\times10^{-4}$) \\
-    Other regulation / metabolism & 65 & 1.2--22.2 & reg.\ developmental process \\
+    RNA / transcription regulation & 36 & 1.4--2.7 & pos.\ reg.\ nucleobase-containing compound metabolic process ($9\times10^{-4}$) \\
+    Neural development & 28 & 1.6--22.2 & generation of neurons ($3\times10^{-5}$) \\
+    Organ / anatomical development & 21 & 1.2--2.5 & anatomical structure morphogenesis ($2\times10^{-3}$) \\
+    Cell morphogenesis \& differentiation & 13 & 1.5--2.2 & cell development ($2\times10^{-5}$) \\
+    Photoreception / sensory response & 7 & 1.5--13.8 & response to light stimulus ($9\times10^{-5}$) \\
+    Other regulation / metabolism & 46 & 1.2--11.4 & reg.\ response to stimulus ($3\times10^{-3}$) \\
     \bottomrule
   \end{tabular}
 \end{table}
