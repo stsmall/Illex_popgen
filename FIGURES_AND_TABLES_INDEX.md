@@ -54,16 +54,21 @@ Supplementary figures are numbered by first citation in main.tex (renumbered 202
 Editable exports in `tables_export/` — one CSV per table plus a multi-sheet
 `illex_tables.xlsx`. Regenerate with `scripts/export_tables.py`.
 
+Supplementary tables are numbered by first citation in main.tex (renumbered 2026-11-13). Exported CSV names keep their earlier numbers.
+
 | Table | Export | Source (`.tex`) | Subject |
 |-------|--------|-----------------|---------|
 | 1 | `Table1_summary.csv` | `main.tex` (tab:summary) | Sample & whole-genome summary |
 | 2 | `Table2_inv.csv` | `main.tex` (tab:inv) | The chromosome-2 inversion |
 | 3 | `Table3_demog.csv` | `main.tex` (tab:demog) | Demographic model |
 | 4 | `Table4_sweep.csv` | `main.tex` (tab:sweep) | High-confidence sweep candidates (incl. chrZ) |
-| S1 | `TableS1_software.csv` | `software_table.tex` | Software and versions |
+| S1 | `TableS8_sampling.csv` | `sampling_table.tex` (stab:sampling; longtable) | Sampling by collection event and division |
 | S2 | `TableS2_geo.csv` | `supplement.tex` (stab:geo) | chr2 karyotype counts by NAFO division |
 | S3 | `TableS3_coindetii.csv` | `supplement.tex` (stab:coindetii) | Outgroup usage |
-| S4 | `TableS4_goenrich.csv` | `supplement.tex` (stab:goenrich) | Tier-1 GO enrichment |
-| S5 | `TableS5_goclusters.csv` | `supplement.tex` (stab:goclusters) | Functional clusters (BGS-robust) |
-| S6 | `TableS6_candidates.csv` | `supplement.tex` (stab:candidates) | Tier-2 cross-method-concordant genes |
-| S7 | (`inversion_gene_table.tex`; longtable) | `supplement.tex` (stab:invgenes) | The 45 annotated genes captured by the chr2 inversion |
+| S4 | (`inversion_gene_table.tex`; longtable) | `supplement.tex` (stab:invgenes) | The 45 annotated genes captured by the chr2 inversion |
+| S5 | `TableS9_pi_blocks.csv` | `pi_blocks_table.tex` (stab:piblocks) | Anomalous-diversity blocks |
+| S6 | `TableS4_goenrich.csv` | `supplement.tex` (stab:goenrich) | Tier-1 GO enrichment |
+| S7 | `TableS5_goclusters.csv` | `supplement.tex` (stab:goclusters) | Functional clusters (BGS-robust) |
+| S8 | `TableS6_candidates.csv` | `supplement.tex` (stab:candidates) | Tier-2 cross-method-concordant genes |
+| S9 | (none) | `supplement.tex` (stab:zsex) | Z recombination and sex-biased mutation |
+| S10 | `TableS1_software.csv` | `software_table.tex` | Software and versions |

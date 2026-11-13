@@ -53,7 +53,7 @@ root-mean-square mapping quality was below 40, or its strand-bias score (FS) exc
 it was missing in half or more of the individuals, if it lay in a GC-corrected high-depth window identified with
 mosdepth, or if it lay outside the accessibility mask. Sites at intermediate allele frequency (0.1 to 0.9) with a
 strong excess of heterozygotes (ExcHet $<0.001$) were flagged as likely paralogous and removed. Only sites passing
-every filter were used. The accessibility mask is the 1.43~Gb of the 3.47-Gb assembly that lies outside repeats annotated with Earl~Grey. Mappability was computed with GenMap 1.3.0 \citep{pockrandt2020genmap} for 150-mers with up to two mismatches, matching the 151-bp reads. Across the assembly 14.7\% of positions are not uniquely mappable, but within the accessibility mask only 3.8\% (53.7~Mb) are, because the repeat annotation already removes nearly all multi-copy sequence. Non-unique sequence is concentrated six-fold in the 22 anomalous-diversity blocks (23\% of their accessible sequence), and outside them it is 2.7\% of accessible sequence. For the sweep scan and the gene-set analyses, the mask was extended by the 22 anomalous-diversity blocks (129~Mb, Supplementary Table~S9), in which collapsed duplications and sequence duplicated within the assembly make genotype-based statistics unreliable.
+every filter were used. The accessibility mask is the 1.43~Gb of the 3.47-Gb assembly that lies outside repeats annotated with Earl~Grey. Mappability was computed with GenMap 1.3.0 \citep{pockrandt2020genmap} for 150-mers with up to two mismatches, matching the 151-bp reads. Across the assembly 14.7\% of positions are not uniquely mappable, but within the accessibility mask only 3.8\% (53.7~Mb) are, because the repeat annotation already removes nearly all multi-copy sequence. Non-unique sequence is concentrated six-fold in the 22 anomalous-diversity blocks (23\% of their accessible sequence), and outside them it is 2.7\% of accessible sequence. For the sweep scan and the gene-set analyses, the mask was extended by the 22 anomalous-diversity blocks (129~Mb, Supplementary Table~S5), in which collapsed duplications and sequence duplicated within the assembly make genotype-based statistics unreliable.
 
 \paragraph{Diversity and demography.}
 All site-frequency spectra and diversity statistics were computed with ANGSD 0.940 \citep{korneliussen2014angsd}
@@ -69,7 +69,7 @@ do\_stat}, per chromosome and in 50-kb windows (10-kb step genome-wide, 50-kb st
 folded spectrum pooled across chromosomes is the input to the demographic models. Per-division statistics used the same options on at most 25 individuals per division (all individuals in 3O, 4S and 4T), and the Z was run in the 329
 confidently sexed males with data. Per-karyotype spectra and genotype-likelihood $\Fst$ between arrangements used the 2a/2a and
 2+/2+ homozygotes as separate sample sets. Stairway~Plot~2, moments (a two-epoch growth model fitted to the folded
-spectrum, with Godambe confidence intervals), and GONE2 were fitted as described in Supplementary Table~S1, and
+spectrum, with Godambe confidence intervals), and GONE2 were fitted as described in Supplementary Table~S10, and
 the moments model was checked by forward simulation, which reproduced the observed $\pi$ and Tajima's $D$.
 
 \paragraph{Genotype-based statistics.}
@@ -163,7 +163,7 @@ resamples of genes within strata.
 
 Linkage disequilibrium decays at the same rate on the Z as on the autosomes, $\rho_Z/\rho_A=1.04$ (95\% CI
 0.88--1.28) from the decay fit and 1.08 (0.78--1.67) from curve rescaling, with $\rho_A=0.026$ per base
-(Supplementary Table~S10). Synonymous divergence is lower on the Z ($d_S=0.298$ vs 0.358, Mann--Whitney $p=0.009$),
+(Supplementary Table~S9). Synonymous divergence is lower on the Z ($d_S=0.298$ vs 0.358, Mann--Whitney $p=0.009$),
 giving $R=0.83$ and $\alpha=0.33$ (95\% CI 0.10--0.70), a female mutation rate about three times the male rate.
 Z-linked genes are slightly more constrained (median $d_N/d_S$ 0.082 vs 0.113, $p=0.048$) and lower in GC3 (0.36
 vs 0.42, $p<10^{-16}$). Matching on $d_N/d_S$ leaves $\alpha$ unchanged (0.36), and matching on GC3 raises it to
@@ -206,7 +206,7 @@ disequilibrium, and by read depth relative to 5-Mb flanks in all 621 individuals
 quality 0 and 20). Long-read depth and heterozygous-site allele fractions came from PacBio HiFi reads of the
 assembly individual and a second individual aligned to the assembly, and genotype-likelihood $\pi$ was
 recomputed at mapping quality 60. Blocks with population depth at least 1.15 times their flanks were classed as
-collapsed duplications and those at 0.90 or less as under-mapped, and the fraction of each block's accessible sequence that is not uniquely mappable was taken from GenMap (Supplementary Table~S9).
+collapsed duplications and those at 0.90 or less as under-mapped, and the fraction of each block's accessible sequence that is not uniquely mappable was taken from GenMap (Supplementary Table~S5).
 
 \bibliographystyle{plainnat}
 \bibliography{references}
@@ -405,7 +405,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 
 \begin{figure}[h]\centering
   \includegraphics[width=\linewidth]{figS23_pi_blocks_by_division.png}
-  \caption{\textbf{The 22 elevated-diversity blocks are shared by every sampling division.} \textbf{(a)}~Nucleotide diversity across chr1:19--36~Mb computed separately in each of the ten divisions with more than one individual (ANGSD, 50-kb windows, lines coloured by division latitude). The 24.0--31.3~Mb block (shaded) carries 2.2--2.4 times the flanking diversity in every division. \textbf{(b)}~Between-division Hudson $\Fst$ over the same span (all 45 division pairs, 100-kb windows) is lower inside the block than in the flanks (0.014 vs 0.015). The same holds for the three strongest blocks (chr30:17.3--18.5, chr23:0.1--5.6 and chr38:61.5--68.0~Mb, 0.006--0.007 inside vs 0.014--0.015 outside). \textbf{(c)}~Block-to-flank diversity ratio per division for all 22 blocks. The excess varies by only 1--6\% among divisions, so no block is driven by a subset of the sample. Read depth separates the blocks into collapsed duplications (depth raised in every individual, up to 2.2 times the flanks in the population sample and 2.7 and 2.4 times in long reads from the assembly individual and a second individual, with five to six times the flanking density of heterozygous sites at skewed allele fractions in single diploid genomes), under-mapped blocks (short-read depth 0.6--0.9 times the flanks, a third of the accessible sequence not uniquely mappable, and a much smaller deficit in long reads), and gene-poor regions of elevated diversity with normal depth (Supplementary Table~S9). Genotype-likelihood diversity at mapping quality 60 retains most of the excess (for example chr30 6.4 to 5.8 times, chr23 5.2 to 4.0 times), because reads from unassembled copies map uniquely to the single assembled copy. All 22 blocks are masked from the sweep scan and gene-set analyses.}
+  \caption{\textbf{The 22 elevated-diversity blocks are shared by every sampling division.} \textbf{(a)}~Nucleotide diversity across chr1:19--36~Mb computed separately in each of the ten divisions with more than one individual (ANGSD, 50-kb windows, lines coloured by division latitude). The 24.0--31.3~Mb block (shaded) carries 2.2--2.4 times the flanking diversity in every division. \textbf{(b)}~Between-division Hudson $\Fst$ over the same span (all 45 division pairs, 100-kb windows) is lower inside the block than in the flanks (0.014 vs 0.015). The same holds for the three strongest blocks (chr30:17.3--18.5, chr23:0.1--5.6 and chr38:61.5--68.0~Mb, 0.006--0.007 inside vs 0.014--0.015 outside). \textbf{(c)}~Block-to-flank diversity ratio per division for all 22 blocks. The excess varies by only 1--6\% among divisions, so no block is driven by a subset of the sample. Read depth separates the blocks into collapsed duplications (depth raised in every individual, up to 2.2 times the flanks in the population sample and 2.7 and 2.4 times in long reads from the assembly individual and a second individual, with five to six times the flanking density of heterozygous sites at skewed allele fractions in single diploid genomes), under-mapped blocks (short-read depth 0.6--0.9 times the flanks, a third of the accessible sequence not uniquely mappable, and a much smaller deficit in long reads), and gene-poor regions of elevated diversity with normal depth (Supplementary Table~S5). Genotype-likelihood diversity at mapping quality 60 retains most of the excess (for example chr30 6.4 to 5.8 times, chr23 5.2 to 4.0 times), because reads from unassembled copies map uniquely to the single assembled copy. All 22 blocks are masked from the sweep scan and gene-set analyses.}
   \label{sfig:piblocks}
 \end{figure}
 
@@ -490,10 +490,9 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 
 \section*{Supplementary tables}
 
-% ---- S1: software & versions (shared with the Methods) ----
-\input{software_table}
+\input{sampling_table}
 
-% ---- S2: karyotype frequency by NAFO division (geography / non-cline) ----
+% ---- karyotype frequency by NAFO division (geography / non-cline) ----
 \begin{table}[h]\centering
   \caption{\textbf{Chromosome-2 karyotype counts and derived-arrangement frequency by NAFO division}
     (ordered by latitude). The derived (2a) frequency $p_\mathrm{2a}$ shows no latitudinal cline
@@ -520,7 +519,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
   \end{tabular}
 \end{table}
 
-% ---- S3: coindetii outgroup usage (alignment / polarization / MK) ----
+% ---- coindetii outgroup usage (alignment / polarization / MK) ----
 \begin{table}[h]\centering
   \caption{\textbf{Use of the outgroups.} \coin{} served three roles, the structural comparison of
     the chromosome-2 arrangements, a count of allele sharing at sites that differ between them, and the divergence term of the genome-wide McDonald--Kreitman (MK) test, the latter resting on a whole-genome \coin$\leftrightarrow$\illex{} AnchorWave alignment.
@@ -581,7 +580,11 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
   \end{tabular}
 \end{table}
 
-% ---- S4: Tier-1 GO enrichment ----
+\input{inversion_gene_table}
+
+\input{pi_blocks_table}
+
+% ---- Tier-1 GO enrichment ----
 \begin{table}[h]\centering
   \caption{\textbf{Gene-ontology enrichment of the Tier-1 (diploSHIC-only, Markov-corrected) sweep genes.}
     The 623 Tier-1 calls overlap 885 genes (475 GO-annotated). Enrichment by Fisher's exact test against the
@@ -608,7 +611,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
   \end{tabular}
 \end{table}
 
-% ---- S5: GO functional clusters (BGS-robust Tier-1) ----
+% ---- GO functional clusters (BGS-robust Tier-1) ----
 \begin{table}[h]\centering
   \caption{\textbf{Functional clusters of the background-selection-robust Tier-1 sweep genes.} The 151 GO terms
     enriched at FDR$<$0.05 in the BGS-robust set (137 biological process, 12 molecular function and 2 cellular
@@ -632,7 +635,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
   \end{tabular}
 \end{table}
 
-% ---- S6: Tier-2 cross-method-concordant genes ----
+% ---- Tier-2 cross-method-concordant genes ----
 \begin{table}[h]\centering
   \caption{\textbf{Tier-2 (cross-method-concordant) sweep genes.} The 24 genome-wide-scan regions where
     the diploSHIC-HMM sweep signal is independently corroborated by an LD/SFS-footprint method (RAiSD or
@@ -665,14 +668,6 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
   \end{tabular}
 \end{table}
 
-\clearpage
-\input{inversion_gene_table}
-
-\input{sampling_table}
-
-\input{pi_blocks_table}
-
-
 \begin{table}[h]\centering
   \caption{\textbf{Z recombination and sex-biased mutation.} Top, the ratio of population-scaled recombination
     rates on the Z and the autosomes in the 329 ZZ males from the decay of $\sigma_D^2$ with distance (86
@@ -701,5 +696,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
   \end{tabular}
 \end{table}
 
+% ---- software & versions (shared with the Methods) ----
+\input{software_table}
 
 \end{document}
