@@ -2,15 +2,22 @@
 
 Parses the LaTeX tabular environments in main.tex, supplement.tex and software_table.tex,
 strips LaTeX markup, and writes:
-  tables_export/<label>.csv        (one per table; opens/edits directly in Excel)
+  tables_export/Table<N>_<label>.csv  (one per table, N as numbered in the compiled main/supplement PDFs,
+                                      read from main.aux and supplement.aux; run after make all)
   tables_export/illex_tables.xlsx  (one sheet per table; caption on the first row)
 Intended so the numbers/labels can be hand-edited without touching LaTeX.
 """
 import os, re, csv, glob
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "tables_export")
+ROOT = os.path.dirname(HERE)
+OUT = os.path.join(ROOT, "tables_export")
 os.makedirs(OUT, exist_ok=True)
-SRC = [os.path.join(HERE, f) for f in ("main.tex", "supplement.tex", "software_table.tex")]
+SRC = [os.path.join(ROOT, f) for f in ("main.tex", "supplement.tex", "software_table.tex", "sampling_table.tex",
+                                       "pi_blocks_table.tex", "inversion_gene_table.tex")]
+NUM = {}
+for aux in ("main.aux", "supplement.aux"):
+    for lab, n in re.findall(r"\\newlabel\{(s?tab:[^}]+)\}\{\{(S?\d+)\}", open(os.path.join(ROOT, aux)).read()):
+        NUM[lab] = n
 
 
 def clean(cell):
@@ -44,14 +51,24 @@ def caption_of(block):
         i += 1
     cap = clean("".join(buf))
     cap = re.sub(r"\s*\\?ref\{[^}]*\}", "", cap)
-    return cap.split(".")[0][:220]
+    return re.split(r"\.(?:\s|$)", cap)[0][:220]
 
 
 def parse_tabular(block):
-    m = re.search(r"\\begin\{tabular\}\{[^}]*\}(.*?)\\end\{tabular\}", block, re.S)
-    if not m:
-        return []
-    body = m.group(1)
+    m = re.search(r"\\begin\{tabular\}\{[^}]*\}(.*?)\\end\{tabular\}", block, re.S) or \
+        re.search(r"\\begin\{tabularx\}\{[^}]*\}\{(?:[^{}]|\{[^{}]*\})*\}(.*?)\\end\{tabularx\}", block, re.S)
+    if m:
+        body = m.group(1)
+    else:                                   # longtable: drop caption/label and repeated head/foot
+        m = re.search(r"\\begin\{longtable\}\{[^}]*\}(.*?)\\end\{longtable\}", block, re.S)
+        if not m:
+            return []
+        body = m.group(1)
+        body = body[body.index("\\endfirsthead"):] if "\\endfirsthead" in body else body
+        body = re.sub(r"^.*?\\endfoot", "", body, flags=re.S) if "\\endfoot" in body else body
+        body = re.sub(r"^.*?\\endhead", "", body, flags=re.S) if "\\endhead" in body else body
+        hdr = re.search(r"\\toprule\s*(.*?)\\\\\s*\\midrule", m.group(1), re.S)
+        body = (hdr.group(1) + r" \\ " if hdr else "") + body
     body = re.sub(r"\\(toprule|midrule|bottomrule|hline|addlinespace)(\[[^]]*\])?", "", body)
     body = re.sub(r"\\cmidrule(\([^)]*\))?\{[^}]*\}", "", body)
     rows = []
@@ -66,8 +83,10 @@ def parse_tabular(block):
 
 
 def label_of(block, i):
-    m = re.search(r"\\label\{(?:s?tab):([^}]*)\}", block)
-    return m.group(1) if m else f"table{i}"
+    m = re.search(r"\\label\{(s?tab:[^}]*)\}", block)
+    if not m:
+        return f"table{i}"
+    return f"Table{NUM[m.group(1)]}_{m.group(1).split(':')[1]}"
 
 
 tables = []
@@ -75,7 +94,7 @@ for path in SRC:
     if not os.path.exists(path):
         continue
     txt = open(path).read()
-    for block in re.findall(r"\\begin\{table\*?\}.*?\\end\{table\*?\}", txt, re.S):
+    for block in re.findall(r"\\begin\{(?:long)?table\*?\}.*?\\end\{(?:long)?table\*?\}", txt, re.S):
         rows = parse_tabular(block)
         if not rows:
             continue
@@ -84,7 +103,12 @@ for path in SRC:
     if "software_table" in path and not re.search(r"\\begin\{table", txt):
         rows = parse_tabular(txt)
         if rows:
-            tables.append(("software", "Software and tools used", rows))
+            tables.append((f"Table{NUM['tab:software']}_software", "Software and tools used", rows))
+
+def order(t):
+    n = t[0][5:].split("_")[0]
+    return (n.startswith("S"), int(n.lstrip("S")) if n.lstrip("S").isdigit() else 99)
+tables.sort(key=order)
 
 # ---- write CSVs ----
 for label, cap, rows in tables:

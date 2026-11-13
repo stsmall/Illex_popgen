@@ -1,6 +1,16 @@
 Software and versions
 Tool (version),Used for,Reference
-msinv 0.3.5,chr2 inversion age/decline (inversion),;
+msinv 0.4.1,"chr2 inversion simulation (ABC-RF, NPE)",
+grenepipe,read processing and variant calling,
+fastp,read trimming,
+BWA-MEM2,read mapping,
+Picard MarkDuplicates,duplicate removal,Broad Institute
+GATK HaplotypeCaller,"joint genotyping (gVCF, all sites)",
+GenMap 1.3.0,"mappability (150-mers, 2 mismatches)",
+plink2,per-division allele counts (per-SNP Hudson FST),
+LiftOn,annotation transfer to S. oualaniensis,
+MACSE 2.07,codon alignment (sex-biased mutation),
+EnTAP,functional annotation,
 ANGSD 0.940,"SFS, , diversity (demography, diversity)",
 Stairway Plot 2 (2.1.1),demography,
 GONE2 1.0.4,recent demography,
@@ -20,7 +30,6 @@ HMMER 3.4,Pfam domain screen,
 Pfam-A,domain screen,
 AnchorWave 1.2.3,. illecebrosus alignment,
 minimap2 2.29,alignment,
-est-sfs 2.04,ancestral polarisation,
 degenotate 1.3,0-/4-fold degeneracy,
 bedtools 2.30.0,interval operations,
 bcftools/samtools 1.21,VCF/BAM handling,

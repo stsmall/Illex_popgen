@@ -1,19 +1,39 @@
-Use of the two outgroups
+Use of the outgroups
 Step,Quantity,Value
 "Alignment (AnchorWave v1.2.3, CDS-anchored)"
 ,substitution sites (genome-wide),"45,722,335"
-,aligned scaffold identity (inversion body),99.2-99.9\
-Polarization of chr2 karyotypes (est-sfs 2.04 + non-circular subset)
-,diagnostic (AA/BB fixed-difference) sites,"13,998"
-,\ where =I. illecebrosus REF (circular; excluded),"9,680 \ (69.2\"
-,\ where carries the ALT (non-circular; used),"4,175"
-,polarity from non-circular set,BB derived / AA ancestral
+,aligned scaffold identity (inversion),99.2-99.9\
+Chromosome-2 arrangements in the reference individual (minimap2)
+,"hap1 vs.\ primary, inverted segment",60.54-79.53 Mb
+,hap2 vs.\ primary,collinear
+,arrangement of hap1 / hap2,2a / 2+
+,"37.95-74.95 Mb, aligned to 2+",one inverted run
+,\ aligned to 2a,"two runs, split at 60.5 Mb"
+,adjacency at 56.9 Mb,"kept in 2+, broken in 2a"
+"Chromosome-2 breakpoints in S. oualaniensis (HiC_scaffold_1, minimap2)"
+,I. illecebrosus chr2 genes transferred to HiC_scaffold_1,265 of 319
+,"left breakpoint, genes at 60.49 and 60.55 Mb","adjacent (51.52, 51.57 Mb)"
+,"right breakpoint, 78.2-83.6 Mb",one inverted run
+,"2+ adjacencies (hap2), both breakpoints",present
+,"2a adjacencies (hap1), both breakpoints",absent
+"Allele sharing with (inversion, frequency difference between 2a and 2+ 0.7)"
+,differentiated sites ( base callable),"15,093 \ (14,650)"
+,\ 2a majority allele =,26.0\
+,differs from the reference base,"4,582"
+,\ 2a / 2+ carries the allele,65.0\
+"I.\ argentinus reads at the same sites (10 individuals, 0.3x each)"
+,sites covered / reads,"13,195 / 34,860"
+,"reference bias, collinear control",0.018+1.02p
+,"2a frequency, pooled (per individual)",0.284 \ (0.27-0.30)
+,sites with 4 reads showing one allele,87\
+,2a allele where carries 2a / 2+,0.68 / 0.24
 "McDonald-Kreitman test (mkado, divergence)"
 ,genes tested,"20,999"
 ,nonsynonymous / synonymous divergence (Dn / Ds),"15,343 / 13,670"
 ,nonsynonymous / synonymous polymorphism (Pn / Ps),"468,124 / 630,949"
-,asymptotic alpha (95\,0.642 \ (0.539-3.673)
-I.\ argentinus (secondary MK outgroup; CDS alignment)
+,"standard alpha, pooled counts",0.339
+,asymptotic alpha (95\,0.642 \ (0.630-0.656)
+"I.\ argentinus (secondary MK outgroup, CDS alignment)"
 ,nonsynonymous / synonymous divergence (Dn / Ds),"1,355 / 1,805"
 ,"fixed coding differences (vs 29,013)","3,160 \ (9x fewer)"
 ,asymptotic alpha,0.526

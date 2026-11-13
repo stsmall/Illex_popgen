@@ -1,0 +1,8 @@
+Functional clusters of the background-selection-robust Tier-1 sweep genes
+functional cluster,terms,fold range,representative term (min FDR)
+RNA / transcription regulation,36,1.4-2.7,pos.\ reg.\ nucleobase-containing compound metabolic process (9x10^-4)
+Neural development,28,1.6-22.2,generation of neurons (3x10^-5)
+Organ / anatomical development,21,1.2-2.5,anatomical structure morphogenesis (2x10^-3)
+Cell morphogenesis & differentiation,13,1.5-2.2,cell development (2x10^-5)
+Photoreception / sensory response,7,1.5-13.8,response to light stimulus (9x10^-5)
+Other regulation / metabolism,46,1.2-11.4,reg.\ response to stimulus (3x10^-3)

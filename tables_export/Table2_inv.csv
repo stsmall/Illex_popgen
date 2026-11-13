@@ -1,14 +1,17 @@
-"The chromosome-2 inversion (corrected polarisation: I = BB inverted/derived, S = AA ancestral/standard)"
+The chromosome-2 inversion (I = 2a derived and S = 2+ ancestral)
 Quantity,Value
-Location (differentiated body),chr2:60.54-79.50 Mb (18.96 Mb)
-Karyotypes (AA/AB/BB),254 / 284 / 95 (95.3\
-Inverted (BB) frequency p,0.374
-Historical peak frequency,0.74
-"Karyotype FST(AA,BB)",0.365 (geographic FST~0)
-pi_I/pi_S (I=BB),1.356 0.048
-dXY/pi_I,1.385 0.021
-Coalescent age t_inv,"850 ky ( 1/mu, mu=3x10^-9)"
-Decline,"0.74->0.374 over 50-100 ky, ending 50-100 ka"
-Selection on decline,s10^2-10^3 (s~1.5x10^-4)
+Location,chr2:60.54-79.50 Mb (18.96 Mb)
+"Karyotypes (2a/2a, 2a/2+, 2+/2+)",223 / 299 / 97 (99.7\
+Derived (2a) frequency p,0.602
+Founding frequency p_0,0.05 (0.004-0.10)
+Equilibrium frequency p^*,0.603 (0.575-0.707)
+Karyotype FST (2a/2a vs 2+/2+),0.354 (geographic FST~0)
+pi_I/pi_S (I=2a),0.719 0.027
+dXY/pi_S,1.414 0.024
+Favoured model,balancing selection with gene flux (ABC-RF P=0.83)
+Barrier age t_inv,"390 ka (260-720 ka), 1/mu with mu=3x10^-9"
+Onset of selection,310 ka (190-520 ka)
+Selection coefficient,s>2.1x10^-5 (95\
+Gene flux,3.9x10^-7 per site per generation (4x10^-9 to 6.1x10^-7)
 Gene content,"89 gene models, 45 annotated; no GO enrichment (p=0.51)"
-Fixed differences (AA vs BB),"3,513; 19 exonic, in 9 genes"
+Near-fixed differences (||0.9),"5,432 (26 exonic, in 10 genes)"
