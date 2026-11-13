@@ -72,7 +72,7 @@ In this study, we employed a chromosome-level annotated reference genome for \il
 \subsection{Sample, sex, and the absence of geographic structure}
 We conducted an analysis of 619 \illex{} individuals from eleven NAFO management divisions, covering approximately 37--50$^\circ$N (\cref{fig:map}, \cref{tab:summary}). Details of each collection event, including source and depth, are provided in Supplementary Table~S8. The read coverage on the Z chromosome categorizes the sample into 341 ZZ males and 278 ZO females, aligning with a ZZ/ZO system \citep{coffing2025,small2026} (\cref{fig:overview}). Autosomal analyses incorporate both sexes, while the Z chromosome, where males are diploid and females are haploid, is examined separately (\cref{sec:sweep}).
 
-Consistent with range-wide panmixia reported by \citet{baker2025}, population structure is observed in a specific genomic region, although it is not geographically linked. A windowed principal-component analysis along chromosome~2 identifies the three-cluster structure within the inversion (among-karyotype variance $\eta^{2}=0.87$ within the inversion compared to $\eta^{2}=0.003$ in the collinear sequence, Supplementary Fig.~S3), and two genome-wide tests confirm its uniqueness. First, the chromosome-2 karyotype does not account for variation on any other chromosome (in a per-chromosome PCA colored by karyotype, $\eta^{2}=0.86$ on chr2 versus $\leq0.01$ on all 45 others). Second, independent of the chromosome-2 labels, a Gaussian-mixture screen of each chromosome's leading principal component supports more than one cluster only on chromosome~2 (three clusters, $\Delta\mathrm{BIC}=199$, cluster separation $8.6\sigma$) and on the Z chromosome (two clusters, reflecting the expected ZZ/ZO hemizygosity split), while every other autosome forms a single cloud of points (\cref{fig:overview}). The residual dispersion on the autosomal PCA axes does not correlate with division or latitude, and the leading axis tracks sequencing depth (Supplementary Fig.~S1), and a KING-robust relatedness screen \citep{manichaikul2010} identifies no duplicate, parent-offspring, or full-sib pairs, with only a single second-degree pair among the 619 individuals (maximum kinship 0.16), indicating effective unrelatedness. Given that a per-SNP differentiation scan is the most sensitive test for local adaptation in such a panmictic population, we compared per-SNP Hudson $\Fst$ among divisions \citep{bhatia2013} to a permutation null, in which division labels were shuffled among individuals 20 times. This null keeps the genotype calls, missingness, allele-frequency spectrum and linkage of the data and removes only geography. Across the complete per-chromosome callsets of the 620 individuals from the ten divisions with more than one sample, which include the two excluded after the scan, we evaluated every biallelic SNP with a minor-allele frequency above 0.05 (20{,}117{,}984 SNPs on the 45 autosomes, Supplementary Methods), and the empirical differentiation remains entirely within the null expectation. No SNP surpasses the permutation maximum, and the number of SNPs above each upper null percentile lies within the range of the permutations (2{,}319 of the autosomal SNPs outside the inversion above the 99.99th percentile against $1{,}998\pm352$, permutation $p=0.24$), including within the chromosome-2 inversion (8 against 13 expected), so the upper tail holds no more candidates than chance (Supplementary Figs.~S2, S19). Nucleotide diversity and Tajima's $D$ are consistent across latitude, and pairwise $\Fst$ among divisions is approximately 0 throughout (\cref{fig:diversity}). Consequently, there is no geographic local adaptation anywhere in the genome \comment{[overclaim: absence of evidence from 20 label permutations with no power analysis, rephrase as no evidence of]}, and the inversion itself is geographically non-clinal (\cref{fig:map}, Supplementary Fig.~S6 and Table~S2). Furthermore, arrangement frequency does not correlate with capture depth, which ranges from 3 to 613~m across collection events (Supplementary Table~S8). Among 536 individuals with recorded depth, the correlation between depth and the number of 2+ chromosomes carried is $\rho=-0.06$ ($p=0.20$), and within the six divisions sampled at multiple depths, it is $\rho=+0.03$ (within-division permutation $p=0.68$). Across collection events, the slope of 2+ frequency on depth is not significant (weighted least squares over the 11 events with at least five individuals, $p=0.09$).
+Consistent with range-wide panmixia reported by \citet{baker2025}, population structure is observed in a specific genomic region, although it is not geographically linked. A windowed principal-component analysis along chromosome~2 identifies the three-cluster structure within the inversion (among-karyotype variance $\eta^{2}=0.87$ within the inversion compared to $\eta^{2}=0.003$ in the collinear sequence, Supplementary Fig.~S1), and two genome-wide tests confirm its uniqueness. First, the chromosome-2 karyotype does not account for variation on any other chromosome (in a per-chromosome PCA colored by karyotype, $\eta^{2}=0.86$ on chr2 versus $\leq0.01$ on all 45 others). Second, independent of the chromosome-2 labels, a Gaussian-mixture screen of each chromosome's leading principal component supports more than one cluster only on chromosome~2 (three clusters, $\Delta\mathrm{BIC}=199$, cluster separation $8.6\sigma$) and on the Z chromosome (two clusters, reflecting the expected ZZ/ZO hemizygosity split), while every other autosome forms a single cloud of points (\cref{fig:overview}). The residual dispersion on the autosomal PCA axes does not correlate with division or latitude, and the leading axis tracks sequencing depth (Supplementary Fig.~S2), and a KING-robust relatedness screen \citep{manichaikul2010} identifies no duplicate, parent-offspring, or full-sib pairs, with only a single second-degree pair among the 619 individuals (maximum kinship 0.16), indicating effective unrelatedness. Given that a per-SNP differentiation scan is the most sensitive test for local adaptation in such a panmictic population, we compared per-SNP Hudson $\Fst$ among divisions \citep{bhatia2013} to a permutation null, in which division labels were shuffled among individuals 20 times. This null keeps the genotype calls, missingness, allele-frequency spectrum and linkage of the data and removes only geography. Across the complete per-chromosome callsets of the 620 individuals from the ten divisions with more than one sample, which include the two excluded after the scan, we evaluated every biallelic SNP with a minor-allele frequency above 0.05 (20{,}117{,}984 SNPs on the 45 autosomes, Supplementary Methods), and the empirical differentiation remains entirely within the null expectation. No SNP surpasses the permutation maximum, and the number of SNPs above each upper null percentile lies within the range of the permutations (2{,}319 of the autosomal SNPs outside the inversion above the 99.99th percentile against $1{,}998\pm352$, permutation $p=0.24$), including within the chromosome-2 inversion (8 against 13 expected), so the upper tail holds no more candidates than chance (Supplementary Figs.~S3, S4). Nucleotide diversity and Tajima's $D$ are consistent across latitude, and pairwise $\Fst$ among divisions is approximately 0 throughout (\cref{fig:diversity}). Consequently, there is no geographic local adaptation anywhere in the genome \comment{[overclaim: absence of evidence from 20 label permutations with no power analysis, rephrase as no evidence of]}, and the inversion itself is geographically non-clinal (\cref{fig:map}, Supplementary Fig.~S5 and Table~S2). Furthermore, arrangement frequency does not correlate with capture depth, which ranges from 3 to 613~m across collection events (Supplementary Table~S8). Among 536 individuals with recorded depth, the correlation between depth and the number of 2+ chromosomes carried is $\rho=-0.06$ ($p=0.20$), and within the six divisions sampled at multiple depths, it is $\rho=+0.03$ (within-division permutation $p=0.68$). Across collection events, the slope of 2+ frequency on depth is not significant (weighted least squares over the 11 events with at least five individuals, $p=0.09$).
 
 \subsection{A large, selected inversion on chromosome~2}\label{sec:inv}
 
@@ -82,13 +82,13 @@ Local PCA \citep{li2019lostruct} and a Gaussian-mixture karyotype assignment
 rather than geographic, with $\Fst=0.35$ between 2a/2a and 2+/2+ over the inversion as a whole (Hudson ratio of averages across chr2:60--80~Mb)
 against a geographic $\Fst\approx0$. In 100-kb windows along the whole chromosome, between-karyotype $\Fst$ is
 $\approx0$ across collinear sequence (median 0.006) and rises to a median of 0.36 (maximum 0.56) inside the inversion
-(Supplementary Fig.~S20), so the karyotypes are one panmictic population everywhere except
+(Supplementary Fig.~S6), so the karyotypes are one panmictic population everywhere except
 within the barrier. The three karyotypes co-occur throughout the range with no
-latitudinal cline in arrangement frequency (derived-arrangement frequency 0.50--0.70 across divisions, \cref{fig:map}, Supplementary Fig.~S6 and Table~S2). Two independent lines pin
+latitudinal cline in arrangement frequency (derived-arrangement frequency 0.50--0.70 across divisions, \cref{fig:map}, Supplementary Fig.~S5 and Table~S2). Two independent lines pin
 the breakpoints to chr2:60.54--79.50~Mb (a $\sim$18.96~Mb inversion),
 namely a step-change in arrangement differentiation and a strand flip in a
-whole-chromosome alignment to \coin{} (Supplementary Fig.~S11), and an extended block of linkage disequilibrium coincides with the same interval (Supplementary
-Fig.~S4).
+whole-chromosome alignment to \coin{} (Supplementary Fig.~S7), and an extended block of linkage disequilibrium coincides with the same interval (Supplementary
+Fig.~S8).
 
 \paragraph{The reference individual carries both arrangements.} We treat 2a, at a present frequency of
 0.602, as the derived arrangement and 2+, at 0.398, as the ancestral arrangement. The reference allele cannot
@@ -141,7 +141,7 @@ reference table of 16{,}959 simulations, favours balancing selection, with a pos
 reaches the present frequency. Paths under balancing selection end within the accepted window about 12 times as
 often as paths under the other histories, because any $p^{*}$ near 0.602 holds 2a there whereas a sweep must be caught
 mid-course. The summary statistics alone separate the four histories only weakly (cross-validated accuracy 0.51,
-Supplementary Fig.~S26). Under balancing selection, a start from a single copy carries 3\% of the posterior mass. Under
+Supplementary Fig.~S9). Under balancing selection, a start from a single copy carries 3\% of the posterior mass. Under
 the favoured model with gene flux, the NPE posterior (\cref{tab:inv}, \cref{fig:demog}b) places the formation of the
 recombination barrier about 390~ka (95\% credible interval 260--720~ka). 2a began to rise from a founding frequency
 of about 0.05 (0.004--0.10) about 310~ka (190--520~ka) and has been held near its equilibrium, $p^{*}=0.603$
@@ -150,14 +150,14 @@ about 6{,}000 generations of the onset, and the slowest fifth, mostly those with
 50{,}000. The selection coefficient has only a lower bound (95\% of the posterior above $2.1\times10^{-5}$ and 80\%
 above $10^{-4}$), because any stronger selection reaches the equilibrium quickly and leaves the same present-day
 statistics. The fitted gene-flux rate is $3.9\times10^{-7}$ ($4\times10^{-9}$ to $6.1\times10^{-7}$) per site per
-generation in heterokaryotypes. The joint posterior (Supplementary Fig.~S14) shows the barrier age rising with the
+generation in heterokaryotypes. The joint posterior (Supplementary Fig.~S10) shows the barrier age rising with the
 gene-flux rate (Spearman $\rho=0.62$) and with the onset of selection ($\rho=0.56$), whereas the selection coefficient
 is unrelated to the founding frequency ($\rho=-0.11$). The NPE posterior is calibrated, with 95\% credible intervals
 containing the true value in 94--96\% of 2{,}000 held-out simulations for every parameter, and the observed
 statistics lie well inside the simulations it was trained on (Supplementary Methods). Without gene flux the barrier
 is younger (280~ka, 220--360~ka) and the founding frequency similar (0.03). Posterior predictive simulations of the
 favoured model from 1{,}000 NPE posterior draws reproduce the data (joint posterior predictive $p=0.51$, Supplementary
-Fig.~S25), including three statistics withheld from the fit, the Tajima's $D$ of each arrangement and the ratio of
+Fig.~S11), including three statistics withheld from the fit, the Tajima's $D$ of each arrangement and the ratio of
 divergence near the breakpoints to that at the centre of the inversion. No statistic falls below a two-sided predictive $p$ of 0.05. Without gene flux the joint fit
 is poorer ($p=0.09$), mainly because the model almost never produces variants that are rare in 2a and at high
 frequency in 2+ (two-sided $p=0.06$ and 0.12 for the two such cells). Both settings reproduce the low-frequency
@@ -166,13 +166,13 @@ without it, two-sided $p=0.07$ and 0.29), the setting without gene flux because 
 the collinear flanks the same class of variants matches the neutral baseline (Supplementary Methods). The model places 2a at its founding frequency when the barrier forms, so
 $t_\mathrm{inv}$ dates the recombination barrier together with the founding of the arrangement. The observed joint
 site-frequency spectrum between arrangements shows the same barrier directly, with near-fixed differences and
-off-diagonal density in the inversion and a collapse to the diagonal in collinear controls (Supplementary Fig.~S5).
+off-diagonal density in the inversion and a collapse to the diagonal in collinear controls (Supplementary Fig.~S12).
 Absolute ages scale with the assumed mutation rate $\mu=3\times10^{-9}$.
 
 \paragraph{Inversion as a supergene.} 
 The barrier to recombination is shown directly by the block of linkage disequilibrium that spans exactly the 
-inversion (Supplementary Fig.~S4), by the arrangement differentiation (\cref{fig:inv}b), and 
-by the joint site-frequency spectrum (Supplementary Fig.~S5).
+inversion (Supplementary Fig.~S8), by the arrangement differentiation (\cref{fig:inv}b), and 
+by the joint site-frequency spectrum (Supplementary Fig.~S12).
 Concluding that it is not locally adaptive by geography, since there is
 no cline and geographic $\Fst\approx0$, and the migration-selection scenario that
 explains most well-studied inversions \citep{kirkpatrick2006} cannot apply \comment{[overclaim: sentence fragment, and absence of a cline does not exclude local adaptation on other axes]}.
@@ -199,12 +199,12 @@ gene-ontology terms, again the 15th percentile (median 49 GO-annotated genes per
 are diverse (lipid metabolism, DNA repair, transcription and splicing, signalling) with no coherent pathway 
 (Supplementary Table~S7). A gene-ontology test of its annotated genes against the genome
 returns no enriched terms at FDR$<$0.05, and a permutation null on a random gene sets of the same size produce more nominal hits than the inversion genes (86.6$\pm$60 against 69, permutation $p=0.51$),
-while the largest nominal per-term enrichments ($\sim$40-fold) rest on as few as two genes (Supplementary Fig.~S21).
+while the largest nominal per-term enrichments ($\sim$40-fold) rest on as few as two genes (Supplementary Fig.~S13).
 The inversion thus appears as a functionally unremarkable slice of the genome,
 and likely not a selected gene set but instead a supergene maintained for the arrangement as a whole. What the arrangements do accumulate is divergence as a unit. In the genotype-likelihood joint spectrum of 40 2a/2a
 and 40 2+/2+ individuals, 3{,}828 sites are near-fixed between the arrangements and shared polymorphism falls to
 18\%, whereas collinear chromosome-2 sequence has no near-fixed sites and 47\% shared polymorphism (Supplementary
-Fig.~S5). In the called genotypes of all arrangement homozygotes, 5{,}432 sites spread across the inversion differ in
+Fig.~S12). In the called genotypes of all arrangement homozygotes, 5{,}432 sites spread across the inversion differ in
 allele frequency between arrangements by at least 0.9, against none in collinear chr2:10--30~Mb, and these positions
 locate the coding differences described below. These are
 overwhelmingly non-coding since coding sequence is only $\sim$0.2\% of the region, but the exonic fixed
@@ -239,29 +239,29 @@ The folded SFS is fit far better by a Kingman-plus-growth model than by any mult
 \subsection{Recombination, background selection, and protein adaptation}
 Three further features of the genome were resolved to accurately identify selective sweeps. Recombination 
 was estimated with ReLERNN \citep{adrion2020relernn}, a deep-learning method that infers the rate from patterns of linkage in genotype data. The estimated rate is $\sim$0.24~cM/Mb on the 
-autosomes (median 0.241, Supplementary Fig.~S12). The map is flat with respect to gene content, 
+autosomes (median 0.241, Supplementary Fig.~S14). The map is flat with respect to gene content, 
 and the rate differs by only $\sim$2\% between windows adjacent to exons and windows $>$100~kb from any exon, unchanged 
-when $\pi$ is held fixed (Supplementary Fig.~S17a). For example, on chromosome~1 the 2-Mb rolling median spans just 0.22--0.27~cM/Mb, 
+when $\pi$ is held fixed (Supplementary Fig.~S15a). For example, on chromosome~1 the 2-Mb rolling median spans just 0.22--0.27~cM/Mb, 
 the pericentromeric flanks where $\pi$ halves show no more than a 7\% dip, and the centromere itself 
-(a 2.5-Mb block that is 80\% repeat) carries no windows over its central 1.1~Mb (Supplementary Fig.~S22). 
+(a 2.5-Mb block that is 80\% repeat) carries no windows over its central 1.1~Mb (Supplementary Fig.~S16). 
 This pattern is similar genome-wide. Across the 44 autosomes in the map the chromosome-scale rolling median 
 varies by 13--67\% of each chromosome's median, and no chromosome shows a peak more than 17\% above it. 
 Background selection is moderate and gene-density-driven. Nucleotide diversity falls with local coding density
 ($r=-0.31$, a 20--30\% reduction in gene-dense windows) and rises 43\% between exon-adjacent and exon-distant
-windows (Supplementary Fig.~S17) \citep{charlesworth1993,mcvicker2009,charlesworth2021}. A model-based 
+windows (Supplementary Fig.~S15) \citep{charlesworth1993,mcvicker2009,charlesworth2021}. A model-based 
 $B$-map could not be fit under this regime (the classical approximation overflows where the deleterious 
 mutation rate exceeds the selection coefficient), so local coding fraction serves as the background-selection 
 covariate that the sweep scan controls for explicitly. Protein adaptation over the divergence timescale
 is substantial. McDonald--Kreitman tests \citep{mcdonald1991,messer2013mk} against \coin{} across 20{,}999 genes give a
 genome-wide proportion of adaptive substitutions of $\alpha=0.34$ from the pooled counts and 0.64 (95\% CI
 0.63--0.66) by the asymptotic method, which corrects for slightly deleterious polymorphism, with the splicing factor
-\textit{SF3B4} the single most significantly adaptive gene (Supplementary Fig.~S10). Per-gene power is limited,
+\textit{SF3B4} the single most significantly adaptive gene (Supplementary Fig.~S17). Per-gene power is limited,
 so we treat the MK results as complementary to the recent-sweep scan, which detects a different timescale of 
 selection. Comparing to \textit{I.\ argentinus} we find that it is recently diverged (an order of magnitude fewer fixed coding differences than \coin{}, Supplementary Table~S3) 
 yet carries near-identical genome-wide diversity ($\pi=0.0092$ vs 0.0093, within 1\%), so the two are large-$\Ne$, expansion-shaped congeners of matched standing variation.
 We also found twenty-two blocks of $\geq$1~Mb on 17 chromosomes (129~Mb, 3.9\% of the autosomes) that seemingly carry 2--6 times the chromosome-median $\pi$ with less negative Tajima's $D$ (Supplementary Table~S9). 
 They are present at the same strength in every sampling location, are no more differentiated among locations
-than flanking sequence, and lack the long-range linkage disequilibrium of a segregating inversion (Supplementary Figs.~S23, S24).
+than flanking sequence, and lack the long-range linkage disequilibrium of a segregating inversion (Supplementary Figs.~S18, S19).
 Read-depth analyses resolve them into three categories. In six, depth is raised in every individual
 (1.2--2.2 times the flanks across the population sample, and up to 2.7 and 2.4 times in long reads 
 from the individual used for the assembly and a second individual \citep{small2026}), and a single diploid genome carries 
@@ -273,7 +273,7 @@ all 22 blocks were excluded from the sweep scan and the gene-set analyses.
 \subsection{A genome-wide scan for selective sweeps}\label{sec:sweep}
 We scanned for recent positive selection with diploS/HIC \citep{schrider2016,kern2018diploshic}, a five-class
 site-frequency/diversity-based classifier (neutral, hard, soft, linked-hard, and linked-soft, in 1.1~Mb feature windows of eleven 100~kb sub-windows) trained on forward and coalescent simulations under the fitted growth
-demography with the final model reaching 81\% class accuracy (\cref{fig:selection}, Supplementary Figs.~S7 and S8).
+demography with the final model reaching 81\% class accuracy (\cref{fig:selection}, Supplementary Figs.~S20 and S21).
 Applied to the genome, the classifier over-calls sweeps, assigning only 1\% of windows to the neutral class and 91\% to the linked-hard or linked-soft classes.
 We determined this was because real neutral windows (accessible, $\geq$5~kb from any gene) carry 3--8-fold more
 within-window spatial heterogeneity in $\pi$ and $\theta$ than the simulations, even though their marginal
@@ -283,14 +283,14 @@ that a uniform-$\theta$ coalescent does not reproduce \citep{johri2022}. We ther
 in which the sweep score ($p_\mathrm{hard}+p_\mathrm{soft}$) is ranked within strata of callable fraction and coding density,
 so a window is an outlier only relative to windows of similar accessibility and gene density, and calls are corroborated by an
 independent LD-footprint method, RAiSD \citep{alachiotis2018raisd}, or a composite-likelihood SFS method, SweepFinder2 \citep{nielsen2005,degiorgio2016}.
-Thus, we report sweeps at two levels of stringency (Supplementary Fig.~S13). Tier~1 is the diploS/HIC hard/soft classification,
+Thus, we report sweeps at two levels of stringency (Supplementary Fig.~S22). Tier~1 is the diploS/HIC hard/soft classification,
 spatially resolved by a recombination-aware Markov decoder, a hidden Markov model over the per-window (100~kb) classes with neutral,
 linked, and sweep-centre states whose emissions are the prior-corrected class posteriors and whose dwell lengths
-follow the $\sim$400~kb sweep footprint scaled by the recombination map (Supplementary Fig.~S13a). Because the genome
+follow the $\sim$400~kb sweep footprint scaled by the recombination map (Supplementary Fig.~S22a). Because the genome
 reads as $\sim$91\% linked-selected under strong expansion, the decoder's role is spatial coherence.
 It retains hard/soft windows that lie in contiguous sweep centers and discards spatially isolated ones,
 reducing 1{,}651 raw hard/soft windows to 677 and preferentially keeping the higher-outlier windows (median
-empirical-outlier percentile 0.98 vs 0.95 for discarded windows, Supplementary Fig.~S13b). Retained windows separated
+empirical-outlier percentile 0.98 vs 0.95 for discarded windows, Supplementary Fig.~S22b). Retained windows separated
 by no more than one window are merged into 623 localized autosomal calls (437 hard and 186 soft).
 Tier~2 is the subset independently corroborated by other methods, producing 24 concordant regions (a diploS/HIC-HMM
 outlier plus RAiSD or SweepFinder2). Chance alignment of outliers produces far fewer. Shifting the RAiSD and SweepFinder2
@@ -298,16 +298,16 @@ outlier track circularly along each chromosome, which keeps the number and clust
 their alignment with the diploS/HIC outliers, gives 4.8 concordant regions on average (95\% range 1--9, and never
 more than 16 in 10{,}000 shifts), so the false-discovery rate of the concordant set is about 0.20. The two tiers agree strongly, with 88\% of windows at concordant loci decoded as sweep centers 
 versus 2.9\% genome-wide (odds ratio 242, $p<10^{-30}$), and 21 of the 24 concordant
-regions contain a Tier-1 center (Supplementary Fig.~S13c), so the conservative concordance set is a
+regions contain a Tier-1 center (Supplementary Fig.~S22c), so the conservative concordance set is a
 high-purity subset of the classifier calls, not a disjoint list. The Z chromosome is necessarily diploS/HIC-only
 and scanned separately in males (below), it contributes four further Tier-1 calls, for a genome-wide 
-Tier-1 total of 627 (\cref{fig:selection}, Supplementary Fig.~S18).
+Tier-1 total of 627 (\cref{fig:selection}, Supplementary Fig.~S23).
 
 \paragraph{Neurodevelopment and photoreception.}
 The 623 autosomal Tier-1 calls overlap 885 genes (475 with GO annotation). One-third of calls fall in
 gene-poor, often transposon-rich windows and are excluded from enrichment analyses. A gene-ontology enrichment against the
 annotated-gene background (Fisher's exact test with Benjamini--Hochberg FDR, \citealt{benjamini1995}) returns
-124 terms at FDR$<$0.05 (Supplementary Fig.~S15, Table~S4), dominated by neural development 
+124 terms at FDR$<$0.05 (Supplementary Fig.~S24, Table~S4), dominated by neural development 
 (neurogenesis, generation of neurons, neuron development, neuron-projection and cell morphogenesis, at 1.5--1.8-fold), 
 together with transcriptional and RNA-regulatory control, and a weaker light-response signal
 (response to light stimulus 1.9-fold, response to radiation 1.8-fold). The hard-sweep calls alone give 98 terms at FDR$<$0.05, 85 of them among the 124 and including every term in Supplementary Table~S4 and both light-response terms, and the disjoint soft-sweep set, with 142 GO-annotated genes against 333 for the hard calls, has none at FDR$<$0.05. 
@@ -320,12 +320,12 @@ including response to light stimulus $1.94\!\to\!3.15$ (FDR $2\times10^{-2}\!\to
 response to radiation $1.76\!\to\!2.79$ (FDR $3\times10^{-2}\!\to\!2\times10^{-4}$),
 neuron-projection morphogenesis $1.81\!\to\!2.25$, cell morphogenesis $1.73\!\to\!2.24$,
 neuron development $1.59\!\to\!1.97$, generation of neurons $1.59\!\to\!1.90$,
-transcription by RNA polymerase~II $1.73\!\to\!2.08$ (Supplementary Fig.~S15).
+transcription by RNA polymerase~II $1.73\!\to\!2.08$ (Supplementary Fig.~S24).
 The photoreception signal, the weakest in the full set, becomes the single most enriched theme after the BGS screen,
 and its more specific child terms (detection of light stimulus $2.5\!\to\!3.9$, phototransduction
 $2.5\!\to\!3.4$) move in the same direction, though with too few genes to reach significance. A shared-gene
 enrichment map of the BGS-robust set resolves the same two connected modules, neural
-development/morphogenesis and light response, with no third (Supplementary Fig.~S16, Table~S5).
+development/morphogenesis and light response, with no third (Supplementary Fig.~S25, Table~S5).
 
 \paragraph{Candidate sweeps.}
 The Tier-2 concordant regions carry a biologically coherent set of cephalopod-orthologous genes that sit
@@ -343,7 +343,7 @@ There is no overlap between the sweep candidates and the MK-adaptive genes.
 Because males are Z-diploid and females Z-haploid, the Z was scanned separately in the 329 confident ZZ
 males, using a model retrained at the matched sample size and accounting for the Z's reduced effective size.
 The male-only screen was validated against 278 haploid females (including five later set to not confident), whose per-window diversity tracks the males' at $r=0.996$.
-Of the four Z Tier-1 calls (three hard and one soft, Supplementary Fig.~S18), three credible, gene-localised sweeps survive
+Of the four Z Tier-1 calls (three hard and one soft, Supplementary Fig.~S23), three credible, gene-localised sweeps survive
 fine-scale triage, all confirmed as conserved cephalopod genes by direct homology. These are \textit{Pasilla}/Nova-1 (a neuronal alternative-splicing regulator with 92\% identity to its \textit{Octopus} ortholog),
 \textit{Smaug}/samd4a (a germline RNA-binding translational repressor), and \textit{Esrrg} (an estrogen-related receptor with an adjacent likely \textit{cis}-regulatory lncRNA, with 97.5\% identity to its \textit{Octopus} ortholog),
 a coherent RNA-regulation-and-hormone-signalling signature on a sex chromosome that is dosage compensated, enriched for chromatin-modifying genes and carries two conserved sex-biased lncRNAs with RNA-binding-protein sites \citep{small2026}.
@@ -493,25 +493,25 @@ The manuscript, along with all figures and tables, their generating scripts, and
 
 \begin{figure}[p]\centering
 \includegraphics[width=\linewidth]{fig2_overview.png}
-\caption{\textbf{Absence of population structure outside chromosome~2 and sex assignment} (consistent with the range-wide panmixia reported by \citealt{baker2025}). \textbf{(a)} Genome-wide autosomal PCA excluding chromosome~2 reveals a single undifferentiated cluster, with PC1 tracking sequencing depth (Supplementary Fig.~S1). Variance explained is relative to the full relationship matrix. \textbf{(b)} PCA of chrZ, coloured by the sex calls of panel c, shows mild separation between males and females. \textbf{(c)} The chrZ:autosome read-coverage ratio per individual separates ZZ males (median 1.23, two Z copies) from ZO females (median 0.83, one Z and no W), with sex assigned by a two-component Gaussian mixture. Open symbols and hatched bars mark calls below the confidence threshold. Three mixture-model female calls with male-like chrZ heterozygosity and coverage between the clusters (grey in panel b) were set to not confident. The sample includes 341 males (329 confident) and 278 females (273 confident).}
+\caption{\textbf{Absence of population structure outside chromosome~2 and sex assignment} (consistent with the range-wide panmixia reported by \citealt{baker2025}). \textbf{(a)} Genome-wide autosomal PCA excluding chromosome~2 reveals a single undifferentiated cluster, with PC1 tracking sequencing depth (Supplementary Fig.~S2). Variance explained is relative to the full relationship matrix. \textbf{(b)} PCA of chrZ, coloured by the sex calls of panel c, shows mild separation between males and females. \textbf{(c)} The chrZ:autosome read-coverage ratio per individual separates ZZ males (median 1.23, two Z copies) from ZO females (median 0.83, one Z and no W), with sex assigned by a two-component Gaussian mixture. Open symbols and hatched bars mark calls below the confidence threshold. Three mixture-model female calls with male-like chrZ heterozygosity and coverage between the clusters (grey in panel b) were set to not confident. The sample includes 341 males (329 confident) and 278 females (273 confident).}
 \label{fig:overview}
 \end{figure}
 
 \begin{figure}[p]\centering
 \includegraphics[width=\linewidth]{fig3_inversion.png}
-\caption{\textbf{Chromosome-2 inversion analysis.} \textbf{(a)} PCA of chr2 in the 619 individuals distinguishes three karyotype clusters (2a/2a, 2a/2+, 2+/2+). \textbf{(b)} $\Fst$ values between arrangements along chr2 indicate that the inversion (60.54--79.50~Mb, shaded) is the sole differentiated region (Hudson $\Fst$ between the arrangement homozygotes in 100-kb windows, median 0.36 inside the inversion compared to 0.006 in collinear sequence, the same windows as Supplementary Fig.~S20). \textbf{(c)} Diversity per arrangement in 100-kb windows across the inversion (shaded) and 20~Mb of collinear sequence on either side, computed from called genotypes at biallelic SNPs of all arrangement homozygotes (Hudson estimator, missing genotypes excluded per site) and divided by window length without an accessibility mask. Absolute values are therefore lower bounds, below the genotype-likelihood estimates given in the text. Within the breakpoints the derived 2a arrangement is less diverse than the ancestral 2+ ($\pi_I/\pi_S=0.72$, a ratio unaffected by the denominator), despite its higher frequency, and $\dxy$ surpasses both, indicating an ancient polymorphism whose derived arrangement was rarer in the past. Outside the breakpoints, the three curves converge at the collinear $d_{xy}$ (dashed), as expected where arrangements recombine freely.}
+\caption{\textbf{Chromosome-2 inversion analysis.} \textbf{(a)} PCA of chr2 in the 619 individuals distinguishes three karyotype clusters (2a/2a, 2a/2+, 2+/2+). \textbf{(b)} $\Fst$ values between arrangements along chr2 indicate that the inversion (60.54--79.50~Mb, shaded) is the sole differentiated region (Hudson $\Fst$ between the arrangement homozygotes in 100-kb windows, median 0.36 inside the inversion compared to 0.006 in collinear sequence, the same windows as Supplementary Fig.~S6). \textbf{(c)} Diversity per arrangement in 100-kb windows across the inversion (shaded) and 20~Mb of collinear sequence on either side, computed from called genotypes at biallelic SNPs of all arrangement homozygotes (Hudson estimator, missing genotypes excluded per site) and divided by window length without an accessibility mask. Absolute values are therefore lower bounds, below the genotype-likelihood estimates given in the text. Within the breakpoints the derived 2a arrangement is less diverse than the ancestral 2+ ($\pi_I/\pi_S=0.72$, a ratio unaffected by the denominator), despite its higher frequency, and $\dxy$ surpasses both, indicating an ancient polymorphism whose derived arrangement was rarer in the past. Outside the breakpoints, the three curves converge at the collinear $d_{xy}$ (dashed), as expected where arrangements recombine freely.}
 \label{fig:inv}
 \end{figure}
 
 \begin{figure}[p]\centering
   \includegraphics[width=\linewidth]{fig4_demography.png}
-  \caption{\textbf{Demographic history and inversion frequency history.} \textbf{(a)} The effective population size over time is depicted using Stairway~Plot~2 (median $\pm$95\% CI), alongside the moments 2-epoch growth model with its Godambe (GIM) 95\% parameter-CI envelope (expansion $12.4\times\pm9\%$, $T\approx770$~ky~$\pm16\%$). GONE2 covers the last 150 generations at an assumed uniform 1~cM/Mb without rescaling, and its first four generations, a known edge artifact, are set to the generation-5 value. The Stairway~Plot~2 upper limit near $1.67\times10^{7}$ is the $\theta$ ceiling of that fit. \textbf{(b)} Frequency history of the derived (2a) arrangement under the favoured balancing-selection model with gene flux, chosen by ABC-RF with the barrier-aware coalescent simulator msinv, with parameters from neural posterior estimation. The line and bands are the pointwise median, 50\% and 95\% ranges of 392 trajectories re-simulated from posterior draws. Each trajectory rises in a single step whose timing varies among draws, so the width of the bands reflects uncertainty in timing rather than a gradual rise. The barrier formed about 390~ka, and 2a rose from a founding frequency near 0.05 to its equilibrium near 0.60 about 310~ka. The joint posterior, individual trajectories and predictive checks are in Supplementary Figs.~S14 and S25.}
+  \caption{\textbf{Demographic history and inversion frequency history.} \textbf{(a)} The effective population size over time is depicted using Stairway~Plot~2 (median $\pm$95\% CI), alongside the moments 2-epoch growth model with its Godambe (GIM) 95\% parameter-CI envelope (expansion $12.4\times\pm9\%$, $T\approx770$~ky~$\pm16\%$). GONE2 covers the last 150 generations at an assumed uniform 1~cM/Mb without rescaling, and its first four generations, a known edge artifact, are set to the generation-5 value. The Stairway~Plot~2 upper limit near $1.67\times10^{7}$ is the $\theta$ ceiling of that fit. \textbf{(b)} Frequency history of the derived (2a) arrangement under the favoured balancing-selection model with gene flux, chosen by ABC-RF with the barrier-aware coalescent simulator msinv, with parameters from neural posterior estimation. The line and bands are the pointwise median, 50\% and 95\% ranges of 392 trajectories re-simulated from posterior draws. Each trajectory rises in a single step whose timing varies among draws, so the width of the bands reflects uncertainty in timing rather than a gradual rise. The barrier formed about 390~ka, and 2a rose from a founding frequency near 0.05 to its equilibrium near 0.60 about 310~ka. The joint posterior, individual trajectories and predictive checks are in Supplementary Figs.~S10 and S11.}
   \label{fig:demog}
 \end{figure}
 
 \begin{figure}[p]\centering
   \includegraphics[width=\linewidth]{fig5_selection.png}
-  \caption{\textbf{Genome-wide selective-sweep scan.} The sweep signal across the genome (chromosomes concatenated) is illustrated. The classifier interprets the genome as predominantly linked-selected ($\sim$91\% linked-hard or linked-soft, $\sim$1\% neutral, and only a few percent hard or soft). Each window is plotted at the percentile of its diploS/HIC sweep score within its callability and coding-density stratum, and the dashed line marks the top 1\% of each stratum (240 stratified outliers, 230 autosomal and 10 on the Z). Stratified outliers that are also RAiSD or SweepFinder2 outliers form the cross-method concordant set and are highlighted (25 windows in 24 regions), with key genes labeled. The background-selection test is not applied to the highlighted set, and the 11 concordant regions that pass it are listed in \cref{tab:sweep}. Chromosome-Z Tier-1 calls (diamonds, with \textit{Pasilla}, \textit{Smaug}, \textit{Esrrg} labeled) are male-based and diploS/HIC-only (the footprint methods do not cover the Z), thus they cannot be included in the concordance filter. The chromosome-2 inversion does not exhibit a concordant sweep. The complete scan pipeline is detailed in Supplementary Fig.~S8.}
+  \caption{\textbf{Genome-wide selective-sweep scan.} The sweep signal across the genome (chromosomes concatenated) is illustrated. The classifier interprets the genome as predominantly linked-selected ($\sim$91\% linked-hard or linked-soft, $\sim$1\% neutral, and only a few percent hard or soft). Each window is plotted at the percentile of its diploS/HIC sweep score within its callability and coding-density stratum, and the dashed line marks the top 1\% of each stratum (240 stratified outliers, 230 autosomal and 10 on the Z). Stratified outliers that are also RAiSD or SweepFinder2 outliers form the cross-method concordant set and are highlighted (25 windows in 24 regions), with key genes labeled. The background-selection test is not applied to the highlighted set, and the 11 concordant regions that pass it are listed in \cref{tab:sweep}. Chromosome-Z Tier-1 calls (diamonds, with \textit{Pasilla}, \textit{Smaug}, \textit{Esrrg} labeled) are male-based and diploS/HIC-only (the footprint methods do not cover the Z), thus they cannot be included in the concordance filter. The chromosome-2 inversion does not exhibit a concordant sweep. The complete scan pipeline is detailed in Supplementary Fig.~S21.}
   \label{fig:selection}
 \end{figure}
 
@@ -519,7 +519,7 @@ The manuscript, along with all figures and tables, their generating scripts, and
   \includegraphics[width=\linewidth]{fig6_diversity.png}
   \caption{\textbf{Diversity is uniform and there is no geographic structure.} \textbf{(a)} Nucleotide
     diversity $\pi$ and \textbf{(b)} Tajima's $D$ per NAFO division (ten of the eleven sampled divisions, as 3N, with a single individual, cannot support per-population estimates), ordered from south to north, and both are flat across latitude (no cline), and $D$ is negative in every population, the signature of strong
-    expansion. \textbf{(c)} Pairwise $\Fst$ among divisions as a clustered heatmap with dendrogram. Every value is close to zero ($-0.017$ to $-0.005$), and the clustering follows sample size rather than geography, so there is no population structure. The slightly negative values scale with the inverse of division sample size (Pearson $r=-0.98$ with $1/n_1+1/n_2$), consistent with the excess of called heterozygotes in the genotype data (observed over expected heterozygosity 1.13), which lowers Hudson $\Fst$ most in the smallest divisions. $\Fst$ is the Hudson ratio-of-averages estimator computed per chromosome with pg\_gpu and averaged over the 44 autosomes other than chromosome~2. $\pi$ and $D$ were estimated from ANGSD genotype likelihoods in 50-kb windows over all 45 autosomes and the Z (males only), on at most 25 individuals per division (all 16, 15 and 23 individuals in 3O, 4S and 4T). Because Tajima's $D$ depends on sample size under population growth, these division medians ($-1.26$ to $-1.64$) are less negative than the genome-wide $D$ of $-2.07$ from all individuals and are not directly comparable to it, and projecting the genome-wide spectrum to 25 individuals gives $D=-1.50$. Per-chromosome distributions are in Supplementary Fig.~S9.}
+    expansion. \textbf{(c)} Pairwise $\Fst$ among divisions as a clustered heatmap with dendrogram. Every value is close to zero ($-0.017$ to $-0.005$), and the clustering follows sample size rather than geography, so there is no population structure. The slightly negative values scale with the inverse of division sample size (Pearson $r=-0.98$ with $1/n_1+1/n_2$), consistent with the excess of called heterozygotes in the genotype data (observed over expected heterozygosity 1.13), which lowers Hudson $\Fst$ most in the smallest divisions. $\Fst$ is the Hudson ratio-of-averages estimator computed per chromosome with pg\_gpu and averaged over the 44 autosomes other than chromosome~2. $\pi$ and $D$ were estimated from ANGSD genotype likelihoods in 50-kb windows over all 45 autosomes and the Z (males only), on at most 25 individuals per division (all 16, 15 and 23 individuals in 3O, 4S and 4T). Because Tajima's $D$ depends on sample size under population growth, these division medians ($-1.26$ to $-1.64$) are less negative than the genome-wide $D$ of $-2.07$ from all individuals and are not directly comparable to it, and projecting the genome-wide spectrum to 25 individuals gives $D=-1.50$. Per-chromosome distributions are in Supplementary Fig.~S26.}
   \label{fig:diversity}
 \end{figure}
 

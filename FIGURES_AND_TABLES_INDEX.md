@@ -18,30 +18,36 @@ editable table exports (CSV + `illex_tables.xlsx`) in `tables_export/`.
 
 ## Supplementary figures
 
+Supplementary figures are numbered by first citation in main.tex (renumbered 2026-11-13). Image filenames keep their earlier numbers.
+
 | Fig | File (`supp_figures/`) | Script (`scripts/`) | Subject |
 |-----|------------------------|---------------------|---------|
-| S1 | `figS1_pca_geography.png` | `plot_pca_geography.py` | PCA spread is not geographic structure |
-| S2 | `figS2_fst_expanded.png` | `plot_fst_persnp.py` | Per-SNP FST vs neutral null; no local adaptation |
-| S3 | `figS3_winpca.png` | (upstream) | Windowed PCA across chr2 |
-| S4 | `figS4_ld_triangle.png` | (upstream) | LD triangle across chr2 |
-| S5 | `figS5_joint_sfs.png` | (upstream) | Joint 2D SFS, AA vs BB arrangement |
-| S6 | `figS6_cline.png` | (upstream) | The inversion is non-clinal |
-| S7 | `figS7_confusion.png` | (upstream) | Sweep-classifier confusion matrix |
-| S8 | `figS8_pipeline.png` | `plot_pipeline_schematic.py` | The selective-sweep scan pipeline |
-| S9 | `figS9_diversity_boxplots.png` | `plot_diversity.py` | Per-chromosome diversity & Tajima's D |
-| S10 | `figS10_mkado.png` | `plot_supp_mkado.py` | Per-gene McDonald–Kreitman neutrality index (volcano) |
-| S11 | `figS11_breakpoints.png` | (upstream) | Inversion breakpoints |
-| S12 | `figS12_recomb_boxplots.png` | scripts/plot_recomb_boxplots.py | Per-chromosome male recombination rate (200-rep bootstrap-corrected), with r_Z/r_A |
-| S13 | `figS13_markov.png` | `fig_markov.py` | Recombination-aware Markov decoder for Tier-1 calls |
-| S14 | `figS14_inversion_grid.png` | `plot_inversion_grid.py` (run from an msinv checkout at a9f92bb, branch illex/pboot-recovery) | Grid-search fit of the inversion trajectory (covariance distance with trajectory variance), profiles with bootstrap-calibrated cutoffs |
-| S15 | `figS15_gsea.png` | `plot_gsea.py` | GO enrichment of the sweep genes (Tier-1 vs BGS-robust) |
-| S16 | `figS16_go_network.png` | `plot_go_network.py` | GO enrichment map (BGS-robust sweep genes) |
-| S17 | `figS17_recomb_selection.png` | `plot_recomb_selection.py` | Recombination, gene proximity and selection efficacy |
-| S18 | `figS18_tier1_manhattan.png` | `plot_tier1_manhattan.py` | Genome-wide Tier-1 sweep calls (autosomes + chrZ) |
-| S19 | `figS19_fst_genomewide.png` | (upstream) | Genome-wide per-SNP FST finds no outlier |
-| S20 | `figS20_chr2_karyotype_fst.png` | `plot_chr2_karyotype_fst.py` | Between-karyotype (AA vs BB) FST along chr2 |
-| S21 | `figS21_inversion_go_qq.png` | `plot_inversion_go_qq.py` (+ `inversion_go_permutation_null.py`) | Inversion-gene GO enrichment is null (permutation QQ) |
-| S22 | `figS22_chr1_recomb_landscape.png` | `plot_chr1_recomb_landscape.py` | chr1 male ReLERNN landscape (200-rep corrected) + CIs; masked block and centromere gap; compressed dynamic range |
+| S1 | `figS3_winpca.png` | (upstream) | Windowed PCA across chr2 |
+| S2 | `figS1_pca_geography.png` | `plot_pca_geography.py` | PCA spread is not geographic structure |
+| S3 | `figS2_fst_expanded.png` | `plot_fst_persnp.py` | Per-SNP FST vs neutral null; no local adaptation |
+| S4 | `figS19_fst_genomewide.png` | (upstream) | Genome-wide per-SNP FST finds no outlier |
+| S5 | `figS6_cline.png` | (upstream) | The inversion is non-clinal |
+| S6 | `figS20_chr2_karyotype_fst.png` | `plot_chr2_karyotype_fst.py` | Between-karyotype (AA vs BB) FST along chr2 |
+| S7 | `figS11_breakpoints.png` | (upstream) | Inversion breakpoints |
+| S8 | `figS4_ld_triangle.png` | (upstream) | LD triangle across chr2 |
+| S9 | `figS26_abc_confusion.png` | see supplement.tex (sfig:abcconf) | Confusion matrix of the ABC-RF model choice for the chromosome-2 inversion. |
+| S10 | `figS14b_npe_posterior.png`, `figS14c_abc_trajectory.png` | see supplement.tex (sfig:profiles) | Posterior of the balancing model with gene flux for the chromosome-2 inversion |
+| S11 | `figS25_abc_ppc.png` | see supplement.tex (sfig:abcppc) | Posterior predictive check of the balancing model with gene flux. |
+| S12 | `figS5_joint_sfs.png` | (upstream) | Joint 2D SFS, AA vs BB arrangement |
+| S13 | `figS21_inversion_go_qq.png` | `plot_inversion_go_qq.py` (+ `inversion_go_permutation_null.py`) | Inversion-gene GO enrichment is null (permutation QQ) |
+| S14 | `figS12_recomb_boxplots.png` | scripts/plot_recomb_boxplots.py | Per-chromosome male recombination rate (200-rep bootstrap-corrected), with r_Z/r_A |
+| S15 | `figS17_recomb_selection.png` | `plot_recomb_selection.py` | Recombination, gene proximity and selection efficacy |
+| S16 | `figS22_chr1_recomb_landscape.png` | `plot_chr1_recomb_landscape.py` | chr1 male ReLERNN landscape (200-rep corrected) + CIs; masked block and centromere gap; compressed dynamic range |
+| S17 | `figS10_mkado.png` | `plot_supp_mkado.py` | Per-gene McDonald–Kreitman neutrality index (volcano) |
+| S18 | `figS23_pi_blocks_by_division.png` | see supplement.tex (sfig:piblocks) | The 22 elevated-diversity blocks are shared by every sampling division. |
+| S19 | `figS24_block_ld_triangles.png` | see supplement.tex (sfig:blockld) | The elevated-diversity blocks carry no inversion-like linkage disequilibrium. |
+| S20 | `figS7_confusion.png` | (upstream) | Sweep-classifier confusion matrix |
+| S21 | `figS8_pipeline.png` | `plot_pipeline_schematic.py` | The selective-sweep scan pipeline |
+| S22 | `figS13_markov.png` | `fig_markov.py` | Recombination-aware Markov decoder for Tier-1 calls |
+| S23 | `figS18_tier1_manhattan.png` | `plot_tier1_manhattan.py` | Genome-wide Tier-1 sweep calls (autosomes + chrZ) |
+| S24 | `figS15_gsea.png` | `plot_gsea.py` | GO enrichment of the sweep genes (Tier-1 vs BGS-robust) |
+| S25 | `figS16_go_network.png` | `plot_go_network.py` | GO enrichment map (BGS-robust sweep genes) |
+| S26 | `figS9_diversity_boxplots.png` | `plot_diversity.py` | Per-chromosome diversity & Tajima's D |
 
 ## Tables
 
