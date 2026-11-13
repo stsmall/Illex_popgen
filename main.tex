@@ -253,7 +253,8 @@ $B$-map could not be fit under this regime (the classical approximation overflow
 mutation rate exceeds the selection coefficient), so local coding fraction serves as the background-selection 
 covariate that the sweep scan controls for explicitly. Protein adaptation over the divergence timescale
 is substantial. McDonald--Kreitman tests \citep{mcdonald1991,messer2013mk} against \coin{} across 20{,}999 genes give a
-genome-wide proportion of adaptive substitutions $\alpha\approx0.34$--0.64, with the splicing factor
+genome-wide proportion of adaptive substitutions of $\alpha=0.34$ from the pooled counts and 0.64 (95\% CI
+0.63--0.66) by the asymptotic method, which corrects for slightly deleterious polymorphism, with the splicing factor
 \textit{SF3B4} the single most significantly adaptive gene (Supplementary Fig.~S10). Per-gene power is limited,
 so we treat the MK results as complementary to the recent-sweep scan, which detects a different timescale of 
 selection. Comparing to \textit{I.\ argentinus} we find that it is recently diverged (an order of magnitude fewer fixed coding differences than \coin{}, Supplementary Table~S3) 
@@ -469,7 +470,7 @@ the background-selection screen retained calls whose local diversity lies at lea
 
 \paragraph{McDonald--Kreitman tests.}
 McDonald--Kreitman tests used mkado \citep{mkado} with \coin{} as the outgroup for 20{,}999 genes, with codon
-degeneracy annotated by degenotate \citep{degenotate}.
+degeneracy annotated by degenotate \citep{degenotate}. Genome-wide $\alpha$ was computed from the pooled counts and by the asymptotic method \citep{messer2013mk}, an exponential fit of $\alpha(x)$ over derived-allele frequencies 0.1--0.9, with a 95\% confidence interval from 500 bootstrap resamples of the pooled polymorphisms.
 
 % =====================================================================
 \section*{Data and code availability}
