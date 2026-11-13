@@ -58,7 +58,7 @@ every filter were used. The accessibility mask is the 1.43~Gb of the 3.47-Gb ass
 \paragraph{Diversity and demography.}
 All site-frequency spectra and diversity statistics were computed with ANGSD 0.940 \citep{korneliussen2014angsd}
 directly from the deduplicated BAM alignments of the 621 individuals with data, not from the called genotypes, so that the
-uncertainty of genotypes at about 9-fold depth is carried through as genotype likelihoods. Each chromosome was
+uncertainty of genotypes at about 2.5-fold depth (a median of 57.9 million autosomal reads of 150~bp per individual) is carried through as genotype likelihoods. Each chromosome was
 run separately with the options \texttt{-doSaf 1 -doCounts 1 -GL 1 -minQ 20 -minMapQ 20 -remove\_bads 1
 -only\_proper\_pairs 1 -minInd 1 -setMinDepthInd 1}, restricted with \texttt{-sites} to the accessibility mask and
 with the reference supplied as both \texttt{-ref} and \texttt{-anc}. \texttt{-GL 1} is the SAMtools
@@ -78,6 +78,11 @@ The coalescent class was tested by comparing the normalised folded genome-wide S
 Statistics that need individual genotypes were computed with pg\_gpu \citep{pggpu} from the filtered VCF.
 Windowed $\pi$, $\dxy$ and Hudson $\Fst$ between arrangements used biallelic SNPs in 100-kb windows, with the 2a/2a
 ($n=223$) and 2+/2+ ($n=97$) homozygotes as the two populations and missing genotypes included pairwise. The between-division $\Fst$ matrix (Hudson), the linkage-disequilibrium triangles (genotype $r^2$ among common SNPs), and the principal-component analyses were computed the same way. The per-SNP geographic $\Fst$ scans (Supplementary Figs.~S3, S4) used plink2 \citep{chang2015plink2} to filter and count alleles at every biallelic SNP with a minor-allele frequency above 0.05 in the pooled 620 individuals from the ten divisions with more than one sample, the 618 retained and the two excluded afterwards (division 3N, with a single individual, was excluded). Per-division allele counts were converted to Hudson $\Fst$ for each of the 45 division pairs \citep{bhatia2013}, at sites genotyped in at least 40 individuals in that pair and with at least two alleles in each division. The per-SNP value is the ratio of averages over informative pairs (the sum of the numerators over the sum of the denominators), without clipping, keeping sites informative in at least 20 of the 45 pairs. Of the 23{,}892{,}020 SNPs passing the frequency filter, 20{,}276{,}930 met this criterion, 20{,}117{,}984 of them on the 45 autosomes (133{,}957 in the chromosome-2 inversion) and 158{,}946 on the Z chromosome. The null was built by shuffling division labels among the individuals 20 times (division sizes kept) and recomputing $\Fst$ at the same SNPs in the same way. Thresholds are quantiles of the pooled null over the autosomes outside the chromosome-2 inversion ($3.996\times10^{8}$ values), and the expected count above each threshold is the number of SNPs times the null tail rate.
+
+Between-division $\Fst$ values (main-text Fig.~6c) are slightly negative and scale with the inverse of the division sample sizes (Pearson $r=-0.98$ with $1/n_1+1/n_2$), so they reflect sample size rather than structure. Because Tajima's $D$ depends on sample size under population growth, the division medians in Fig.~6 ($-1.26$ to $-1.64$, at most 25 individuals per division) are not directly comparable to the genome-wide $D$ of $-2.07$ from all individuals, and projecting the genome-wide spectrum to 25 individuals gives $D=-1.50$.
+
+\paragraph{Genotype quality and karyotype groups.}
+At about 2.5-fold depth, heterozygotes are under-called. On chromosome~20, over the biallelic PASS SNPs of the 619 individuals, the number of called heterozygotes is 0.36 of that expected under Hardy--Weinberg from the called allele frequencies (0.34 at minor-allele frequency $\geq$0.05, where 66\% of genotypes are called), with $H_e=2pq\,2n/(2n-1)$ per site from the $n$ called genotypes and $H_o/H_e=\sum H_o/\sum H_e$ over sites. Per individual, $H_o/H_e$ rises with read count from 0.14 in the lowest to 0.48 in the highest fifth (Spearman $\rho=0.99$), and so does the call rate ($\rho=0.99$, \cref{sfig:karyoqc}). The same estimator gives $H_o/H_e=0.32$ for each arrangement in the inversion and sets the heterozygote miscall rate $h=1-H_o/H_e$ of the genotype-error model in the simulations. The three karyotype groups do not differ in read count (medians 56.8, 59.8 and 53.7 million for 2a/2a, 2a/2+ and 2+/2+, Kruskal--Wallis $p=0.13$), chromosome-20 call rate ($p=0.09$) or $H_o/H_e$ ($p=0.13$), and karyotype is independent of division ($\chi^2$ $p=0.72$, the ten divisions with at least five individuals). With 97 2a/2a individuals matched to the 97 2+/2+ on read count (medians 53.5 and 53.7 million), $\pi_I/\pi_S$ is $0.708\pm0.027$ and $\dxy/\pi_S$ is $1.403\pm0.023$ over the same 189 windows, against $0.719\pm0.027$ and $1.414\pm0.024$ for all individuals, and from the ANGSD genotype likelihoods of the two groups $\pi_I/\pi_S$ is $0.704\pm0.026$. In the collinear flanks of chromosome~2 the groups have the same $\pi$ (ratio 1.00, and 0.98 when matched on depth). The 40 individuals of each homokaryotype used for the joint spectra differ in sampling event (33 of the 2a/2a from division 3K against 20 of the 2+/2+), which may account for the excess of private rare variants in 2+/2+ in the collinear control (\texttt{pipeline/steps/03\_karyotype/m4\_qc/}).
 
 \paragraph{The inversion.}
 Karyotypes were called with a three-component Gaussian mixture on the first principal component of a PCA of
@@ -485,6 +490,12 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
     in the 329 hemizygous-informative males only, as females are Z-haploid) has reduced diversity
     ($\pi$ median 0.005 vs $\sim$0.008 autosomal, $\approx$0.63$\times$) as expected for a sex chromosome.}
   \label{sfig:divbox}
+\end{figure}
+
+\begin{figure}[h]\centering
+  \includegraphics[width=.95\linewidth]{figS27_karyotype_qc.png}
+  \caption{\textbf{Sequencing depth, call rate and sampling by chromosome-2 karyotype.} \textbf{(a)} Autosomal reads per individual (samtools idxstats) and \textbf{(b)} call rate at the biallelic chromosome-20 SNPs with minor-allele frequency $\geq$0.05, by karyotype group, with medians. \textbf{(c)} Called $H_o/H_e$ on chromosome~20 against read count. Heterozygotes are under-called at low depth in every group alike. \textbf{(d)} Karyotype composition of the ten divisions with at least five individuals (numbers in parentheses).}
+  \label{sfig:karyoqc}
 \end{figure}
 
 \section*{Supplementary tables}
