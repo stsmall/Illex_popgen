@@ -5,7 +5,7 @@ Location,chr2:60.54-79.50 Mb (18.96 Mb)
 Derived (2a) frequency p,0.602
 Founding frequency p_0,0.05 (0.004-0.10)
 Equilibrium frequency p^*,0.603 (0.575-0.707)
-Karyotype FST (2a/2a vs 2+/2+),0.354 (geographic FST~0)
+Karyotype FST (2a/2a vs 2+/2+),0.362 (geographic FST~0)
 pi_I/pi_S (I=2a),0.719 0.027
 dXY/pi_S,1.414 0.024
 Favoured model,balancing selection with gene flux (ABC-RF P=0.83)
@@ -13,5 +13,5 @@ Barrier age t_inv,"390 ka (260-720 ka), 1/mu with mu=3x10^-9"
 Onset of selection,310 ka (190-520 ka)
 Selection coefficient,s>2.1x10^-5 (95\
 Gene flux,3.9x10^-7 per site per generation (4x10^-9 to 6.1x10^-7)
-Gene content,"89 gene models, 45 annotated; no GO enrichment (p=0.51)"
+Gene content,"89 gene models, 45 annotated, no GO enrichment (p=0.51)"
 Near-fixed differences (||0.9),"5,432 (26 exonic, in 10 genes)"

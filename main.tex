@@ -46,7 +46,7 @@
 % =====================================================================
 \begin{abstract}
 \noindent
-Marine species with high dispersal capabilities often exhibit minimal geographic population structure while maintaining significant adaptive genomic variation. In this study, we employ a chromosome-level reference genome and whole-genome data from 619 northern shortfin squid, \illex{}, collected across the Northwest Atlantic, to elucidate genomic variation previously inaccessible with a divergent reference assembly. Our findings confirm nearly complete range-wide panmixia, yet reveal a single major axis of genomic structure, a $\sim$19~Mb inversion on chromosome~2. Its derived arrangement segregates at a frequency of 0.602, is present throughout the species' range without a geographic cline, and achieves $\Fst=0.35$ between alternative homozygotes despite a geographic $\Fst\approx0$. Its evolutionary trajectory is inconsistent with neutral drift. The common derived arrangement retains 2.1 times less diversity than expected given its current frequency, and approximate Bayesian computation with a barrier-aware coalescent simulator favours balancing selection over neutral drift and directional selection. Neural posterior estimation places the formation of the recombination barrier about 390~ka, and the derived arrangement rose from a founding frequency near 0.05 to an equilibrium near 0.60, at which it has been held for about 310~ky. The inversion is gene-poor and lacks functional enrichment, yet contains thousands of near-fixed differences concentrated within the non-recombining block, suggesting selection on the arrangement as a long-lived supergene rather than on a single locally adaptive locus. Outside the inversion, demographic analyses indicate strong expansion (genome-wide Tajima's $D\approx-2$) to a current effective population size of approximately seven million. A stratified scan, corroborated across methods, for recent positive selection identified 627 candidate sweep calls, including 24 high-confidence regions independently supported by multiple methods. Genes associated with these sweeps show significant enrichment for neurodevelopment and photoreception, with additional candidates involving lineage-specific genes and Z-linked RNA-regulatory and hormone-signaling loci. In males, linkage disequilibrium decays at the same rate on the Z chromosome as on the autosomes, which, after accounting for a female mutation rate two to four times the male rate, indicates that female meiosis is achiasmate, as in octopuses \comment{[overclaim: the uncertainty in the LD ratio, the mutation bias and the Z effective size is not propagated to the female rate]}. Collectively, these findings reveal two contrasting modes of adaptation in an otherwise panmictic marine species, a long-lived chromosomal polymorphism whose derived arrangement is held by balancing selection at an intermediate frequency, and recent directional selection on sensory and neural functions. More broadly, they illustrate how a conspecific reference genome can uncover structural and adaptive variation that remains largely undetectable through geographic differentiation alone.
+Marine species with high dispersal capabilities often exhibit minimal geographic population structure while maintaining significant adaptive genomic variation. In this study, we employ a chromosome-level reference genome and whole-genome data from 619 northern shortfin squid, \illex{}, collected across the Northwest Atlantic, to elucidate genomic variation previously inaccessible with a divergent reference assembly. Our findings confirm nearly complete range-wide panmixia, yet reveal a single major axis of genomic structure, a $\sim$19~Mb inversion on chromosome~2. Its derived arrangement segregates at a frequency of 0.602, is present throughout the species' range without a geographic cline, and achieves $\Fst=0.36$ between alternative homozygotes despite a geographic $\Fst\approx0$. Its evolutionary trajectory is inconsistent with neutral drift. The common derived arrangement retains 2.1 times less diversity than expected given its current frequency, and approximate Bayesian computation with a barrier-aware coalescent simulator favours balancing selection over neutral drift and directional selection. Neural posterior estimation places the formation of the recombination barrier about 390~ka, and the derived arrangement rose from a founding frequency near 0.05 to an equilibrium near 0.60, at which it has been held for about 310~ky. The inversion is gene-poor and lacks functional enrichment, yet contains thousands of near-fixed differences concentrated within the non-recombining block, suggesting selection on the arrangement as a long-lived supergene rather than on a single locally adaptive locus. Outside the inversion, demographic analyses indicate strong expansion (genome-wide Tajima's $D\approx-2$) to a current effective population size of approximately seven million. A stratified scan, corroborated across methods, for recent positive selection identified 627 candidate sweep calls, including 24 high-confidence regions independently supported by multiple methods. Genes associated with these sweeps show significant enrichment for neurodevelopment and photoreception, with additional candidates involving lineage-specific genes and Z-linked RNA-regulatory and hormone-signaling loci. In males, linkage disequilibrium decays at the same rate on the Z chromosome as on the autosomes, which, after accounting for a female mutation rate two to four times the male rate, indicates that female meiosis is achiasmate, as in octopuses \comment{[overclaim: the uncertainty in the LD ratio, the mutation bias and the Z effective size is not propagated to the female rate]}. Collectively, these findings reveal two contrasting modes of adaptation in an otherwise panmictic marine species, a long-lived chromosomal polymorphism whose derived arrangement is held by balancing selection at an intermediate frequency, and recent directional selection on sensory and neural functions. More broadly, they illustrate how a conspecific reference genome can uncover structural and adaptive variation that remains largely undetectable through geographic differentiation alone.
 \end{abstract}
 
 % =====================================================================
@@ -79,7 +79,7 @@ Consistent with range-wide panmixia reported by \citet{baker2025}, population st
 \paragraph{Identity, breakpoints, and karyotypes.}
 Local PCA \citep{li2019lostruct} and a Gaussian-mixture karyotype assignment
 (99.7\% concordant with a depth-equalised recall) resolve three genotype clusters on chromosome~2, the karyotypes of two arrangements that we call 2a and 2+ (2a/2a $n=223$, 2a/2+ $n=299$ and 2+/2+ $n=97$, \cref{fig:inv}a), whose differentiation is karyotypic
-rather than geographic, with $\Fst=0.35$ between 2a/2a and 2+/2+ over the inversion as a whole (Hudson ratio of averages across chr2:60--80~Mb)
+rather than geographic, with $\Fst=0.36$ between 2a/2a and 2+/2+ over the inversion as a whole (Hudson ratio of averages between the breakpoints, chr2:60.54--79.50~Mb)
 against a geographic $\Fst\approx0$. In 100-kb windows along the whole chromosome, between-karyotype $\Fst$ is
 $\approx0$ across collinear sequence (median 0.006) and rises to a median of 0.36 (maximum 0.56) inside the inversion
 (Supplementary Fig.~S6), so the karyotypes are one panmictic population everywhere except
@@ -97,8 +97,7 @@ inversion. Its two haplotype assemblies differ by an inversion at 60.54--79.53~M
 population data, the haplotype inverted relative to the primary assembly carrying 2a and the other, like the
 primary assembly, carrying 2+ (Supplementary Table~S3). Whole-chromosome alignment of both haplotypes to \coin{} shows that chromosome~2 is extensively rearranged
 between the species, with large blocks translocated and inverted along its length, and the inversion region is
-part of this complex structure. A 37-Mb segment of the \coin{} chromosome aligns to 2+ as one contiguous run,
-inverted as a whole between chr2:44.4 and 79.5~Mb, so 2+ keeps the \coin{} order within the segment. In 2a the
+part of this complex structure. A 37-Mb segment of the \coin{} chromosome (37.95--74.95~Mb) aligns to 2+ as one contiguous run, inverted as a whole, spanning 35.1~Mb of chr2 (44.4--79.5~Mb), so 2+ keeps the \coin{} order within the segment. In 2a the
 right part of the run, the segregating inversion, is inverted a second time, which breaks the \coin{} adjacency
 at the left breakpoint. Arrangement 2+ therefore differs from \coin{} across this segment by one inversion and 2a by two,
 which places 2a as derived. The segregating inversion shares its right breakpoint with the older inverted block,
@@ -109,8 +108,7 @@ The primary evidence is per-arrangement diversity (\cref{tab:inv},
 \cref{fig:inv}c). Inside an inversion the two arrangements behave as partially
 isolated demes \citep{navarro2000,guerrero2012}, and without gene flux between them the
 neutral diversity of each scales with its frequency \citep{navarro2000}. The common derived arrangement is
-instead less diverse than its frequency predicts, with
-$\pi_I/\pi_S=0.719\pm0.027$ against an equilibrium expectation of $p/(1-p)=1.51$
+instead less diverse than its frequency predicts, with $\pi_I/\pi_S=0.719\pm0.027$ (ratio of summed $\pi$ over the 189 differentiated 100-kb windows of the inversion, $\pm$ standard error from a delete-one jackknife over 1-Mb blocks) against an equilibrium expectation of $p/(1-p)=1.51$
 for a polymorphism held at 0.602, a 2.1-fold deficit. Diversity within an arrangement approaches this equilibrium
 only over a time of the order of the arrangement's own effective size, so the deficit is the signature of an
 arrangement that became common recently on that time scale. Model choice among neutral drift, directional selection
@@ -259,7 +257,7 @@ genome-wide proportion of adaptive substitutions of $\alpha=0.34$ from the poole
 so we treat the MK results as complementary to the recent-sweep scan, which detects a different timescale of 
 selection. Comparing to \textit{I.\ argentinus} we find that it is recently diverged (an order of magnitude fewer fixed coding differences than \coin{}, Supplementary Table~S3) 
 yet carries near-identical genome-wide diversity ($\pi=0.0092$ vs 0.0093, within 1\%), so the two are large-$\Ne$, expansion-shaped congeners of matched standing variation.
-We also found twenty-two blocks of $\geq$1~Mb on 17 chromosomes (129~Mb, 3.9\% of the autosomes) that seemingly carry 2--6 times the chromosome-median $\pi$ with less negative Tajima's $D$ (Supplementary Table~S5). 
+We also found twenty-two blocks of $\geq$1~Mb on 17 chromosomes (129~Mb, 3.9\% of the autosomes) that carry 2.1--6.1 times the chromosome-median $\pi$ with less negative Tajima's $D$ (Supplementary Table~S5). 
 They are present at the same strength in every sampling location, are no more differentiated among locations
 than flanking sequence, and lack the long-range linkage disequilibrium of a segregating inversion (Supplementary Figs.~S18, S19).
 Read-depth analyses resolve them into three categories. In six, depth is raised in every individual
@@ -335,7 +333,7 @@ synthase \textit{cept1}, and the ceramide phosphoethanolamine synthase \textit{C
 11 of these as high-confidence candidates in which diversity is reduced beyond the background-selection expectation.
 Fine-scale localization places one gene-desert signal on an annotated transposable element (flagged lower confidence) and moves two targets to neighboring genes, from \textit{eif3h} to \textit{Cpes} at chr1:85.5~Mb and to \textit{GALT} at chr25:65.0~Mb. The single most distinctive autosomal candidate is a cephalopod-lineage-specific gene
 under a hard sweep on chromosome~16, a tandem-exon transcript with no functional annotation whose translation matches
-an uncharacterised protein family in the bobtail squid \textit{Euprymna} ($E=2\times10^{-53}$) \citep{albertin2022}.
+an uncharacterised protein family in the bobtail squid \textit{Euprymna} (NCBI BLASTX against nr, $E=2\times10^{-53}$, 40\% identity) \citep{albertin2022}.
 There is no overlap between the sweep candidates and the MK-adaptive genes.
 
 \paragraph{The Z chromosome.}
@@ -473,7 +471,7 @@ degeneracy annotated by degenotate \citep{degenotate}. Genome-wide $\alpha$ was 
 
 % =====================================================================
 \section*{Data and code availability}
-The manuscript, along with all figures and tables, their generating scripts, and editable table exports, is available in the manuscript repository (\url{https://github.com/stsmall/Illex_popgen}). A section-by-section index of every figure and table source file is provided in \texttt{FIGURES\_\allowbreak AND\_\allowbreak TABLES\_\allowbreak INDEX.md}. The annotation utilized is \texttt{Illex\_F24} version 3, which includes additions to version 2, specifically the loci recovered in the inversion and the chromosome-16 functional note, located in \texttt{data/annotation/} within the same repository. Whole-genome sequencing reads for \textit{I.\ argentinus} will be deposited in the NCBI Sequence Read Archive and the variant calls (VCF) in figshare [accessions to be added]. The coalescent simulations for the inversion analysis (\cref{sec:inv}) were generated using \texttt{msinv} v0.4.1, a general ARG-based inversion-coalescent simulator (\url{https://github.com/stsmall/msinv}, MIT), with the simulation, ABC-RF, NPE and predictive-check code on branch \texttt{illex/baseline-refit-karyofix} (commit \texttt{36a8b77}). The complete \illex{}-specific inversion analysis, including fitting code, simulation configuration, tabulated outputs, and inversion figures, is contained within the repository under \texttt{illex/} and \texttt{results/illex/}.
+The manuscript, along with all figures and tables, their generating scripts, and editable table exports, is available in the manuscript repository (\url{https://github.com/stsmall/Illex_popgen}). A section-by-section index of every figure and table source file is provided in \texttt{FIGURES\_\allowbreak AND\_\allowbreak TABLES\_\allowbreak INDEX.md}. The annotation utilized is \texttt{Illex\_F24} version 3, which includes additions to version 2, specifically the loci recovered in the inversion and the chromosome-16 functional note, located in \texttt{data/annotation/} within the same repository. Whole-genome sequencing reads for \textit{I.\ argentinus} will be deposited in the NCBI Sequence Read Archive and the variant calls (VCF) in figshare [accessions to be added]. The coalescent simulations for the inversion analysis (\cref{sec:inv}) were generated using \texttt{msinv} v0.4.1, a sequentially Markov coalescent simulator that enforces the recombination barrier between arrangements (\url{https://github.com/stsmall/msinv}, MIT), with the simulation, ABC-RF, NPE and predictive-check code on branch \texttt{illex/baseline-refit-karyofix} (commit \texttt{36a8b77}). The complete \illex{}-specific inversion analysis, including fitting code, simulation configuration, tabulated outputs, and inversion figures, is contained within the repository under \texttt{illex/} and \texttt{results/illex/}.
 
 \section*{Acknowledgements}
 [TODO: funding, contribution?.]
@@ -540,7 +538,7 @@ The manuscript, along with all figures and tables, their generating scripts, and
     Genome-wide Tajima's $D$     & $-2.07$ ($-2.09$ in 50~kb windows) \\
     chr2 karyotypes (2a/2a, 2a/2+, 2+/2+)   & 223 / 299 / 97 \\
     Derived (2a) frequency       & 0.602 (0.50--0.70 across divisions, non-clinal) \\
-    Karyotype $\Fst$ (2a/2a vs 2+/2+)      & 0.354 \\
+    Karyotype $\Fst$ (2a/2a vs 2+/2+)      & 0.362 \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -557,13 +555,13 @@ The manuscript, along with all figures and tables, their generating scripts, and
     Derived (2a) frequency $p$     & 0.602 \\
     Founding frequency $p_0$       & 0.05 (0.004--0.10) \\
     Equilibrium frequency $p^{*}$  & 0.603 (0.575--0.707) \\
-    Karyotype $\Fst$ (2a/2a vs 2+/2+)        & 0.354 (geographic $\Fst\approx0$) \\
+    Karyotype $\Fst$ (2a/2a vs 2+/2+)        & 0.362 (geographic $\Fst\approx0$) \\
     $\pi_I/\pi_S$ (I$=$2a)         & $0.719 \pm 0.027$ \\
     $\dxy/\pi_S$                   & $1.414 \pm 0.024$ \\
     Favoured model                 & balancing selection with gene flux (ABC-RF $P=0.83$) \\
     Barrier age $t_\mathrm{inv}$   & 390~ka (260--720~ka), $\propto 1/\mu$ with $\mu=3\times10^{-9}$ \\
     Onset of selection             & 310~ka (190--520~ka) \\
-    Selection coefficient          & $s>2.1\times10^{-5}$ (95\% lower bound only) \\
+    Selection coefficient          & $s>2.1\times10^{-5}$ (95\% lower bound only, prior $10^{-6}$--$10^{-1}$) \\
     Gene flux                      & $3.9\times10^{-7}$ per site per generation ($4\times10^{-9}$ to $6.1\times10^{-7}$) \\
     Gene content                   & 89 gene models, 45 annotated, no GO enrichment ($p=0.51$) \\
     Near-fixed differences ($|\Delta\mathrm{AF}|\geq0.9$) & 5{,}432 (26 exonic, in 10 genes) \\
