@@ -1,11 +1,10 @@
 """Supp Fig S3: windowed PC1 along chr2 around the inversion, by karyotype.
 
-Inputs (analysis/steps): 02_inv_pca/chr2_winpca_coords.npy (windows x 653 samples x 10 PCs,
-sample order = the chr2 callset VCF), 02_inv_pca/chr2_winpca_windows.tsv, and
-03_karyotype/karyotypes.baker.tsv. PC1 sign is arbitrary per window, so each window is
+Inputs (analysis/steps/05_karyo_pca_arms/refit_619, from pipeline/steps/05_karyo_pca_arms/refit_pca_619.sh):
+chr2_winpca_619_coords.npy (windows x 619 samples x 10 PCs, sample order chr2_619_samples.txt),
+chr2_winpca_619_windows.tsv, and data/qc/karyotypes_619.tsv (karyotype_final). PC1 sign is arbitrary per window, so each window is
 oriented so that 2+/2+ individuals have positive mean PC1. 18 random individuals per karyotype.
 """
-import subprocess
 from pathlib import Path
 
 import matplotlib as mpl
@@ -14,20 +13,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-A = Path("/sietch_colab/data_share/illex/popgen_data/analysis")
-VCF = A / "steps/00_callset/filtered/2/variants_filt.vcf.gz"
-BCF = "/home/ssmall/miniforge3/envs/bioinfo-buddy/bin/bcftools"
+R = Path("/sietch_colab/data_share/illex/popgen_data/analysis/steps/05_karyo_pca_arms/refit_619")
 OUT = Path(__file__).resolve().parent.parent / "supp_figures" / "figS3_winpca.png"
 BP_L, BP_R = 60.54, 79.50
 
-coords = np.load(A / "steps/02_inv_pca/chr2_winpca_coords.npy")[:, :, 0]   # windows x samples
-win = pd.read_csv(A / "steps/02_inv_pca/chr2_winpca_windows.tsv", sep="\t")
-names = subprocess.run([BCF, "query", "-l", str(VCF)], capture_output=True, text=True,
-                       check=True).stdout.split()
-assert len(names) == coords.shape[1]
-# final calls of the 619 (data/qc/karyotypes_619.tsv); excluded individuals get no label
+coords = np.load(R / "chr2_winpca_619_coords.npy")[:, :, 0]   # windows x samples
+win = pd.read_csv(R / "chr2_winpca_619_windows.tsv", sep="\t")
+names = (R / "chr2_619_samples.txt").read_text().split()
+assert len(names) == coords.shape[1] == 619
 kar = pd.read_csv(Path(__file__).resolve().parents[1] / "data/qc/karyotypes_619.tsv", sep="\t", comment="#").set_index("sample")["karyotype_final"]
-lab = np.array([kar.get(n, "") for n in names])
+lab = np.array([kar[n] for n in names])
 
 sign = np.sign(np.nanmean(coords[:, lab == "BB"], axis=1))
 sign[sign == 0] = 1
