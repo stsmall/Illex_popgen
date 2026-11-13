@@ -221,7 +221,7 @@ constrained, weakly polymorphic sites, so the depletion is not specific to the i
 The selection scan below depends on the population's demography, and both it and the inversion model assume the standard Kingman coalescent. Genome-wide, \illex{} shows $\pi\approx0.0093$, close to the 1.06\% heterozygosity estimated from $k$-mers of the individual used for the assembly \citep{small2026}, and Tajima's $D\approx-2$ in essentially every
 window \citep{tajima1989,tajima1989b}, an unambiguous, genome-wide signature of expansion \comment{[overclaim: Tajima's D alone cannot separate growth from sweepstakes or linked selection, as the Discussion says]} (\cref{tab:demog},
 \cref{fig:demog}a, \cref{fig:diversity}). A moments fit to the folded SFS gives growth from an ancestral
-$\Ne=$ 547{,}928 to a present $\Ne=$ 6{,}808{,}096 over 769{,}519 generations ($\sim$12-fold, with generations equal to years in this annual species), and this history reproduces both the observed $\pi$ and a full-SFS
+$\Ne=$ 547{,}928 to a present $\Ne=$ 6{,}808{,}096 over 769{,}519 generations ($\sim$12-fold, with generations equal to years in this annual species, 95\% confidence intervals in \cref{tab:demog}), and this history reproduces both the observed $\pi$ and a full-SFS
 Tajima's $D=-1.92$ under forward simulation. Stairway~Plot~2 also recovers a strong expansion, with a most recent median $\Ne$ of $1.5\times10^{7}$ (95\% CI
 $1.1$--$1.7\times10^{7}$). This value lies against the upper limit of $\theta$ in the Stairway~Plot~2 fit
 ($\Ne=1.67\times10^{7}$), so it is less well constrained than the moments estimate. The Stairway~Plot~2 median also
@@ -331,7 +331,7 @@ squarely within these themes (\cref{tab:sweep}, Supplementary Table~S8). They in
 (cardiovascular/vasculature signalling), the DNA-damage-response gene \textit{MACROD2}, the phospholipid
 synthase \textit{cept1}, and the ceramide phosphoethanolamine synthase \textit{Cpes}. A per-region background-selection test isolates
 11 of these as high-confidence candidates in which diversity is reduced beyond the background-selection expectation.
-Fine-scale localization places one gene-desert signal on an annotated transposable element (flagged lower confidence) and moves two targets to neighboring genes, from \textit{eif3h} to \textit{Cpes} at chr1:85.5~Mb and to \textit{GALT} at chr25:65.0~Mb. The single most distinctive autosomal candidate is a cephalopod-lineage-specific gene
+Fine-scale localization (Supplementary Methods) places one gene-desert signal on an annotated transposable element (flagged lower confidence) and moves two targets to neighboring genes, from \textit{eif3h} to \textit{Cpes} at chr1:85.5~Mb and to \textit{GALT} at chr25:65.0~Mb. The single most distinctive autosomal candidate is a cephalopod-lineage-specific gene
 under a hard sweep on chromosome~16, a tandem-exon transcript with no functional annotation whose translation matches
 an uncharacterised protein family in the bobtail squid \textit{Euprymna} (NCBI BLASTX against nr, $E=2\times10^{-53}$, 40\% identity) \citep{albertin2022}.
 There is no overlap between the sweep candidates and the MK-adaptive genes.
@@ -502,7 +502,7 @@ The manuscript, along with all figures and tables, their generating scripts, and
 
 \begin{figure}[p]\centering
   \includegraphics[width=\linewidth]{fig4_demography.png}
-  \caption{\textbf{Demographic history and inversion frequency history.} \textbf{(a)} The effective population size over time is depicted using Stairway~Plot~2 (median $\pm$95\% CI), alongside the moments 2-epoch growth model with its Godambe (GIM) 95\% parameter-CI envelope (expansion $12.4\times\pm9\%$, $T\approx770$~ky~$\pm16\%$). GONE2 covers the last 150 generations at an assumed uniform 1~cM/Mb without rescaling, and its first four generations, a known edge artifact, are set to the generation-5 value. The Stairway~Plot~2 upper limit near $1.67\times10^{7}$ is the $\theta$ ceiling of that fit. \textbf{(b)} Frequency history of the derived (2a) arrangement under the favoured balancing-selection model with gene flux, chosen by ABC-RF with the barrier-aware coalescent simulator msinv, with parameters from neural posterior estimation. The line and bands are the pointwise median, 50\% and 95\% ranges of 392 trajectories re-simulated from posterior draws. Each trajectory rises in a single step whose timing varies among draws, so the width of the bands reflects uncertainty in timing rather than a gradual rise. The barrier formed about 390~ka, and 2a rose from a founding frequency near 0.05 to its equilibrium near 0.60 about 310~ka. The joint posterior, individual trajectories and predictive checks are in Supplementary Figs.~S10 and S11.}
+  \caption{\textbf{Demographic history and inversion frequency history.} \textbf{(a)} The effective population size over time is depicted using Stairway~Plot~2 (median $\pm$95\% CI), alongside the moments 2-epoch growth model with its Godambe (GIM) 95\% parameter-CI envelope (expansion 12.4-fold, 95\% CI 10.4--14.8, onset 770~ka, 633--935~ka). GONE2 covers the last 150 generations at an assumed uniform 1~cM/Mb without rescaling, and its first four generations, a known edge artifact, are set to the generation-5 value. The Stairway~Plot~2 upper limit near $1.67\times10^{7}$ is the $\theta$ ceiling of that fit. \textbf{(b)} Frequency history of the derived (2a) arrangement under the favoured balancing-selection model with gene flux, chosen by ABC-RF with the barrier-aware coalescent simulator msinv, with parameters from neural posterior estimation. The line and bands are the pointwise median, 50\% and 95\% ranges of 392 trajectories re-simulated from posterior draws. Each trajectory rises in a single step whose timing varies among draws, so the width of the bands reflects uncertainty in timing rather than a gradual rise. The barrier formed about 390~ka, and 2a rose from a founding frequency near 0.05 to its equilibrium near 0.60 about 310~ka. The joint posterior, individual trajectories and predictive checks are in Supplementary Figs.~S10 and S11.}
   \label{fig:demog}
 \end{figure}
 
@@ -570,16 +570,17 @@ The manuscript, along with all figures and tables, their generating scripts, and
 \end{table}
 
 \begin{table}[t]\centering
-  \caption{\textbf{Demographic model} (moments, folded SFS, validated by forward simulation).}
+  \caption{\textbf{Demographic model} (moments, folded SFS, validated by forward simulation). Ranges are 95\% confidence intervals from the Godambe information matrix over 100 chromosome-block bootstraps of the SFS.}
   \label{tab:demog}
   \begin{tabular}{ll}
     \toprule
     Parameter & Value \\
     \midrule
-    Ancestral $\Ne$ (N\_REF)     & 547{,}928 \\
-    Present $\Ne$ (N0)           & 6{,}808{,}096 \\
-    Growth duration (T\_GROW)    & 769{,}519 generations \\
-    Fold expansion               & $\sim$12$\times$ \\
+    Ancestral $\Ne$ (N\_REF)     & 547{,}928 (454{,}382--660{,}650) \\
+    Present $\Ne$ (N0)           & 6{,}808{,}096 (6{,}141{,}531--7{,}550{,}002) \\
+    Growth duration (T\_GROW)    & 769{,}519 generations (633{,}255--934{,}536) \\
+    Fold expansion               & 12.4$\times$ (10.4--14.8) \\
+    Generation time              & 1 year (annual life cycle, assumed) \\
     Genome-wide $\pi$            & 0.0093 \\
     Genome-wide Tajima's $D$     & $\approx-2$ (nearly all windows) \\
     Mutation rate $\mu$          & $3\times10^{-9}$ / bp / generation \\
@@ -626,7 +627,7 @@ The manuscript, along with all figures and tables, their generating scripts, and
   \end{tabular}
   \\[2pt]
   {\footnotesize $^{\dagger}$ target reassigned by fine-scale localisation to a neighbouring annotated gene.
-   $^{\ddagger}$ peak on an annotated transposable element in a gene desert. The window's TE content is typical of the genome (59th percentile), and the signal may be a sweep of the TE insertion or a mapping artifact at the repeat.}
+   $^{\ddagger}$ peak on an annotated transposable element in a gene desert, 4.5~Mb from the masked chr1:24.0--31.3~Mb block. The window's TE content is typical of the genome (59th percentile), and the signal may be a sweep of the TE insertion or a mapping artifact at the repeat.}
 \end{table}
 
 % =====================================================================
