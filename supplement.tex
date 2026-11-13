@@ -316,9 +316,9 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
     the Spearman correlation in each panel (bold where $|\rho|\ge0.3$). The barrier age $t_\mathrm{inv}$ and the
     onset of selection $t_\mathrm{sel}$ are in thousands of generations. All draws are soft starts, which carry 97\%
     of the posterior mass of balancing selection. The selection coefficient has only a lower bound and follows the prior above about
-    $10^{-4}$. The gene-flux rate is the per-site conversion probability per generation in heterokaryotypes. Bottom
+    $10^{-4}$. The gene-flux rate is the per-site conversion probability per generation in heterokaryotypes. The posterior of the founding frequency $p_0$ extends to the upper limit of its prior at 0.10. Bottom
     left, frequency of 2a in 200 trajectories re-simulated from posterior draws, aligned on the onset of selection,
-    with the pointwise median, 50\% and 95\% ranges of 392. The median trajectory reaches 0.55 about 6{,}000
+    with bands (pointwise median, 50\% and 95\% ranges) computed from all 392 re-simulated trajectories. The median trajectory reaches 0.55 about 6{,}000
     generations after onset, and the slowest fifth, mostly those with $s<10^{-4}$, take more than 50{,}000
     generations. Bottom right, the posterior draws of $t_\mathrm{inv}$ and $t_\mathrm{sel}$ behind these
     trajectories, with medians dashed.}
@@ -365,7 +365,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 
 \begin{figure}[h]\centering
   \includegraphics[width=.9\linewidth]{figS12_recomb_boxplots.png}
-  \caption{\textbf{Per-chromosome male recombination-rate distribution} (ReLERNN). Rates are corrected with 200 parametric-bootstrap replicates in each of 20 rate slices. The autosomes were predicted in 3--6-kb windows by one network, trained on chromosomes 1, 13 and 45 and applied to every autosome except chromosome~2. The Z was predicted in 30-kb windows by a separate network trained with the Z effective size set to 0.60 of the autosomal value (the Z-to-autosome diversity ratio), which places its rate on the autosomal scale. The dashed line marks the median of all autosomal windows (0.241~cM/Mb), and per-chromosome medians span 0.229--0.259~cM/Mb. The Z median is 0.290~cM/Mb, so $r_Z/r_A=1.20$. Because the Z recombines only in ZZ males, equal recombination in the two sexes predicts $r_Z/r_A=0.67$ and achiasmate female meiosis predicts 1.33. Chromosome~2 is not shown, because a window-scale map estimated from all karyotypes together cannot resolve a barrier that acts only between arrangements. That barrier is shown directly by the linkage-disequilibrium block spanning the inversion (Supplementary Fig.~S8).}
+  \caption{\textbf{Per-chromosome recombination-rate distribution} (ReLERNN, estimated in the 329 confidently sexed males). Autosomal rates from linkage disequilibrium are sex-averaged population rates, even when estimated in males. Rates are corrected with 200 parametric-bootstrap replicates in each of 20 rate slices. The autosomes were predicted in 3--6-kb windows by one network, trained on chromosomes 1, 13 and 45 and applied to every autosome except chromosome~2. The Z was predicted in 30-kb windows by a separate network trained with the Z effective size set to 0.60 of the autosomal value (the Z-to-autosome diversity ratio), which places its rate on the autosomal scale. The dashed line marks the median of all autosomal windows (0.241~cM/Mb), and per-chromosome medians span 0.229--0.259~cM/Mb. The Z median is 0.290~cM/Mb, so $r_Z/r_A=1.20$. Because the Z recombines only in ZZ males, equal recombination in the two sexes predicts $r_Z/r_A=0.67$ and achiasmate female meiosis predicts 1.33. Chromosome~2 is not shown, because a window-scale map estimated from all karyotypes together cannot resolve a barrier that acts only between arrangements. That barrier is shown directly by the linkage-disequilibrium block spanning the inversion (Supplementary Fig.~S8).}
   \label{sfig:recombbox}
 \end{figure}
 
@@ -436,7 +436,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
     lengths from the $\sim$400~kb sweep footprint scaled by the ReLERNN map, design-based rather than simulation-calibrated). \textbf{(a)}~The decoder at a representative concordant sweep (chromosome~35, \textit{ZEB2}), showing the sweep posterior $p_\mathrm{hard}+p_\mathrm{soft}$ per window and the Viterbi state track
     (neutral / linked / centre). It localises the centre inside the linked envelope and overrides spatially
     isolated high-posterior windows (e.g.\ near 38.35~Mb). \textbf{(b)}~Markov correction reduces the raw
-    hard/soft windows from 1{,}651 to 677 spatially coherent windows ($-59\%$), which merge into 623 localized calls. \textbf{(c)}~88\% of windows at
+    hard/soft windows from 1{,}651 to 677 spatially coherent windows ($-59\%$), which merge into 623 localized autosomal calls (the four Z calls come from the separate males-only scan). \textbf{(c)}~88\% of windows at
     the Tier-2 cross-method-concordant loci are decoded as sweep centres versus 2.9\% genome-wide (odds
     ratio 242, $p<10^{-30}$, 21 of 24 concordant regions recovered).}
   \label{sfig:markov}
@@ -637,14 +637,13 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 % ---- Tier-2 cross-method-concordant genes ----
 \begin{table}[h]\centering
   \caption{\textbf{Tier-2 (cross-method-concordant) sweep genes.} The 24 genome-wide-scan regions where
-    the diploSHIC-HMM sweep signal is independently corroborated by an LD/SFS-footprint method (RAiSD or
-    SweepFinder2). Ten regions carry a named protein-coding gene (13 genes, listed). The remaining
+    the diploSHIC-HMM sweep signal is independently corroborated by RAiSD, which combines the site-frequency spectrum, linkage disequilibrium and diversity, or by SweepFinder2, a site-frequency-spectrum likelihood method. Ten regions carry a named protein-coding gene (13 genes, listed). The remaining
     concordant regions are gene deserts or uncharacterised loci. At the two regions marked $^{\dagger}$ the gene is the
     target assigned by fine-scale localisation of the diversity minimum, as in main-text Table~4. Coordinates are in Mb, and $\alpha$ and DoS are from
     the McDonald--Kreitman test against \textit{I.~coindetii} (`--' where the test is unpowered, i.e.\ too
     few fixed/polymorphic sites). The full candidate set, comprising all 227 diploSHIC-outlier regions, the 24 concordant regions
     and the per-region background-selection test, is provided as machine-readable tables
-    (\texttt{outlier\_scan\_45\_masked/\{windows,regions\}.tsv} and the \texttt{concordant} gene/MK/BGS tables).}
+    (\texttt{analysis/steps/14\_sweep\_seqmodel/results/empirical\_scan\_fullsfs/\allowbreak outlier\_scan\_45\_masked/\{windows,regions\}.tsv} and the \texttt{concordant} gene/MK/BGS tables).}
   \label{stab:candidates}
   \begin{tabular}{llllrr}
     \toprule
