@@ -78,7 +78,7 @@ g2.loc[g2["Generation"] < 5, "Ne_diploids"] = _ne5
 # =====================================================================
 TRAJ = Path(__file__).resolve().parents[1] / "data" / "inversion_abc" / "traj_quantiles_npe_f1.csv"
 tq = pd.read_csv(TRAJ)
-P_NOW = 0.618  # 2a frequency over 621 karyotyped individuals (242/284/95)
+P_NOW = 0.602  # 2a frequency over the 619 karyotyped individuals (karyotype_final 223/299/97)
 
 # one consistent accent for the inversion-frequency data, distinct from the
 # three colours already spoken for in panel a (blue/vermillion/green)

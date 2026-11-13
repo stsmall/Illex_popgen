@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 
 apply()
 COL = OKABE[7]     # same accent as Fig. 4b
-P_NOW = 0.618  # 2a frequency over 621 karyotyped individuals (242/284/95)
+P_NOW = 0.602  # 2a frequency over the 619 karyotyped individuals (karyotype_final 223/299/97)
 
 al = pd.read_csv(ROOT / "data" / "inversion_abc" / "traj_aligned_npe_f1.csv")
 pr = pd.read_csv(ROOT / "data" / "inversion_abc" / "traj_params_npe_f1.csv")
