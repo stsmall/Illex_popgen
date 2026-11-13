@@ -1,4 +1,4 @@
-"""Supp Fig S5: joint 2D SFS between the chr2 arrangements, inversion vs collinear control.
+"""Supp Fig S12: joint 2D SFS between the chr2 arrangements, inversion vs collinear control.
 
 Input: unfolded realSFS 2D spectra (81 x 81, 40 2a/2a and 40 2+/2+ individuals),
 m[i, j] = sites with i non-reference alleles in 2a and j in 2+, plus the summary
@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 R = Path("/sietch_colab/ssmall/projects/msinv_dir/msinv_pboot_wt/results/illex")
-OUT = Path(__file__).resolve().parent.parent / "supp_figures" / "figS5_joint_sfs.png"
+OUT = Path(__file__).resolve().parent.parent / "supp_figures" / "figS12_joint_sfs.png"
 
 SPECTRA = {"body": R / "observed_karyofix" / "AA_BB.body.2dSFS",
            "control": R / "sfs2d" / "AA_BB.control.2dSFS"}

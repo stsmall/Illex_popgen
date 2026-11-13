@@ -1,4 +1,4 @@
-"""Supp Fig S25 -- posterior predictive checks of the balancing model (NPE draws).
+"""Supp Fig S11 -- posterior predictive checks of the balancing model (NPE draws).
 
 For each statistic, the quantile of the observed value among 1,000 replicates simulated from NPE posterior draws of
 the balancing model with gene flux, the favoured model. Background bands mark the central 50, 90 and 95%
@@ -8,7 +8,7 @@ marked. The title gives the joint predictive p.
 
 Data (written by illex/abc/smc_results/ppc/ppc_analyze.py on the output of illex/abc/npe/ppc_npe.py in the msinv
 repository, branch illex/trajectory-abc): data/inversion_abc/npe_ppc_per_stat.csv, npe_ppc_joint.csv.
-Output: supp_figures/figS25_abc_ppc.png
+Output: supp_figures/figS11_npe_ppc.png
 """
 import sys
 from pathlib import Path
@@ -101,4 +101,4 @@ handles += [plt.Rectangle((0, 0), 1, 1, color=c, label=l) for c, l in
 fig.legend(handles=handles, loc="lower center", ncol=3, fontsize=7.5, bbox_to_anchor=(0.6, -0.01),
            handletextpad=0.4, columnspacing=1.0)
 fig.subplots_adjust(left=0.32, right=0.97, top=0.95, bottom=0.09)
-save(fig, str(ROOT / "supp_figures" / "figS25_abc_ppc.png"))
+save(fig, str(ROOT / "supp_figures" / "figS11_npe_ppc.png"))

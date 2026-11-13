@@ -1,4 +1,4 @@
-"""Supp Fig S26 -- confusion matrix of the ABC random-forest model choice for the chromosome-2 inversion.
+"""Supp Fig S9 -- confusion matrix of the ABC random-forest model choice for the chromosome-2 inversion.
 
 Grouped five-fold cross-validation of the post-hoc-weighted random-forest classifier over the four frequency
 histories with gene flux (neutral drift N, directional selection still under way D1 or stopped D2, balancing
@@ -7,7 +7,7 @@ mass assigned to each predicted model, so rows sum to 1.
 
 Data (written by illex/abc/abc_infer.R, model-choice section, on the base2 reference table in the msinv repository,
 branch illex/trajectory-abc, results/illex/modelchoice_base2/abc_rf): data/inversion_abc/abcrf_confusion_cv.csv.
-Output: supp_figures/figS26_abc_confusion.png
+Output: supp_figures/figS9_abcrf_confusion.png
 """
 import sys
 from pathlib import Path
@@ -41,4 +41,4 @@ ax.set_ylabel("True model")
 ax.set_title(f"Cross-validated accuracy {acc:.2f}", fontsize=9)
 cb = fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
 cb.set_label("Share of true-model mass")
-save(fig, ROOT / "supp_figures" / "figS26_abc_confusion.png")
+save(fig, ROOT / "supp_figures" / "figS9_abcrf_confusion.png")

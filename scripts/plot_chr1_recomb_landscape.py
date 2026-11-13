@@ -1,4 +1,4 @@
-"""Supp Fig S22: the chromosome-1 male ReLERNN recombination landscape (bootstrap-corrected, 200 replicates) with
+"""Supp Fig S16: the chromosome-1 male ReLERNN recombination landscape (bootstrap-corrected, 200 replicates) with
 95% bootstrap intervals, and what it does not show. Windows of 3-6 kb from the network trained on chromosomes 1,
 13 and 45 (run_male_uf_achknet, BSCORRECTED200). Rolling medians over 100 windows (~0.6 Mb) and 333 windows
 (~2 Mb). Shaded: the stretches with no windows, 24.0-31.3 Mb (a masked pi-elevated block) and 45.25-46.39 Mb
@@ -15,7 +15,7 @@ apply()
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
 
 RD = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/11_relernn"
-OUT = os.path.join(_ROOT, "supp_figures", "figS22_chr1_recomb_landscape.png")
+OUT = os.path.join(_ROOT, "supp_figures", "figS16_chr1_recomb_landscape.png")
 CHROM = "1"
 CEN = (45.0, 47.5)          # 80%-repeat block (centromere)
 

@@ -1,4 +1,4 @@
-"""Supp Fig S3: windowed PC1 along chr2 around the inversion, by karyotype.
+"""Supp Fig S1: windowed PC1 along chr2 around the inversion, by karyotype.
 
 Inputs (analysis/steps/05_karyo_pca_arms/refit_619, from pipeline/steps/05_karyo_pca_arms/refit_pca_619.sh):
 chr2_winpca_619_coords.npy (windows x 619 samples x 10 PCs, sample order chr2_619_samples.txt),
@@ -14,7 +14,7 @@ import numpy as np
 import pandas as pd
 
 R = Path("/sietch_colab/data_share/illex/popgen_data/analysis/steps/05_karyo_pca_arms/refit_619")
-OUT = Path(__file__).resolve().parent.parent / "supp_figures" / "figS3_winpca.png"
+OUT = Path(__file__).resolve().parent.parent / "supp_figures" / "figS1_winpca.png"
 BP_L, BP_R = 60.54, 79.50
 
 coords = np.load(R / "chr2_winpca_619_coords.npy")[:, :, 0]   # windows x samples

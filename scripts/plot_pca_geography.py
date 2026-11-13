@@ -16,7 +16,7 @@ from scipy.stats import pearsonr
 
 SC = DATA
 META = "/sietch_colab/data_share/illex/popgen_data/pggpu_illex/popstats/metadata.tsv"
-OUT = os.path.join(_HERE, "..", "supp_figures", "figS1_pca_geography.png")
+OUT = os.path.join(_HERE, "..", "supp_figures", "figS2_pca_geography.png")
 
 ev = pd.read_csv(f"{SC}/auto_pca.eigenvec", sep="\t")
 ev = ev.rename(columns={"IID": "sample"})

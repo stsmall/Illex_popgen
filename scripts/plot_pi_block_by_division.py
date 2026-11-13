@@ -1,4 +1,4 @@
-"""Supp Fig S23: the chr1 elevated-diversity block is shared by every sampling division and is not
+"""Supp Fig S18: the chr1 elevated-diversity block is shared by every sampling division and is not
 differentiated among them. (a) pi per NAFO division (ANGSD, 50-kb windows) across chr1:19-36 Mb, lines
 coloured by division latitude; (b) between-division Hudson FST (all 45 division pairs, ratio of averages)
 in 100-kb windows over the same span; (c) block/flank pi ratio per division for all 22 blocks."""
@@ -12,7 +12,7 @@ import numpy as np, pandas as pd, matplotlib.pyplot as plt, matplotlib as mpl
 B = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/inversion_content/block_perpop"
 P = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/08_demography/per_population/tables/perpop_windows_expanded.tsv"
 M = "/sietch_colab/data_share/illex/popgen_data/seq_data/baker_2025/docs/Squid_Meta_Sept2024_Simple.txt"
-OUT = os.path.join(_ROOT, "supp_figures", "figS23_pi_blocks_by_division.png")
+OUT = os.path.join(_ROOT, "supp_figures", "figS18_pi_blocks_by_division.png")
 S, E, LO, HI = 23.98, 31.28, 19.0, 36.3
 lat = pd.read_csv(M, sep="\t").groupby("Zone").Lat.mean()
 p = pd.read_csv(P, sep="\t"); p["chrom"] = p.chrom.astype(str)

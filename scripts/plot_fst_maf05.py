@@ -42,7 +42,7 @@ c.set_yscale("log"); c.set_xticks(xo); c.set_xticklabels([TL[k] for k in ks], fo
 c.set_ylabel("SNPs above null threshold"); c.legend(frameon=False, fontsize=6.5)
 c.text(0.98, 0.62, f"above null maximum ({T['null_max']:.3f}): {g['null_max']['observed']}", transform=c.transAxes, ha="right", fontsize=6.5)
 c.set_title("c   observed vs expected", loc="left", fontsize=8, fontweight="bold"); despine(c)
-fig.tight_layout(); fig.savefig(f"{OUT}/figS2_fst_expanded.png", dpi=220, bbox_inches="tight"); plt.close(fig)
+fig.tight_layout(); fig.savefig(f"{OUT}/figS3_fst_expanded.png", dpi=220, bbox_inches="tight"); plt.close(fig)
 
 # ---------------- S19 ----------------
 P = os.path.join(os.path.dirname(R), "perm")   # observed per-SNP FST (perm 00 = real labels), every SNP
@@ -82,5 +82,5 @@ lim = [min(Q["null"][t].min(), Q["real"][t].min()), max(Q["null"][t].max(), Q["r
 b.plot(lim, lim, color=C["muted"], ls="--", lw=0.8)
 b.set_xlabel("permutation null quantile"); b.set_ylabel("observed quantile"); b.legend(frameon=False, fontsize=6.5)
 b.set_title("b   upper tail (90th-99.95th pct)", loc="left", fontsize=8, fontweight="bold"); despine(b)
-fig.tight_layout(); fig.savefig(f"{OUT}/figS19_fst_genomewide.png", dpi=220, bbox_inches="tight"); plt.close(fig)
-print("wrote figS2_fst_expanded.png and figS19_fst_genomewide.png")
+fig.tight_layout(); fig.savefig(f"{OUT}/figS4_fst_genomewide.png", dpi=220, bbox_inches="tight"); plt.close(fig)
+print("wrote figS3_fst_expanded.png and figS4_fst_genomewide.png")

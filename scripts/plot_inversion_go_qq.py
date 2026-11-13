@@ -17,7 +17,7 @@ apply()
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
 
 O = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/inversion_content"
-OUT = os.path.join(_ROOT, "supp_figures", "figS21_inversion_go_qq.png")
+OUT = os.path.join(_ROOT, "supp_figures", "figS13_inversion_go_qq.png")
 
 b = pd.read_csv(f"{O}/perm_null_band.tsv", sep="\t")
 b = b[(b.obs > 0) | (b.exp > 0)]

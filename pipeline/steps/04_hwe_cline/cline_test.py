@@ -61,7 +61,7 @@ xs=np.array([tab["mean_lat"].min(),tab["mean_lat"].max()])
 ax[1].plot(xs,np.full(2,tab["p_B"].mean()),":",color="grey")  # flat ref at the mean
 ax[1].set(xlabel="mean latitude (N)",ylabel="2+ arrangement frequency",title=f"2+ frequency vs latitude (r={r_div:.2f}, p={p_div:.2g})")
 fig.suptitle(f"chr2 inversion: non-clinal test (n={len(df)})")
-fig.tight_layout(); fig.savefig(f"{ROOT}/supp_figures/figS6_cline.png",dpi=140,bbox_inches="tight")
+fig.tight_layout(); fig.savefig(f"{ROOT}/supp_figures/figS5_cline.png",dpi=140,bbox_inches="tight")
 # n=619 table written beside (not over) the original 633-sample karyo_by_division.tsv
 tab.to_csv(f"{D}/karyo_by_division.n619.tsv",sep="\t")
-print(f"wrote {ROOT}/supp_figures/figS6_cline.png + {D}/karyo_by_division.n619.tsv", flush=True)
+print(f"wrote {ROOT}/supp_figures/figS5_cline.png + {D}/karyo_by_division.n619.tsv", flush=True)

@@ -1,4 +1,4 @@
-"""Supp Fig S12: per-chromosome male ReLERNN recombination-rate distributions, bootstrap-corrected (200 replicates).
+"""Supp Fig S14: per-chromosome male ReLERNN recombination-rate distributions, bootstrap-corrected (200 replicates).
 Autosomes: the network trained on chromosomes 1, 13 and 45 (run_Achk_male_uf, 6 kb windows) applied to every
 autosome except chromosome 2 (run_male_uf_achknet), corrected with that network's 200-replicate bootstrap table
 (BSCORRECTED200, analysis/steps/11_relernn/bs200_correct_genomewide.py).
@@ -13,7 +13,7 @@ from figstyle import apply, C, despine
 apply()
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
 RD = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/11_relernn"
-OUT = os.path.join(_ROOT, "supp_figures", "figS12_recomb_boxplots.png")
+OUT = os.path.join(_ROOT, "supp_figures", "figS14_recomb_boxplots.png")
 
 
 def load(proj, bn, bsfile):

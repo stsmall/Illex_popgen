@@ -216,13 +216,13 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \section*{Supplementary figures}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=.7\linewidth]{figS3_winpca.png}
+  \includegraphics[width=.7\linewidth]{figS1_winpca.png}
   \caption{\textbf{Windowed PCA across chromosome~2} localising the differentiated block.}
   \label{sfig:winpca}
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=\linewidth]{figS1_pca_geography.png}
+  \includegraphics[width=\linewidth]{figS2_pca_geography.png}
   \caption{\textbf{The autosomal-PCA spread is not geographic structure.} Genome-wide PCA
     (all autosomes except chromosome~2, 280{,}131 LD-thinned SNPs), $n=619$ individuals.
     (a)~Coloured by NAFO sampling division and (b)~by latitude, the divisions and the
@@ -235,7 +235,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=\linewidth]{figS2_fst_expanded.png}
+  \includegraphics[width=\linewidth]{figS3_fst_expanded.png}
   \caption{\textbf{No geographic differentiation beyond genetic drift and no local adaptation signal.} Per-SNP
     Hudson $\Fst$ across all 45 NAFO-division pairs for every biallelic SNP with minor-allele frequency above 0.05
     ($\geq$40 genotyped individuals per pair, ratio of averages over $\geq$20 informative pairs). \textbf{(a)}~On the autosomes
@@ -256,7 +256,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=\linewidth]{figS19_fst_genomewide.png}
+  \includegraphics[width=\linewidth]{figS4_fst_genomewide.png}
   \caption{\textbf{Genome-wide per-SNP $\Fst$ finds no differentiation outlier.} Per-SNP Hudson $\Fst$ of
     \cref{sfig:fstsnp} along the genome (20{,}276{,}930 SNPs with minor-allele frequency above 0.05 that are informative in at least 20 division pairs, 20{,}117{,}984 on the autosomes and 158{,}946 on the Z, every SNP shown).
     \textbf{(a)}~No SNP exceeds the permutation-null maximum ($0.583$, dashed). The 2{,}327 SNPs above the null
@@ -269,7 +269,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=.7\linewidth]{figS6_cline.png}
+  \includegraphics[width=.7\linewidth]{figS5_cline.png}
   \caption{\textbf{The inversion is non-clinal.} Frequency of the ancestral 2+ arrangement across NAFO sampling
     divisions shows no latitudinal trend (see \cref{stab:geo}). Geographic $\Fst\approx0$, and the three
     karyotypes co-occur throughout the range.}
@@ -277,7 +277,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=\linewidth]{figS20_chr2_karyotype_fst.png}
+  \includegraphics[width=\linewidth]{figS6_chr2_karyotype_fst.png}
   \caption{\textbf{Between-karyotype differentiation is confined to the chromosome-2 inversion.} Per-window
     $\Fst$ between the 2a and 2+ arrangements (arrangement homozygotes, 2a/2a $n=223$ and 2+/2+ $n=97$) across the
     whole of chromosome~2, aggregated in 100~kb windows (ratio-of-averages Hudson estimator). Unlike the
@@ -289,19 +289,19 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=.9\linewidth]{figS11_breakpoints.png}
+  \includegraphics[width=.9\linewidth]{figS7_breakpoints.png}
   \caption{\textbf{Inversion breakpoints.} $\Fst$ across the left (60.54~Mb) and right (79.50~Mb) breakpoints, a step rather than a ramp.}
   \label{sfig:breakpoints}
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=.6\linewidth]{figS4_ld_triangle.png}
+  \includegraphics[width=.6\linewidth]{figS8_ld_triangle.png}
   \caption{\textbf{Linkage disequilibrium across the chromosome-2 inversion.} Mean genotype $r^2$ between SNPs, binned along chr2:55--85~Mb, pooling all 621 individuals. Dashed lines and shading mark the breakpoints (60.54 and 79.50~Mb). A block of elevated linkage disequilibrium spans exactly the inversion and stops at both breakpoints, while the flanking collinear sequence shows only background values. Mean $r^2$ between SNPs more than 1~Mb apart is 3.5 times higher inside the inversion than in its flanks (0.0056 vs 0.0016, Supplementary Fig.~S19). This long-range association arises because the few near-fixed differences between arrangements are all correlated with karyotype, and it is the direct signature of suppressed recombination between arrangements. Recombination within arrangements is not suppressed at the scale of the 3--6-kb windows used by the recombination map, which is why the inversion is shown here rather than in Supplementary Fig.~S14.}
   \label{sfig:ld}
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=.5\linewidth]{figS26_abc_confusion.png}
+  \includegraphics[width=.5\linewidth]{figS9_abcrf_confusion.png}
   \caption{\textbf{Confusion matrix of the ABC-RF model choice for the chromosome-2 inversion.} Grouped five-fold
     cross-validation over 16{,}959 simulations of the four histories with gene flux, neutral drift (N), directional
     selection still under way (D1) or stopped (D2) and balancing selection (B). Each row is the true history, and the
@@ -310,8 +310,8 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \end{figure}
 
 \begin{figure}[p]\centering
-  \includegraphics[width=.6\linewidth]{figS14b_npe_posterior.png}\\[4pt]
-  \includegraphics[width=.72\linewidth]{figS14c_abc_trajectory.png}
+  \includegraphics[width=.6\linewidth]{figS10a_npe_posterior.png}\\[4pt]
+  \includegraphics[width=.72\linewidth]{figS10b_npe_trajectories.png}
   \caption{\textbf{Posterior of the balancing model with gene flux for the chromosome-2 inversion} (main-text
     Fig.~4b). Top, joint posterior from neural posterior estimation, with each axis spanning its prior. The diagonal
     gives the marginals with medians dashed, and below it the contours enclose 80, 95 and 99\% of the posterior, with
@@ -324,14 +324,14 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
     generations after onset, and the slowest fifth, mostly those with $s<10^{-4}$, take more than 50{,}000
     generations. Bottom right, the posterior draws of $t_\mathrm{inv}$ and $t_\mathrm{sel}$ behind these
     trajectories, with medians dashed.}
-  \label{sfig:profiles}
+  \label{sfig:npepost}
 \end{figure}
 
 
 
 \clearpage
 \begin{figure}[p]\centering
-  \includegraphics[width=.44\linewidth]{figS25_abc_ppc.png}
+  \includegraphics[width=.44\linewidth]{figS11_npe_ppc.png}
   \caption{\textbf{Posterior predictive check of the balancing model with gene flux.} 1{,}000 NPE posterior draws
     were simulated again, and each point is the quantile of the observed statistic among the replicates. The shading
     marks the central 50--90\%, the 90--95\% and the outer 5\% of the predictive distribution, the points are
@@ -345,7 +345,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=.9\linewidth]{figS5_joint_sfs.png}
+  \includegraphics[width=.9\linewidth]{figS12_joint_sfs.png}
   \caption{\textbf{Joint two-dimensional site-frequency spectrum} of non-reference allele frequency in the
     2a (derived) versus 2+ (ancestral) arrangement. Each cell is a count of sites (colour, $\log_{10}$).
     In the inversion (a) density spreads off the diagonal and into the corners, with variants common in one arrangement and absent in the other, i.e.\ near-fixed differences (3{,}828 sites, 18\% shared polymorphism), the direct signature of the recombination barrier. In the collinear control (b) the
@@ -355,7 +355,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=.62\linewidth]{figS21_inversion_go_qq.png}
+  \includegraphics[width=.62\linewidth]{figS13_inversion_go_qq.png}
   \caption{\textbf{The inversion-captured genes show no GO enrichment.} QQ-plot of the per-term GO-enrichment
     $p$-values (Fisher's exact vs.\ genome background, all three ontologies) for the genes in the inversion against a permutation null (500 random gene sets of the same size). A theoretical-uniform
     null is inappropriate for GO, because nested and correlated terms and tiny discrete counts inflate any small gene set, so the permutation band is the correct reference. The observed points fall entirely within it, and the inversion genes yield fewer nominally enriched terms than random sets of the same size
@@ -366,13 +366,13 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=.9\linewidth]{figS12_recomb_boxplots.png}
+  \includegraphics[width=.9\linewidth]{figS14_recomb_boxplots.png}
   \caption{\textbf{Per-chromosome recombination-rate distribution} (ReLERNN, estimated in the 329 confidently sexed males). Autosomal rates from linkage disequilibrium are sex-averaged population rates, even when estimated in males. Rates are corrected with 200 parametric-bootstrap replicates in each of 20 rate slices. The autosomes were predicted in 3--6-kb windows by one network, trained on chromosomes 1, 13 and 45 and applied to every autosome except chromosome~2. The Z was predicted in 30-kb windows by a separate network trained with the Z effective size set to 0.60 of the autosomal value (the Z-to-autosome diversity ratio), which places its rate on the autosomal scale. The dashed line marks the median of all autosomal windows (0.241~cM/Mb), and per-chromosome medians span 0.229--0.259~cM/Mb. The Z median is 0.290~cM/Mb, so $r_Z/r_A=1.20$. Because the Z recombines only in ZZ males, equal recombination in the two sexes predicts $r_Z/r_A=0.67$ and achiasmate female meiosis predicts 1.33. Chromosome~2 is not shown, because a window-scale map estimated from all karyotypes together cannot resolve a barrier that acts only between arrangements. That barrier is shown directly by the linkage-disequilibrium block spanning the inversion (Supplementary Fig.~S8).}
   \label{sfig:recombbox}
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=\linewidth]{figS17_recomb_selection.png}
+  \includegraphics[width=\linewidth]{figS15_recomb_selection.png}
   \caption{\textbf{Recombination, gene proximity and the efficacy of selection.} Per-window statistics
     ($\sim$50~kb windows, autosomes). \textbf{(a)}~As a control, recombination rate is essentially flat across
     distance from the nearest exon (0.233$\to$0.236~cM/Mb near$\to$far, a $\sim$2\% difference, Spearman
@@ -386,13 +386,13 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=\linewidth]{figS22_chr1_recomb_landscape.png}
+  \includegraphics[width=\linewidth]{figS16_chr1_recomb_landscape.png}
   \caption{\textbf{The chromosome-1 recombination map, and what the LD-based map does not resolve.} Male ReLERNN estimate in 3--6-kb windows, corrected with 200 bootstrap replicates, with 95\% bootstrap intervals and a 0.6-Mb rolling median (median 0.244~cM/Mb). Two stretches carry no windows. The $\pi$-elevated block at 24.0--31.3~Mb was masked. The 1.1-Mb gap at 45.25--46.39~Mb lies inside the 2.5-Mb block at 45.0--47.5~Mb, which is 80\% repeat sequence (vs 52\% chromosome-wide) and is the centromere. In the accessible pericentromeric flanks the estimate dips only $\sim$7\%, although nucleotide diversity halves there (0.0038 vs 0.0084), and across the whole 103~Mb the 2-Mb rolling median spans just 0.22--0.27~cM/Mb ($-10\%$ to $+10\%$ of the median). The map's chromosome-scale dynamic range is therefore compressed, so centromeric suppression cannot be resolved and the nearly uniform landscape is in part an estimator ceiling.}
   \label{sfig:chr1recomb}
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=.8\linewidth]{figS10_mkado.png}
+  \includegraphics[width=.8\linewidth]{figS17_mkado.png}
   \caption{\textbf{Per-gene McDonald--Kreitman neutrality index} (mkado volcano plot, \coin{} outgroup).
     Each point is one gene, plotted as $-\log_{10}$ of its neutrality index NI\,$=(P_n/P_s)/(D_n/D_s)$ on the $x$-axis
     (right of the neutral NI\,$=1$ line $=$ adaptive, $\mathrm{NI}<1$, left $=$ excess non-synonymous
@@ -405,25 +405,25 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=\linewidth]{figS23_pi_blocks_by_division.png}
+  \includegraphics[width=\linewidth]{figS18_pi_blocks_by_division.png}
   \caption{\textbf{The 22 elevated-diversity blocks are shared by every sampling division.} \textbf{(a)}~Nucleotide diversity across chr1:19--36~Mb computed separately in each of the ten divisions with more than one individual (ANGSD, 50-kb windows, lines coloured by division latitude). The 24.0--31.3~Mb block (shaded) carries 2.2--2.4 times the flanking diversity in every division. \textbf{(b)}~Between-division Hudson $\Fst$ over the same span (all 45 division pairs, 100-kb windows) is lower inside the block than in the flanks (0.014 vs 0.015). The same holds for the three strongest blocks (chr30:17.3--18.5, chr23:0.1--5.6 and chr38:61.5--68.0~Mb, 0.006--0.007 inside vs 0.014--0.015 outside). \textbf{(c)}~Block-to-flank diversity ratio per division for all 22 blocks. The excess varies by only 1--6\% among divisions, so no block is driven by a subset of the sample. Read depth separates the blocks into collapsed duplications (depth raised in every individual, up to 2.2 times the flanks in the population sample and 2.7 and 2.4 times in long reads from the assembly individual and a second individual, with five to six times the flanking density of heterozygous sites at skewed allele fractions in single diploid genomes), under-mapped blocks (short-read depth 0.6--0.9 times the flanks, a third of the accessible sequence not uniquely mappable, and a much smaller deficit in long reads), and gene-poor regions of elevated diversity with normal depth (Supplementary Table~S5). Genotype-likelihood diversity at mapping quality 60 retains most of the excess (for example chr30 6.4 to 5.8 times, chr23 5.2 to 4.0 times), because reads from unassembled copies map uniquely to the single assembled copy. All 22 blocks are masked from the sweep scan and gene-set analyses.}
   \label{sfig:piblocks}
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=\linewidth]{figS24_block_ld_triangles.png}
+  \includegraphics[width=\linewidth]{figS19_block_ld_triangles.png}
   \caption{\textbf{The elevated-diversity blocks carry no inversion-like linkage disequilibrium.} Genotype $r^2$ among common SNPs (minor-allele frequency $\geq$0.1, $\leq$30\% missing, 1{,}500 SNPs per region), averaged in 120 bins, for the chromosome-2 inversion (positive control) and five of the strongest blocks, each shown with a third of its length of flanking sequence. The orange bar marks the inversion or block. The inversion is a solid block of long-range LD over exactly its span (mean $r^2$ at $>$1~Mb 0.0056 inside vs 0.0016 in its flanks). None of the blocks differs from its flanks (0.0017--0.0020 vs 0.0012--0.0021 at $>$1~Mb, across all eight blocks tested), so none behaves as a segregating inversion or other long non-recombining haplotype. White stripes are bins with too few sampled SNPs.}
   \label{sfig:blockld}
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=.6\linewidth]{figS7_confusion.png}
+  \includegraphics[width=.6\linewidth]{figS20_confusion.png}
   \caption{\textbf{Sweep-classifier confusion matrix} (five-class diploSHIC, full-SFS model, 81\% overall accuracy). Recall is 0.85 for hard, 0.86 for linked-hard, 0.82 for neutral, 0.75 for soft and 0.77 for linked-soft sweeps.}
   \label{sfig:confusion}
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=.92\linewidth]{figS8_pipeline.png}
+  \includegraphics[width=.92\linewidth]{figS21_pipeline.png}
   \caption{\textbf{The selective-sweep scan pipeline.} Simulate (SLiM + msprime under the fitted growth
     demography) $\to$ diploSHIC five-class classifier $\to$ Markov/HMM decode $\to$ stratified
     empirical-outlier ranking (within callability $\times$ gene-density strata) + cross-method concordance
@@ -432,7 +432,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=\linewidth]{figS13_markov.png}
+  \includegraphics[width=\linewidth]{figS22_markov.png}
   \caption{\textbf{Recombination-aware Markov decoder for the Tier-1 sweep calls.} A hidden Markov model over
     the per-100~kb-window diploSHIC classification (emissions $=$ prior-corrected class posteriors, dwell
     lengths from the $\sim$400~kb sweep footprint scaled by the ReLERNN map, design-based rather than simulation-calibrated). \textbf{(a)}~The decoder at a representative concordant sweep (chromosome~35, \textit{ZEB2}), showing the sweep posterior $p_\mathrm{hard}+p_\mathrm{soft}$ per window and the Viterbi state track
@@ -445,7 +445,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=\linewidth]{figS18_tier1_manhattan.png}
+  \includegraphics[width=\linewidth]{figS23_tier1_manhattan.png}
   \caption{\textbf{Genome-wide diploSHIC-HMM (Tier-1) sweep calls.} Per-100~kb-window empirical-outlier
     sweep score (rank within callability $\times$ coding-density strata) across all 45 autosomes plus the
     Z chromosome (627 calls in total, 440 hard and 187 soft). The Markov-decoded Tier-1 calls are highlighted by
@@ -456,7 +456,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=.9\linewidth]{figS15_gsea.png}
+  \includegraphics[width=.9\linewidth]{figS24_gsea.png}
   \caption{\textbf{GO enrichment of the diploSHIC-HMM sweep genes} (biological process, terms significant at
     FDR$<$0.05 in both sets). In this paired dot plot each term is shown for the full Tier-1 set (blue circle, 623 calls) and for its background-selection-robust subset (orange diamond, 291 calls), with $x=$ fold
     enrichment and marker area $=$ number of sweep genes carrying the term. The grey arrow marks the shift between the two sets. The BGS screen consistently sharpens the enrichment (rightward), and most
@@ -468,7 +468,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=.85\linewidth]{figS16_go_network.png}
+  \includegraphics[width=.85\linewidth]{figS25_go_network.png}
   \caption{\textbf{GO enrichment map for the background-selection-robust sweep genes.} Built from the 291
     BGS-robust Tier-1 calls (the subset whose local diversity reduction exceeds the background-selection
     expectation, 227 GO-annotated genes). Nodes are enriched biological-process terms (size $=$ number of
@@ -479,7 +479,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \end{figure}
 
 \begin{figure}[h]\centering
-  \includegraphics[width=\linewidth]{figS9_diversity_boxplots.png}
+  \includegraphics[width=\linewidth]{figS26_diversity_boxplots.png}
   \caption{\textbf{Per-chromosome diversity.} Distribution of nucleotide diversity $\pi$ (top) and Tajima's
     $D$ (bottom) across 50~kb windows, one box per chromosome (pooled over the ten NAFO divisions, for all 46 chromosomes, the 45 autosomes plus chrZ). Diversity is uniform and $D$ is strongly negative genome-wide, the signature of
     expansion. Two chromosomes stand apart. Chromosome~2 (the inversion, orange) carries an inflated upper

@@ -16,7 +16,7 @@ apply()
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
 
 O = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/karyofix"
-OUT = os.path.join(_ROOT, "supp_figures", "figS20_chr2_karyotype_fst.png")
+OUT = os.path.join(_ROOT, "supp_figures", "figS6_chr2_karyotype_fst.png")
 INV_S, INV_E = 60_540_000, 79_500_000
 N1, N2 = 2 * 223, 2 * 97          # allele counts (diploid homozygotes)
 WIN = 100_000

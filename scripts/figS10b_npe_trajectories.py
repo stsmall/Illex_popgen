@@ -1,4 +1,4 @@
-"""Supp Fig S14 (bottom row) -- individual posterior trajectories of the chr2 inversion.
+"""Supp Fig S10 (bottom row) -- individual posterior trajectories of the chr2 inversion.
 
 Balancing model (B) with gene flux. Left: frequency of the derived 2a arrangement against
 generations since the onset of selection (t_sel), for 200 trajectories re-simulated from
@@ -9,7 +9,7 @@ trajectories (dashed lines are medians).
 
 Data (written by illex/abc/npe/plot_npe.py in the msinv repository, branch
 illex/trajectory-abc): data/inversion_abc/traj_aligned_npe_f1.csv, traj_params_npe_f1.csv.
-Output: supp_figures/figS14c_abc_trajectory.png
+Output: supp_figures/figS10b_npe_trajectories.png
 """
 import sys
 from pathlib import Path
@@ -65,7 +65,7 @@ ax2.set_xlabel("Thousand generations ago")
 ax2.legend(fontsize=7.5, loc="upper left")
 despine(ax2, keep=("bottom",))
 
-save(fig, str(ROOT / "supp_figures" / "figS14c_abc_trajectory.png"))
+save(fig, str(ROOT / "supp_figures" / "figS10b_npe_trajectories.png"))
 print("median t_inv, t_sel (kgen):", np.median(pr["t_inv"]) / 1e3, np.median(pr["t_sel"]) / 1e3,
       "| median aligned path reaches 0.55 at u =", float(u[np.argmax(al["q50"].values >= 0.55)]), "kgen",
       "| lower 2.5% bound reaches 0.55 at u =", float(u[np.argmax(al["q025"].values >= 0.55)]), "kgen")

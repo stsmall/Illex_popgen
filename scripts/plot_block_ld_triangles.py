@@ -8,7 +8,7 @@ apply()
 import numpy as np, matplotlib.pyplot as plt
 from matplotlib.transforms import Affine2D
 D = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/03_karyotype/inversion_content/block_perpop/ld"
-OUT = os.path.join(_ROOT, "supp_figures", "figS24_block_ld_triangles.png")
+OUT = os.path.join(_ROOT, "supp_figures", "figS19_block_ld_triangles.png")
 REG = [("chr2inv_control", "chr2 inversion (positive control)"), ("chr1_24_31", "chr1 block"),
        ("chr30_17_18", "chr30 block (6.1× π)"), ("chr23_0_6", "chr23 block (4.3× π)"),
        ("chr38_61_68", "chr38 block (4.1× π)"), ("chr35_60_65", "chr35 block (3.4× π)")]

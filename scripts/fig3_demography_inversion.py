@@ -21,7 +21,7 @@ Panel b: chr2 inversion frequency history of the derived 2a arrangement under th
     gene flux, the model favoured by the ABC-SMC model choice, with parameters from neural posterior estimation
     (NPE). Pointwise quantiles (50% and 95%) and median of 400 trajectories re-simulated from NPE posterior draws
     on the inversion's neutral baseline. Individual trajectories are not drawn (they are in Supplementary Fig. S14,
-    scripts/figS14c_abc_trajectory.py). Data: data/inversion_abc/traj_quantiles_npe_f1.csv, written by
+    scripts/figS10b_npe_trajectories.py). Data: data/inversion_abc/traj_quantiles_npe_f1.csv, written by
     illex/abc/npe/plot_npe.py in the msinv repository (branch illex/trajectory-abc).
 """
 import json
