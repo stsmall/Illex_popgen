@@ -54,7 +54,7 @@ for title, items in GROUPS:
     y += 0.4
 ymax = y
 
-TAIL = [(0.05, "#D55E00", "outside 95%"), (0.10, "#E69F00", "outside 90%"), (1.01, "#0072B2", "inside 90%")]
+TAIL = [(0.05, "#D55E00", "$p<0.05$"), (0.10, "#E69F00", "$p$ 0.05–0.10"), (1.01, "#0072B2", "$p>0.10$")]
 
 
 def colour(p):

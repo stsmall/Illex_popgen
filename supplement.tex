@@ -304,8 +304,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
   \includegraphics[width=.5\linewidth]{figS9_abcrf_confusion.png}
   \caption{\textbf{Confusion matrix of the ABC-RF model choice for the chromosome-2 inversion.} Grouped five-fold
     cross-validation over 16{,}959 simulations of the four histories with gene flux, neutral drift (N), directional
-    selection still under way (D1) or stopped (D2) and balancing selection (B). Each row is the true history, and the
-    cells give the share of its prior-weighted mass assigned to each predicted history, so rows sum to 1.}
+    selection still under way (D1) or stopped (D2) and balancing selection (B). Each row is the true history, and the cells give the share of its prior-weighted mass assigned to each predicted history, so rows sum to 1. This is the classification by the forest alone, without the acceptance-rate weighting that gives $P(\mathrm{B})=0.83$ (Supplementary Methods).}
   \label{sfig:abcconf}
 \end{figure}
 
@@ -332,8 +331,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \clearpage
 \begin{figure}[p]\centering
   \includegraphics[width=.44\linewidth]{figS11_npe_ppc.png}
-  \caption{\textbf{Posterior predictive check of the balancing model with gene flux.} 1{,}000 NPE posterior draws
-    were simulated again, and each point is the quantile of the observed statistic among the replicates. The shading
+  \caption{\textbf{Posterior predictive check of the balancing model with gene flux.} 1{,}000 NPE posterior draws were simulated again, as 40-kb segments of inversion like the training simulations, and each point is the quantile of the observed statistic among the replicates. The shading
     marks the central 50--90\%, the 90--95\% and the outer 5\% of the predictive distribution, the points are
     coloured by the two-sided predictive $p$ (below 0.05, 0.05--0.10, above 0.10), and statistics with $p$ below 0.10
     are labelled. The title gives the joint predictive $p$. Tajima's $D$ and the edge-to-centre divergence ratio were

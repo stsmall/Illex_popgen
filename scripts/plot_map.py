@@ -10,7 +10,7 @@ from figstyle import apply, KARYO, C, despine
 apply()
 import numpy as np, pandas as pd
 import matplotlib.pyplot as plt
-from matplotlib.patches import Wedge
+from matplotlib.patches import Wedge, Circle
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 
@@ -36,15 +36,19 @@ ax.add_feature(cfeature.OCEAN.with_scale("50m"), facecolor="#f7fbff")
 gl = ax.gridlines(draw_labels=True, lw=0.4, color="#dddddd")
 gl.top_labels = gl.right_labels = False
 
-def pie_at(ax, lon, lat, fracs, colors, r):
-    """draw a karyotype pie (wedges) at map coords; r in degrees."""
+def pie_at(ax, lon, lat, fracs, colors, r, small=False):
+    """draw a karyotype pie (wedges) at map coords; r in degrees. Divisions with fewer than five
+    individuals (3N, n = 1) are drawn faded with a dashed outline so they do not read as a frequency."""
     start = 90.0
     for frac, col in zip(fracs, colors):
         theta = 360.0 * frac
         ax.add_patch(Wedge((lon, lat), r, start - theta, start, facecolor=col,
                            edgecolor="white", lw=0.6, transform=ccrs.PlateCarree(),
-                           zorder=5))
+                           zorder=5, alpha=0.35 if small else 1.0))
         start -= theta
+    if small:
+        ax.add_patch(Circle((lon, lat), r, fill=False, ls="--", lw=0.8, edgecolor=C["ink"],
+                            transform=ccrs.PlateCarree(), zorder=6))
 
 Nmax = DIV["N"].max()
 for _, row in DIV.iterrows():
@@ -52,7 +56,7 @@ for _, row in DIV.iterrows():
     fr = [row["AA"] / tot, row["AB"] / tot, row["BB"] / tot]
     r = 0.55 + 1.1 * np.sqrt(n / Nmax)   # radius in degrees
     pie_at(ax, row["lon"], row["mean_lat"], fr,
-           [KARYO["AA"], KARYO["AB"], KARYO["BB"]], r)
+           [KARYO["AA"], KARYO["AB"], KARYO["BB"]], r, small=n < 5)
     lab = row["division"] if row["N"] >= 5 else f'{row["division"]} (n={int(row["N"])})'
     ax.text(row["lon"], row["mean_lat"] - r - 0.35, lab, ha="center",
             va="top", fontsize=7.5, color=C["ink"], transform=ccrs.PlateCarree(), zorder=6)

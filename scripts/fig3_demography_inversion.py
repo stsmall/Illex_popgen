@@ -154,7 +154,7 @@ ax_bi.set_xlim(-14, 1000)   # present (0 ka) at LEFT, to match panel a
 ax_bi.set_ylim(0, 0.8)
 ax_bi.set_yticks([0, 0.2, 0.4, P_NOW])
 ax_bi.set_yticklabels(["0", "0.2", "0.4", f"{P_NOW:.3f}"])
-ax_bi.set_xlabel("Time before present (ka)")
+ax_bi.set_xlabel("Time before present (ka, 1 generation = 1 year)")
 ax_bi.set_ylabel("Frequency of derived\n(2a) arrangement", linespacing=1.3)
 despine(ax_bi)
 ax_bi.legend(loc="center right", fontsize=8.0, title="posterior", title_fontsize=8.0)
@@ -163,5 +163,5 @@ ax_bi.text(-0.085, 1.06, "b", transform=ax_bi.transAxes, **LETTER_KW)
 ax_bi.set_title("Inversion frequency history", loc="left", pad=8,
                 fontsize=11, fontweight="normal", color=C["muted"])
 
-OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/figures/fig4_demography.png"
+OUT = "/sietch_colab/data_share/illex/popgen_data/illex_manuscript/figures/fig4_demography.png"
 save(fig, OUT)

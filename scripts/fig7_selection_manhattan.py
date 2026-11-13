@@ -17,7 +17,7 @@ TIER1_Z = "/sietch_colab/data_share/illex/popgen_data/analysis/steps/14_sweep_se
 # chrZ Tier-1 calls are one category (diploSHIC-only, male-based) -> a single distinct
 # colour (blue, the male convention used elsewhere), not the orange sweep-candidate family
 HARD_Z = SOFT_Z = "#0072B2"
-OUT = "/sietch_colab/data_share/illex/popgen_data/analysis/manuscript/figures/fig5_selection.png"
+OUT = "/sietch_colab/data_share/illex/popgen_data/illex_manuscript/figures/fig5_selection.png"
 
 # ---- why the y-axis is NOT raw diploSHIC S ----
 # Raw S = P(hard)+P(soft) saturates at ~1 across a huge, spatially-correlated
@@ -93,7 +93,7 @@ genes = [
     ("35", 39_000_000, "ZEB2"),
     ("32", 9_300_000, "MACROD2"),
     ("5", 38_000_000, "cept1"),
-    ("16", 35_300_000, "novel"),
+    ("16", 35_300_000, "uncharacterised"),
     # chrZ Tier-1 sweep genes (male-based scan; Table 4 "Z" rows)
     ("Z", 20_800_000, "Pasilla"),
     ("Z", 23_600_000, "Smaug"),
@@ -210,7 +210,7 @@ ax.set_ylim(-0.15, ymax + 0.5)
 ax.set_yticks([0, Y_THRESH, ymax])
 ax.set_yticklabels(["0", "0.99", "≈1"])
 ax.set_xlabel("chromosome")
-ax.set_ylabel("stratified S percentile\n" r"$-\log_{10}(1-\mathrm{S\_pct})$")
+ax.set_ylabel("stratified S percentile\n(axis scaled as " r"$-\log_{10}(1-$percentile$)$)")
 
 despine(ax)
 fig.tight_layout()
