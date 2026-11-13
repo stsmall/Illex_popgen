@@ -193,9 +193,7 @@ outlier windows among 22{,}278 callable windows). The mean of this null, 4.8 reg
 construction and have no comparable estimate. Tier-1 calls
 came from a hidden Markov model with neutral, linked and sweep-centre states, whose emissions are the
 prior-corrected class posteriors and whose dwell lengths follow the $\sim$400-kb sweep footprint scaled by the
-recombination map. Calibrating this decoder by simulation proved infeasible, because at this population size the
-simulated ancestral recombination graphs carry about $3.4\times10^{5}$ marginal trees per 2.5~Mb. Its settings
-are therefore design-based and were checked against the concordant regions (Supplementary Fig.~S22). The background-selection screen compared each call's $\pi$, from the ANGSD windows it overlaps, with the value predicted from the fraction of coding sites within 1~Mb of its midpoint, $\hat\pi=0.010593-0.165473\,f_\mathrm{CDS}$, the genome-wide linear relationship between the two. A call was retained when $\pi-\hat\pi\leq-0.003$, i.e.\ when its diversity is at least 0.003 below the background-selection expectation. Retained calls with $f_\mathrm{CDS}$ above the genome median are those well below the expectation, and those below it are low-diversity calls in gene-poor sequence where background selection is weak.
+recombination map. The decoder is not calibrated by simulation, because at this population size the simulated ancestral recombination graphs carry about $3.4\times10^{5}$ marginal trees per 2.5~Mb. Its settings are design-based and were checked against the concordant regions (Supplementary Fig.~S22). The background-selection screen compared each call's $\pi$, from the ANGSD windows it overlaps, with the value predicted from the fraction of coding sites within 1~Mb of its midpoint, $\hat\pi=0.010593-0.165473\,f_\mathrm{CDS}$, the genome-wide linear relationship between the two. A call was retained when $\pi-\hat\pi\leq-0.003$, i.e.\ when its diversity is at least 0.003 below the background-selection expectation. Retained calls with $f_\mathrm{CDS}$ above the genome median are those well below the expectation, and those below it are low-diversity calls in gene-poor sequence where background selection is weak.
 Gene-ontology enrichment used genes with EnTAP \citep{hart2020entap} annotations that overlap a call, against all
 annotated genes outside the Z and the masked blocks.
 
@@ -514,7 +512,7 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
     4S &  7 &  5 &  3 &  15 & 0.633 & 49.9 \\
     3K & 33 & 48 & 20 & 101 & 0.564 & 50.0 \\
     \midrule
-    Total & 223 & 299 & 97 & 619 & 0.602 & --- \\
+    Total & 223 & 299 & 97 & 619 & 0.602 & -- \\
     \bottomrule
   \end{tabular}
 \end{table}
