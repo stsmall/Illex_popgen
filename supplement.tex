@@ -367,8 +367,8 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
     enrichment and marker area $=$ number of sweep genes carrying the term. The grey arrow marks the shift between the two sets. The BGS screen consistently sharpens the enrichment (rightward), and most
     strongly for the light-response / photoreception terms (response to light stimulus $1.9\to3.2\times$,
     response to radiation $1.8\to2.8\times$). Two coherent themes dominate, neural development and photoreception, and both survive the background-selection filter (\cref{stab:goenrich},
-    full per-set enrichment tables are provided with the source). The hard-sweep calls are a
-    sub-classification recorded in the calls table, not a separate gene set.}
+    full per-set enrichment tables are provided with the source). The hard- and soft-sweep
+    subsets are tested separately in \cref{stab:goenrich}.}
   \label{sfig:gsea}
 \end{figure}
 
@@ -585,8 +585,8 @@ collapsed duplications and those at 0.90 or less as under-mapped, and the fracti
 \begin{table}[h]\centering
   \caption{\textbf{Gene-ontology enrichment of the Tier-1 (diploSHIC-only, Markov-corrected) sweep genes.}
     The 623 Tier-1 calls overlap 885 genes (475 GO-annotated). Enrichment by Fisher's exact test against the
-    annotated-gene background on the scanned chromosomes, Benjamini--Hochberg FDR. 124 biological-process terms
-    reach FDR$<$0.05, and representative terms are shown, spanning the two dominant themes (neural development and RNA-regulatory or transcriptional control). All are carried by the hard-sweep calls. The soft-sweep gene set
+    annotated-gene background on the scanned chromosomes, Benjamini--Hochberg FDR. 124 terms (116 biological process, 6
+    molecular function and 2 cellular component) reach FDR$<$0.05, and representative terms are shown, spanning the two dominant themes (neural development and RNA-regulatory or transcriptional control). Every term shown also reaches FDR$<$0.05 in the hard-sweep gene set alone, which gives 98 terms, 85 of them shared with the full set. The soft-sweep gene set
     has no term at FDR$<$0.05. The full machine-readable table is \texttt{hmm\_decode\_masked/tier1\_GO\_enrichment.tsv}.}
   \label{stab:goenrich}
   \begin{tabular}{llrrr}
