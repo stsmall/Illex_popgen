@@ -1,6 +1,6 @@
 Sampling events
 Division,Date,Source,Depth (m),N (this study),N (Baker)
-3K,16 August 2023,Recreational jig,3,48,48
+3K,16 August 2023,Recreational jig,3,47,48
 ,30 August 2023,Coastal fishery jig,5,53,46
 4S,28 August 2023,Canadian trawl survey,228,2,2
 ,29 August 2023,Canadian trawl survey,251,1,1
@@ -46,4 +46,4 @@ Division,Date,Source,Depth (m),N (this study),N (Baker)
 6B,18 June 2023,Commercial trawl,74,49,46
 ,16 August 2023,Commercial trawl,201,48,48
 6C,14 September 2022,US trawl survey,307,86,73
-Total,,,,619,540
+Total,,,,618,540

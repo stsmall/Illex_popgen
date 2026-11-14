@@ -1,0 +1,18 @@
+# Individuals excluded from every count: the 12 Baker et al. 2025 BAMs with essentially no data (empty_bams_12.tsv) and two individuals with signs of contamination (male-like chrZ heterozygosity under female coverage calls, chrZ coverage above every male, and the extreme positions on autosomal PC2). Analyses run before the exclusion received only missing genotypes from the 12 and include the two.
+# SQ233K026 was excluded last (2026-11-13): 2a/2+ from genotype likelihoods at the near-fixed inversion sites but 2a/2a from the PCAs, 2a/2+-like inversion heterozygosity, and a not-confident female call with Z coverage between the clusters and male-like Z heterozygosity (possible mixed sample). Analyses run on 619 individuals include it.
+sample	reason
+SQ233K059	empty BAM
+SQ234Xn026	empty BAM
+SQ234Xn038	empty BAM
+SQ234Xn028	empty BAM
+SQ234Xn052	empty BAM
+SQ234Xn044	empty BAM
+SQ234Xn042	empty BAM
+SQ234Xn057	empty BAM
+SQ234Xn060	empty BAM
+SQ234Xn070	empty BAM
+SQ234Xn058	empty BAM
+SQ234Xn068	empty BAM
+SQ23HBB023	likely contaminated
+SQ23HBB124	likely contaminated
+SQ233K026	possible mixed sample (genotype-likelihood karyotype 2a/2+ vs PCA 2a/2a; Z coverage between sex clusters, male-like Z heterozygosity)

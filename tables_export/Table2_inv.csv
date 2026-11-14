@@ -1,8 +1,8 @@
 The chromosome-2 inversion (I = 2a derived and S = 2+ ancestral)
 Quantity,Value
 Location,chr2:60.54-79.50 Mb (18.96 Mb)
-"Karyotypes (2a/2a, 2a/2+, 2+/2+)",223 / 299 / 97 (99.7\
-Derived (2a) frequency p,0.602
+"Karyotypes (2a/2a, 2a/2+, 2+/2+)",222 / 299 / 97 (99.7\
+Derived (2a) frequency p,0.601
 Founding frequency p_0,0.05 (0.004-0.10)
 Equilibrium frequency p^*,0.603 (0.575-0.707)
 Karyotype FST (2a/2a vs 2+/2+),0.362 (geographic FST~0)

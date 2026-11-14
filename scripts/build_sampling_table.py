@@ -8,7 +8,7 @@ A = "/sietch_colab/data_share/illex/popgen_data"
 _HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE)
 m = pd.read_csv(f"{A}/seq_data/baker_2025/docs/Squid_Meta_Sept2024_Simple.txt", sep="\t", dtype=str)
 ids = set(open(f"{A}/analysis/steps/00_callset/baker_633.txt").read().split())
-EMPTY = set(pd.read_csv(f"{_ROOT}/data/qc/excluded_14.tsv", sep="\t", comment="#")["sample"])
+EMPTY = set(pd.read_csv(f"{_ROOT}/data/qc/excluded_15.tsv", sep="\t", comment="#")["sample"])
 ids -= EMPTY
 m = m[m.ID.isin(ids)].copy()
 m["date"] = pd.to_datetime(m.Collection_Date, format="%d-%b-%y", errors="coerce")
@@ -38,12 +38,11 @@ for r in g.itertuples():
                      source=src, depth_m=("not recorded" if dp is None else dp), n_this_study=r.n,
                      n_baker2025=BAKER.get((r.Zone, ds, dp), 0), _lat=m[m.Zone == r.Zone].Lat.astype(float).mean()))
 t = pd.DataFrame(rows).sort_values(["_lat", "_d", "depth_m"], ascending=[False, True, True], key=lambda c: c.astype(str).str.zfill(4) if c.name=="depth_m" else c).drop(columns=["_lat","_d"])
-os.makedirs(f"{_ROOT}/tables_export", exist_ok=True)
-t.to_csv(f"{_ROOT}/tables_export/TableS8_sampling.csv", index=False)
+N_THIS = 633 - len(EMPTY)
 tex = ["\\begin{longtable}{llllrr}",
  "\\caption{\\textbf{Sampling events.} Every collection event (NAFO division, date, depth) with its source, the "
- "number of individuals analysed in this study (621 of the 633 whole-genome sequenced individuals, excluding 12 whose BAMs "
- "contain essentially no data) and the number retained "
+ f"number of individuals analysed in this study ({N_THIS} of the 633 whole-genome sequenced individuals, excluding 12 whose BAMs "
+ "contain essentially no data and three likely contaminated or mixed samples) and the number retained "
  "by \\citet{baker2025} after their genotype-missingness filter (540). Divisions are ordered north to south by mean "
  "sampling latitude. 4X was bulk-sampled across the division with no per-tow depth or position recorded.}"
  "\\label{stab:sampling}\\\\", "\\toprule", "Division & Date & Source & Depth (m) & $N$ (this study) & $N$ (Baker) \\\\",
