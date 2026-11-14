@@ -49,7 +49,6 @@
 \item Introduction, second paragraph, ``(needs reference)'': large-$\Ne$ terrestrial species without geographic structure (review minor 2).
 \item Citation for the 51~Myr divergence and 46\% alignment rate (minor 4), and for bgspy (text names it, no bib or Table~S10 entry).
 \item False-discovery rate of the 11 background-selection-robust regions (minor 27), needs the circular-shift null rerun with the BGS test.
-\item The $\sim$33\% depletion of near-fixed differences in the outermost megabase has no supporting figure (minor 14).
 \item Stairway Plot 2 dip at 1{,}200--3{,}000 generations is not tested (minor 20).
 \item Archived versioned releases (Zenodo DOIs) of the manuscript repository, msinv, pg\_gpu and degenotate (minor 65, M10), data accessions, EnTAP and LiftOn versions (not recorded on the analysis machine, Table~S10), funding and contributions, ``Draft \today''.
 \item Analyses still open: M1--M3, M5, M7 power simulation and more permutations, M8 Tier-1 error rate, gene-length-matched GO null and size-matched BGS comparison.
@@ -160,9 +159,7 @@ of about 0.05 (0.004--0.10) about 310~ka (190--520~ka) and has been held near it
 (0.575--0.707), since. Half of the trajectories re-simulated from the posterior reach a frequency of 0.55 within
 about 6{,}000 generations of the onset, and the slowest fifth, mostly those with $s<10^{-4}$, take more than 50{,}000 generations. The selection coefficient has only a lower bound (95\% of the posterior above $2.1\times10^{-5}$ and 80\%
 above $10^{-4}$), because any stronger selection reaches the equilibrium quickly and leaves the same present-day
-statistics. The fitted gene-flux rate is $3.9\times10^{-7}$ ($4\times10^{-9}$ to $6.1\times10^{-7}$) per site per
-generation in heterokaryotypes. The joint posterior (Supplementary Fig.~S10) shows the barrier age rising with the
-gene-flux rate (Spearman $\rho=0.62$) and with the onset of selection ($\rho=0.56$), whereas the selection coefficient
+statistics. The fitted gene-flux rate is $3.9\times10^{-7}$ ($4\times10^{-9}$ to $6.1\times10^{-7}$) per site per generation in heterokaryotypes, and its posterior extends towards the lower limit of its prior ($10^{-9}$), so gene flux is not clearly separated from zero. The joint posterior (Supplementary Fig.~S10) shows the barrier age rising with the gene-flux rate (Spearman $\rho=0.62$) and with the onset of selection ($\rho=0.56$), and the onset of selection rising with the gene-flux rate ($\rho=0.42$), whereas the selection coefficient
 is unrelated to the founding frequency ($\rho=-0.11$). The NPE posterior is calibrated, with 95\% credible intervals
 containing the true value in 94--96\% of 2{,}000 held-out simulations for every parameter, and the observed
 statistics lie well inside the simulations it was trained on (Supplementary Methods). Without gene flux the barrier
@@ -171,9 +168,7 @@ favoured model from 1{,}000 NPE posterior draws reproduce the data (joint poster
 Fig.~S11), including three statistics withheld from the fit, the Tajima's $D$ of each arrangement and the ratio of
 divergence near the breakpoints to that at the centre of the inversion. No statistic falls below a two-sided predictive $p$ of 0.05. Without gene flux the joint fit
 is poorer ($p=0.09$), mainly because the model almost never produces variants that are rare in 2a and at high
-frequency in 2+ (two-sided $p=0.06$ and 0.12 for the two such cells). Both settings reproduce the low-frequency
-variants shared by the two arrangements (0.064 of variable sites, against 0.031 predicted with gene flux and 0.035
-without it, two-sided $p=0.07$ and 0.29), the setting without gene flux because its younger barrier retains more shared ancestral variation. In
+frequency in 2+ (two-sided $p=0.06$ and 0.12 for the two such cells). Both settings predict about half the observed share of low-frequency variants shared by the two arrangements (0.031 with gene flux and 0.035 without it, against 0.064 of variable sites, two-sided $p=0.07$ and 0.29), the setting without gene flux slightly more because its younger barrier retains more shared ancestral variation. In
 the collinear flanks the same class of variants matches the neutral baseline (Supplementary Methods). The model places 2a at its founding frequency when the barrier forms, so
 $t_\mathrm{inv}$ dates the recombination barrier together with the founding of the arrangement. The observed joint
 site-frequency spectrum between arrangements shows the same barrier directly, with near-fixed differences and
@@ -191,10 +186,7 @@ It is also not a region of strong selective sweep, because the genome-wide scan 
 cross-method-concordant sweep inside the inversion. The RAiSD footprint
 statistic is broadly elevated and the classifier over-calls across the
 inversion, but the two never colocalize into focal concordance, as expected if any selection acts on the arrangement as a whole rather than on a focal swept locus, and the
-concordance requirement filters these calls. Gene flux between
-arrangements leaves no gradient in mean $\dxy$ from the breakpoints to the centre, though a residual $\sim$33\%
-depletion of near-fixed differences appears in the outermost megabase around the
-breakpoints, and the fitted model reproduces variants rare in 2a and common in 2+ better with gene flux than
+concordance requirement filters these calls. Gene flux between arrangements leaves no gradient in mean $\dxy$ from the breakpoints to the centre, and the share of near-fixed differences among SNPs in the outermost megabase (0.45\%) is close to that of the interior (0.47\%), although it differs between the left and right breakpoints (0.63\% and 0.24\%, Supplementary Methods). The fitted model reproduces variants rare in 2a and common in 2+ better with gene flux than
 without it. The derived arrangement has held an intermediate frequency for about 310~ky, and model choice favours an
 equilibrium maintained by balancing selection over a sweep that is still under way or one that stalled. The mechanism of a balanced equilibrium, whether overdominance, associative
 overdominance, frequency dependence, or a moving optimum under fluctuating selection, cannot be resolved from
