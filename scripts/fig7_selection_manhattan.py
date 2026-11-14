@@ -177,7 +177,7 @@ import pandas as _pd
 _reg = _pd.read_csv(WINDOWS.replace('windows.tsv', 'regions.tsv'), sep='\t'); N_REG = int((_reg.max_nmethods >= 2).sum())
 ax.text(0.0, 1.20,
          f"{n_out} stratified outliers  →  {len(candidates)} corroborated windows in {N_REG} regions "
-         "(diploSHIC-HMM outlier + a footprint method; Tier-2)",
+         "(stratified diploS/HIC outlier + a footprint method; Tier 2)",
          transform=ax.transAxes, ha="left", va="bottom", fontsize=6.8,
          color=C["ink"])
 

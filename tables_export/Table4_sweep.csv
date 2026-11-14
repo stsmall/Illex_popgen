@@ -1,4 +1,4 @@
-"High-confidence selective-sweep candidates, grouped by biological function and ordered by chromosome, including the Z-chromosome set"
+"Selective-sweep candidates, grouped by biological function and ordered by chromosome, including the Z-chromosome set"
 Location,Gene / feature,Class
 "Neural, RNA-regulation & development"
 chr6:3.0 Mb,Rexo1 (RNA exonuclease 1),hard
