@@ -198,8 +198,7 @@ ranked the same way, and a region was concordant when a diploS/HIC outlier was s
 false-discovery rate of the concordant set was estimated by shifting the joint RAiSD and SweepFinder2 outlier track
 circularly within each chromosome by an independent uniform offset of whole 100-kb windows, 10{,}000 times, and
 counting the diploS/HIC outlier regions that became concordant by chance (227 outlier regions, 446 footprint
-outlier windows among 22{,}278 callable windows). The mean of this null, 4.8 regions (95\% range 1--9), against the
-24 observed gives a false-discovery rate of 0.20 (no shift reached 24). Tier-1 calls are stratified outliers by
+outlier windows among 22{,}278 callable windows). The mean of this null, 4.8 regions (95\% range 1--9), against the 24 observed gives a false-discovery rate of 0.20 (no shift reached 24). Applying the per-region background-selection test (below) to all 227 diploS/HIC outlier regions and recording which contain a Tier-1 call, the same 10{,}000 shifts give a mean of 2.24 chance regions (95\% range 0--5, maximum 8) among the 11 concordant regions that contain a Tier-1 call and pass the test, a false-discovery rate of 0.20, and 2.43 among the 12 that pass the test regardless of Tier~1 (the twelfth, chr11:10.8~Mb, is decoded as linked and has no Tier-1 call). Of the 623 autosomal Tier-1 calls, 34 span a RAiSD or SweepFinder2 outlier window, against a null mean of 13.1 (95\% range up to 20, never 34) (\texttt{sweep\_fdr\_extended.py} in \texttt{pipeline/steps/14\_sweep\_seqmodel/calibration}). Tier-1 calls are stratified outliers by
 construction and have no comparable estimate. Tier-1 calls
 came from a hidden Markov model with neutral, linked and sweep-centre states, whose emissions are the
 prior-corrected class posteriors and whose dwell lengths follow the $\sim$400-kb sweep footprint scaled by the

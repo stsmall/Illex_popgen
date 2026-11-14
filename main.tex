@@ -48,7 +48,6 @@
 \begin{enumerate}\itemsep0pt
 \item Introduction, second paragraph, ``(needs reference)'': large-$\Ne$ terrestrial species without geographic structure (review minor 2).
 \item Citation for the 51~Myr divergence and 46\% alignment rate (minor 4), and for bgspy (text names it, no bib or Table~S10 entry).
-\item False-discovery rate of the 11 background-selection-robust regions (minor 27), needs the circular-shift null rerun with the BGS test.
 \item Stairway Plot 2 dip at 1{,}200--3{,}000 generations is not tested (minor 20).
 \item Archived versioned releases (Zenodo DOIs) of the manuscript repository, msinv, pg\_gpu and degenotate (minor 65, M10), data accessions, EnTAP and LiftOn versions (not recorded on the analysis machine, Table~S10), funding and contributions, ``Draft \today''.
 \item Analyses still open: M1--M3, M5, M7 power simulation and more permutations, M8 Tier-1 error rate, gene-length-matched GO null and size-matched BGS comparison.
@@ -279,10 +278,10 @@ reads as $\sim$91\% linked-selected under strong expansion, the decoder's role i
 It retains hard/soft windows that lie in contiguous sweep centers and discards spatially isolated ones,
 reducing 1{,}651 raw hard/soft windows to 677 and preferentially keeping the higher-outlier windows (median
 empirical-outlier percentile 0.98 vs 0.95 for discarded windows, Supplementary Fig.~S22b). Retained windows separated
-by no more than one window are merged into 623 localized autosomal calls (437 hard and 186 soft). Tier~1 has no estimated error rate and serves as an exploratory ranking. Tier~2 is defined separately, as regions in which a stratified diploS/HIC outlier window (the top 1\% of its stratum) is corroborated by RAiSD or SweepFinder2, producing 24 concordant regions. Chance alignment of outliers produces far fewer. Shifting the RAiSD and SweepFinder2
+by no more than one window are merged into 623 localized autosomal calls (437 hard and 186 soft). Tier~1 serves as an exploratory ranking. Of its 623 calls, 34 contain a RAiSD or SweepFinder2 outlier window, against 13.1 expected by chance (95\% range up to 20 in the circular-shift null described below), so Tier-1 calls are corroborated about 2.6 times more often than chance, but most remain unconfirmed and Tier~1 as a whole has no error rate. Tier~2 is defined separately, as regions in which a stratified diploS/HIC outlier window (the top 1\% of its stratum) is corroborated by RAiSD or SweepFinder2, producing 24 concordant regions. Chance alignment of outliers produces far fewer. Shifting the RAiSD and SweepFinder2
 outlier track circularly along each chromosome, which keeps the number and clustering of its outliers but breaks
 their alignment with the diploS/HIC outliers, gives 4.8 concordant regions on average (95\% range 1--9, and never
-more than 16 in 10{,}000 shifts), so the false-discovery rate of the concordant set is about 0.20. The two tiers agree strongly, with 88\% of windows at concordant loci decoded as sweep centers 
+more than 16 in 10{,}000 shifts), so the false-discovery rate of the concordant set is about 0.20. The same null gives 2.2 regions by chance among the 11 that also contain a Tier-1 call and pass the background-selection test described below (95\% range up to 5, never 11), a false-discovery rate of 0.20 for that high-confidence set. The two tiers agree strongly, with 88\% of windows at concordant loci decoded as sweep centers 
 versus 2.9\% genome-wide (odds ratio 242, $p<10^{-30}$), and 21 of the 24 concordant
 regions contain a Tier-1 center (Supplementary Fig.~S22c), so the concordant regions largely coincide with Tier-1 calls, although Tier~2 is defined from the stratified outliers rather than as a subset of Tier~1. The Z chromosome is necessarily diploS/HIC-only
 and scanned separately in males (below), it contributes four further Tier-1 calls, for a genome-wide 
